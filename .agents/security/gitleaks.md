@@ -1,5 +1,5 @@
-# Secret Scanning with Gitleaks
-- Use Gitleaks (via pre-commit) to detect accidentally committed API keys, passwords, and tokens.
-- Never commit hardcoded secrets to the repository.
-- If Gitleaks blocks a commit, remove the secret from the code and load it from environment variables using `python-dotenv`.
-- In case a real secret is committed, consider it compromised and rotate it immediately.
+# Verificação de Segredos com Gitleaks
+- Use Gitleaks (via pre-commit) para detectar chaves de API, senhas e tokens comitados acidentalmente.
+- Nunca faça commit de segredos hardcoded para o repositório.
+- Se o Gitleaks bloquear um commit, remova o segredo do código e carregue-o de variáveis de ambiente usando `python-dotenv`.
+- Caso um segredo real seja comitado, considere-o comprometido e rotacione-o imediatamente.

@@ -31,37 +31,42 @@ Por favor, observe as seguintes regras para este projeto:
 - Verifique a segurança e execute/adicione os testes necessários.
 - Atualize a documentação e use Conventional Commits.
 
+## [Idioma e Nomenclatura](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/personal/idioma-e-nomenclatura.md)
+- Lógica de código, variáveis e funções devem ser em Inglês.
+- Comentários, docstrings e documentação devem ser em Português (BR).
+- Textos de interface de usuário devem usar o sistema de internacionalização (`i18n.t()`).
+
 ## Segurança e Conformidade
 Estas regras governam a segurança local, auditoria de dependências e proteção de dados.
 
-### [SAST with Bandit](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/security/bandit.md)
-### [Dependency Audit with pip-audit](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/security/pip-audit.md)
-### [Secret Scanning with Gitleaks](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/security/gitleaks.md)
-### [Security Audit Logging](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/security/audit-logging.md)
+### [SAST com Bandit](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/security/bandit.md)
+### [Auditoria de Dependências com pip-audit](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/security/pip-audit.md)
+### [Verificação de Segredos com Gitleaks](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/security/gitleaks.md)
+### [Registro de Auditoria de Segurança](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/security/audit-logging.md)
 
-## Language & Architecture
+## Linguagem e Arquitetura
 ### [Python Pro](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/language/python-pro.md)
-### [Python Testing Patterns](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/language/python-testing-patterns.md)
-### [Streamlit Mastery](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/language/streamlit-mastery.md)
-### [Pandas & Data Processing Pro](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/language/pandas-data-processing.md)
+### [Padrões de Teste Python](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/language/python-testing-patterns.md)
+### [Domínio do Streamlit](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/language/streamlit-mastery.md)
+### [Pandas e Processamento de Dados Pro](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/language/pandas-data-processing.md)
 
-## Observability & Monitoring
-### [Python Observability](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/observability_and_monitoring/python-observability.md)
-### [Postmortem Writing](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/observability_and_monitoring/postmortem-writing.md)
+## Observabilidade e Monitoramento
+### [Observabilidade Python](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/observability_and_monitoring/python-observability.md)
+### [Escrita de Postmortem](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/observability_and_monitoring/postmortem-writing.md)
 
-## Creativity & Visuals
-### [Frontend Design](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/frontend-design.md)
-### [UI/UX Accessibility](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/ui-ux-accessibility.md)
-### [Mobile Design](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/mobile-design.md)
-### [Copy Editing](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/copy-editing.md)
-### [Technical Writing](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/technical-writing.md)
-### [Data Visualization](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/data-visualization.md)
-### [Interactive Charts (Plotly)](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/interactive-charts.md)
+## Criatividade e Visual
+### [Design Frontend](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/frontend-design.md)
+### [Acessibilidade UI/UX](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/ui-ux-accessibility.md)
+### [Design Mobile](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/mobile-design.md)
+### [Edição de Textos](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/copy-editing.md)
+### [Escrita Técnica](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/technical-writing.md)
+### [Visualização de Dados](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/data-visualization.md)
+### [Gráficos Interativos (Plotly)](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/interactive-charts.md)
 
-## QA & Testing
-### [Test-Driven Development](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/test-driven-development.md)
-### [Code Review Checklist](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/code-review-checklist.md)
-### [UI Review](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/ui-review.md)
-### [Continuous Integration](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/continuous-integration.md)
-### [End-to-End Testing](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/e2e-testing.md)
-### [Jupyter Notebook Standards](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/jupyter-notebook-standards.md)
+## QA e Testes
+### [Desenvolvimento Orientado a Testes (TDD)](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/test-driven-development.md)
+### [Checklist de Revisão de Código](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/code-review-checklist.md)
+### [Revisão de Interface](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/ui-review.md)
+### [Integração Contínua](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/continuous-integration.md)
+### [Testes Fim a Fim (E2E)](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/e2e-testing.md)
+### [Padrões para Jupyter Notebook](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/jupyter-notebook-standards.md)

@@ -1,5 +1,5 @@
-# Security Audit Logging
-- Use Python's built-in `logging` module to maintain an audit trail of critical security events (logins, access to sensitive data, errors, etc.).
-- Logs must be structured (e.g., JSON format when possible or clearly parseable text) containing timestamp, user/actor, action, and outcome.
-- Never log raw passwords, full credit card numbers, or unprotected PII. Mask sensitive data before passing it to the logger.
-- Define appropriate log levels: `INFO` for routine audit events, `WARNING` for suspicious activities, and `ERROR` or `CRITICAL` for security failures or crashes.
+# Registro de Auditoria de Segurança
+- Use o módulo embutido `logging` do Python para manter um rastro de auditoria de eventos de segurança críticos (logins, acesso a dados sensíveis, erros, etc.).
+- Os logs devem ser estruturados (ex: formato JSON quando possível ou texto claramente analisável) contendo timestamp, usuário/ator, ação e resultado.
+- Nunca registre senhas puras, números completos de cartão de crédito ou PII desprotegida. Mascare dados sensíveis antes de passá-los para o logger.
+- Defina os níveis de log apropriados: `INFO` para eventos de auditoria de rotina, `WARNING` para atividades suspeitas e `ERROR` ou `CRITICAL` para falhas de segurança ou crashes.

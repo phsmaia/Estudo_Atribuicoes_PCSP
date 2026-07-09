@@ -1,12 +1,12 @@
-# Jupyter Notebook Standards
+# Padrões para Jupyter Notebook
 
-## Principles
-- **Reproducibility:** A notebook should run from top to bottom without errors. Avoid out-of-order execution dependencies.
-- **Clear Documentation:** Use Markdown cells to explain the "why", not just the "how". Document the data sources, assumptions, and conclusions for each section.
-- **Clean Commits:** Clear all outputs before committing to version control, unless the output is explicitly required for demonstration purposes. Huge outputs (like inline datasets or large interactive charts) bloat the git repository.
-- **Code Modularity:** If a block of code in a notebook becomes too large or is reused frequently, refactor it into a separate Python script (e.g., `data_processing.py`) and import it.
+## Princípios
+- **Reprodutibilidade:** Um notebook deve executar de cima para baixo sem erros. Evite dependências de execução fora de ordem.
+- **Documentação Clara:** Use células Markdown para explicar o "porquê", não apenas o "como". Documente as fontes de dados, suposições e conclusões para cada seção.
+- **Commits Limpos:** Limpe todas as saídas antes de commitar para o controle de versão, a menos que a saída seja explicitamente necessária para fins de demonstração. Saídas enormes (como conjuntos de dados inline ou gráficos interativos grandes) incham o repositório git.
+- **Modularidade do Código:** Se um bloco de código em um notebook se tornar muito grande ou for reutilizado frequentemente, refatore-o em um script Python separado (ex: `processamento_dados.py`) e importe-o.
 
-## Best Practices
-- Use a consistent naming convention for notebooks (e.g., `01-data-cleaning.ipynb`).
-- Keep the number of imports at the top of the notebook.
-- Use `assert` statements or basic checks to ensure data integrity during exploratory analysis.
+## Melhores Práticas
+- Use uma convenção de nomenclatura consistente para os notebooks (ex: `01-limpeza-de-dados.ipynb`).
+- Mantenha o número de importações no topo do notebook.
+- Use declarações `assert` ou verificações básicas para garantir a integridade dos dados durante a análise exploratória.

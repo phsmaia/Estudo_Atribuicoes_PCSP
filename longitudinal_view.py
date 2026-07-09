@@ -6,8 +6,11 @@ import numpy as np
 import json
 import os
 import explanations
+import i18n
 
 def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, cargos_destaque):
+    lang = st.session_state.get('language', 'PT-BR')
+    traduzir = st.session_state.get('traduzir_cargos', False)
     # CSS para as tabelas HTML
     st.markdown("""
     <style>
@@ -137,8 +140,10 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             return f"{val} <span class='jump-arrow'>(🔀 Saltou)</span>"
 
     def render_html_table(hist_dict, is_float=False):
+        header_origem = "Carreira Origem" if lang == 'PT-BR' else "Origin Role"
+        header_controle = "Atual Sem Correção (Controle)" if lang == 'PT-BR' else "Current Uncorrected (Control)"
         html = "<table class='html-table'><thead><tr>"
-        html += "<th>Carreira Origem</th><th>Atual Sem Correção (Controle)</th>"
+        html += f"<th>{header_origem}</th><th>{header_controle}</th>"
         
         cenarios_secundarios = [c for c in opcoes_cenarios if c != "Atual Sem Correção"]
         for cen in cenarios_secundarios:
@@ -151,7 +156,8 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             
             html += f"<tr style='background-color: {bg_color}; opacity: {opacity}; transition: opacity 0.3s;'>"
             cor_linha = mapa_cores.get(c, '#fff')
-            html += f"<td><span style='color: {cor_linha}; font-weight:bold;'>{c}</span></td>"
+            c_label = i18n.dic_traducao_cargos.get(c, c) if lang == 'EN' and traduzir else c
+            html += f"<td><span style='color: {cor_linha}; font-weight:bold;'>{c_label}</span></td>"
             
             control_val = hist_dict[c].get("Atual Sem Correção", None)
             
@@ -177,7 +183,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
         
         is_sample_biased = len(filtro_cargos) < len(cargos_base)
         if is_sample_biased:
-            st.warning(explanations.get_short_bias_warning(), icon="🚨")
+            st.warning(explanations.get_short_bias_warning(language=lang), icon="🚨")
             
         st.caption(descricao)
         
@@ -196,7 +202,14 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             
             if dados_linhas:
                 df_linhas = pd.DataFrame(dados_linhas)
-                fig_line = px.line(df_linhas, x="Cenário", y="Valor", color="Carreira", markers=True, color_discrete_map=mapa_cores)
+                mapa_cores_plot = mapa_cores.copy()
+                
+                if lang == 'EN' and traduzir:
+                    df_linhas['Carreira'] = df_linhas['Carreira'].map(lambda x: i18n.dic_traducao_cargos.get(x, x))
+                    # Update color map keys for plotting
+                    mapa_cores_plot = {i18n.dic_traducao_cargos.get(k, k): v for k, v in mapa_cores.items()}
+                
+                fig_line = px.line(df_linhas, x="Cenário", y="Valor", color="Carreira", markers=True, color_discrete_map=mapa_cores_plot)
                 
                 if cargos_destaque:
                     for trace in fig_line.data:

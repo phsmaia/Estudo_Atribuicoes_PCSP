@@ -1,6 +1,6 @@
 # Python Observability
 
-Esta regra estabelece o padrão de instrumentação do código para garantirmos visibilidade e rastreabilidade total no projeto Poirot, suportando ativamente a nossa depuração sistemática.
+Esta regra estabelece o padrão de instrumentação do código para garantirmos visibilidade e rastreabilidade total no projeto, suportando ativamente a nossa depuração sistemática.
 
 ## 1. Logs Estruturados
 Substitua o uso de `print()` ou o módulo `logging` padrão por bibliotecas modernas focadas em **Structured Logging**, como **`structlog`** ou **`loguru`**.

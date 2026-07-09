@@ -1,4 +1,4 @@
-# End-to-End (E2E) Testing
+# Testes Fim a Fim (E2E)
 
 Esta regra define como testamos o sistema pelo ponto de vista do usuário final, garantindo que as peças individuais funcionem em conjunto.
 

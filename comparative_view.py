@@ -5,11 +5,15 @@ import plotly.express as px
 import plotly.graph_objects as go
 from data_processing import calcular_distancias_gower
 import explanations
+import i18n
 
 def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b, cargo_foco_a, cargos_destaque=None):
     if cenario_a == cenario_b:
-        st.warning("Selecione cenários diferentes no Painel Superior para comparar.")
+        st.warning(i18n.t("dendro_warning") if i18n.t("dendro_warning") != "dendro_warning" else "Selecione cenários diferentes no Painel Superior para comparar.")
         return
+
+    lang = st.session_state.get('language', 'PT-BR')
+    traduzir = st.session_state.get('traduzir_cargos', False)
 
     if cargos_destaque is None: cargos_destaque = []
     destaques_completos = list(set(cargos_destaque))
@@ -110,8 +114,13 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
     max_val = delta_matrix.abs().max().max()
     limit = max_val if pd.notna(max_val) and max_val > 0 else 0.1
 
+    delta_matrix_vis = delta_matrix.copy()
+    if lang == 'EN' and traduzir:
+        delta_matrix_vis.index = [i18n.dic_traducao_cargos.get(c, c) for c in delta_matrix_vis.index]
+        delta_matrix_vis.columns = [i18n.dic_traducao_cargos.get(c, c) for c in delta_matrix_vis.columns]
+
     fig = px.imshow(
-        delta_matrix,
+        delta_matrix_vis,
         color_continuous_scale='RdBu_r', 
         zmin=-limit, zmax=limit,
         labels=dict(color="Δ Gower"),
@@ -182,6 +191,10 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 comparativo_attrs.append({"Atribuição": attr, "Status": "⚪ Manteve", cenario_a: "Sim", cenario_b: "Sim"})
                 
         df_comparativo_attrs = pd.DataFrame(comparativo_attrs)
+        
+        # Tradução opcional
+        if lang == 'EN' and traduzir and not df_comparativo_attrs.empty:
+            df_comparativo_attrs['Atribuição'] = df_comparativo_attrs['Atribuição'].map(lambda x: i18n.dic_traducao_atribuicoes.get(x, x))
         
         # Ordenar (Ganhos primeiro, Perdas depois, Mantidas no final)
         if not df_comparativo_attrs.empty:
@@ -363,8 +376,22 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
     nodes_a, edges_a, pos_a = data_processing.gerar_dados_grafo(adj_a, threshold=threshold_adj_comp)
     nodes_b, edges_b, pos_b = data_processing.gerar_dados_grafo(adj_b, threshold=threshold_adj_comp)
     
-    fig_grafo_a = visualizations.plot_network_graph(nodes_a, edges_a, f"Grafo Cenário Base ({cenario_a})", cargos_destaque=[c for c in destaques_completos if c in adj_a.index] or None)
-    fig_grafo_b = visualizations.plot_network_graph(nodes_b, edges_b, f"Grafo Cenário Alvo ({cenario_b})", cargos_destaque=[c for c in destaques_b if c in adj_b.index] or None)
+    if lang == 'EN' and traduzir:
+        for node_list in [nodes_a, nodes_b]:
+            for n in node_list: n["id"] = i18n.dic_traducao_cargos.get(n["id"], n["id"])
+        for edge_list in [edges_a, edges_b]:
+            for e in edge_list:
+                e["source"] = i18n.dic_traducao_cargos.get(e["source"], e["source"])
+                e["target"] = i18n.dic_traducao_cargos.get(e["target"], e["target"])
+        # Update cargos destaque lists to English
+        cargos_destaque_a = [i18n.dic_traducao_cargos.get(c, c) for c in destaques_completos if c in adj_a.index] or None
+        cargos_destaque_b = [i18n.dic_traducao_cargos.get(c, c) for c in destaques_b if c in adj_b.index] or None
+    else:
+        cargos_destaque_a = [c for c in destaques_completos if c in adj_a.index] or None
+        cargos_destaque_b = [c for c in destaques_b if c in adj_b.index] or None
+        
+    fig_grafo_a = visualizations.plot_network_graph(nodes_a, edges_a, f"Grafo Cenário Base ({cenario_a})", cargos_destaque=cargos_destaque_a)
+    fig_grafo_b = visualizations.plot_network_graph(nodes_b, edges_b, f"Grafo Cenário Alvo ({cenario_b})", cargos_destaque=cargos_destaque_b)
     
     col_grafo1, col_grafo2 = st.columns(2)
     with col_grafo1:

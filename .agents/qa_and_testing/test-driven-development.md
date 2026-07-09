@@ -1,6 +1,6 @@
 # Test-Driven Development (TDD)
 
-Esta regra dita o ciclo de vida da escrita de código no projeto Poirot, garantindo que o comportamento esperado seja definido antes da implementação.
+Esta regra dita o ciclo de vida da escrita de código no projeto, garantindo que o comportamento esperado seja definido antes da implementação.
 
 ## O Ciclo Red-Green-Refactor
 1. **Red:** Escreva um teste que falhe (usando as diretrizes de `python-testing-patterns.md`).

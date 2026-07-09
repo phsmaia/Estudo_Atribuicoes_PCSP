@@ -1,6 +1,6 @@
-# SAST with Bandit
-- Use Bandit to scan Python code for common security vulnerabilities (e.g. SQL injections, hardcoded credentials, insecure cryptographic algorithms).
-- When a Bandit error is reported, do not ignore it. Refactor the code to eliminate the vulnerability.
-- Only use `# nosec` if absolutely certain it is a false positive and properly document the reason.
-- Ensure all database queries use parameterized parameters via SQLAlchemy to prevent SQL injection.
-- Ensure safe usages of cryptographic modules.
+# SAST com Bandit
+- Use Bandit para varrer o código Python em busca de vulnerabilidades de segurança comuns (ex: injeções SQL, credenciais hardcoded, algoritmos criptográficos inseguros).
+- Quando um erro do Bandit for reportado, não o ignore. Refatore o código para eliminar a vulnerabilidade.
+- Use apenas `# nosec` se tiver certeza absoluta de que é um falso positivo e documente adequadamente o motivo.
+- Garanta que todas as consultas a banco de dados utilizem parâmetros parametrizados via SQLAlchemy para prevenir injeção SQL.
+- Garanta o uso seguro de módulos criptográficos.

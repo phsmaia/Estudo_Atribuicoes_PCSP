@@ -12,7 +12,18 @@ import logger
 import os
 import explanations
 import importlib
+import i18n
 importlib.reload(explanations)
+importlib.reload(i18n)
+importlib.reload(i18n)
+
+
+# Sincroniza idioma a partir da URL (se houver) apenas na primeira carga
+if "language" not in st.session_state:
+    if "lang" in st.query_params:
+        st.session_state.language = st.query_params["lang"]
+    else:
+        st.session_state.language = "PT-BR"
 
 try:
     df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', sep=';', encoding='iso-8859-1')
@@ -28,7 +39,7 @@ logger.init_db()
 st.set_page_config(page_title="Estudo de Atribuições PCSP", layout="wide")
 
 # --- RODAPÉ FLUTUANTE DE CONTATOS E REFERÊNCIAS (Injeção Direta no DOM) ---
-components.html("""
+footer_html = """
 <script>
     // Tenta remover o footer antigo caso o Streamlit faça um re-run da tela
     const oldFooter = window.parent.document.getElementById('hud-floating-footer');
@@ -122,23 +133,37 @@ components.html("""
         </style>
         
         <div class="hud-icon">
-            <span style="font-size: 1.2rem;">💬</span> Referências e Contato
+            <span style="font-size: 1.2rem;">💬</span> __FOOTER_TITLE__
         </div>
         <div class="hud-content">
-            <h4>Referências do Estudo</h4>
-            <span style="font-size: 0.75rem; color: #A0A0A0; display: block; margin: -5px 0 8px 0; font-style: italic;">Material para consulta, teste e checagem</span>
-            <a href="https://github.com/phsmaia/Estudo_Atribuicoes_PCSP_2024" target="_blank">💻 Repositório GitHub</a>
-            <a href="https://periodicos.pf.gov.br/index.php/RBCP/pt_BR/article/view/4693" target="_blank">📜 Artigo Científico</a>
-            <a href="https://zenodo.org/records/14284483" target="_blank">📊 Dados Brutos (Zenodo)</a>
-            <h4 style="margin-top: 15px;">Fale com o Autor</h4>
-            <span style="font-size: 0.75rem; color: #A0A0A0; display: block; margin: -5px 0 8px 0; font-style: italic;">Críticas, sugestões, elogios ou outros</span>
+            <h4>__REF_TITLE__</h4>
+            <span style="font-size: 0.75rem; color: #A0A0A0; display: block; margin: -5px 0 8px 0; font-style: italic;">__REF_DESC__</span>
+            <a href="https://github.com/phsmaia/Estudo_Atribuicoes_PCSP_2024" target="_blank">__REPO__</a>
+            <a href="https://periodicos.pf.gov.br/index.php/RBCP/pt_BR/article/view/4693" target="_blank">__ARTICLE__</a>
+            <a href="https://zenodo.org/records/14284483" target="_blank">__DATA__</a>
+            <h4 style="margin-top: 15px;">__CONTACT_TITLE__</h4>
+            <span style="font-size: 0.75rem; color: #A0A0A0; display: block; margin: -5px 0 8px 0; font-style: italic;">__CONTACT_DESC__</span>
             <a href="mailto:maia.phs@gmail.com">📧 maia.phs@gmail.com</a>
-            <a href="https://www.linkedin.com/in/pedromaiapapilodata/" target="_blank">🔗 LinkedIn (Pedro Maia)</a>
+            <a href="https://www.linkedin.com/in/pedromaiapapilodata/" target="_blank">__LINKEDIN__</a>
         </div>
     `;
     window.parent.document.body.appendChild(footer);
 </script>
-""", height=0)
+"""
+for placeholder, key in [
+    ('__FOOTER_TITLE__', 'footer_title'),
+    ('__REF_TITLE__', 'footer_ref_title'),
+    ('__REF_DESC__', 'footer_ref_desc'),
+    ('__REPO__', 'footer_repo'),
+    ('__ARTICLE__', 'footer_article'),
+    ('__DATA__', 'footer_data'),
+    ('__CONTACT_TITLE__', 'footer_contact_title'),
+    ('__CONTACT_DESC__', 'footer_contact_desc'),
+    ('__LINKEDIN__', 'footer_linkedin')
+]:
+    footer_html = footer_html.replace(placeholder, i18n.t(key))
+
+components.html(footer_html, height=0)
 
 # Injeção de CSS para destaques críticos (Transparência Matemática e Status Bar)
 st.markdown("""
@@ -252,47 +277,91 @@ st.markdown("""
         display: none;
     }
     
+    /* Injeção de Imagens de Bandeiras no st.radio para Windows (Somente no seletor de Idioma) */
+    div[data-testid="stRadio"] div[role="radiogroup"][aria-label="Language"] label:nth-child(1) p::before {
+        content: "";
+        display: inline-block;
+        width: 18px;
+        height: 13px;
+        background-image: url('https://flagcdn.com/w20/br.png');
+        background-size: cover;
+        margin-right: 6px;
+        border-radius: 2px;
+    }
+    div[data-testid="stRadio"] div[role="radiogroup"][aria-label="Language"] label:nth-child(2) p::before {
+        content: "";
+        display: inline-block;
+        width: 18px;
+        height: 13px;
+        background-image: url('https://flagcdn.com/w20/us.png');
+        background-size: cover;
+        margin-right: 6px;
+        border-radius: 2px;
+    }
     </style>
 """, unsafe_allow_html=True)
 
 # Container Exclusivo para o Header Sticky
 with st.container():
     st.markdown("<div id='sticky-header-anchor'></div>", unsafe_allow_html=True)
-    status_bar_placeholder = st.empty()
-    status_bar_placeholder.markdown("""
-    <div id='sticky-header-anchor'></div>
-    <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
-        <h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0;'>Painel Interativo: Estudo de Atribuições da PCSP (2024)</h3>
-    </div>
-    """, unsafe_allow_html=True)
     
+    col_title, col_btn = st.columns([85, 15], vertical_alignment="center")
+    with col_title:
+        st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
+    def _muda_idioma():
+        val = st.session_state.lang_radio
+        st.session_state.language = 'PT-BR' if 'PT-BR' in val else 'EN'
+
+    with col_btn:
+        st.radio(
+            "Language", 
+            options=["PT-BR", "EN"], 
+            index=0 if st.session_state.get('language', 'PT-BR') == 'PT-BR' else 1,
+            key="lang_radio",
+            on_change=_muda_idioma,
+            horizontal=True, 
+            label_visibility="collapsed"
+        )
+                
+    status_bar_placeholder = st.empty()
+    # Removemos o HTML do layout inicial porque o render final dos badges ocorre lá embaixo
+    status_bar_placeholder.markdown("<div style='border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;'></div>", unsafe_allow_html=True)
+
     col_label, col_radio = st.columns([2, 8])
     with col_label:
-        st.markdown("<h4 style='margin:0; margin-top:5px; font-size:1.1rem; color:#ccc;'>Modos de Visão:</h4>", unsafe_allow_html=True)
+        st.markdown(f"<h4 style='margin:0; margin-top:5px; font-size:1.1rem; color:#ccc;'>{i18n.t('view_modes')}</h4>", unsafe_allow_html=True)
     with col_radio:
+        if 'modo_index' not in st.session_state:
+            st.session_state.modo_index = 0
+            
+        opcoes_modos = [i18n.t("mode_1"), i18n.t("mode_2"), i18n.t("mode_3"), i18n.t("mode_4")]
+        
         modo_visao = st.radio(
-            "Navegação Analítica:",
-            ["1. Explorador Individual", "2. Análise de Cenários (Comparativo A x B)", "3. Comparação Global (Macro)", "4. Rastreamento Longitudinal (Micro)"],
+            i18n.t("nav_analytic"),
+            opcoes_modos,
+            index=st.session_state.modo_index,
             horizontal=True,
             label_visibility="collapsed"
         )
         
+        st.session_state.modo_index = opcoes_modos.index(modo_visao)
+        
     col_exp_1, col_exp_2 = st.columns([3, 7])
     with col_exp_1:
-        st.toggle("📖 Modo de Explicações Detalhadas", key="show_explanations")
+        st.toggle(i18n.t("explanation_mode"), key="show_explanations")
     with col_exp_2:
         if st.session_state.get('show_explanations', False):
-            st.radio("Tom de Leitura:", ["👨‍🔬 Acadêmico / Técnico", "🗣️ Leigo / Simplificado"], horizontal=True, label_visibility="collapsed", key="explanation_tone")
+            st.radio(i18n.t("reading_tone"), [i18n.t("tone_academic"), i18n.t("tone_layman")], horizontal=True, label_visibility="collapsed", key="explanation_tone")
         
     is_sample_biased_global = False
     
     # --- CONTROLES SUPERIORES (APENAS EXPLORADOR INDIVIDUAL) ---
-    if modo_visao == "1. Explorador Individual":
-        with st.popover("⚙️ Configurações Analíticas e Controles", use_container_width=True):
+    if modo_visao == i18n.t("mode_1"):
+        with st.popover(i18n.t("config_analytic"), use_container_width=True):
             col1, col2, col3 = st.columns([1, 1, 1.5])
             
             with col1:
-                cenario_sel = st.selectbox("Selecione o Cenário:", opcoes_cenarios)
+                cenario_sel = st.selectbox(i18n.t("select_scenario"), opcoes_cenarios, format_func=lambda x: i18n.t(x))
                 df_cenario = mapa_cenarios.get(cenario_sel)
                 cargos_disponiveis = df_cenario['Carreira'].tolist() if df_cenario is not None and 'Carreira' in df_cenario.columns else (df_cenario.index.tolist() if df_cenario is not None else [])
                 
@@ -302,41 +371,49 @@ with st.container():
                 
             with col2:
                 grupo_sel = st.selectbox(
-                    "Filtro Rápido de Cargos:",
-                    ["Todos os cargos da Polícia Civil", "Polícia Civil sem cargos da Polícia Científica", "Polícia Civil com somente Polícia Científica", "Personalizado"]
+                    i18n.t("fast_filter"),
+                    [i18n.t("filter_all"), i18n.t("filter_no_cientifica"), i18n.t("filter_only_cientifica"), i18n.t("filter_custom")]
                 )
                 
-                if grupo_sel == "Todos os cargos da Polícia Civil":
+                if grupo_sel == i18n.t("filter_all"):
                     default_cargos = cargos_disponiveis
-                elif grupo_sel == "Polícia Civil sem cargos da Polícia Científica":
+                elif grupo_sel == i18n.t("filter_no_cientifica"):
                     default_cargos = cargos_pc
-                elif grupo_sel == "Polícia Civil com somente Polícia Científica":
+                elif grupo_sel == i18n.t("filter_only_cientifica"):
                     default_cargos = cargos_cientifica
                 else:
                     default_cargos = []
                     
-                incluir_comuns = st.checkbox("Incluir Atribuições Genéricas a Todos", value=False)
+                incluir_comuns = st.checkbox(i18n.t("include_generic"), value=False)
                 
             with col1:
                 tipo_matriz_raw = st.selectbox(
-                    "Formato da Matriz:", 
-                    ["Condensada (Aglutina repetições)", "Original (Dados brutos)"], 
+                    i18n.t("matrix_format"), 
+                    [i18n.t("condensed"), i18n.t("original")], 
                     disabled=incluir_comuns
                 )
                 tipo_matriz = "Original" if "Original" in tipo_matriz_raw or incluir_comuns else "Condensada"
                 
             with col2:
-                expandir_textos = st.checkbox("Expandir textos nos tooltips", value=True)
+                expandir_textos = st.checkbox(i18n.t("expand_texts"), value=True)
+                
+                traduzir_cargos = False
+                if st.session_state.get('language', 'PT-BR') == 'EN':
+                    traduzir_cargos = st.checkbox("🌎 Translate Roles & Assignments", value=False)
                 
             with col3:
                 filtro_cargos = st.multiselect(
-                    "Cargos para Analisar:", 
+                    i18n.t("roles_analyze"), 
                     cargos_disponiveis,
-                    default=default_cargos
+                    default=default_cargos,
+                    format_func=lambda x: i18n.dic_traducao_cargos.get(x, x) if traduzir_cargos else x
                 )
+                st.caption(i18n.t("roles_explanation"))
+
                 cargos_destaque = st.multiselect(
-                    "🎨 Destaque Visual (Opcional):",
-                    filtro_cargos if filtro_cargos else cargos_disponiveis
+                    i18n.t("visual_highlight"),
+                    filtro_cargos if filtro_cargos else cargos_disponiveis,
+                    format_func=lambda x: i18n.dic_traducao_cargos.get(x, x) if traduzir_cargos else x
                 )
                 
                 if cargos_destaque:
@@ -358,11 +435,11 @@ with st.container():
                     is_sample_biased_global = True
 
     # --- CONTROLES MODO 2 ---
-    elif modo_visao == "2. Análise de Cenários (Comparativo A x B)":
-        with st.popover("⚙️ Configurações do Comparativo A x B", use_container_width=True):
+    elif modo_visao == i18n.t("mode_2"):
+        with st.popover(i18n.t("config_compare"), use_container_width=True):
             col_a, col_b = st.columns(2)
-            cenario_a = col_a.selectbox("📌 Cenário A (Base):", opcoes_cenarios, index=0)
-            cenario_b = col_b.selectbox("📌 Cenário B (Comparação):", opcoes_cenarios, index=1)
+            cenario_a = col_a.selectbox(i18n.t("scenario_a"), opcoes_cenarios, index=0, format_func=lambda x: i18n.t(x))
+            cenario_b = col_b.selectbox(i18n.t("scenario_b"), opcoes_cenarios, index=1, format_func=lambda x: i18n.t(x))
             
             df_a = mapa_cenarios.get(cenario_a)
             if df_a is not None and 'Carreira' in df_a.columns:
@@ -371,8 +448,8 @@ with st.container():
                 cargos_base = df_a.index.tolist() if df_a is not None else []
                 
             col_c, col_d = st.columns(2)
-            carreira_sel_comparativo = col_c.selectbox("🔎 Selecione a Carreira para Análise Detalhada:", cargos_base, index=None, placeholder="Nenhuma (Visão Geral)")
-            cargos_destaque_2 = col_d.multiselect("🎨 Destaque Visual (Opcional):", cargos_base, help="Realça essas carreiras nos gráficos e tabelas.")
+            carreira_sel_comparativo = col_c.selectbox(i18n.t("career_detail"), cargos_base, index=None, placeholder=i18n.t("none_overview"))
+            cargos_destaque_2 = col_d.multiselect(i18n.t("visual_highlight"), cargos_base, help=i18n.t("highlight_help"))
             
         if carreira_sel_comparativo:
             import json
@@ -403,11 +480,10 @@ with st.container():
         <div id='sticky-header-anchor'></div>
         <div style='display: flex; flex-direction: column;'>
             <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 5px; flex-wrap: wrap; gap: 10px;'>
-                <h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0;'>Painel Interativo: Estudo de Atribuições da PCSP (2024)</h3>
                 <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
                     <div class='status-badge' title='Modo 2: Permite comparar o grau de distanciamento, afinidade e fluxo de funções normativas entre as carreiras policiais nos dois cenários temporais.' style='cursor: help;'>⚙️ Modo: <strong>Análise de Cenários (A x B)</strong> <span style='font-size:0.7rem'>ℹ️</span></div>
-                    <div class='status-badge' title='Cenário de Origem da comparação (De onde os cargos partiram)' style='cursor: help;'>📌 A: <strong>{cenario_a}</strong></div>
-                    <div class='status-badge' title='Cenário de Destino da comparação (Para onde os cargos foram)' style='cursor: help;'>📌 B: <strong>{cenario_b}</strong></div>{badge_destaque_2}
+                    <div class='status-badge' title='Cenário de Origem da comparação (De onde os cargos partiram)' style='cursor: help;'>📌 A: <strong>{i18n.t(cenario_a)}</strong></div>
+                    <div class='status-badge' title='Cenário de Destino da comparação (Para onde os cargos foram)' style='cursor: help;'>📌 B: <strong>{i18n.t(cenario_b)}</strong></div>{badge_destaque_2}
                 </div>
             </div>
             {rastreio_html}
@@ -415,12 +491,11 @@ with st.container():
         """, unsafe_allow_html=True)
             
     # --- CONTROLES MODO 3 ---
-    elif modo_visao == "3. Comparação Global (Macro)":
+    elif modo_visao == i18n.t("mode_3"):
         badge_vies_html = "<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>⚠️ VIÉS AMOSTRAL</div>" if is_sample_biased_global else ""
         status_bar_placeholder.markdown(f"""
         <div id='sticky-header-anchor'></div>
         <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
-            <h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0;'>Painel Interativo: Estudo de Atribuições da PCSP (2024)</h3>
             <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
                 <div class='status-badge'>⚙️ Modo: <strong>Comparação Global (Macro)</strong></div>
             </div>
@@ -428,7 +503,7 @@ with st.container():
         """, unsafe_allow_html=True)
 
     # --- CONTROLES MODO 4 ---
-    elif modo_visao == "4. Rastreamento Longitudinal (Micro)":
+    elif modo_visao == i18n.t("mode_4"):
         import json
         import os
         cargos_base_long = []
@@ -453,7 +528,6 @@ with st.container():
         status_bar_placeholder.markdown(f"""
         <div id='sticky-header-anchor'></div>
         <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
-            <h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0;'>Painel Interativo: Estudo de Atribuições da PCSP (2024)</h3>
             <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
                 <div class='status-badge'>⚙️ Modo: <strong>Rastreamento Longitudinal (Micro)</strong></div>
                 <div class='status-badge'>🔍 Carreiras Filtradas: <strong>{len(filtro_cargos_long)}</strong></div>
@@ -464,27 +538,30 @@ with st.container():
 
 
 if is_sample_biased_global:
-    st.warning(explanations.get_bias_warning(), icon="⚠️")
+    st.warning(explanations.get_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="⚠️")
 
-if modo_visao == "2. Análise de Cenários (Comparativo A x B)":
-    import comparative_view
-    import importlib
-    importlib.reload(comparative_view)
-    comparative_view.render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b, carreira_sel_comparativo, cargos_destaque_2)
+if modo_visao == i18n.t("mode_2"):
+    with st.spinner("🚓 Cruzando evidências de cenários... Por favor, aguarde." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🚓 Cross-referencing scenario evidence... Please wait."):
+        import comparative_view
+        import importlib
+        importlib.reload(comparative_view)
+        comparative_view.render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b, carreira_sel_comparativo, cargos_destaque_2)
     st.stop()
     
-elif modo_visao == "3. Comparação Global (Macro)":
-    import timeline_view
-    import importlib
-    importlib.reload(timeline_view)
-    timeline_view.render_timeline_mode(opcoes_cenarios, mapa_cenarios)
+elif modo_visao == i18n.t("mode_3"):
+    with st.spinner("🕵️‍♂️ Compilando a visão macro da corporação... Por favor, aguarde." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🕵️‍♂️ Compiling macro corporate view... Please wait."):
+        import timeline_view
+        import importlib
+        importlib.reload(timeline_view)
+        timeline_view.render_timeline_mode(opcoes_cenarios, mapa_cenarios)
     st.stop()
     
-elif modo_visao == "4. Rastreamento Longitudinal (Micro)":
-    import longitudinal_view
-    import importlib
-    importlib.reload(longitudinal_view)
-    longitudinal_view.render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos_long, cargos_destaque_long)
+elif modo_visao == i18n.t("mode_4"):
+    with st.spinner("🔍 Rastreando rotas evolutivas longitudinais... Por favor, aguarde." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🔍 Tracking longitudinal evolutionary routes... Please wait."):
+        import longitudinal_view
+        import importlib
+        importlib.reload(longitudinal_view)
+        longitudinal_view.render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos_long, cargos_destaque_long)
     st.stop()
     
 
@@ -494,69 +571,92 @@ if 'visit_logged' not in st.session_state:
 
 
 if df_cenario is not None and not df_cenario.empty:
-    # Higienização de Nomes Longos que quebram a interface
-    if 'Carreira' in df_cenario.columns:
-        df_cenario['Carreira'] = df_cenario['Carreira'].replace({
-            "Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial)": "Investigador de Polícia (+ Apoio)"
-        })
-
-    # Aplicação de Filtros de Cargos
-    if filtro_cargos:
+    with st.spinner("🚨 Processando evidências normativas e consolidando matriz... Por favor, aguarde." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🚨 Processing normative evidence and consolidating matrix... Please wait."):
+        # Higienização de Nomes Longos que quebram a interface
         if 'Carreira' in df_cenario.columns:
-            df_cenario = df_cenario[df_cenario['Carreira'].isin(filtro_cargos)]
+            df_cenario['Carreira'] = df_cenario['Carreira'].replace({
+                "Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial)": "Investigador de Polícia (+ Apoio)"
+            })
+
+        # Aplicação de Filtros de Cargos
+        if filtro_cargos:
+            if 'Carreira' in df_cenario.columns:
+                df_cenario = df_cenario[df_cenario['Carreira'].isin(filtro_cargos)]
+            else:
+                df_cenario = df_cenario.loc[filtro_cargos]
+                
+        # Processamento Matemático Principal
+        if incluir_comuns:
+            col_sums = df_cenario.sum(axis=0)
+            num_reais = len(df_cenario)
+            colunas_comuns = df_cenario.columns[col_sums == num_reais].tolist()
+            colunas_outras = [c for c in df_cenario.columns if c not in colunas_comuns]
+            df_original_limpo = df_cenario[colunas_comuns + colunas_outras].copy()
+            df_condensado = df_original_limpo
         else:
-            df_cenario = df_cenario.loc[filtro_cargos]
+            df_original_limpo = data_processing.remover_atribuicoes_comuns(df_cenario)
+            df_condensado, historico = data_processing.condensar_dataframe(df_cenario)
+        
+        # Switch Lógico
+        df_to_use = df_original_limpo if tipo_matriz == "Original" else df_condensado
+        
+
+        
+        if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
+            # Traduz índice (cargos) do df_to_use
+            df_to_use.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_to_use.index]
+            # Traduz colunas (atribuições) do df_to_use
+            if df_to_use.columns.name != 'Carreira':
+                df_to_use.columns = [i18n.dic_traducao_atribuicoes.get(c, c) for c in df_to_use.columns]
             
-    # Processamento Matemático Principal
-    if incluir_comuns:
-        col_sums = df_cenario.sum(axis=0)
-        num_reais = len(df_cenario)
-        colunas_comuns = df_cenario.columns[col_sums == num_reais].tolist()
-        colunas_outras = [c for c in df_cenario.columns if c not in colunas_comuns]
-        df_original_limpo = df_cenario[colunas_comuns + colunas_outras].copy()
-        df_condensado = df_original_limpo
-    else:
-        df_original_limpo = data_processing.remover_atribuicoes_comuns(df_cenario)
-        df_condensado, historico = data_processing.condensar_dataframe(df_cenario)
-    
-    # Switch Lógico
-    df_to_use = df_original_limpo if tipo_matriz == "Original" else df_condensado
+            if 'Carreira' in df_to_use.columns:
+                df_to_use['Carreira'] = df_to_use['Carreira'].map(lambda c: i18n.dic_traducao_cargos.get(c, c))
+            
+            # Traduz filtro_cargos e cargos_destaque dinamicamente para os gráficos e tabelas
+            filtro_cargos_ui = [i18n.dic_traducao_cargos.get(c, c) for c in filtro_cargos] if filtro_cargos else []
+            cargos_destaque_ui = [i18n.dic_traducao_cargos.get(c, c) for c in cargos_destaque] if cargos_destaque else []
+            cargos_disponiveis_ui = [i18n.dic_traducao_cargos.get(c, c) for c in cargos_disponiveis]
+        else:
+            filtro_cargos_ui = filtro_cargos
+            cargos_destaque_ui = cargos_destaque
+            cargos_disponiveis_ui = cargos_disponiveis
     
     # Siglas e Textos
     dic_siglas = data_processing.gerar_dicionario_siglas(df_to_use.columns)
     dic_reverso = {v: k for k, v in dic_siglas.items()}
+    
+    if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
+        dic_reverso = {k: i18n.dic_traducao_atribuicoes.get(v, v) for k, v in dic_reverso.items()}
+        
     df_to_use_siglas = data_processing.aplicar_siglas_dataframe(df_to_use, dic_siglas)
     text_matrix = data_processing.obter_atribuicoes_comuns_textuais(df_to_use, dic_siglas, expandir_textos)
 
     # --- INJEÇÃO DO HEADER COMBINADO (Título + Status) ---
-    lbl_cargos = "Todos" if not filtro_cargos else f"{len(filtro_cargos)} Selecionados"
-    lbl_genericas = "ON" if incluir_comuns else "OFF"
-    lbl_textos = "ON" if expandir_textos else "OFF"
+    lbl_cargos = f"{i18n.t('filter_all')}" if not filtro_cargos else f"{len(filtro_cargos)} {i18n.t('lbl_selected')}"
+    lbl_genericas = i18n.t("lbl_on") if incluir_comuns else i18n.t("lbl_off")
+    lbl_textos = i18n.t("lbl_on") if expandir_textos else i18n.t("lbl_off")
     
     lista_cargos_html = ""
     if filtro_cargos and len(filtro_cargos) < len(cargos_disponiveis):
-        lista_cargos_html = f"<div style='text-align: right; color: #C0C0C0; font-size: 0.9rem; margin-top: 5px; margin-bottom: 5px;'><strong>Cargos ativos:</strong> {', '.join(filtro_cargos)}</div>"
+        lista_cargos_html = f"<div style='text-align: right; color: #C0C0C0; font-size: 0.9rem; margin-top: 5px; margin-bottom: 5px;'><strong>{i18n.t('badge_filtered_careers')}</strong> {', '.join(filtro_cargos)}</div>"
     
     badge_destaque = ""
     if cargos_destaque:
         str_dest = ", ".join([c.replace(' de Polícia', '').replace(' Policial', '') for c in cargos_destaque])
         badge_destaque = f" <div class='status-badge' style='background: rgba(255, 152, 0, 0.2); border: 1px solid rgba(255, 152, 0, 0.5); color: #ffb74d;'>🎨 Destaques: <strong>{str_dest}</strong></div>"
 
-    badge_vies_html = "<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>⚠️ VIÉS AMOSTRAL</div>" if is_sample_biased_global else ""
+    badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('warning_bias')}</div>" if is_sample_biased_global else ""
     header_html = f"""
-    <div id='sticky-header-anchor'></div>
-    <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
-        <h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0;'>Painel Interativo: Estudo de Atribuições da PCSP (2024)</h3>
-        <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
-            <div class='status-badge'>⚙️ Cenário: <strong>{cenario_sel}</strong></div>
-            <div class='status-badge'>📊 Matriz: <strong>{tipo_matriz}</strong></div>
-            <div class='status-badge'>👥 Genéricas: <strong>{lbl_genericas}</strong></div>
-            <div class='status-badge'>🏷️ Textos Extensos: <strong>{lbl_textos}</strong></div>
-            <div class='status-badge'>🚓 Cargos: <strong>{lbl_cargos}</strong></div>{badge_destaque}
-        </div>
-    </div>
-    {lista_cargos_html}
-    """
+<div style='display: flex; gap: 5px; flex-wrap: wrap; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);'>
+{badge_vies_html}
+<div class='status-badge'>{i18n.t('badge_scenario')} <strong>{i18n.t(cenario_sel)}</strong></div>
+<div class='status-badge'>{i18n.t('badge_matrix')} <strong>{i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')}</strong></div>
+<div class='status-badge'>{i18n.t('badge_generic')} <strong>{lbl_genericas}</strong></div>
+<div class='status-badge'>{i18n.t('badge_texts')} <strong>{lbl_textos}</strong></div>
+<div class='status-badge'>{i18n.t('badge_roles')} <strong>{lbl_cargos}</strong></div>{badge_destaque}
+</div>
+{lista_cargos_html}
+"""
     status_bar_placeholder.markdown(header_html, unsafe_allow_html=True)
 
     # --- INJEÇÃO DOS KPIs DENTRO DA GAVETA ---
@@ -566,67 +666,101 @@ if df_cenario is not None and not df_cenario.empty:
     pct_reducao = (reducao / len(df_original_limpo.columns)) * 100 if len(df_original_limpo.columns) > 0 else 0
     
     html_kpis = f"""
-    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
-        <div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="Total de atribuições únicas extraídas dos editais para os cargos selecionados, antes de aglutinar as redundâncias.">
-            <div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">Atribuições Originais <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
-            <div style="font-size: 1.1rem; line-height: 1.2;">{len(df_original_limpo.columns)}</div>
-        </div>
-        <div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="Quantidade de colunas exclusivas na matriz após juntar numa só as atribuições idênticas que eram comuns a múltiplos cargos.">
-            <div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">Atribuições Condensadas <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
-            <div style="font-size: 1.1rem; line-height: 1.2;">{len(df_condensado.columns)}</div>
-        </div>
-        <div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="Diferença absoluta entre as atribuições originais e as condensadas (quantidade de ruído/redundância eliminada).">
-            <div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">Redução <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
-            <div style="font-size: 1.1rem; color: #00C851; line-height: 1.2; font-weight: bold;">{reducao}</div>
-        </div>
-        <div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="Percentual que representa o nível de redundância normativa que foi superada pela metodologia na comparação.">
-            <div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">Porcentagem de Redução <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
-            <div style="font-size: 1.1rem; color: #00C851; line-height: 1.2; font-weight: bold;">{pct_reducao:.1f}%</div>
-        </div>
-    </div>
-    """
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+<div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="{i18n.t('kpi_orig_help')}">
+<div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">{i18n.t('kpi_orig_title')} <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
+<div style="font-size: 1.1rem; line-height: 1.2;">{len(df_original_limpo.columns)}</div>
+</div>
+<div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="{i18n.t('kpi_cond_help')}">
+<div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">{i18n.t('kpi_cond_title')} <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
+<div style="font-size: 1.1rem; line-height: 1.2;">{len(df_condensado.columns)}</div>
+</div>
+<div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="{i18n.t('kpi_red_help')}">
+<div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">{i18n.t('kpi_red_title')} <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
+<div style="font-size: 1.1rem; color: #00C851; line-height: 1.2; font-weight: bold;">{reducao}</div>
+</div>
+<div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="{i18n.t('kpi_pct_help')}">
+<div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">{i18n.t('kpi_pct_title')} <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
+<div style="font-size: 1.1rem; color: #00C851; line-height: 1.2; font-weight: bold;">{pct_reducao:.1f}%</div>
+</div>
+</div>
+"""
 
     # 1.1. Matriz de Atribuições
-    with st.expander("ⓘ Suposição Matemática Ativa (Metodologia de Condensação)"):
-        st.markdown("As matrizes abaixo transformam listas de atribuições textuais em coordenadas numéricas. Ao passarem pela **Condensação**, repetições exatas entre os mesmos cargos viram uma única coluna. Isso impede que atribuições divididas em 10 itens no edital (mas que significam a mesma coisa) causem um 'peso estatístico artificial' que aproxime duas carreiras de forma incorreta.")
+    with st.expander(i18n.t('expander_math')):
+        st.markdown(i18n.t('expander_math_text'))
+        
+    if st.session_state.get('language', 'PT-BR') == 'EN':
+        with st.expander("📚 Brazilian Police Roles Glossary"):
+            st.markdown("""
+            **Roles Translation (Approximations):**
+            - **Delegado de Polícia**: Police Chief / Police Delegate
+            - **Investigador de Polícia**: Police Investigator / Detective
+            - **Escrivão de Polícia**: Police Clerk / Desk Officer
+            - **Agente Policial**: Police Agent / Operative
+            - **Agente de Telecomunicações Policial**: Police Telecommunications Agent / Dispatcher
+            - **Papiloscopista Policial**: Fingerprint Examiner / Dactyloscopist
+            - **Auxiliar de Papiloscopista Policial**: Fingerprint Examiner Assistant
+            - **Perito Criminal**: Forensic Expert / Criminalist
+            - **Médico Legista**: Medical Examiner / Forensic Pathologist
+            - **Fotógrafo Técnico-Pericial**: Forensic Photographer
+            - **Desenhista Técnico-Pericial**: Forensic Sketch Artist
+            - **Atendente de Necrotério Policial**: Morgue Attendant
+            - **Auxiliar de Necropsia**: Autopsy Assistant
+            
+            *(Note: 'Odontolegista' is not listed separately here because it's functionally merged within Medical Examiner and Forensic Expert duties in this dataset).*
+            """)
+        
+        with st.expander("📖 Assignments Translation Table"):
+            st.markdown("Below are the available translations for the assignments in the active dataset.")
+            df_translations = pd.DataFrame(list(i18n.dic_traducao_atribuicoes.items()), columns=["Portuguese (PT-BR)", "English (US-EN)"])
+            st.dataframe(df_translations, use_container_width=True, hide_index=True)
 
     st.markdown(html_kpis, unsafe_allow_html=True)
 
     if is_sample_biased:
-        st.warning(explanations.get_short_bias_warning(), icon="🚨")
-    st.subheader(f"1.1. Matriz de Atribuições ({tipo_matriz})", help="**Como interpretar:** Exibe o valor '1' se o cargo possui a atribuição normativa e '0' caso não possua. \n\n**Cálculo:** Construída lendo os manuais e editais. No modo 'Condensada', a matriz aglutina atribuições que possuem o exato mesmo padrão de repetição (ex: atribuições comuns a um mesmo grupo de cargos viram uma única coluna com peso 1) para evitar que redundâncias documentais criem distorções de peso estatístico.")
-    st.markdown("<p style='font-size: 0.85rem; color: #9E9E9E; margin-top: -15px; margin-bottom: 10px;'>💡 <em>Dica: Passe o mouse sobre as células (quadrados coloridos) para ler a atribuição normativa completa.</em></p>", unsafe_allow_html=True)
-    fig_bin = visualizations.plot_binary_heatmap(df_to_use_siglas, f"Matriz {tipo_matriz} - {cenario_sel}", colorscale="Teal", dic_reverso=dic_reverso, cargos_destaque=cargos_destaque)
+        st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.subheader(f"{i18n.t('sub_matrix')} ({i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')})", help=i18n.t('sub_matrix_help'))
+    st.markdown(f"<p style='font-size: 0.85rem; color: #9E9E9E; margin-top: -15px; margin-bottom: 10px;'>{i18n.t('tip_hover')}</p>", unsafe_allow_html=True)
+    lbl_matriz_translated = i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')
+    fig_bin = visualizations.plot_binary_heatmap(df_to_use_siglas, f"{i18n.t('title_matrix_prefix')} {lbl_matriz_translated} - {i18n.t(cenario_sel)}", colorscale="Teal", dic_reverso=dic_reverso, cargos_destaque=cargos_destaque_ui)
     st.plotly_chart(fig_bin, use_container_width=True)
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("matriz", st.session_state.get('explanation_tone', 'tecnico')))
+        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
+        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        st.info(explanations.get_explanation("matriz", tone_key, language=st.session_state.get('language', 'PT-BR')))
     
     # 1.2. Matriz de Adjacência
     if is_sample_biased:
-        st.warning(explanations.get_short_bias_warning(), icon="🚨")
-    st.subheader("1.2. Matriz de Adjacência (Atribuições Compartilhadas)", help="**Como interpretar:** Exibe a contagem absoluta de quantas atribuições normativas dois cargos distintos compartilham entre si. Valores mais altos (cores fortes) indicam forte justaposição funcional.\n\n**Cálculo:** Feito através do Produto Escalar cruzando a Matriz de Atribuições contra si própria (sua transposta).")
+        st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.subheader(i18n.t('sub_adj'), help=i18n.t('sub_adj_help'))
     adj_matrix = data_processing.gerar_matriz_adjacencia(df_to_use)
-    fig_adj = visualizations.plot_adjacency_heatmap(adj_matrix, f"Adjacência - {cenario_sel}", text_matrix=text_matrix, cargos_destaque=cargos_destaque)
+    fig_adj = visualizations.plot_adjacency_heatmap(adj_matrix, f"{i18n.t('title_adj_prefix')} - {i18n.t(cenario_sel)}", text_matrix=text_matrix, cargos_destaque=cargos_destaque_ui)
     st.plotly_chart(fig_adj, use_container_width=True)
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("adjacencia", st.session_state.get('explanation_tone', 'tecnico')))
+        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
+        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        st.info(explanations.get_explanation("adjacencia", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
 
     # 1.3. Explorador Dinâmico
     if is_sample_biased:
-        st.warning(explanations.get_short_bias_warning(), icon="🚨")
-    st.subheader("1.3. Explorador Dinâmico de Atribuições", help="**Como interpretar:** Permite cruzar dados manualmente simulando as tabelas dinâmicas do estudo original. Nota: No artigo o cruzamento limitou-se a 3 carreiras por falta de espaço em página, mas aqui o sistema calcula e confronta todas as carreiras ativas simultaneamente.\n\n**Porcentagens:** Exibe o volume de atribuições que cada cargo representa em relação ao somatório total de atribuições únicas na Polícia Civil.")
+        st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.subheader(i18n.t('sub_dyn'), help=i18n.t('sub_dyn_help'))
     
     df_explorer = df_original_limpo.set_index('Carreira') if 'Carreira' in df_original_limpo.columns else df_original_limpo.copy()
+    if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
+        df_explorer.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_explorer.index]
+        df_explorer.columns = [i18n.dic_traducao_atribuicoes.get(c, c) for c in df_explorer.columns]
         
     # Total de atribuições na base (para a porcentagem)
     total_atribuicoes_base = len(df_explorer.columns)
     
-    aba1, aba2 = st.tabs(["Filtro por Cargo (O que eles compartilham?)", "Filtro por Atribuição (Quem faz isso?)"])
+    aba1, aba2 = st.tabs([i18n.t("tab_roles"), i18n.t("tab_assignments")])
     
     with aba1:
-        st.markdown(f"**Base Total de Análise:** {total_atribuicoes_base} atribuições normativas possíveis na matriz de dados.")
+        st.markdown(f"**{i18n.t('base_total')}** {total_atribuicoes_base} {i18n.t('base_desc')}")
         @st.cache_data(show_spinner=False)
         def carregar_tabela_conversao():
             try:
@@ -657,21 +791,21 @@ if df_cenario is not None and not df_cenario.empty:
         if mudou_cenario:
             st.session_state["filtro_cargos_aba1"] = []
             st.session_state.last_cenario_aba1 = cenario_sel
-        filtro_cargos = st.multiselect("Cargos:", df_explorer.index.tolist(), default=cargos_default_aba1, key="filtro_cargos_aba1")
-        if filtro_cargos:
+        filtro_cargos_explorador = st.multiselect(i18n.t("roles_label"), df_explorer.index.tolist(), default=cargos_default_aba1, key="filtro_cargos_aba1")
+        if filtro_cargos_explorador:
             # Filtra e transpõe
-            df_filtro = df_explorer.loc[filtro_cargos]
+            df_filtro = df_explorer.loc[filtro_cargos_explorador]
             colunas_ativas = df_filtro.columns[(df_filtro > 0).any()]
             df_resultado = df_filtro[colunas_ativas].T
             
             # Seletor de Visibilidade (Exclusivas vs Compartilhadas)
-            op_todas = "🌟 Mostrar Todas"
-            op_excl_selecao = "🔸 Somente Exclusivas da Seleção (Nenhum cargo de fora faz)"
-            op_comp_fora = "🔹 Somente Compartilhadas (Cargos de fora também fazem)"
-            op_comp_dentro = "✅ Somente Compartilhadas (Cargos selecionados)"
+            op_todas = i18n.t("op_all")
+            op_excl_selecao = i18n.t("op_excl")
+            op_comp_fora = i18n.t("op_comp_out")
+            op_comp_dentro = i18n.t("op_comp_in")
             
             tipo_exclusividade = st.radio(
-                "Filtro de Atribuições:", 
+                i18n.t("filter_assignments"), 
                 [op_todas, op_excl_selecao, op_comp_fora, op_comp_dentro], 
                 horizontal=True
             )
@@ -686,24 +820,24 @@ if df_cenario is not None and not df_cenario.empty:
             elif tipo_exclusividade == op_comp_dentro:
                 df_resultado = df_resultado[somas_selecao > 1]
                 
-            if len(filtro_cargos) > 1:
+            if len(filtro_cargos_explorador) > 1:
                 def status_compartilhamento(row):
-                    if row.sum() == len(filtro_cargos):
-                        return "✅ Compartilhada por Todos"
+                    if row.sum() == len(filtro_cargos_explorador):
+                        return i18n.t("status_all")
                     elif row.sum() == 1:
-                        return "🔸 Exclusiva de 1 Cargo"
+                        return i18n.t("status_excl")
                     else:
-                        return "🔹 Compartilhada por Alguns"
+                        return i18n.t("status_some")
                 df_resultado['Status'] = df_resultado.apply(status_compartilhamento, axis=1)
                 
             # Restaura Nomes
             df_resultado.index = [dic_reverso.get(col, col) for col in df_resultado.index]
-            df_resultado.index.name = "Atribuição Normativa"
+            df_resultado.index.name = i18n.t("assignments_label").replace(":", "")
             
             # Mostra estatísticas de carga por cargo
-            st.markdown("##### Peso Normativo (Montante de Atribuições por Cargo)")
+            st.markdown(i18n.t("norm_weight"))
             stats = []
-            for c in filtro_cargos:
+            for c in filtro_cargos_explorador:
                 qtd = df_filtro.loc[c].sum()
                 pct = (qtd / total_atribuicoes_base) * 100
                 stats.append({"Cargo": c, "Qtd Atribuições": int(qtd), "Representatividade (%)": f"{pct:.1f}%"})
@@ -711,21 +845,21 @@ if df_cenario is not None and not df_cenario.empty:
             df_stats = pd.DataFrame(stats).set_index("Cargo")
             
             def highlight_stats(row):
-                if cargos_destaque and row.name in cargos_destaque:
+                if cargos_destaque_ui and row.name in cargos_destaque_ui:
                     return ['background-color: rgba(255, 152, 0, 0.2); color: #ffb74d; font-weight: bold;'] * len(row)
                 return [''] * len(row)
                 
             st.dataframe(df_stats.style.apply(highlight_stats, axis=1), use_container_width=True)
-            st.markdown("##### Quadro de Cruzamento de Atribuições")
+            st.markdown(i18n.t("cross_table"))
             
-            for c in filtro_cargos:
+            for c in filtro_cargos_explorador:
                 if c in df_resultado.columns:
                     df_resultado[c] = df_resultado[c].apply(lambda x: '✔️' if isinstance(x, (int, float)) and x > 0 else '❌' if isinstance(x, (int, float)) and x == 0 else x)
 
             def highlight_cruzamento(row):
                 styles = []
                 for col in df_resultado.columns:
-                    if cargos_destaque and col in cargos_destaque:
+                    if cargos_destaque_ui and col in cargos_destaque_ui:
                         if row[col] == '✔️':
                             styles.append('background-color: rgba(255, 152, 0, 0.25); color: #ffb74d; font-weight: bold;')
                         else:
@@ -737,47 +871,51 @@ if df_cenario is not None and not df_cenario.empty:
             st.dataframe(df_resultado.style.apply(highlight_cruzamento, axis=1), use_container_width=True)
             
     with aba2:
-        st.markdown("Selecione uma ou mais atribuições para descobrir quais carreiras policiais as possuem formalmente em seus escopos.")
+        st.markdown(i18n.t("select_assignments_desc"))
         todas_atrib = df_explorer.columns.tolist()
-        filtro_atrib = st.multiselect("Atribuições:", todas_atrib, key="filtro_atrib_aba2")
+        filtro_atrib = st.multiselect(i18n.t("assignments_label"), todas_atrib, key="filtro_atrib_aba2")
         if filtro_atrib:
             df_filtro_atrib = df_explorer[filtro_atrib].copy()
             df_filtro_atrib = df_filtro_atrib[(df_filtro_atrib > 0).any(axis=1)]
             df_filtro_atrib.columns = filtro_atrib
-            df_filtro_atrib.index.name = "Carreira Policial"
+            df_filtro_atrib.index.name = i18n.t("roles_label").replace(":", "")
             
             for col in df_filtro_atrib.columns:
                 df_filtro_atrib[col] = df_filtro_atrib[col].apply(lambda x: '✔️' if isinstance(x, (int, float)) and x > 0 else '❌')
                 
             def highlight_aba2(row):
-                if cargos_destaque and row.name in cargos_destaque:
+                if cargos_destaque_ui and row.name in cargos_destaque_ui:
                     return ['background-color: rgba(255, 152, 0, 0.25); color: #ffb74d; font-weight: bold;' if v == '✔️' else 'background-color: rgba(255, 152, 0, 0.05);' for v in row]
                 return [''] * len(row)
 
             st.dataframe(df_filtro_atrib.style.apply(highlight_aba2, axis=1), use_container_width=True)
 
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("explorador", st.session_state.get('explanation_tone', 'tecnico')))
+        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
+        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        st.info(explanations.get_explanation("explorador", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
 
     # 1.4. Grafo de Similaridade
     if is_sample_biased:
-        st.warning(explanations.get_short_bias_warning(), icon="🚨")
-    st.subheader("1.4. Grafo de Similaridade (Baseado em Adjacência)", help="**Como interpretar:** Representação de rede onde as 'bolas' (nós) representam as carreiras policiais e as 'linhas' (arestas) indicam que há uma intersecção de funções. A espessura da linha simboliza a quantidade de funções compartilhadas.\n\n**Cálculo:** Renderizado pelo motor NetworkX com física Fruchterman-Reingold (Spring Layout), que cria forças de repulsão magnética entre os nós, permitindo que cargos altamente conectados 'puxem' uns aos outros para o centro do agrupamento (cluster).")
-    threshold_adj = st.slider("Corte de Adjacência (Threshold de Conexões):", min_value=1, max_value=15, value=1, step=1)
+        st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.subheader(i18n.t("sub_graph"), help=i18n.t("sub_graph_help"))
+    threshold_adj = st.slider(i18n.t("threshold_adj"), min_value=1, max_value=15, value=1, step=1)
     nodes_data, edges_data, pos = data_processing.gerar_dados_grafo(adj_matrix, threshold=threshold_adj, text_matrix=text_matrix)
-    fig_grafo = visualizations.plot_network_graph(nodes_data, edges_data, f"Rede de Carreiras (Adjacência >= {threshold_adj})", cargos_destaque=cargos_destaque)
+    fig_grafo = visualizations.plot_network_graph(nodes_data, edges_data, i18n.t("title_network").format(threshold=threshold_adj) + f" - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
     st.plotly_chart(fig_grafo, use_container_width=True)
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("grafo", st.session_state.get('explanation_tone', 'tecnico')))
+        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
+        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        st.info(explanations.get_explanation("grafo", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
 
     # 1.5. Mapa de Calor Gower
     if is_sample_biased:
-        st.warning(explanations.get_short_bias_warning(), icon="🚨")
-    st.subheader("1.5. Mapa de Calor de Similaridade (Distância de Gower)", help="**Como interpretar o Mapa:** Visão térmica do distanciamento. Áreas vermelhas representam cargos idênticos (Distância próxima de 0.0).\n\n**Cálculo:** Diferente da adjacência (contagem bruta), este usa o Coeficiente de Gower entre 0 e 1, cruzando arrays de presenças (1) e ausências (0) penalizando distorções.")
+        st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.subheader(i18n.t("sub_gower"), help=i18n.t("sub_gower_help"))
     
     df_para_gower = df_to_use.copy()
     if incluir_comuns:
@@ -791,58 +929,75 @@ if df_cenario is not None and not df_cenario.empty:
         
     df_gower = data_processing.calcular_distancias_gower(df_para_gower)
     
-    fig_gower_heat = visualizations.plot_gower_heatmap(df_gower, f"Matriz de Distância de Gower - {cenario_sel}", cargos_destaque=cargos_destaque)
+    if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
+        df_gower.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower.index]
+        df_gower.columns = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower.columns]
+    
+    fig_gower_heat = visualizations.plot_gower_heatmap(df_gower, f"{i18n.t('title_gower_prefix')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
     st.plotly_chart(fig_gower_heat, use_container_width=True)
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("gower", st.session_state.get('explanation_tone', 'tecnico')))
+        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
+        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        st.info(explanations.get_explanation("gower", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
     
     # 1.6. Régua Gower
     if is_sample_biased:
-        st.warning(explanations.get_short_bias_warning(), icon="🚨")
-    st.subheader("1.6. Régua de Similaridade Relativa (Distância de Gower)", help="**Como interpretar a Régua:** Fixando um cargo central na marca 'Zero', mapeia o afastamento de todas as outras carreiras.\n\n**Cálculo:** Diferente da adjacência (contagem bruta), este usa o Coeficiente de Gower entre 0 e 1, cruzando arrays de presenças (1) e ausências (0) penalizando distorções.")
+        st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.subheader(i18n.t("sub_ruler"), help=i18n.t("sub_ruler_help"))
 
+    ref_cargo_opcoes = list(df_gower.columns)
     ref_cargo = st.selectbox(
-        "Selecione o Cargo de Referência para a Régua:", 
-        df_gower.columns, 
+        i18n.t("select_ruler_role"), 
+        ref_cargo_opcoes, 
         index=0,
-        format_func=lambda x: f"{x} (usado no artigo)" if x == "Delegado de Polícia" else x
+        format_func=lambda x: f"{x} {i18n.t('used_in_paper')}" if x in ["Delegado de Polícia", "Police Chief"] else x
     )
     fig_gower_ruler = visualizations.plot_gower_ruler(df_gower, reference_career=ref_cargo, cargos_destaque=cargos_destaque)
     st.plotly_chart(fig_gower_ruler, use_container_width=True)
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("regua", st.session_state.get('explanation_tone', 'tecnico')))
+        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
+        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        st.info(explanations.get_explanation("regua", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
 
     # 1.7. Dendograma
     if is_sample_biased:
-        st.warning(explanations.get_short_bias_warning(), icon="🚨")
-    st.subheader("1.7. Árvore Hierárquica (Dendograma)", help="**Como interpretar:** Classifica e agrupa sub-blocos de carreiras que possuem alta afinidade. Se duas carreiras se conectam mais para baixo (mais à esquerda nos eixos X), significa que são funcionalmente muito idênticas e foram agrupadas primeiro na base.\n\n**Cálculo:** Utiliza Algoritmo de Clusterização Hierárquica sobre as métricas da Matriz de Gower. Foi utilizado o método aglomerativo *Single-linkage*, que calcula a distância mínima entre membros de grupos adjacentes.")
-    st.markdown("Agrupamento hierárquico das distâncias de Gower usando o método *single*.")
+        st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.subheader(i18n.t("sub_dendro"), help=i18n.t("sub_dendro_help"))
+    st.markdown(i18n.t("dendro_method"))
     if len(df_gower.columns) > 1:
-        fig_dendro = visualizations.plot_dendrogram(df_gower, f"Dendograma Gower - {cenario_sel}", cargos_destaque=cargos_destaque)
+        fig_dendro = visualizations.plot_dendrogram(df_gower, f"{i18n.t('dendro_title')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
         st.plotly_chart(fig_dendro, use_container_width=True)
     else:
-        st.warning("Selecione mais de um cargo para gerar a árvore hierárquica.")
+        st.warning(i18n.t("dendro_warning"))
 
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("dendograma", st.session_state.get('explanation_tone', 'tecnico')))
+        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
+        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        st.info(explanations.get_explanation("dendograma", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
 
     # 1.8. UpSet Plot (Alternativa ao Venn)
     if is_sample_biased:
-        st.warning(explanations.get_short_bias_warning(), icon="🚨")
-    st.subheader("1.8. Diagrama de Conjuntos (Interseções Exatas)", help="**Como interpretar:** Funciona como um 'Diagrama de Venn' escalável. Ele varre as centenas de combinações possíveis entre os cargos e lista as maiores fatias em comum. A barra revela exatamente quantas atribuições aquele 'bloco' de cargos exclusivo possui.\n\n**Por que não usar um Diagrama de Venn circular?** Matematicamente, círculos só conseguem se sobrepor em todas as permutações para, no máximo, 4 conjuntos. Como possuímos 14 cargos diferentes, um Venn seria geometricamente impossível de ser desenhado sem violar as leis espaciais. Este formato (UpSet Plot) é o padrão ouro na visualização multicamadas na Ciência de Dados.")
+        st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.subheader(i18n.t("sub_upset"), help=i18n.t("sub_upset_help"))
     
     df_upset = df_original_limpo.set_index('Carreira') if 'Carreira' in df_original_limpo.columns else df_original_limpo.copy()
-    fig_upset = visualizations.plot_upset_bar_chart(df_upset, f"Top Interseções Normativas (Granular) - {cenario_sel}", cargos_destaque=cargos_destaque)
+    if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
+        df_upset.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_upset.index]
+        df_upset.columns = [i18n.dic_traducao_atribuicoes.get(c, c) for c in df_upset.columns]
+    
+    fig_upset = visualizations.plot_upset_bar_chart(df_upset, f"{i18n.t('upset_title')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
     st.plotly_chart(fig_upset, use_container_width=True)
     
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("upset", st.session_state.get('explanation_tone', 'tecnico')))
+        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
+        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        st.info(explanations.get_explanation("upset", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
 else:
     st.error("Cenário indisponível.")

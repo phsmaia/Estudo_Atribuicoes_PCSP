@@ -1,12 +1,12 @@
-# Interactive Charts (Plotly/Altair)
+# Gráficos Interativos (Plotly/Altair)
 
-## Principles
-- **Visual Consistency:** Maintain a consistent color palette across all visualizations in the dashboard. Use colors that match the application theme and avoid aggressive or hard-to-read combinations.
-- **Clarity Over Complexity:** Keep visualizations clean. Don't overload a single chart with too many dimensions. If it gets too complex, split it into multiple charts.
-- **Informative Tooltips:** Interactive charts should provide clear and concise tooltips. Avoid dumping raw JSON or unformatted numbers; format currencies, percentages, and dates nicely.
-- **Responsiveness:** Ensure charts scale correctly within the Streamlit layout without causing horizontal scrolling unless explicitly intended.
+## Princípios
+- **Consistência Visual:** Mantenha uma paleta de cores consistente em todas as visualizações no dashboard. Use cores que correspondam ao tema do aplicativo e evite combinações agressivas ou difíceis de ler.
+- **Clareza em vez de Complexidade:** Mantenha as visualizações limpas. Não sobrecarregue um único gráfico com muitas dimensões. Se ficar muito complexo, divida-o em vários gráficos.
+- **Tooltips Informativos:** Gráficos interativos devem fornecer tooltips claros e concisos. Evite despejar JSON puro ou números não formatados; formate moedas, porcentagens e datas de maneira agradável.
+- **Responsividade:** Garanta que os gráficos sejam redimensionados corretamente dentro do layout do Streamlit sem causar rolagem horizontal, a menos que seja explicitamente intencional.
 
-## Best Practices
-- Provide titles and axis labels for every chart.
-- Ensure legends are visible and positioned correctly without overlapping data.
-- Optimize plotting functions to not block the main UI thread with heavy calculations; do the calculations beforehand in Pandas.
+## Melhores Práticas
+- Forneça títulos e rótulos de eixos para cada gráfico.
+- Garanta que as legendas sejam visíveis e posicionadas corretamente sem sobrepor os dados.
+- Otimize as funções de plotagem para não bloquear a thread principal da interface com cálculos pesados; faça os cálculos previamente no Pandas.

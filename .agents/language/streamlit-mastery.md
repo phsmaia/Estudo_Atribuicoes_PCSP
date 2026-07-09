@@ -1,14 +1,14 @@
-# Streamlit Mastery
+# Domínio do Streamlit
 
-## Principles
-- **Separation of Concerns:** Keep data processing logic separated from UI rendering logic. Don't process massive dataframes directly inside a `st.write` or UI component.
-- **State Management:** Use `st.session_state` properly to manage interactions, selections, and user configurations that should persist across reruns.
-- **Performance & Caching:** 
-  - Use `@st.cache_data` for functions that load data or do heavy pandas computations.
-  - Use `@st.cache_resource` for database connections or machine learning models.
-- **Responsiveness:** Make sure the dashboard uses layout elements effectively (`st.columns`, `st.container`, `st.expander`) to remain readable on different screen sizes.
-- **Clean Reruns:** Ensure interactions don't cause unnecessary or expensive reruns.
+## Princípios
+- **Separação de Preocupações:** Mantenha a lógica de processamento de dados separada da lógica de renderização da interface. Não processe dataframes enormes diretamente dentro de um `st.write` ou componente de UI.
+- **Gerenciamento de Estado:** Use `st.session_state` adequadamente para gerenciar interações, seleções e configurações do usuário que devem persistir entre reexecuções.
+- **Desempenho & Caching:** 
+  - Use `@st.cache_data` para funções que carregam dados ou fazem cálculos pesados do pandas.
+  - Use `@st.cache_resource` para conexões de banco de dados ou modelos de machine learning.
+- **Responsividade:** Certifique-se de que o dashboard usa elementos de layout de forma eficaz (`st.columns`, `st.container`, `st.expander`) para permanecer legível em diferentes tamanhos de tela.
+- **Reexecuções Limpas:** Garanta que as interações não causem reexecuções desnecessárias ou custosas.
 
-## Best Practices
-- Never mutate cached objects directly; return a copy if mutation is needed or use the `ttl` / `max_entries` parameters.
-- Provide loading indicators (`st.spinner`) for long-running processes to enhance user experience.
+## Melhores Práticas
+- Nunca mude objetos em cache diretamente; retorne uma cópia se a mutação for necessária ou use os parâmetros `ttl` / `max_entries`.
+- Forneça indicadores de carregamento (`st.spinner`) para processos demorados para melhorar a experiência do usuário.

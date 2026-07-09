@@ -1,6 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
+import i18n
 
 def plot_binary_heatmap(df: pd.DataFrame, title: str, colorscale: str = "Teal", dic_reverso: dict = None, cargos_destaque: list = None) -> go.Figure:
     """
@@ -21,7 +22,7 @@ def plot_binary_heatmap(df: pd.DataFrame, title: str, colorscale: str = "Teal", 
         for col in df_temp.columns:
             # Pega o texto completo se o dic_reverso existir, senão usa a própria coluna
             nome_real = dic_reverso.get(col, col) if dic_reverso else col
-            hover_row.append(f"<b>Carreira:</b> {index}<br><b>Atribuição:</b> {nome_real}<br><b>Valor:</b> {row[col]}")
+            hover_row.append(f"<b>{i18n.t('hover_career')}:</b> {index}<br><b>{i18n.t('hover_assignment')}:</b> {nome_real}<br><b>{i18n.t('hover_value')}:</b> {row[col]}")
         hover_text.append(hover_row)
         
     fig = go.Figure(data=go.Heatmap(
@@ -70,7 +71,7 @@ def plot_correlation_heatmap(matriz_corr: pd.DataFrame, title: str) -> go.Figure
         colorscale="RdBu_r",
         zmin=-1, zmax=1,
         xgap=1, ygap=1,
-        hovertemplate="<b>Carreira A:</b> %{y}<br><b>Carreira B:</b> %{x}<br><b>Correlação:</b> %{z:.2f}<extra></extra>"
+        hovertemplate=f"<b>{i18n.t('hover_career_a')}:</b> %{{y}}<br><b>{i18n.t('hover_career_b')}:</b> %{{x}}<br><b>Correlação:</b> %{{z:.2f}}<extra></extra>"
     ))
     fig.update_layout(
         title=title,
@@ -115,7 +116,7 @@ def plot_network_graph(nodes_data: list, edges_data: list, title: str, cargos_de
         ))
         
         # Ponto invisível no meio da linha para ativar o Hovertext
-        texto_hover = f"<b>{edge['source']} ↔ {edge['target']}</b><br>Força: {peso:.2f}<br>Comum: {edge['hovertext']}"
+        texto_hover = f"<b>{edge['source']} ↔ {edge['target']}</b><br>{i18n.t('hover_force')}: {peso:.2f}<br>{i18n.t('hover_common')}: {edge['hovertext']}"
         edge_traces.append(go.Scatter(
             x=[mid_x],
             y=[mid_y],
@@ -187,9 +188,9 @@ def plot_adjacency_heatmap(adj_matrix: pd.DataFrame, title: str, text_matrix: pd
     # Se uma matriz de textos (atributos compartilhados) foi enviada, injetamos como customdata
     custom_data = text_matrix.values if text_matrix is not None else None
     
-    hovertemplate = "<b>Carreira A:</b> %{y}<br><b>Carreira B:</b> %{x}<br><b>Atribuições em Comum:</b> %{z}<extra></extra>"
+    hovertemplate = f"<b>{i18n.t('hover_career_a')}:</b> %{{y}}<br><b>{i18n.t('hover_career_b')}:</b> %{{x}}<br><b>{i18n.t('hover_shared_assignments')}:</b> %{{z}}<extra></extra>"
     if custom_data is not None:
-        hovertemplate = "<b>Carreira A:</b> %{y}<br><b>Carreira B:</b> %{x}<br><b>Qtd. Atribuições:</b> %{z}<br><b>Comum:</b><br>%{customdata}<extra></extra>"
+        hovertemplate = f"<b>{i18n.t('hover_career_a')}:</b> %{{y}}<br><b>{i18n.t('hover_career_b')}:</b> %{{x}}<br><b>{i18n.t('hover_qty_assignments')}:</b> %{{z}}<br><b>{i18n.t('hover_common')}:</b><br>%{{customdata}}<extra></extra>"
     
     fig = go.Figure(data=go.Heatmap(
         z=adj_vis.values,
@@ -233,14 +234,14 @@ def plot_gower_heatmap(df_gower: pd.DataFrame, title: str, cargos_destaque: list
     A escala de cores é ajustada para dar foco em 0 (ex: cores mais quentes).
     """
     # Gower distance is symmetric with 0 on the diagonal
+    gower_vis = df_gower
     fig = go.Figure(data=go.Heatmap(
-        z=df_gower.values,
-        x=df_gower.columns,
-        y=df_gower.index,
-        colorscale="RdBu", # Vermelho para 0, Azul para 1
-        reversescale=False,
+        z=gower_vis.values,
+        x=gower_vis.columns,
+        y=gower_vis.index,
+        colorscale="RdYlBu",
         xgap=1, ygap=1,
-        hovertemplate="<b>Carreira A:</b> %{y}<br><b>Carreira B:</b> %{x}<br><b>Distância de Gower:</b> %{z:.4f}<extra></extra>"
+        hovertemplate=f"<b>{i18n.t('hover_career_a')}:</b> %{{y}}<br><b>{i18n.t('hover_career_b')}:</b> %{{x}}<br><b>{i18n.t('hover_gower_dist')}:</b> %{{z:.4f}}<extra></extra>"
     ))
     fig.update_layout(
         title=title,
@@ -283,8 +284,17 @@ def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado d
     fig = go.Figure()
     
     # Adicionamos os pontos ao scatter. O eixo X é a distância, o eixo Y pode ser 0.
-    # Mas para não encavalar, vamos escalonar o eixo Y por índice.
+    media_dist = dist_serie.mean()
+    mediana_dist = dist_serie.median()
     
+    fig.add_shape(type="line", x0=media_dist, x1=media_dist, y0=-1, y1=len(dist_serie),
+                  line=dict(color="red", width=2, dash="dash"))
+    fig.add_annotation(x=media_dist, y=len(dist_serie)-0.5, text=f"{i18n.t('hover_mean')} ({media_dist:.2f})", showarrow=False, font=dict(color="red"), yshift=10)
+    
+    fig.add_shape(type="line", x0=mediana_dist, x1=mediana_dist, y0=-1, y1=len(dist_serie),
+                  line=dict(color="orange", width=2, dash="dash"))
+    fig.add_annotation(x=mediana_dist, y=-0.5, text=f"{i18n.t('hover_median')} ({mediana_dist:.2f})", showarrow=False, font=dict(color="orange"), yshift=-10)
+
     tamanhos = []
     cores = []
     for c in dist_serie.index:
@@ -309,27 +319,19 @@ def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado d
             showscale=not bool(cargos_destaque)
         ),
         text=dist_serie.index,
-        hovertemplate="<b>Carreira:</b> %{text}<br><b>Distância Gower (ref: " + reference_career + "):</b> %{x:.3f}<extra></extra>"
+        hovertemplate=f"<b>{i18n.t('hover_career')}:</b> %{{text}}<br><b>{i18n.t('hover_gower_dist')}:</b> %{{x:.3f}}<extra></extra>"
     ))
     
+    # Substituir o título dinâmico com o i18n da seção 1.6
     fig.update_layout(
-        title=f"Régua de Distanciamento Relativo (Referência: {reference_career})",
+        title=f"{i18n.t('sub_ruler')} (Ref: {reference_career})",
         title_font_size=18,
-        xaxis_title="Distância de Gower",
+        xaxis_title=i18n.t('hover_gower_dist'),
         yaxis_title=None,
         margin=dict(l=150, r=50, t=50, b=50),
         height=500,
         autosize=True
     )
-    
-    # Adicionando a linha da Média e Mediana para possibilitar um panorama geral
-    media = dist_serie.mean()
-    mediana = dist_serie.median()
-    
-    fig.add_vline(x=media, line_width=2, line_dash="dash", line_color="red", 
-                  annotation_text=f"Média: {media:.3f}", annotation_position="top right")
-    fig.add_vline(x=mediana, line_width=2, line_dash="dot", line_color="blue", 
-                  annotation_text=f"Mediana: {mediana:.3f}", annotation_position="bottom right")
                   
     return fig
 
@@ -511,9 +513,10 @@ def plot_upset_bar_chart(df: pd.DataFrame, title: str, dic_reverso: dict = None,
         orientation='h',
         customdata=combination_counts[['cargos_str', 'atributos_str', 'pct']].values,
         hovertemplate=(
-            "<b>Representatividade:</b> %{customdata[2]:.1f}% do cenário<br><br>"
-            "<b>Cargos Envolvidos:</b><br>%{customdata[0]}<br><br>"
-            "<b>Atribuições Compartilhadas:</b>%{customdata[1]}"
+            f"<b>{i18n.t('hover_represent')}:</b> %{{customdata[2]:.1f}}%<br>"
+            f"<b>{i18n.t('hover_roles_involved')}:</b> %{{customdata[0]}}<br>"
+            f"<b>{i18n.t('hover_shared_attr')}:</b> %{{x}}<br><br>"
+            f"<b>{i18n.t('hover_shared_assignments')}:</b>%{{customdata[1]}}"
             "<extra></extra>"
         ),
         marker=dict(
@@ -526,7 +529,7 @@ def plot_upset_bar_chart(df: pd.DataFrame, title: str, dic_reverso: dict = None,
     
     fig.update_layout(
         title=title,
-        xaxis_title="Quantidade de Atribuições Compartilhadas",
+        xaxis_title=i18n.t('hover_shared_attr'),
         yaxis_title=None,
         margin=dict(l=250, r=20, t=50, b=50),
         height=max(400, len(combination_counts) * 35),

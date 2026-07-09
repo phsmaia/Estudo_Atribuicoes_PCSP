@@ -11,4 +11,4 @@ Esta regra garante que a execução das validações não dependa da memória hu
   4. A auditoria de dependências com `pip-audit`.
 
 ## Falha Zero
-- Nenhum código pode ser integrado se a pipeline de CI falhar. A CI é o juiz final da estabilidade do Poirot.
+- Nenhum código pode ser integrado se a pipeline de CI falhar. A CI é o juiz final da estabilidade do projeto.

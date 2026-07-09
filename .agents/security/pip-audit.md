@@ -1,5 +1,5 @@
-# Dependency Audit with pip-audit
-- Use pip-audit to check for known vulnerabilities (CVEs) in project dependencies.
-- If pip-audit flags a vulnerability, immediately update the offending package in `requirements.txt` to the patched version.
-- Avoid pinning dependencies to vulnerable versions unless there is a strictly documented and managed exception.
-- Run `pip-audit` regularly on both `requirements.txt` and `requirements-dev.txt`.
+# Auditoria de Dependências com pip-audit
+- Use pip-audit para verificar vulnerabilidades conhecidas (CVEs) nas dependências do projeto.
+- Se o pip-audit sinalizar uma vulnerabilidade, atualize imediatamente o pacote problemático no `requirements.txt` para a versão corrigida.
+- Evite fixar dependências em versões vulneráveis, a menos que haja uma exceção estritamente documentada e gerenciada.
+- Execute `pip-audit` regularmente tanto no `requirements.txt` quanto no `requirements-dev.txt`.
