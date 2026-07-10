@@ -165,11 +165,12 @@ def obter_atribuicoes_comuns_textuais(df: pd.DataFrame, dic_siglas: dict, expand
                 else:
                     linhas_texto.append(dic_siglas.get(col, col))
             
+            import i18n
             # Se for expandido, adiciona bullet points. Se não, separa por vírgula.
             if expandir_textos:
-                texto_final = "<br>• ".join([""] + linhas_texto) if linhas_texto else "Nenhuma"
+                texto_final = "<br>• ".join([""] + linhas_texto) if linhas_texto else i18n.t("none_text")
             else:
-                texto_final = ", ".join(linhas_texto) if linhas_texto else "Nenhuma"
+                texto_final = ", ".join(linhas_texto) if linhas_texto else i18n.t("none_text")
                 
             text_matrix.loc[c1, c2] = texto_final
             
