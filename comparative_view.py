@@ -9,11 +9,11 @@ import i18n
 
 def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b, cargo_foco_a, cargos_destaque=None):
     if cenario_a == cenario_b:
-        st.warning(i18n.t("dendro_warning") if i18n.t("dendro_warning") != "dendro_warning" else "Selecione cenários diferentes no Painel Superior para comparar.")
+        st.warning(i18n.t("warning_diff_scenarios"))
         return
 
     lang = st.session_state.get('language', 'PT-BR')
-    traduzir = st.session_state.get('traduzir_cargos', False)
+    traduzir = lang == 'EN'
 
     if cargos_destaque is None: cargos_destaque = []
     destaques_completos = list(set(cargos_destaque))
@@ -105,10 +105,10 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
 
     st.markdown("---")
     st.subheader(
-        f"2.1. Delta de Similaridade de Gower ({cenario_a} → {cenario_b})",
-        help="**O que é isso?**\nEste mapa de calor matemático calcula a diferença vetorial exata entre os dois cenários.\n\n**Como ler:**\n- **Azul (Negativo)**: A distância entre os cargos diminuiu. Eles se tornaram mais parecidos (Aglutinação de funções).\n- **Vermelho (Positivo)**: A distância aumentou. Eles se afastaram e tornaram-se mais exclusivos/distintos.\n- **Branco (Zero)**: Não houve alteração na relação matemática entre os cargos."
+        i18n.t("sub_delta_title").format(cenario_a=i18n.t(cenario_a), cenario_b=i18n.t(cenario_b)),
+        help=i18n.t("sub_delta_help")
     )
-    st.markdown("<p style='color:#ccc; font-size:0.9rem;'>Valores negativos (Azul) indicam aproximação (ficaram mais similares). Valores positivos (Vermelho) indicam distanciamento.</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color:#ccc; font-size:0.9rem;'>{i18n.t('delta_subtitle')}</p>", unsafe_allow_html=True)
     
     # Calcula o limite máximo real para calibrar a escala de cor 
     max_val = delta_matrix.abs().max().max()
@@ -155,18 +155,18 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
 
     st.plotly_chart(fig, use_container_width=True)
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("m2_delta", st.session_state.get('explanation_tone', 'tecnico')))
+        st.info(explanations.get_explanation("m2_delta", st.session_state.get('explanation_tone', 'tecnico'), st.session_state.get('language', 'PT-BR')))
     
     st.markdown("---")
     
     st.subheader(
-        "2.2. Fluxo Normativo (Ganhos e Perdas)",
-        help="**O que é isso?**\nExibe explicitamente quais atribuições foram adicionadas (ganho), removidas (perda) ou mantidas para a carreira selecionada na transição entre os cenários."
+        i18n.t("sub_flow_title"),
+        help=i18n.t("sub_flow_help")
     )
     
     # Extração de Atribuições Ganhos/Perdas
     if not cargo_foco_a:
-        st.info("💡 Selecione uma 'Carreira para Análise Detalhada' no topo para visualizar o Fluxo Normativo (Ganhos e Perdas).")
+        st.info(i18n.t("flow_no_career_warning"))
     elif cargo_foco_a in df_a['Carreira'].values and cargo_foco_b in df_b['Carreira'].values:
         row_a = df_a[df_a['Carreira'] == cargo_foco_a].iloc[0].drop('Carreira')
         row_b = df_b[df_b['Carreira'] == cargo_foco_b].iloc[0].drop('Carreira')
@@ -184,51 +184,58 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             val_b = row_b.get(attr, 0)
             
             if val_a == 1 and val_b == 0:
-                comparativo_attrs.append({"Atribuição": attr, "Status": "🔴 Perdeu", cenario_a: "Sim", cenario_b: "Não"})
+                comparativo_attrs.append({i18n.t("hover_assignment"): attr, "Status": i18n.t("status_lost"), i18n.t(cenario_a): i18n.t("lbl_yes"), i18n.t(cenario_b): i18n.t("lbl_no")})
             elif val_a == 0 and val_b == 1:
-                comparativo_attrs.append({"Atribuição": attr, "Status": "🟢 Ganhou", cenario_a: "Não", cenario_b: "Sim"})
+                comparativo_attrs.append({i18n.t("hover_assignment"): attr, "Status": i18n.t("status_gained"), i18n.t(cenario_a): i18n.t("lbl_no"), i18n.t(cenario_b): i18n.t("lbl_yes")})
             elif val_a == 1 and val_b == 1:
-                comparativo_attrs.append({"Atribuição": attr, "Status": "⚪ Manteve", cenario_a: "Sim", cenario_b: "Sim"})
+                comparativo_attrs.append({i18n.t("hover_assignment"): attr, "Status": i18n.t("status_maintained"), i18n.t(cenario_a): i18n.t("lbl_yes"), i18n.t(cenario_b): i18n.t("lbl_yes")})
                 
         df_comparativo_attrs = pd.DataFrame(comparativo_attrs)
         
         # Tradução opcional
         if lang == 'EN' and traduzir and not df_comparativo_attrs.empty:
-            df_comparativo_attrs['Atribuição'] = df_comparativo_attrs['Atribuição'].map(lambda x: i18n.dic_traducao_atribuicoes.get(x, x))
+            df_comparativo_attrs[i18n.t("hover_assignment")] = df_comparativo_attrs[i18n.t("hover_assignment")].map(lambda x: i18n.dic_traducao_atribuicoes.get(x, x))
         
         # Ordenar (Ganhos primeiro, Perdas depois, Mantidas no final)
         if not df_comparativo_attrs.empty:
-            df_comparativo_attrs['SortKey'] = df_comparativo_attrs['Status'].map({"🟢 Ganhou": 1, "🔴 Perdeu": 2, "⚪ Manteve": 3})
-            df_comparativo_attrs = df_comparativo_attrs.sort_values(by=['SortKey', 'Atribuição']).drop(columns=['SortKey']).reset_index(drop=True)
+            df_comparativo_attrs['SortKey'] = df_comparativo_attrs['Status'].map({i18n.t("status_gained"): 1, i18n.t("status_lost"): 2, i18n.t("status_maintained"): 3})
+            df_comparativo_attrs = df_comparativo_attrs.sort_values(by=['SortKey', i18n.t("hover_assignment")]).drop(columns=['SortKey']).reset_index(drop=True)
             
-            opcoes_status_22 = ["🟢 Ganhou", "🔴 Perdeu", "⚪ Manteve"]
-            filtro_status_22 = st.multiselect("Filtrar Status da Atribuição:", opcoes_status_22, default=opcoes_status_22, key="filtro_status_22")
-            df_mostrar_22 = df_comparativo_attrs[df_comparativo_attrs["Status"].isin(filtro_status_22)]
+            opcoes_status_22 = ["status_gained", "status_lost", "status_maintained"]
+            filtro_status_22 = st.multiselect(
+                i18n.t("flow_filter_label"), 
+                opcoes_status_22, 
+                default=opcoes_status_22, 
+                format_func=lambda x: i18n.t(x),
+                key="filtro_status_22"
+            )
+            df_mostrar_22 = df_comparativo_attrs[df_comparativo_attrs["Status"].isin([i18n.t(k) for k in filtro_status_22])]
             def highlight_status_22(row):
                 status = row["Status"]
-                if "Ganhou" in status:
+                if status == i18n.t("status_gained"):
                     return ['background-color: rgba(76, 175, 80, 0.15); color: #81c784;'] * len(row)
-                elif "Perdeu" in status:
+                elif status == i18n.t("status_lost"):
                     return ['background-color: rgba(244, 67, 54, 0.15); color: #e57373;'] * len(row)
                 else:
                     return ['color: #9e9e9e;'] * len(row)
             
             st.dataframe(df_mostrar_22.style.apply(highlight_status_22, axis=1), use_container_width=True, height=(len(df_mostrar_22) + 1) * 35 + 3)
         else:
-            st.write("Nenhuma atribuição encontrada para esta carreira.")
+            st.write(i18n.t("flow_no_attr_warning"))
     else:
-        st.warning("Carreira não localizada nos dados para comparação direta de atribuições.")
+        st.warning(i18n.t("flow_career_not_found"))
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("m2_fluxo", st.session_state.get('explanation_tone', 'tecnico')))
+        st.info(explanations.get_explanation("m2_fluxo", st.session_state.get('explanation_tone', 'tecnico'), st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
+    
     st.subheader(
-        "2.3. Régua Evolutiva por Cargo (Radar de Afinidade)",
-        help="**O que é isso?**\nUm gráfico bidimensional que sobrepõe a similaridade do cargo selecionado contra as outras carreiras da polícia nos dois cenários.\n\n**Como ler:**\n- Quanto mais a ponta do radar se esticar para a borda externa, mais as carreiras são **similares**.\n- Se a área laranja (Cenário Alvo) for maior que a ciano (Cenário Base), o cargo selecionado *absorveu* funções e se aproximou das demais carreiras.\n- Se a área encolher, o cargo sofreu um expurgo normativo e isolou-se."
+        i18n.t("sub_radar_title"),
+        help=i18n.t("sub_radar_help")
     )
     
     if not cargo_foco_a:
-        st.info("💡 Selecione uma 'Carreira para Análise Detalhada' no topo para visualizar o Radar de Afinidade e o Detalhamento Analítico.")
+        st.info(i18n.t("radar_no_career_warning"))
     elif cargo_foco_a in df_a['Carreira'].values and cargo_foco_b in df_b['Carreira'].values:
         # Pega TODAS as carreiras do cenário (exceto ela mesma)
         todas_carreiras = [c for c in gower_a.index if c != cargo_foco_a]
@@ -250,35 +257,37 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         for c in todas_carreiras:
             cb = mapping_a_to_b.get(c)
             vals_b.append(calc_jaccard(df_b, cargo_foco_b, cb))
+        todas_carreiras_display = [i18n.traduzir_cargo(c) if traduzir else c for c in todas_carreiras]
                 
         fig_radar.add_trace(go.Scatterpolar(
             r=vals_a + [vals_a[0]], 
-            theta=todas_carreiras + [todas_carreiras[0]],
+            theta=todas_carreiras_display + [todas_carreiras_display[0]],
             fill='toself',
-            name=f"{cenario_a}",
+            name=f"{i18n.t(cenario_a)}",
             line_color='cyan',
-            hovertemplate="<b>Carreira:</b> %{theta}<br><b>Afinidade Jaccard:</b> %{r:.1%}<extra></extra>"
+            hovertemplate=i18n.t("radar_hover")
         ))
         
         fig_radar.add_trace(go.Scatterpolar(
             r=vals_b + [vals_b[0]],
-            theta=todas_carreiras + [todas_carreiras[0]],
+            theta=todas_carreiras_display + [todas_carreiras_display[0]],
             fill='toself',
-            name=f"{cenario_b}",
+            name=f"{i18n.t(cenario_b)}",
             line_color='orange',
-            hovertemplate="<b>Carreira:</b> %{theta}<br><b>Afinidade Jaccard:</b> %{r:.1%}<extra></extra>"
+            hovertemplate=i18n.t("radar_hover")
         ))
         
         for dest in destaques_completos:
             if dest in todas_carreiras:
+                dest_display = i18n.traduzir_cargo(dest) if traduzir else dest
                 fig_radar.add_trace(go.Scatterpolar(
                     r=[1.0],
-                    theta=[dest],
+                    theta=[dest_display],
                     mode='markers+text',
                     marker=dict(color=text_map.get(dest, 'white'), size=12, symbol='star'),
                     text=["⭐"],
                     textposition="top center",
-                    name=f"Destaque: {dest}",
+                    name=f"{i18n.t('radar_highlight')}: {dest_display}",
                     showlegend=True,
                     hoverinfo='skip'
                 ))
@@ -300,7 +309,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         st.plotly_chart(fig_radar, use_container_width=True)
         
         # TABELA DE DIVERGÊNCIA
-        st.markdown("#### 2.4. Detalhamento Analítico de Afinidade", help="**Como a afinidade é calculada?**\nA Afinidade é calculada matematicamente pelo **Índice de Similaridade de Jaccard**. Ela leva em conta estritamente o que é *COMPARTILHADO E PRESENTE* entre os cargos. Atribuições que **nenhum dos dois** exerce não entram na conta e não aproximam artificialmente os cargos, corrigindo falhas analíticas de matrizes simples. Se Afinidade for `100%`, eles exercem exatamente as mesmas funções em comum.")
+        st.markdown(i18n.t("sub_affinity_title"), help=i18n.t("sub_affinity_help"))
         
         tabela_dados = []
         for i, c in enumerate(todas_carreiras):
@@ -310,62 +319,73 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             
             # Seta indicativa
             if delta > 0.01:
-                seta = "🟢 ↗ Aproximou"
+                seta = i18n.t("trend_approached")
             elif delta < -0.01:
-                seta = "🔴 ↘ Afastou"
+                seta = i18n.t("trend_distanced")
             else:
-                seta = "⚪ ➡ Estável"
+                seta = i18n.t("trend_stable")
                 
+            c_display = i18n.traduzir_cargo(c) if traduzir else c
             tabela_dados.append({
-                "Carreira Relacionada": c,
-                f"Afinidade Base ({cenario_a})": float(sim_a * 100),
-                f"Nova Afinidade ({cenario_b})": float(sim_b * 100),
-                "Δ Variação": float(delta * 100),
-                "Tendência": seta
+                i18n.t("col_related_career"): c_display,
+                f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})": float(sim_a * 100),
+                f"{i18n.t('col_new_affinity')} ({i18n.t(cenario_b)})": float(sim_b * 100),
+                i18n.t("col_delta_var"): float(delta * 100),
+                i18n.t("col_trend"): seta
             })
             
-        df_tabela = pd.DataFrame(tabela_dados).sort_values(by=f"Afinidade Base ({cenario_a})", ascending=False).reset_index(drop=True)
+        df_radar_comp = pd.DataFrame(tabela_dados).sort_values(by=f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})", ascending=False).reset_index(drop=True)
         
-        opcoes_status_24 = ["🟢 ↗ Aproximou", "🔴 ↘ Afastou", "⚪ ➡ Estável"]
-        filtro_status_24 = st.multiselect("Filtrar Tendência de Afinidade:", opcoes_status_24, default=opcoes_status_24, key="filtro_status_24")
-        df_mostrar_24 = df_tabela[df_tabela["Tendência"].isin(filtro_status_24)]
+        opcoes_status_24 = ["trend_approached", "trend_distanced", "trend_stable"]
+        filtro_status_24 = st.multiselect(
+            i18n.t("affinity_filter_label"), 
+            opcoes_status_24, 
+            default=opcoes_status_24, 
+            format_func=lambda x: i18n.t(x),
+            key="filtro_status_24"
+        )
+        df_mostrar_24 = df_radar_comp[df_radar_comp[i18n.t("col_trend")].isin([i18n.t(k) for k in filtro_status_24])]
         
         def highlight_24(row):
-            c = row["Carreira Relacionada"]
-            if c in color_map:
-                return [f'background-color: {color_map[c]}; color: {text_map[c]}; font-weight: bold;'] * len(row)
+            c_disp = row[i18n.t("col_related_career")]
+            # We map it back to original name for color logic, or color map just doesn't match...
+            # The color_map keys are original names.
+            # Let's find the original name.
+            orig_c = next((k for k in color_map.keys() if i18n.traduzir_cargo(k) == c_disp or k == c_disp), None)
+            if orig_c and orig_c in color_map:
+                return [f'background-color: {color_map[orig_c]}; color: {text_map[orig_c]}; font-weight: bold;'] * len(row)
             return [''] * len(row)
             
         st.dataframe(
             df_mostrar_24.style.apply(highlight_24, axis=1),
             use_container_width=True,
             column_config={
-                f"Afinidade Base ({cenario_a})": st.column_config.NumberColumn(
-                    f"Afinidade Base ({cenario_a})",
+                f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})": st.column_config.NumberColumn(
+                    f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})",
                     format="%.1f%%"
                 ),
-                f"Nova Afinidade ({cenario_b})": st.column_config.NumberColumn(
-                    f"Nova Afinidade ({cenario_b})",
+                f"{i18n.t('col_new_affinity')} ({i18n.t(cenario_b)})": st.column_config.NumberColumn(
+                    f"{i18n.t('col_new_affinity')} ({i18n.t(cenario_b)})",
                     format="%.1f%%"
                 ),
-                "Δ Variação": st.column_config.NumberColumn(
-                    "Δ Variação",
+                i18n.t("col_delta_var"): st.column_config.NumberColumn(
+                    i18n.t("col_delta_var"),
                     format="%+.1f%%"
                 )
             },
             height=(len(df_mostrar_24) + 1) * 35 + 3
         )
         if st.session_state.get('show_explanations', False):
-            st.info(explanations.get_explanation("m2_radar", st.session_state.get('explanation_tone', 'tecnico')))
+            st.info(explanations.get_explanation("m2_radar", st.session_state.get('explanation_tone', 'tecnico'), st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
     
     st.subheader(
-        "2.5. Rede de Adjacência Comparativa (Grafo de Similaridade)",
-        help="**O que é isso?**\nExibe as 'teias de aranha' de conexões lado a lado. Se o cenário alvo fragmentou as atribuições, você verá o grafo B mais desconectado ou as linhas mais finas. Se aglutinou, o grafo ficará mais denso e as carreiras mais puxadas para o centro."
+        i18n.t("sub_network_comp_title"),
+        help=i18n.t("sub_network_comp_help")
     )
     
-    threshold_adj_comp = st.slider("Corte de Adjacência Comparativa (Threshold):", min_value=1, max_value=20, value=1, step=1, key="slider_grafo_comp")
+    threshold_adj_comp = st.slider(i18n.t("network_comp_slider"), min_value=1, max_value=20, value=1, step=1, key="slider_grafo_comp")
     
     import data_processing
     import visualizations
@@ -390,8 +410,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         cargos_destaque_a = [c for c in destaques_completos if c in adj_a.index] or None
         cargos_destaque_b = [c for c in destaques_b if c in adj_b.index] or None
         
-    fig_grafo_a = visualizations.plot_network_graph(nodes_a, edges_a, f"Grafo Cenário Base ({cenario_a})", cargos_destaque=cargos_destaque_a)
-    fig_grafo_b = visualizations.plot_network_graph(nodes_b, edges_b, f"Grafo Cenário Alvo ({cenario_b})", cargos_destaque=cargos_destaque_b)
+    fig_grafo_a = visualizations.plot_network_graph(nodes_a, edges_a, f"{i18n.t('network_graph_base')} ({cenario_a})", cargos_destaque=cargos_destaque_a)
+    fig_grafo_b = visualizations.plot_network_graph(nodes_b, edges_b, f"{i18n.t('network_graph_target')} ({cenario_b})", cargos_destaque=cargos_destaque_b)
     
     col_grafo1, col_grafo2 = st.columns(2)
     with col_grafo1:
@@ -399,8 +419,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
     with col_grafo2:
         st.plotly_chart(fig_grafo_b, use_container_width=True)
 
-    st.markdown("#### Detalhamento Estrutural da Rede")
-    st.caption(f"A tabela abaixo contabiliza quantas conexões fortes (acima do corte de {threshold_adj_comp} atribuições em comum) cada carreira formou na teia.")
+    st.markdown(i18n.t("network_details_title"))
+    st.caption(i18n.t("network_details_caption").format(threshold=threshold_adj_comp))
     
     todas_carreiras_grafo = list(set([n["id"] for n in nodes_a] + [n["id"] for n in nodes_b]))
     
@@ -414,58 +434,77 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         
         diff = deg_b - deg_a
         if diff > 0:
-            status = "🔗 ↗ Mais Conectado"
+            status = i18n.t("net_more_connected")
         elif diff < 0:
-            status = "✂️ ↘ Menos Conectado"
+            status = i18n.t("net_less_connected")
         else:
-            status = "⚪ ➡ Estável"
+            status = i18n.t("net_stable")
             
+        c_display = i18n.traduzir_cargo(c) if traduzir else c
         tabela_grafo.append({
-            "Carreira": c,
-            f"Conexões no Grafo ({cenario_a})": deg_a,
-            f"Conexões no Grafo ({cenario_b})": deg_b,
-            "Variação (Nº de Arestas)": diff,
-            "Impacto na Rede": status
+            i18n.t("hover_career"): c_display,
+            i18n.t('col_conn_base').format(cenario=i18n.t(cenario_a)): deg_a,
+            i18n.t('col_conn_base').format(cenario=i18n.t(cenario_b)): deg_b,
+            i18n.t("col_conn_var"): diff,
+            i18n.t("col_net_impact"): status
         })
         
-    df_grafo = pd.DataFrame(tabela_grafo).sort_values(by="Variação (Nº de Arestas)", ascending=False).reset_index(drop=True)
+    df_grafo = pd.DataFrame(tabela_grafo).sort_values(by=i18n.t("col_conn_var"), ascending=False).reset_index(drop=True)
     
-    opcoes_status_25 = ["🔗 ↗ Mais Conectado", "✂️ ↘ Menos Conectado", "⚪ ➡ Estável"]
-    filtro_status_25 = st.multiselect("Filtrar Impacto na Rede:", opcoes_status_25, default=opcoes_status_25, key="filtro_status_25")
-    df_mostrar_25 = df_grafo[df_grafo["Impacto na Rede"].isin(filtro_status_25)]
+    opcoes_status_25 = ["net_more_connected", "net_less_connected", "net_stable"]
+    filtro_status_25 = st.multiselect(
+        i18n.t("network_filter_label"), 
+        opcoes_status_25, 
+        default=opcoes_status_25, 
+        format_func=lambda x: i18n.t(x),
+        key="filtro_status_25"
+    )
+    df_mostrar_25 = df_grafo[df_grafo[i18n.t("col_net_impact")].isin([i18n.t(k) for k in filtro_status_25])]
     
     def highlight_25(row):
-        c = row["Carreira"]
-        if c in color_map:
-            return [f'background-color: {color_map[c]}; color: {text_map[c]}; font-weight: bold;'] * len(row)
+        c_disp = row[i18n.t("hover_career")]
+        orig_c = next((k for k in color_map.keys() if i18n.traduzir_cargo(k) == c_disp or k == c_disp), None)
+        if orig_c and orig_c in color_map:
+            return [f'background-color: {color_map[orig_c]}; color: {text_map[orig_c]}; font-weight: bold;'] * len(row)
         return [''] * len(row)
         
     st.dataframe(
         df_mostrar_25.style.apply(highlight_25, axis=1),
         use_container_width=True,
         column_config={
-            "Variação (Nº de Arestas)": st.column_config.NumberColumn(
-                "Variação (Nº de Arestas)",
+            i18n.t("col_conn_var"): st.column_config.NumberColumn(
+                i18n.t("col_conn_var"),
                 format="%+d"
             )
         },
         height=(len(df_mostrar_25) + 1) * 35 + 3
     )
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("m2_grafo", st.session_state.get('explanation_tone', 'tecnico')))
+        st.info(explanations.get_explanation("m2_grafo", st.session_state.get('explanation_tone', 'tecnico'), st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
 
     st.subheader(
-        "2.6. Árvore Hierárquica Comparativa (Dendrograma)",
-        help="**O que é isso?**\nExibe as estruturas hierárquicas de classificação lado a lado. Você pode avaliar como as carreiras mudaram de 'galhos' na árvore evolutiva entre o Cenário Base e o Cenário Alvo."
+        i18n.t("sub_tree_comp_title"),
+        help=i18n.t("sub_tree_comp_help")
     )
     
     # O Dendrograma precisa do gower_a e gower_b (já calculados anteriormente)
     # Apenas se houver mais de um cargo para poder clusterizar
     if len(gower_a.columns) > 1 and len(gower_b.columns) > 1:
-        fig_dendro_a = visualizations.plot_dendrogram(gower_a, f"Árvore Cenário Base ({cenario_a})", cargos_destaque=[c for c in destaques_completos if c in gower_a.columns] or None)
-        fig_dendro_b = visualizations.plot_dendrogram(gower_b, f"Árvore Cenário Alvo ({cenario_b})", cargos_destaque=[c for c in destaques_b if c in gower_b.columns] or None)
+        if lang == 'EN' and traduzir:
+            gower_a_disp = gower_a.rename(index=i18n.dic_traducao_cargos, columns=i18n.dic_traducao_cargos)
+            gower_b_disp = gower_b.rename(index=i18n.dic_traducao_cargos, columns=i18n.dic_traducao_cargos)
+            destaques_a_disp = [i18n.dic_traducao_cargos.get(c, c) for c in destaques_completos if c in gower_a.columns] or None
+            destaques_b_disp = [i18n.dic_traducao_cargos.get(c, c) for c in destaques_b if c in gower_b.columns] or None
+        else:
+            gower_a_disp = gower_a
+            gower_b_disp = gower_b
+            destaques_a_disp = [c for c in destaques_completos if c in gower_a.columns] or None
+            destaques_b_disp = [c for c in destaques_b if c in gower_b.columns] or None
+            
+        fig_dendro_a = visualizations.plot_dendrogram(gower_a_disp, f"{i18n.t('tree_graph_base')} ({cenario_a})", cargos_destaque=destaques_a_disp)
+        fig_dendro_b = visualizations.plot_dendrogram(gower_b_disp, f"{i18n.t('tree_graph_target')} ({cenario_b})", cargos_destaque=destaques_b_disp)
         
         col_dendro1, col_dendro2 = st.columns(2)
         with col_dendro1:
@@ -473,8 +512,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         with col_dendro2:
             st.plotly_chart(fig_dendro_b, use_container_width=True)
             
-        st.markdown("#### Detalhamento Estrutural da Árvore")
-        st.caption("A tabela abaixo identifica o vizinho funcional mais próximo de cada carreira na árvore hierárquica (o primeiro 'galho' com quem ela se funde) e verifica se houve salto de ramo metodológico.")
+        st.markdown(i18n.t("tree_details_title"))
+        st.caption(i18n.t("tree_details_caption"))
         
         tabela_dendro = []
         for c in gower_a.columns:
@@ -493,40 +532,51 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 # Para saber se mudou de galho, precisamos ver se vizinho_b (no novo nome) 
                 # corresponde ao vizinho_a (no novo nome)
                 viz_a_mapped = mapping_a_to_b.get(vizinho_a, vizinho_a)
-                mudou_galho = "🌳 🔀 Sim (Saltou)" if vizinho_b != viz_a_mapped else "⚪ Não (Manteve)"
+                mudou_galho = i18n.t("branch_jumped") if vizinho_b != viz_a_mapped else i18n.t("branch_maintained")
+                
+                c_display = i18n.traduzir_cargo(c) if traduzir else c
+                vizinho_a_display = i18n.traduzir_cargo(vizinho_a) if traduzir else vizinho_a
+                vizinho_b_display = i18n.traduzir_cargo(vizinho_b) if traduzir else vizinho_b
                 
                 tabela_dendro.append({
-                    "Carreira": c,
-                    f"Vizinho Mais Próximo ({cenario_a})": vizinho_a,
-                    f"Distância ({cenario_a})": val_a,
-                    f"Novo Vizinho ({cenario_b})": vizinho_b,
-                    f"Distância ({cenario_b})": val_b,
-                    "Mudança de Ramo?": mudou_galho
+                    i18n.t("hover_career"): c_display,
+                    f"{i18n.t('col_closest_neighbor')} ({i18n.t(cenario_a)})": vizinho_a_display,
+                    f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})": val_a,
+                    f"{i18n.t('col_new_neighbor')} ({i18n.t(cenario_b)})": vizinho_b_display,
+                    f"{i18n.t('col_distance')} ({i18n.t(cenario_b)})": val_b,
+                    i18n.t("col_branch_change"): mudou_galho
                 })
         
         if tabela_dendro:
-            df_dendro = pd.DataFrame(tabela_dendro).sort_values(by=f"Distância ({cenario_a})").reset_index(drop=True)
+            df_dendro = pd.DataFrame(tabela_dendro).sort_values(by=f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})").reset_index(drop=True)
             
-            opcoes_status_26 = ["🌳 🔀 Sim (Saltou)", "⚪ Não (Manteve)"]
-            filtro_status_26 = st.multiselect("Filtrar Mudança de Ramo:", opcoes_status_26, default=opcoes_status_26, key="filtro_status_26")
-            df_mostrar_26 = df_dendro[df_dendro["Mudança de Ramo?"].isin(filtro_status_26)]
+            opcoes_status_26 = ["branch_jumped", "branch_maintained"]
+            filtro_status_26 = st.multiselect(
+                i18n.t("tree_filter_label"), 
+                opcoes_status_26, 
+                default=opcoes_status_26, 
+                format_func=lambda x: i18n.t(x),
+                key="filtro_status_26"
+            )
+            df_mostrar_26 = df_dendro[df_dendro[i18n.t("col_branch_change")].isin([i18n.t(k) for k in filtro_status_26])]
             
             def highlight_26(row):
-                c = row["Carreira"]
-                if c in color_map:
-                    return [f'background-color: {color_map[c]}; color: {text_map[c]}; font-weight: bold;'] * len(row)
+                c_disp = row[i18n.t("hover_career")]
+                orig_c = next((k for k in color_map.keys() if i18n.traduzir_cargo(k) == c_disp or k == c_disp), None)
+                if orig_c and orig_c in color_map:
+                    return [f'background-color: {color_map[orig_c]}; color: {text_map[orig_c]}; font-weight: bold;'] * len(row)
                 return [''] * len(row)
                 
             st.dataframe(
                 df_mostrar_26.style.apply(highlight_26, axis=1),
                 use_container_width=True,
                 column_config={
-                    f"Distância ({cenario_a})": st.column_config.NumberColumn(
-                        f"Distância ({cenario_a})",
+                    f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})": st.column_config.NumberColumn(
+                        f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})",
                         format="%.3f"
                     ),
-                    f"Distância ({cenario_b})": st.column_config.NumberColumn(
-                        f"Distância ({cenario_b})",
+                    f"{i18n.t('col_distance')} ({i18n.t(cenario_b)})": st.column_config.NumberColumn(
+                        f"{i18n.t('col_distance')} ({i18n.t(cenario_b)})",
                         format="%.3f"
                     )
                 },
@@ -534,8 +584,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             )
             
     else:
-        st.warning("Não há carreiras suficientes para gerar a árvore hierárquica.")
+        st.warning(i18n.t("tree_warning"))
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("m2_dendro", st.session_state.get('explanation_tone', 'tecnico')))
+        st.info(explanations.get_explanation("m2_dendro", st.session_state.get('explanation_tone', 'tecnico'), st.session_state.get('language', 'PT-BR')))
 
     st.markdown("<div style='height: 150px;'></div>", unsafe_allow_html=True)

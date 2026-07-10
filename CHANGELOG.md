@@ -4,6 +4,15 @@ Todas as modificações notáveis neste projeto serão documentadas neste arquiv
 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [Unreleased] - 2026-07-10
+
+### Added
+- **Expansão de Traduções (Modos 2, 3 e 4)**: Inclusão de toda a matriz de traduções em inglês (textos acadêmicos e simplificados) para os detalhamentos metodológicos do painel comparativo, macroscópico e microscópico (`explanations.py`).
+
+### Fixed
+- **Anomalia de Estado em Multiselects**: Refatoração das caixas de seleção da Visão Comparativa (Fluxo, Afinidade, Rede e Árvore) adotando armazenamento de "chaves-invisíveis" ao invés de strings traduzidas, curando o vazamento e o desaparecimento de dados nas tabelas pós-troca de idioma.
+- **Deseleção Indesejada de Menus**: Alteração na lógica dos *Radio Buttons* de Explicações para desacoplar as *labels* dinâmicas (Inglês/Português) da chave de indexação armazenada no `st.session_state`.
+
 ## [Unreleased] - 2026-07-09
 
 ### Added

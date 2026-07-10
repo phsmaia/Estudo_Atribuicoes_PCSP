@@ -342,7 +342,7 @@ with st.container():
         st.toggle(i18n.t("explanation_mode"), key="show_explanations")
     with col_exp_2:
         if st.session_state.get('show_explanations', False):
-            st.radio(i18n.t("reading_tone"), [i18n.t("tone_academic"), i18n.t("tone_layman")], horizontal=True, label_visibility="collapsed", key="explanation_tone")
+            st.radio(i18n.t("reading_tone"), ["tecnico", "leigo"], format_func=lambda x: i18n.t("tone_academic") if x == "tecnico" else i18n.t("tone_layman"), horizontal=True, label_visibility="collapsed", key="explanation_tone")
         
     is_sample_biased_global = False
     
@@ -352,7 +352,7 @@ with st.container():
             col1, col2, col3 = st.columns([1, 1, 1.5])
             
             with col1:
-                cenario_sel = st.selectbox(i18n.t("select_scenario"), opcoes_cenarios, format_func=lambda x: i18n.t(x))
+                cenario_sel = st.selectbox(i18n.t("select_scenario"), opcoes_cenarios, format_func=lambda x: i18n.t(x), key="cenario_sel")
                 df_cenario = mapa_cenarios.get(cenario_sel)
                 cargos_disponiveis = df_cenario['Carreira'].tolist() if df_cenario is not None and 'Carreira' in df_cenario.columns else (df_cenario.index.tolist() if df_cenario is not None else [])
                 
@@ -361,16 +361,19 @@ with st.container():
                 cargos_pc = [c for c in cargos_disponiveis if c not in cargos_cientifica]
                 
             with col2:
+                opcoes_grupos = ["filter_all", "filter_no_cientifica", "filter_only_cientifica", "filter_custom"]
                 grupo_sel = st.selectbox(
                     i18n.t("fast_filter"),
-                    [i18n.t("filter_all"), i18n.t("filter_no_cientifica"), i18n.t("filter_only_cientifica"), i18n.t("filter_custom")]
+                    opcoes_grupos,
+                    format_func=lambda x: i18n.t(x),
+                    key="grupo_sel"
                 )
                 
-                if grupo_sel == i18n.t("filter_all"):
+                if grupo_sel == "filter_all":
                     default_cargos = cargos_disponiveis
-                elif grupo_sel == i18n.t("filter_no_cientifica"):
+                elif grupo_sel == "filter_no_cientifica":
                     default_cargos = cargos_pc
-                elif grupo_sel == i18n.t("filter_only_cientifica"):
+                elif grupo_sel == "filter_only_cientifica":
                     default_cargos = cargos_cientifica
                 else:
                     default_cargos = []
@@ -378,12 +381,15 @@ with st.container():
                 incluir_comuns = st.checkbox(i18n.t("include_generic"), value=False)
                 
             with col1:
+                opcoes_matriz = ["condensed", "original"]
                 tipo_matriz_raw = st.selectbox(
                     i18n.t("matrix_format"), 
-                    [i18n.t("condensed"), i18n.t("original")], 
-                    disabled=incluir_comuns
+                    opcoes_matriz, 
+                    format_func=lambda x: i18n.t(x),
+                    disabled=incluir_comuns,
+                    key="tipo_matriz_raw"
                 )
-                tipo_matriz = "Original" if "Original" in tipo_matriz_raw or incluir_comuns else "Condensada"
+                tipo_matriz = "Original" if "original" in tipo_matriz_raw or incluir_comuns else "Condensada"
                 
             with col2:
                 expandir_textos = st.checkbox(i18n.t("expand_texts"), value=True)
@@ -395,13 +401,15 @@ with st.container():
                     i18n.t("roles_analyze"), 
                     cargos_disponiveis,
                     default=default_cargos,
-                    format_func=lambda x: i18n.traduzir_cargo(x) if traduzir_cargos else x
+                    format_func=lambda x: i18n.traduzir_cargo(x) if st.session_state.get('language', 'PT-BR') == 'EN' else x,
+                    key="filtro_cargos"
                 )
 
                 cargos_destaque = st.multiselect(
                     i18n.t("visual_highlight"),
                     filtro_cargos if filtro_cargos else cargos_disponiveis,
-                    format_func=lambda x: i18n.traduzir_cargo(x) if traduzir_cargos else x
+                    format_func=lambda x: i18n.traduzir_cargo(x) if st.session_state.get('language', 'PT-BR') == 'EN' else x,
+                    key="cargos_destaque"
                 )
                 
                 if cargos_destaque:
@@ -422,12 +430,12 @@ with st.container():
                 if filtro_cargos and len(filtro_cargos) < len(cargos_disponiveis):
                     is_sample_biased_global = True
 
-    # --- CONTROLES MODO 2 ---
     elif modo_visao == i18n.t("mode_2"):
+        traduzir_cargos = st.session_state.get('language', 'PT-BR') == 'EN'
         with st.popover(i18n.t("config_compare"), use_container_width=True):
             col_a, col_b = st.columns(2)
-            cenario_a = col_a.selectbox(i18n.t("scenario_a"), opcoes_cenarios, index=0, format_func=lambda x: i18n.t(x))
-            cenario_b = col_b.selectbox(i18n.t("scenario_b"), opcoes_cenarios, index=1, format_func=lambda x: i18n.t(x))
+            cenario_a = col_a.selectbox(i18n.t("scenario_a"), opcoes_cenarios, index=0, format_func=lambda x: i18n.t(x), key="cenario_a_sel")
+            cenario_b = col_b.selectbox(i18n.t("scenario_b"), opcoes_cenarios, index=1, format_func=lambda x: i18n.t(x), key="cenario_b_sel")
             
             df_a = mapa_cenarios.get(cenario_a)
             if df_a is not None and 'Carreira' in df_a.columns:
@@ -436,8 +444,8 @@ with st.container():
                 cargos_base = df_a.index.tolist() if df_a is not None else []
                 
             col_c, col_d = st.columns(2)
-            carreira_sel_comparativo = col_c.selectbox(i18n.t("career_detail"), cargos_base, index=None, placeholder=i18n.t("none_overview"))
-            cargos_destaque_2 = col_d.multiselect(i18n.t("visual_highlight"), cargos_base, help=i18n.t("highlight_help"))
+            carreira_sel_comparativo = col_c.selectbox(i18n.t("career_detail"), cargos_base, index=None, placeholder=i18n.t("none_overview"), format_func=lambda x: i18n.traduzir_cargo(x) if traduzir_cargos else x, key="carreira_sel_comparativo_sel")
+            cargos_destaque_2 = col_d.multiselect(i18n.t("visual_highlight"), cargos_base, help=i18n.t("highlight_help"), format_func=lambda x: i18n.traduzir_cargo(x) if traduzir_cargos else x, key="cargos_destaque_2_sel")
             
         if carreira_sel_comparativo:
             import json
@@ -454,14 +462,17 @@ with st.container():
                         val_b = "Investigador de Polícia (+ Apoio)"
                     cargo_foco_b = val_b
                     break
-            rastreio_html = f"<div title='Rastreia as perdas e ganhos funcionais de uma carreira específica entre os dois cenários escolhidos.' style='cursor: help; background: rgba(0, 114, 178, 0.2); border: 1px solid #0072B2; padding: 6px 15px; border-radius: 8px; font-size: 0.85rem; color: #E0E0E0; width: 100%; margin-top: 5px;'>🔍 Rastreando carreira principal: <strong style='color: #4da6ff;'>{carreira_sel_comparativo}</strong> ({cenario_a}) ➔ <strong style='color: #4da6ff;'>{cargo_foco_b}</strong> ({cenario_b}) <span style='float:right'>ℹ️</span></div>"
+            # translate for tracking badge if needed
+            c_sel_trans = i18n.traduzir_cargo(carreira_sel_comparativo) if traduzir_cargos else carreira_sel_comparativo
+            c_foco_trans = i18n.traduzir_cargo(cargo_foco_b) if traduzir_cargos else cargo_foco_b
+            rastreio_html = f"<div title='{i18n.t('tracking_title')}' style='cursor: help; background: rgba(0, 114, 178, 0.2); border: 1px solid #0072B2; padding: 6px 15px; border-radius: 8px; font-size: 0.85rem; color: #E0E0E0; width: 100%; margin-top: 5px;'>{i18n.t('tracking_main')} <strong style='color: #4da6ff;'>{c_sel_trans}</strong> ({i18n.t(cenario_a)}) ➔ <strong style='color: #4da6ff;'>{c_foco_trans}</strong> ({i18n.t(cenario_b)}) <span style='float:right'>ℹ️</span></div>"
         else:
             rastreio_html = ""
             
         badge_destaque_2 = ""
         if cargos_destaque_2:
-            str_dest_2 = ", ".join([c.replace(' de Polícia', '').replace(' Policial', '') for c in cargos_destaque_2])
-            badge_destaque_2 = f" <div class='status-badge' style='background: rgba(255, 152, 0, 0.2); border: 1px solid rgba(255, 152, 0, 0.5); color: #ffb74d;'>🎨 Destaques: <strong>{str_dest_2}</strong></div>"
+            str_dest_2 = ", ".join([i18n.traduzir_cargo(c).replace(' de Polícia', '').replace(' Policial', '') if traduzir_cargos else c.replace(' de Polícia', '').replace(' Policial', '') for c in cargos_destaque_2])
+            badge_destaque_2 = f" <div class='status-badge' style='background: rgba(255, 152, 0, 0.2); border: 1px solid rgba(255, 152, 0, 0.5); color: #ffb74d;'>{i18n.t('highlights_lbl')} <strong>{str_dest_2}</strong></div>"
 
         badge_vies_html = "<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>⚠️ VIÉS AMOSTRAL</div>" if is_sample_biased_global else ""
         status_bar_placeholder.markdown(f"""
@@ -469,9 +480,9 @@ with st.container():
         <div style='display: flex; flex-direction: column;'>
             <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 5px; flex-wrap: wrap; gap: 10px;'>
                 <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
-                    <div class='status-badge' title='Modo 2: Permite comparar o grau de distanciamento, afinidade e fluxo de funções normativas entre as carreiras policiais nos dois cenários temporais.' style='cursor: help;'>⚙️ Modo: <strong>Análise de Cenários (A x B)</strong> <span style='font-size:0.7rem'>ℹ️</span></div>
-                    <div class='status-badge' title='Cenário de Origem da comparação (De onde os cargos partiram)' style='cursor: help;'>📌 A: <strong>{i18n.t(cenario_a)}</strong></div>
-                    <div class='status-badge' title='Cenário de Destino da comparação (Para onde os cargos foram)' style='cursor: help;'>📌 B: <strong>{i18n.t(cenario_b)}</strong></div>{badge_destaque_2}
+                    <div class='status-badge' title='{i18n.t("mode2_tooltip")}' style='cursor: help;'>{i18n.t("badge_mode")} <strong>{i18n.t("mode_2").split(". ")[1]}</strong> <span style='font-size:0.7rem'>ℹ️</span></div>
+                    <div class='status-badge' title='{i18n.t("scenario_origin_tooltip")}' style='cursor: help;'>{i18n.t("badge_scenario_a")}<strong>{i18n.t(cenario_a)}</strong></div>
+                    <div class='status-badge' title='{i18n.t("scenario_dest_tooltip")}' style='cursor: help;'>{i18n.t("badge_scenario_b")}<strong>{i18n.t(cenario_b)}</strong></div>{badge_destaque_2}
                 </div>
             </div>
             {rastreio_html}
