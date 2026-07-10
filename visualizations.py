@@ -417,6 +417,9 @@ def plot_upset_bar_chart(df: pd.DataFrame, title: str, dic_reverso: dict = None,
     Calcula as interseções reais entre os conjuntos de cargos.
     O DataFrame de entrada deve ter os cargos como índice (rows) e as atribuições nas colunas.
     """
+    import streamlit as st
+    lang = st.session_state.get('language', 'PT-BR') if 'language' in st.session_state else 'PT-BR'
+    
     # Converter para booleano
     df_bool = df > 0
     total_attrs = len(df.columns)
@@ -445,14 +448,15 @@ def plot_upset_bar_chart(df: pd.DataFrame, title: str, dic_reverso: dict = None,
     
     def make_label(row):
         c_list = [c for c in cols if row[c]]
+        
         if len(c_list) == len(cols):
-            return "Todos os Cargos"
+            return i18n.t_lang("upset_all_roles", lang)
         elif len(c_list) == 1:
-            return c_list[0] + " (Exclusiva)"
+            return c_list[0] + f" {i18n.t_lang('upset_exclusive', lang)}"
         elif len(c_list) == 2:
             return c_list[0] + " + " + c_list[1]
         else:
-            return f"[{len(c_list)} Cargos] " + " + ".join([c[:8]+"." for c in c_list])
+            return f"[{len(c_list)} {i18n.t_lang('upset_roles_count', lang)}] " + " + ".join([c[:8]+"." for c in c_list])
             
     def make_hover(row):
         # Transforma a lista de siglas em nomes originais
@@ -467,7 +471,8 @@ def plot_upset_bar_chart(df: pd.DataFrame, title: str, dic_reverso: dict = None,
         display_list = text_list[:max_show]
         joined = "<br> - " + "<br> - ".join([t[:90] + "..." if len(t) > 90 else t for t in display_list])
         if len(text_list) > max_show:
-            joined += f"<br><i>... e mais {len(text_list) - max_show} atribuições.</i>"
+            diff = len(text_list) - max_show
+            joined += f"<br><i>{i18n.t('upset_more_attr').format(count=diff)}</i>"
             
         c_list = [c for c in cols if row[c]]
         cargos_str = "<br>".join(c_list)

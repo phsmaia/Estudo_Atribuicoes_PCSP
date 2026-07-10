@@ -28,6 +28,8 @@ if "language" not in st.session_state:
 try:
     df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', sep=';', encoding='iso-8859-1')
     df_conv.to_json('csv_dump.json', orient='records', force_ascii=False)
+
+    
 except Exception as e:
     with open('erro.txt', 'w') as f: f.write(str(e))
     pass
@@ -277,26 +279,8 @@ st.markdown("""
         display: none;
     }
     
-    /* Injeção de Imagens de Bandeiras no st.radio para Windows (Somente no seletor de Idioma) */
-    div[data-testid="stRadio"] div[role="radiogroup"][aria-label="Language"] label:nth-child(1) p::before {
-        content: "";
-        display: inline-block;
-        width: 18px;
-        height: 13px;
-        background-image: url('https://flagcdn.com/w20/br.png');
-        background-size: cover;
-        margin-right: 6px;
-        border-radius: 2px;
-    }
-    div[data-testid="stRadio"] div[role="radiogroup"][aria-label="Language"] label:nth-child(2) p::before {
-        content: "";
-        display: inline-block;
-        width: 18px;
-        height: 13px;
-        background-image: url('https://flagcdn.com/w20/us.png');
-        background-size: cover;
-        margin-right: 6px;
-        border-radius: 2px;
+    header[data-testid="stHeader"] {
+        display: none;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -305,7 +289,7 @@ st.markdown("""
 with st.container():
     st.markdown("<div id='sticky-header-anchor'></div>", unsafe_allow_html=True)
     
-    col_title, col_btn = st.columns([85, 15], vertical_alignment="center")
+    col_title, col_btn = st.columns([70, 30], vertical_alignment="center")
     with col_title:
         st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
     def _muda_idioma():
@@ -313,15 +297,22 @@ with st.container():
         st.session_state.language = 'PT-BR' if 'PT-BR' in val else 'EN'
 
     with col_btn:
-        st.radio(
-            "Language", 
-            options=["PT-BR", "EN"], 
-            index=0 if st.session_state.get('language', 'PT-BR') == 'PT-BR' else 1,
-            key="lang_radio",
-            on_change=_muda_idioma,
-            horizontal=True, 
-            label_visibility="collapsed"
-        )
+        c1, c2 = st.columns([6, 4], vertical_alignment="center")
+        with c1:
+            st.markdown(
+                "<div style='text-align: right; font-size: 0.95rem; font-weight:600; color: #aaa; margin-top: -13px;'>Idioma / Language 🌐 <span title='Clique para alternar o idioma do painel / Click to switch dashboard language' style='cursor: help; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; border: 1px solid #aaa; font-size: 0.7rem; margin-left: 2px;'>?</span></div>", 
+                unsafe_allow_html=True
+            )
+        with c2:
+            st.radio(
+                "lang_label", 
+                options=["PT-BR", "EN"], 
+                index=0 if st.session_state.get('language', 'PT-BR') == 'PT-BR' else 1,
+                key="lang_radio",
+                on_change=_muda_idioma,
+                horizontal=True, 
+                label_visibility="collapsed"
+            )
                 
     status_bar_placeholder = st.empty()
     # Removemos o HTML do layout inicial porque o render final dos badges ocorre lá embaixo
@@ -397,23 +388,20 @@ with st.container():
             with col2:
                 expandir_textos = st.checkbox(i18n.t("expand_texts"), value=True)
                 
-                traduzir_cargos = False
-                if st.session_state.get('language', 'PT-BR') == 'EN':
-                    traduzir_cargos = st.checkbox("🌎 Translate Roles & Assignments", value=False)
+                traduzir_cargos = st.session_state.get('language', 'PT-BR') == 'EN'
                 
             with col3:
                 filtro_cargos = st.multiselect(
                     i18n.t("roles_analyze"), 
                     cargos_disponiveis,
                     default=default_cargos,
-                    format_func=lambda x: i18n.dic_traducao_cargos.get(x, x) if traduzir_cargos else x
+                    format_func=lambda x: i18n.traduzir_cargo(x) if traduzir_cargos else x
                 )
-                st.caption(i18n.t("roles_explanation"))
 
                 cargos_destaque = st.multiselect(
                     i18n.t("visual_highlight"),
                     filtro_cargos if filtro_cargos else cargos_disponiveis,
-                    format_func=lambda x: i18n.dic_traducao_cargos.get(x, x) if traduzir_cargos else x
+                    format_func=lambda x: i18n.traduzir_cargo(x) if traduzir_cargos else x
                 )
                 
                 if cargos_destaque:
@@ -600,22 +588,24 @@ if df_cenario is not None and not df_cenario.empty:
         # Switch Lógico
         df_to_use = df_original_limpo if tipo_matriz == "Original" else df_condensado
         
-
+        # Ocultar coluna de atribuições não encontradas (se existir)
+        if "NÃO ENCONTRADAS ATRIBUIÇÕES" in df_to_use.columns:
+            df_to_use = df_to_use.drop(columns=["NÃO ENCONTRADAS ATRIBUIÇÕES"])
+        
         
         if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
             # Traduz índice (cargos) do df_to_use
-            df_to_use.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_to_use.index]
+            df_to_use.index = [i18n.traduzir_cargo(c) for c in df_to_use.index]
             # Traduz colunas (atribuições) do df_to_use
-            if df_to_use.columns.name != 'Carreira':
-                df_to_use.columns = [i18n.dic_traducao_atribuicoes.get(c, c) for c in df_to_use.columns]
+            df_to_use.columns = [i18n.traduzir_atribuicao(c) for c in df_to_use.columns]
             
             if 'Carreira' in df_to_use.columns:
-                df_to_use['Carreira'] = df_to_use['Carreira'].map(lambda c: i18n.dic_traducao_cargos.get(c, c))
+                df_to_use['Carreira'] = df_to_use['Carreira'].map(lambda c: i18n.traduzir_cargo(c))
             
             # Traduz filtro_cargos e cargos_destaque dinamicamente para os gráficos e tabelas
-            filtro_cargos_ui = [i18n.dic_traducao_cargos.get(c, c) for c in filtro_cargos] if filtro_cargos else []
-            cargos_destaque_ui = [i18n.dic_traducao_cargos.get(c, c) for c in cargos_destaque] if cargos_destaque else []
-            cargos_disponiveis_ui = [i18n.dic_traducao_cargos.get(c, c) for c in cargos_disponiveis]
+            filtro_cargos_ui = [i18n.traduzir_cargo(c) for c in filtro_cargos] if filtro_cargos else []
+            cargos_destaque_ui = [i18n.traduzir_cargo(c) for c in cargos_destaque] if cargos_destaque else []
+            cargos_disponiveis_ui = [i18n.traduzir_cargo(c) for c in cargos_disponiveis]
         else:
             filtro_cargos_ui = filtro_cargos
             cargos_destaque_ui = cargos_destaque
@@ -624,10 +614,7 @@ if df_cenario is not None and not df_cenario.empty:
     # Siglas e Textos
     dic_siglas = data_processing.gerar_dicionario_siglas(df_to_use.columns)
     dic_reverso = {v: k for k, v in dic_siglas.items()}
-    
-    if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
-        dic_reverso = {k: i18n.dic_traducao_atribuicoes.get(v, v) for k, v in dic_reverso.items()}
-        
+
     df_to_use_siglas = data_processing.aplicar_siglas_dataframe(df_to_use, dic_siglas)
     text_matrix = data_processing.obter_atribuicoes_comuns_textuais(df_to_use, dic_siglas, expandir_textos)
 
@@ -698,6 +685,7 @@ if df_cenario is not None and not df_cenario.empty:
             - **Investigador de Polícia**: Police Investigator / Detective
             - **Escrivão de Polícia**: Police Clerk / Desk Officer
             - **Agente Policial**: Police Agent / Operative
+            - **Carcereiro Policial**: Police Jailer
             - **Agente de Telecomunicações Policial**: Police Telecommunications Agent / Dispatcher
             - **Papiloscopista Policial**: Fingerprint Examiner / Dactyloscopist
             - **Auxiliar de Papiloscopista Policial**: Fingerprint Examiner Assistant
@@ -751,8 +739,8 @@ if df_cenario is not None and not df_cenario.empty:
     
     df_explorer = df_original_limpo.set_index('Carreira') if 'Carreira' in df_original_limpo.columns else df_original_limpo.copy()
     if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
-        df_explorer.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_explorer.index]
-        df_explorer.columns = [i18n.dic_traducao_atribuicoes.get(c, c) for c in df_explorer.columns]
+        df_explorer.index = [i18n.traduzir_cargo(c) for c in df_explorer.index]
+        df_explorer.columns = [i18n.traduzir_atribuicao(c) for c in df_explorer.columns]
         
     # Total de atribuições na base (para a porcentagem)
     total_atribuicoes_base = len(df_explorer.columns)
@@ -840,9 +828,9 @@ if df_cenario is not None and not df_cenario.empty:
             for c in filtro_cargos_explorador:
                 qtd = df_filtro.loc[c].sum()
                 pct = (qtd / total_atribuicoes_base) * 100
-                stats.append({"Cargo": c, "Qtd Atribuições": int(qtd), "Representatividade (%)": f"{pct:.1f}%"})
+                stats.append({i18n.t("col_roles"): c, i18n.t("col_qtd"): int(qtd), i18n.t("col_rep"): f"{pct:.1f}%"})
             
-            df_stats = pd.DataFrame(stats).set_index("Cargo")
+            df_stats = pd.DataFrame(stats).set_index(i18n.t("col_roles"))
             
             def highlight_stats(row):
                 if cargos_destaque_ui and row.name in cargos_destaque_ui:
@@ -988,10 +976,13 @@ if df_cenario is not None and not df_cenario.empty:
     
     df_upset = df_original_limpo.set_index('Carreira') if 'Carreira' in df_original_limpo.columns else df_original_limpo.copy()
     if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
-        df_upset.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_upset.index]
-        df_upset.columns = [i18n.dic_traducao_atribuicoes.get(c, c) for c in df_upset.columns]
-    
-    fig_upset = visualizations.plot_upset_bar_chart(df_upset, f"{i18n.t('upset_title')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
+        df_upset.index = [i18n.traduzir_cargo(c) for c in df_upset.index]
+        df_upset.columns = [i18n.traduzir_atribuicao(c) for c in df_upset.columns]
+    fig_upset = visualizations.plot_upset_bar_chart(
+        df_upset, 
+        f"{i18n.t('upset_title')} - {i18n.t(cenario_sel)}", 
+        cargos_destaque=cargos_destaque_ui
+    )
     st.plotly_chart(fig_upset, use_container_width=True)
     
     if st.session_state.get('show_explanations', False):

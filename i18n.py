@@ -1,41 +1,194 @@
 import streamlit as st
 
-# --- DICIONÁRIO GLOBAL DE TRADUÇÃO ---
+import pandas as pd
+import os
+
+# Base static dictionaries (fallback)
 dic_traducao_cargos = {
-    "Delegado de Polícia": "Police Chief",
-    "Investigador de Polícia": "Police Investigator",
     "Investigador de Polícia (+ Apoio)": "Police Investigator (+ Support)",
-    "Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial)": "Police Investigator (+ Telecomm + Agent + Jailer)",
-    "Oficial Investigador de Polícia": "Official Police Investigator",
-    "Escrivão de Polícia": "Police Clerk",
-    "Agente Policial": "Police Agent",
-    "Agente de Polícia Judiciária": "Judicial Police Agent",
-    "Carcereiro Policial": "Police Jailer",
-    "Agente de Telecomunicações Policial": "Police Telecomm Agent",
-    "Papiloscopista Policial": "Fingerprint Examiner",
-    "Perito Papiloscopista": "Fingerprint Expert",
-    "Agente de Perícia Papiloscópica": "Fingerprint Forensics Agent",
-    "Auxiliar de Papiloscopista Policial": "Fingerprint Examiner Asst",
-    "Perito Criminal": "Forensic Expert",
-    "Médico Legista": "Medical Examiner",
-    "Fotógrafo Técnico-Pericial": "Forensic Photographer",
-    "Fotógrafo Técnico Pericial": "Forensic Photographer",
-    "Desenhista Técnico-Pericial": "Forensic Sketch Artist",
-    "Desenhista Técnico Pericial": "Forensic Sketch Artist",
-    "Agente de Perícia Criminalística": "Criminalistics Forensics Agent",
-    "Atendente de Necrotério Policial": "Morgue Attendant",
-    "Auxiliar de Necropsia": "Autopsy Assistant",
-    "Auxiliar de Necrópsia Policial": "Autopsy Assistant",
-    "Agente de Perícia Médico Legal": "Medicolegal Forensics Agent",
     "Policial Civil (todos os cargos)": "Civil Police (all roles)"
 }
 
 dic_traducao_atribuicoes = {
-    "DIRIGIR, COORDENAR E SUPERVISIONAR AS UNIDADES POLICIAIS": "Direct, Coordinate and Supervise Police Units",
-    "REALIZAR INVESTIGACOES E LEVANTAMENTOS": "Conduct Investigations and Surveys",
-    "REALIZAR PERICIAS CRIMINALISTICAS": "Conduct Criminalistics Expertise",
-    "REALIZAR PERICIAS MEDICO-LEGAIS": "Conduct Medicolegal Expertise"
+    "Portar arma de fogo e documento de identidade funcional": "Carry a firearm and official ID",
+    "Atuar com possibilidade de exposição a situações de risco": "Act with potential exposure to risk situations",
+    "Realizar diligências": "Conduct police diligences/investigations",
+    "Conduzir viaturas policiais": "Drive police vehicles",
+    "Atendimento ao público": "Customer/Public service",
+    "Cumprir mandados": "Execute warrants",
+    "Elaborar relatórios": "Prepare reports",
+    "Preservar local de crime": "Preserve crime scenes",
+    
+    # Missing explicit generic assignments from older scenarios
+    "portar arma, distintivo e algemas": "Carry weapon, badge, and handcuffs",
+    "atender sempre, com urbanidade e eficiência, o público em geral, pessoalmente ou por telefone": "Always serve the general public, in person or by phone, with urbanity and efficiency",
+    "elaborar, sob orientação da Autoridade Policial, registro de ocorrência": "Prepare incident reports under the guidance of the Police Authority",
+    "conduzir viatura policial": "Drive police vehicles",
+    "cumprir diligência e/ou requisição determinada pela Autoridade Policial, elaborando relatório respectivo": "Fulfill diligences and/or requests determined by the Police Authority, preparing the respective report",
+    "proceder à abordagem de pessoas suspeitas da prática de ilícitos, realizando busca pessoal quando necessário": "Approach individuals suspected of illicit practices, performing personal searches when necessary",
+    "identificar pessoas, inclusive por meio digital, nas hipóteses em que tal providência se faça necessária": "Identify people, including by digital means, when necessary",
+    "conduzir e apresentar pessoas legalmente presas à Autoridade Policial competente ou onde for por ela determinado": "Escort and present legally arrested people to the competent Police Authority",
+    "auxiliar a Autoridade Policial na formalização de atos de polícia judiciária": "Assist the Police Authority in formalizing acts of judicial police",
+    "operar os sistemas de comunicação e de dados da Polícia Civil": "Operate the Civil Police's communication and data systems",
+    
+    "secretariar atos de polícia judiciária": "Serve as secretary for judicial police acts",
+    "transporte de pessoas / coisas de ocorrência policial": "Transport people/goods related to police occurrences",
+    "transporte de pessoas/ coisas...": "Transport people/goods...",
+    "análises de substâncias orgânica / inorgânicas": "Analyze organic/inorganic substances",
+    "análises de substâncias...": "Analyze organic/inorganic substances...",
+    "identificação civil e criminal com papiloscopia e retrato falado": "Civil and criminal identification using papiloscopy and composite sketches",
+    "identificação civil e criminal...": "Civil and criminal identification...",
+    "projeções de envelhecimento e rejuvenecimento": "Age progression and regression projections",
+    "projeções de envelhecimento...": "Age progression...",
+    "registrar e encaminhar dados de clssificação papiloscópica": "Register and forward papiloscopic classification data",
+    "registrar e encaminhar dados...": "Register and forward papiloscopic data...",
+    "elaborar levantamento planimétrico": "Prepare planimetric surveys",
+    "assessoramento técnico papiloscópico": "Papiloscopic Technical Assistance",
+    "suporte a desastres": "Disaster Support",
+    
+    # Just in case, the ones with trailing ellipses the user mentioned:
+    "atender sempre, com urbanidade...": "Always serve the general public, with urbanity...",
+    "elaborar, sob orientação da Autoridade Policia...": "Prepare incident reports under the guidance...",
+    "cunpri diligência e/ou requisição...": "Fulfill diligences and/or requests...",
+    "proceder à abordagem de pessoas suspeitas...": "Approach individuals suspected of illicit practices..."
 }
+
+def init_translations():
+    # Carregar Cargos
+    try:
+        if os.path.exists('cargos_ingles_descricao.csv'):
+            df_cargos = pd.read_csv('cargos_ingles_descricao.csv', encoding='utf-8')
+            pt_col = 'Cargo em Português' if 'Cargo em Português' in df_cargos.columns else df_cargos.columns[0]
+            en_col = 'Melhor Tradução em Inglês' if 'Melhor Tradução em Inglês' in df_cargos.columns else df_cargos.columns[1]
+            for _, row in df_cargos.iterrows():
+                pt_val = str(row[pt_col]).strip()
+                en_val = str(row[en_col]).strip()
+                if pt_val and en_val and pt_val != 'nan':
+                    dic_traducao_cargos[pt_val] = en_val
+    except:
+        pass
+
+    # Carregar Atribuições
+    try:
+        if os.path.exists('Atribuicoes_Carreiras_Editais.CSV'):
+            df_editais = None
+            for enc in ['utf-8', 'iso-8859-1', 'cp1252']:
+                try:
+                    df_editais = pd.read_csv('Atribuicoes_Carreiras_Editais.CSV', sep=';', encoding=enc)
+                    break
+                except UnicodeDecodeError:
+                    pass
+            
+            if df_editais is not None:
+                if 'atribuicao' in df_editais.columns and 'atribuicao_inglês' in df_editais.columns:
+                    for _, row in df_editais.iterrows():
+                        pt_val = str(row['atribuicao']).strip()
+                        en_val = str(row['atribuicao_inglês']).strip()
+                        if pt_val and en_val and pt_val != 'nan' and en_val != 'nan':
+                            dic_traducao_atribuicoes[pt_val] = en_val
+                            
+                if 'Reduzida' in df_editais.columns and 'Reduzida_Inglês' in df_editais.columns:
+                    for _, row in df_editais.iterrows():
+                        pt_val = str(row['Reduzida']).strip()
+                        en_val = str(row['Reduzida_Inglês']).strip()
+                        if pt_val and en_val and pt_val != 'nan' and en_val != 'nan':
+                            dic_traducao_atribuicoes[pt_val] = en_val
+    except:
+        pass
+
+    # Forçar traduções hardcoded genéricas por cima do CSV caso o CSV esteja mal traduzido nessas linhas
+    hardcoded = {
+        "Portar arma de fogo e documento de identidade funcional": "Carry a firearm and official ID",
+        "Atuar com possibilidade de exposição a situações de risco": "Act with potential exposure to risk situations",
+        "Realizar diligências": "Conduct police diligences/investigations",
+        "Conduzir viaturas policiais": "Drive police vehicles",
+        "Atendimento ao público": "Customer/Public service",
+        "Cumprir mandados": "Execute warrants",
+        "Elaborar relatórios": "Prepare reports",
+        "Preservar local de crime": "Preserve crime scenes"
+    }
+    dic_traducao_atribuicoes.update(hardcoded)
+
+# Initialize once
+init_translations()
+
+def _traduzir_cargo_simples(cargo):
+    c_limpo = cargo.strip()
+    if c_limpo in dic_traducao_cargos:
+        return dic_traducao_cargos[c_limpo]
+        
+    c_lower = c_limpo.lower()
+    for k, v in dic_traducao_cargos.items():
+        if k.lower() == c_lower:
+            return v
+    return cargo
+
+def traduzir_cargo(cargo_pt):
+    if pd.isna(cargo_pt):
+        return cargo_pt
+    cargo_pt_str = str(cargo_pt).strip()
+    
+    # Se já existe no dicionário exato, retorna direto
+    if cargo_pt_str in dic_traducao_cargos:
+        return dic_traducao_cargos[cargo_pt_str]
+    
+    # Q1-A: Regra dinâmica para mesclagens (ex: "Cargo A (+ Cargo B + Cargo C)")
+    if "(+" in cargo_pt_str:
+        partes = cargo_pt_str.split("(+")
+        cargo_base = partes[0].strip()
+        cargos_extra = partes[1].replace(")", "").split("+")
+        
+        base_trad = _traduzir_cargo_simples(cargo_base)
+        extras_trad = []
+        for extra in cargos_extra:
+            trad = _traduzir_cargo_simples(extra.strip())
+            # A lógica retira "Police " de itens secundários para evitar repetição excessiva, ex "Investigator (+ Agent)"
+            trad = trad.replace("Police ", "")
+            extras_trad.append(trad)
+            
+        return f"{base_trad} (+ {' + '.join(extras_trad)})"
+        
+    # Fallback ignorando case
+    return _traduzir_cargo_simples(cargo_pt_str)
+
+import re
+
+def _traduzir_atribuicao_simples(atrib):
+    atrib_str = str(atrib).strip(" .")
+    # Q2-A: Tenta traduzir exato
+    if atrib_str in dic_traducao_atribuicoes:
+        return dic_traducao_atribuicoes[atrib_str]
+        
+    # Fallback super resiliente
+    # Remove \xa0, \t, etc e normaliza múltiplos espaços para um só
+    a_norm = re.sub(r'\s+', ' ', atrib_str.lower().replace('\xa0', ' ')).strip()
+    
+    for k, v in dic_traducao_atribuicoes.items():
+        k_norm = re.sub(r'\s+', ' ', str(k).lower().replace('\xa0', ' ')).strip(" .")
+        if k_norm == a_norm:
+            return v
+            
+    # Como último recurso, tenta ver se a chave do dicionário está CONTIDA na atribuição
+    for k, v in dic_traducao_atribuicoes.items():
+        k_norm = re.sub(r'\s+', ' ', str(k).lower().replace('\xa0', ' ')).strip(" .")
+        if len(k_norm) > 10 and k_norm in a_norm:
+            return v
+            
+    return atrib
+
+def traduzir_atribuicao(atrib_pt):
+    if pd.isna(atrib_pt):
+        return atrib_pt
+    
+    atrib_pt_str = str(atrib_pt).strip()
+    
+    # Lida com colunas aglutinadas geradas por condensar_dataframe ("A / B")
+    if ' / ' in atrib_pt_str:
+        partes = [p.strip() for p in atrib_pt_str.split(' / ')]
+        return ' / '.join([_traduzir_atribuicao_simples(p) for p in partes])
+        
+    return _traduzir_atribuicao_simples(atrib_pt_str)
+
 
 TRANSLATIONS = {
     "PT-BR": {
@@ -168,7 +321,14 @@ TRANSLATIONS = {
         "title_matrix_prefix": "Matriz",
         "title_adj_prefix": "Adjacência",
         "title_gower_prefix": "Matriz de Distância de Gower",
-        "title_network": "Rede de Carreiras (Adjacência >= {threshold})"
+        "col_roles": "Cargo",
+        "col_qtd": "Qtd Atribuições",
+        "col_rep": "Representatividade (%)",
+        "none_text": "Nenhuma",
+        "upset_all_roles": "Todos os Cargos",
+        "upset_exclusive": "(Exclusiva)",
+        "upset_roles_count": "Cargos",
+        "upset_more_attr": "... e mais {count} atribuições."
     },
     "EN": {
         "title": "Interactive Dashboard: PCSP Assignments Study (2024)",
@@ -305,7 +465,15 @@ TRANSLATIONS = {
         "title_matrix_prefix": "Matrix",
         "title_adj_prefix": "Adjacency",
         "title_gower_prefix": "Gower Distance Matrix",
-        "title_network": "Careers Network (Adjacency >= {threshold})"
+        "title_network": "Careers Network (Adjacency >= {threshold})",
+        "col_roles": "Role",
+        "col_qtd": "Qty Assignments",
+        "col_rep": "Representativeness (%)",
+        "none_text": "None",
+        "upset_all_roles": "All Roles",
+        "upset_exclusive": "(Exclusive)",
+        "upset_roles_count": "Roles",
+        "upset_more_attr": "... and {count} more assignments."
     }
 }
 
@@ -315,4 +483,10 @@ def t(key):
     Returns the translation of the provided key according to the selected language in session_state.
     """
     lang = st.session_state.get('language', 'PT-BR')
+    return TRANSLATIONS.get(lang, TRANSLATIONS["PT-BR"]).get(key, key)
+
+def t_lang(key, lang):
+    """
+    Tradução explícita baseada no parâmetro lang.
+    """
     return TRANSLATIONS.get(lang, TRANSLATIONS["PT-BR"]).get(key, key)

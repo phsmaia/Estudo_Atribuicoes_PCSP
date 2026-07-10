@@ -4,6 +4,17 @@ Todas as modificações notáveis neste projeto serão documentadas neste arquiv
 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [Unreleased] - 2026-07-09
+
+### Added
+- **Suporte a Múltiplos Idiomas (i18n)**: Implementação arquitetural robusta para tradução completa do painel para o Inglês (`i18n.py`).
+- **Tradução com Regex Resiliente**: Criação da função `_traduzir_atribuicao_simples` que varre, limpa e padroniza strings brutas (ex: eliminando espaços invisíveis `\xa0` e duplos espaços) garantindo a correspondência no dicionário mesmo com variações no texto original.
+- **Função de Escopo Isolado `t_lang`**: Nova sub-rotina de tradução explicitly injetável por parâmetro (`lang`) desenhada para contornar perdas de contexto de sessão do Streamlit no interior de loops do Pandas.
+
+### Fixed
+- **Quebra de Tradução na Seção 1.8**: Resolução da falha nas traduções (labels em português vazando em ambiente EN) do Gráfico de Barras UpSet, abandonando a varredura `.get` direta para forçar a passagem na nova engine central.
+- **Conflito de Escopo Python/Streamlit**: Contorno definitivo para o bloqueio de cache no carregamento modular do Streamlit causador do erro (TypeError/AttributeError) nas atualizações quentes de arquivos secundários (`visualizations.py`).
+
 ## [Unreleased] - 2026-06-29
 
 ### Added
