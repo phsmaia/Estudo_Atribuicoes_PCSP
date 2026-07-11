@@ -15,6 +15,33 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
     lang = st.session_state.get('language', 'PT-BR')
     traduzir = lang == 'EN'
 
+    if lang == 'EN':
+        with st.expander("📚 Brazilian Police Roles Glossary"):
+            st.markdown("""
+            **Roles Translation (Approximations):**
+            - **Delegado de Polícia**: Police Chief / Police Delegate
+            - **Investigador de Polícia**: Police Investigator / Detective
+            - **Escrivão de Polícia**: Police Clerk / Desk Officer
+            - **Agente Policial**: Police Agent / Operative
+            - **Carcereiro Policial**: Police Jailer
+            - **Agente de Telecomunicações Policial**: Police Telecommunications Agent / Dispatcher
+            - **Papiloscopista Policial**: Fingerprint Examiner / Dactyloscopist
+            - **Auxiliar de Papiloscopista Policial**: Fingerprint Examiner Assistant
+            - **Perito Criminal**: Forensic Expert / Criminalist
+            - **Médico Legista**: Medical Examiner / Forensic Pathologist
+            - **Fotógrafo Técnico-Pericial**: Forensic Photographer
+            - **Desenhista Técnico-Pericial**: Forensic Sketch Artist
+            - **Atendente de Necrotério Policial**: Morgue Attendant
+            - **Auxiliar de Necropsia**: Autopsy Assistant
+            
+            *(Note: 'Odontolegista' is not listed separately here because it's functionally merged within Medical Examiner and Forensic Expert duties in this dataset).*
+            """)
+        
+        with st.expander("📖 Assignments Translation Table"):
+            st.markdown("Below are the available translations for the assignments in the active dataset.")
+            df_translations = pd.DataFrame(list(i18n.dic_traducao_atribuicoes.items()), columns=["Portuguese (PT-BR)", "English (US-EN)"])
+            st.dataframe(df_translations, use_container_width=True, hide_index=True)
+
     if cargos_destaque is None: cargos_destaque = []
     destaques_completos = list(set(cargos_destaque))
     if cargo_foco_a and cargo_foco_a not in destaques_completos:

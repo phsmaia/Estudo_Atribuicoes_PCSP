@@ -474,7 +474,7 @@ with st.container():
             str_dest_2 = ", ".join([i18n.traduzir_cargo(c).replace(' de Polícia', '').replace(' Policial', '') if traduzir_cargos else c.replace(' de Polícia', '').replace(' Policial', '') for c in cargos_destaque_2])
             badge_destaque_2 = f" <div class='status-badge' style='background: rgba(255, 152, 0, 0.2); border: 1px solid rgba(255, 152, 0, 0.5); color: #ffb74d;'>{i18n.t('highlights_lbl')} <strong>{str_dest_2}</strong></div>"
 
-        badge_vies_html = "<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>⚠️ VIÉS AMOSTRAL</div>" if is_sample_biased_global else ""
+        badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('badge_bias')}</div>" if is_sample_biased_global else ""
         status_bar_placeholder.markdown(f"""
         <div id='sticky-header-anchor'></div>
         <div style='display: flex; flex-direction: column;'>
@@ -491,12 +491,12 @@ with st.container():
             
     # --- CONTROLES MODO 3 ---
     elif modo_visao == i18n.t("mode_3"):
-        badge_vies_html = "<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>⚠️ VIÉS AMOSTRAL</div>" if is_sample_biased_global else ""
+        badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('badge_bias')}</div>" if is_sample_biased_global else ""
         status_bar_placeholder.markdown(f"""
         <div id='sticky-header-anchor'></div>
         <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
             <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
-                <div class='status-badge'>⚙️ Modo: <strong>Comparação Global (Macro)</strong></div>
+                <div class='status-badge'>{i18n.t('badge_mode_3')}</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -514,22 +514,32 @@ with st.container():
         except Exception:
             pass
             
-        with st.popover("⚙️ Configurações de Rastreamento Longitudinal", use_container_width=True):
-            st.markdown("<p style='margin-top:-10px; color:#aaa; font-size:0.9rem;'>Isola carreiras específicas ou ofusca o restante para visualizar rotas evolutivas com clareza.</p>", unsafe_allow_html=True)
-            filtro_cargos_long = st.multiselect("🔍 Filtrar Carreiras:", cargos_base_long, default=cargos_base_long)
-            cargos_destaque_long = st.multiselect("💡 Destacar Carreiras (Realce Visual):", cargos_base_long, help="Se preenchido, ofusca as carreiras não marcadas no gráfico e aplica cores na tabela.")
+        with st.popover(i18n.t("m4_config_title"), use_container_width=True):
+            st.markdown(f"<p style='margin-top:-10px; color:#aaa; font-size:0.9rem;'>{i18n.t('m4_config_desc')}</p>", unsafe_allow_html=True)
+            filtro_cargos_long = st.multiselect(
+                i18n.t("m4_filter_roles"), 
+                cargos_base_long, 
+                default=cargos_base_long,
+                format_func=lambda x: i18n.traduzir_cargo(x) if st.session_state.get('language', 'PT-BR') == 'EN' else x
+            )
+            cargos_destaque_long = st.multiselect(
+                i18n.t("m4_highlight_roles"), 
+                cargos_base_long, 
+                help=i18n.t("m4_highlight_help"),
+                format_func=lambda x: i18n.traduzir_cargo(x) if st.session_state.get('language', 'PT-BR') == 'EN' else x
+            )
             
         if 'filtro_cargos_long' in locals() and 'cargos_base_long' in locals():
             if filtro_cargos_long and len(filtro_cargos_long) < len(cargos_base_long):
                 is_sample_biased_global = True
 
-        badge_vies_html = "<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>⚠️ VIÉS AMOSTRAL</div>" if is_sample_biased_global else ""
+        badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('badge_bias')}</div>" if is_sample_biased_global else ""
         status_bar_placeholder.markdown(f"""
         <div id='sticky-header-anchor'></div>
         <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
             <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
-                <div class='status-badge'>⚙️ Modo: <strong>Rastreamento Longitudinal (Micro)</strong></div>
-                <div class='status-badge'>🔍 Carreiras Filtradas: <strong>{len(filtro_cargos_long)}</strong></div>
+                <div class='status-badge'>{i18n.t('badge_mode_4')}</div>
+                <div class='status-badge'>{i18n.t('badge_filtered_roles')} <strong>{len(filtro_cargos_long)}</strong></div>
             </div>
         </div>
         """, unsafe_allow_html=True)

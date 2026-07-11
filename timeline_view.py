@@ -6,9 +6,10 @@ import numpy as np
 import json
 import os
 import explanations
+import i18n
 
 def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
-    st.markdown("Compare as métricas globais da Polícia Civil como um bloco único através dos diferentes cenários normativos.")
+    st.markdown(i18n.t("m3_intro"))
     
     # --- CARREGAMENTO DO DICIONÁRIO DE MAPA GERAL ---
     mapa_dict = {}
@@ -19,7 +20,7 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
                 for row in lista_mapa:
                     mapa_dict[row['Atual Sem Correção']] = row
     except Exception as e:
-        st.error(f"Erro ao carregar mapa de conversão global: {e}")
+        st.error(f"{i18n.t('err_load_global_map')} {e}")
         pass
         
     cargos_base = list(mapa_dict.keys()) if mapa_dict else []
@@ -35,7 +36,7 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
     hist_exclusivas = {c: {} for c in cargos_base}
     hist_compartilhadas = {c: {} for c in cargos_base}
     
-    with st.spinner("Compilando Rastreamento Longitudinal dos Cenários..."):
+    with st.spinner(i18n.t("m3_spinner")):
         for cenario in opcoes_cenarios:
             df = mapa_cenarios[cenario]
             if df is None or df.empty:
@@ -59,11 +60,11 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
                 media_gower = 0
                 
             data_macro.append({
-                "Cenário": cenario,
-                "Cargos Ativos": len(df_temp.index),
-                "Total de Atribuições Únicas": num_atribuicoes_ativas,
-                "Nível de Compartilhamento (Média)": media_compartilhamento,
-                "Dissimilaridade Gower (Média)": media_gower
+                "Cenário": i18n.t(cenario) if i18n.t(cenario) != cenario else cenario,
+                i18n.t("m3_col_active_roles"): len(df_temp.index),
+                i18n.t("m3_col_total_unique"): num_atribuicoes_ativas,
+                i18n.t("m3_col_sharing_level"): media_compartilhamento,
+                i18n.t("m3_col_gower"): media_gower
             })
             
             # --- MICRO MÉTRICAS (LONGITUDINAL) ---
@@ -118,41 +119,41 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
     
     col1, col2 = st.columns(2)
     
-    fig1 = px.bar(df_metrics, x="Cenário", y="Dissimilaridade Gower (Média)", text="Dissimilaridade Gower (Média)",
-                   color="Dissimilaridade Gower (Média)", color_continuous_scale="Teal")
+    fig1 = px.bar(df_metrics, x="Cenário", y=i18n.t("m3_col_gower"), text=i18n.t("m3_col_gower"),
+                   color=i18n.t("m3_col_gower"), color_continuous_scale="Teal")
     fig1.update_traces(texttemplate='%{text:.3f}', textposition='outside')
     fig1.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
     
     with col1:
-        st.subheader("3.1. Índice de Dissimilaridade Institucional", help="**O que é isso?**\nMede a distância matemática média (Gower) entre todos os cargos de um cenário.\n\n**Como ler:**\n- Valores **menores** indicam que as carreiras da Polícia estão mais parecidas entre si (maior aglutinação) naquele cenário.\n- Valores **maiores** indicam maior separação e exclusividade entre as funções.")
+        st.subheader(i18n.t("m3_sub_gower_title"), help=i18n.t("m3_sub_gower_help"))
         st.plotly_chart(fig1, use_container_width=True)
-        st.markdown("<p style='font-size:0.8rem; color:#aaa; margin-top:-20px;'>Mede o distanciamento médio (Gower) dos cargos no cenário. Cenários com valores menores possuem carreiras mais unificadas.</p>", unsafe_allow_html=True)
+        st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:-20px;'>{i18n.t('m3_gower_desc')}</p>", unsafe_allow_html=True)
         if st.session_state.get('show_explanations', False):
-            st.info(explanations.get_explanation("gower", st.session_state.get('explanation_tone', 'tecnico')))
+            st.info(explanations.get_explanation("gower", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
     
-    fig2 = px.bar(df_metrics, x="Cenário", y="Total de Atribuições Únicas", text="Total de Atribuições Únicas",
-                  color="Total de Atribuições Únicas", color_continuous_scale="Viridis")
+    fig2 = px.bar(df_metrics, x="Cenário", y=i18n.t("m3_col_total_unique"), text=i18n.t("m3_col_total_unique"),
+                  color=i18n.t("m3_col_total_unique"), color_continuous_scale="Viridis")
     fig2.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
     fig2.update_traces(textposition='outside')
     
     with col2:
-        st.subheader("3.2. Volume Normativo Bruto", help="**O que é isso?**\nA contagem bruta de todas as atribuições ativas espalhadas pelos cargos.\n\n**Como ler:**\n- Quedas drásticas indicam condensações normativas (ex: exclusão de detalhamentos desnecessários ou revogação de funções).")
+        st.subheader(i18n.t("m3_sub_vol_title"), help=i18n.t("m3_sub_vol_help"))
         st.plotly_chart(fig2, use_container_width=True)
-        st.markdown("<p style='font-size:0.8rem; color:#aaa; margin-top:-20px;'>Mede a carga bruta de funções ativas na instituição. Quedas drásticas indicam condensação normativo (Ex: LONPC).</p>", unsafe_allow_html=True)
+        st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:-20px;'>{i18n.t('m3_vol_desc')}</p>", unsafe_allow_html=True)
         if st.session_state.get('show_explanations', False):
-            st.info(explanations.get_explanation("m3_macro_31", st.session_state.get('explanation_tone', 'tecnico')))
+            st.info(explanations.get_explanation("m3_macro_31", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
         
     st.markdown("---")
     
-    fig3 = px.bar(df_metrics, x="Cenário", y="Nível de Compartilhamento (Média)", text="Nível de Compartilhamento (Média)",
-                   color="Nível de Compartilhamento (Média)", color_continuous_scale="Oranges")
+    fig3 = px.bar(df_metrics, x="Cenário", y=i18n.t("m3_col_sharing_level"), text=i18n.t("m3_col_sharing_level"),
+                   color=i18n.t("m3_col_sharing_level"), color_continuous_scale="Oranges")
     fig3.update_traces(texttemplate='%{text:.2f}', textposition='outside')
     fig3.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
     
-    st.subheader("3.3. Nível de Compartilhamento", help="**O que é isso?**\nMostra, em média, por quantos cargos uma atribuição é dividida na corporação.\n\n**Como ler:**\n- Valores maiores indicam diluição de exclusividade (ex: muitas atribuições sendo feitas por múltiplos cargos simultaneamente).")
+    st.subheader(i18n.t("m3_sub_share_title"), help=i18n.t("m3_sub_share_help"))
     st.plotly_chart(fig3, use_container_width=True)
-    st.markdown("<p style='font-size:0.8rem; color:#aaa; margin-top:-20px;'>Mostra em média por quantos cargos cada atribuição é dividida. Valores altos indicam diluição de exclusividade.</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:-20px;'>{i18n.t('m3_share_desc')}</p>", unsafe_allow_html=True)
     if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("m3_macro_33", st.session_state.get('explanation_tone', 'tecnico')))
+        st.info(explanations.get_explanation("m3_macro_33", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("<div style='height: 150px;'></div>", unsafe_allow_html=True)

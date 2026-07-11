@@ -7,9 +7,11 @@ O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 ## [Unreleased] - 2026-07-10
 
 ### Added
-- **Expansão de Traduções (Modos 2, 3 e 4)**: Inclusão de toda a matriz de traduções em inglês (textos acadêmicos e simplificados) para os detalhamentos metodológicos do painel comparativo, macroscópico e microscópico (`explanations.py`).
+- **Expansão de Traduções (Modos 3 e 4)**: Inclusão completa das chaves de internacionalização da interface, tooltips (ajudas e explicações dos gráficos) e cabeçalhos para os rastreamentos longitudinal e global em inglês (`i18n.py`).
+- **Glossários e Ajuda Integrados**: Propagação dos módulos "Brazilian Police Roles Glossary" e "Assignments Translation Table" nos cabeçalhos dos Modos 2 e 4 em ambiente inglês, dispensando a necessidade de retornar ao explorador individual para checar conversões.
 
 ### Fixed
+- **Vazamentos de Labels em Português no Módulo EN**: Refatoração generalizada da passagem de dados em gráficos longitudinais e nos cabeçalhos e emblemas de sistema (ex: "Viés Amostral", "Configurações de Modo") para acionar chaves de `i18n` em `app.py` e `longitudinal_view.py`.
 - **Anomalia de Estado em Multiselects**: Refatoração das caixas de seleção da Visão Comparativa (Fluxo, Afinidade, Rede e Árvore) adotando armazenamento de "chaves-invisíveis" ao invés de strings traduzidas, curando o vazamento e o desaparecimento de dados nas tabelas pós-troca de idioma.
 - **Deseleção Indesejada de Menus**: Alteração na lógica dos *Radio Buttons* de Explicações para desacoplar as *labels* dinâmicas (Inglês/Português) da chave de indexação armazenada no `st.session_state`.
 
