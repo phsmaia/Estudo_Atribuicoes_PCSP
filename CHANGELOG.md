@@ -111,7 +111,7 @@ O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 - Início da Etapa 2: Planejamento arquitetural para conversão dos scripts analíticos em um painel interativo com Streamlit.
 
 ### Changed
-- Adição de nota explicativa no `README.md` indicando a branch [`scientific-publication`](https://github.com/phsmaia/Estudo_Atribuicoes_PCSP_2024/tree/scientific-publication) (versão estática do artigo) e a branch `main` (atualizações contínuas), em linguagem acessível para leigos.
+- Adição de nota explicativa no `README.md` indicando a branch [`scientific-publication`](https://github.com/phsmaia/Estudo_Atribuicoes_PCSP/tree/scientific-publication) (versão estática do artigo) e a branch `main` (atualizações contínuas), em linguagem acessível para leigos.
 - Reestruturação completa do arquivo `README.md`:
   - Criação da seção de **Visão Geral** para introdução do projeto a leigos.
   - Separação clara da seção do **Artigo Científico e Scripts Analíticos**, incluindo orientações de execução local.

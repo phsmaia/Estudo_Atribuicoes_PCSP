@@ -70,3 +70,7 @@ Estas regras governam a segurança local, auditoria de dependências e proteçã
 ### [Integração Contínua](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/continuous-integration.md)
 ### [Testes Fim a Fim (E2E)](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/e2e-testing.md)
 ### [Padrões para Jupyter Notebook](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/qa_and_testing/jupyter-notebook-standards.md)
+
+## Regras de Projeto e Negócio
+### [Segurança e LGPD](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP/.agents/personal/security-lgpd.md)
+### [Padrão de Dashboard Analytics Streamlit](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP/.agents/learning/streamlit-analytics-dashboard.md)

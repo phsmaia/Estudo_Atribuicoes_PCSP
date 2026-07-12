@@ -7,6 +7,8 @@ import json
 import os
 import explanations
 import i18n
+import interaction_ui
+import hashlib
 
 def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, cargos_destaque):
     lang = st.session_state.get('language', 'PT-BR')
@@ -206,6 +208,8 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             st.subheader(titulo, help=help_text)
         else:
             st.subheader(titulo)
+            
+        interaction_ui.render_like_button(titulo, f"4_{hashlib.md5(titulo.encode()).hexdigest()[:4]}")
         
         is_sample_biased = len(filtro_cargos) < len(cargos_base)
         if is_sample_biased:
@@ -223,7 +227,8 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
                         try:
                             val_float = float(val)
                             cen_trans = i18n.t(cen) if i18n.t(cen) != cen else cen
-                            dados_linhas.append({i18n.t("col_roles"): c, i18n.t("m3_col_scenario"): cen_trans, "Valor": val_float})
+                            col_val_str = "Value" if lang == 'EN' and traduzir else "Valor"
+                            dados_linhas.append({i18n.t("col_roles"): c, i18n.t("m3_col_scenario"): cen_trans, col_val_str: val_float})
                         except:
                             pass
             
@@ -236,7 +241,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
                     # Update color map keys for plotting
                     mapa_cores_plot = {i18n.dic_traducao_cargos.get(k, k): v for k, v in mapa_cores.items()}
                 
-                fig_line = px.line(df_linhas, x=i18n.t("m3_col_scenario"), y="Valor", color=i18n.t("col_roles"), markers=True, color_discrete_map=mapa_cores_plot)
+                fig_line = px.line(df_linhas, x=i18n.t("m3_col_scenario"), y=col_val_str, color=i18n.t("col_roles"), markers=True, color_discrete_map=mapa_cores_plot)
                 
                 if cargos_destaque:
                     cargos_destaque_trans = [i18n.dic_traducao_cargos.get(c, c) for c in cargos_destaque] if lang == 'EN' and traduzir else cargos_destaque

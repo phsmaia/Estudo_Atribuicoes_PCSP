@@ -10,7 +10,7 @@ Este projeto busca mapear, analisar e comparar as atribuições dos diversos car
 Esta seção contempla os códigos e análises realizados para o estudo que embasa o artigo científico.
 
 > **Aviso Importante (para não programadores):**
-> Se você quer ver os códigos e arquivos exatamente como estavam quando o artigo foi publicado, acesse a versão chamada [`scientific-publication`](https://github.com/phsmaia/Estudo_Atribuicoes_PCSP_2024/tree/scientific-publication). Na programação, chamamos essas versões de *branches*, que funcionam como uma "foto" do projeto congelada no tempo. Já as melhorias e atualizações contínuas do projeto acontecem na versão principal, chamada `main`.
+> Se você quer ver os códigos e arquivos exatamente como estavam quando o artigo foi publicado, acesse a versão chamada [`scientific-publication`](https://github.com/phsmaia/Estudo_Atribuicoes_PCSP/tree/scientific-publication). Na programação, chamamos essas versões de *branches*, que funcionam como uma "foto" do projeto congelada no tempo. Já as melhorias e atualizações contínuas do projeto acontecem na versão principal, chamada `main`.
 
 ### Como rodar os scripts localmente
 - Recomenda-se o uso de **Jupyter Notebook** ou **Google Colab**.

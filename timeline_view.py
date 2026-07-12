@@ -7,6 +7,7 @@ import json
 import os
 import explanations
 import i18n
+import interaction_ui
 
 def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
     st.markdown(i18n.t("m3_intro"))
@@ -127,7 +128,8 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
     with col1:
         st.subheader(i18n.t("m3_sub_gower_title"), help=i18n.t("m3_sub_gower_help"))
         st.plotly_chart(fig1, use_container_width=True)
-        st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:-20px;'>{i18n.t('m3_gower_desc')}</p>", unsafe_allow_html=True)
+        interaction_ui.render_like_button("3.1 Distancia Media Gower", "3_1")
+        st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_gower_desc')}</p>", unsafe_allow_html=True)
         if st.session_state.get('show_explanations', False):
             st.info(explanations.get_explanation("gower", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
     
@@ -139,7 +141,8 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
     with col2:
         st.subheader(i18n.t("m3_sub_vol_title"), help=i18n.t("m3_sub_vol_help"))
         st.plotly_chart(fig2, use_container_width=True)
-        st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:-20px;'>{i18n.t('m3_vol_desc')}</p>", unsafe_allow_html=True)
+        interaction_ui.render_like_button("3.2 Volume de Atribuicoes", "3_2")
+        st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_vol_desc')}</p>", unsafe_allow_html=True)
         if st.session_state.get('show_explanations', False):
             st.info(explanations.get_explanation("m3_macro_31", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
         
@@ -152,7 +155,8 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
     
     st.subheader(i18n.t("m3_sub_share_title"), help=i18n.t("m3_sub_share_help"))
     st.plotly_chart(fig3, use_container_width=True)
-    st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:-20px;'>{i18n.t('m3_share_desc')}</p>", unsafe_allow_html=True)
+    interaction_ui.render_like_button("3.3 Nivel de Compartilhamento", "3_3")
+    st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_share_desc')}</p>", unsafe_allow_html=True)
     if st.session_state.get('show_explanations', False):
         st.info(explanations.get_explanation("m3_macro_33", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
 

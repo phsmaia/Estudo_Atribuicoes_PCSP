@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 from data_processing import calcular_distancias_gower
 import explanations
 import i18n
+import interaction_ui
 
 def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b, cargo_foco_a, cargos_destaque=None):
     if cenario_a == cenario_b:
@@ -135,6 +136,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         i18n.t("sub_delta_title").format(cenario_a=i18n.t(cenario_a), cenario_b=i18n.t(cenario_b)),
         help=i18n.t("sub_delta_help")
     )
+    interaction_ui.render_like_button("2.3 Discrepancias", "2_3")
     st.markdown(f"<p style='color:#ccc; font-size:0.9rem;'>{i18n.t('delta_subtitle')}</p>", unsafe_allow_html=True)
     
     # Calcula o limite máximo real para calibrar a escala de cor 
@@ -190,6 +192,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         i18n.t("sub_flow_title"),
         help=i18n.t("sub_flow_help")
     )
+    interaction_ui.render_like_button("2.1 Comparativo Direito (Base)", "2_1")
     
     # Extração de Atribuições Ganhos/Perdas
     if not cargo_foco_a:
@@ -260,6 +263,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         i18n.t("sub_radar_title"),
         help=i18n.t("sub_radar_help")
     )
+    interaction_ui.render_like_button("2.2 Similaridade Geral (Radar)", "2_2")
     
     if not cargo_foco_a:
         st.info(i18n.t("radar_no_career_warning"))

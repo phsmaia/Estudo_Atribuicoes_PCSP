@@ -7,16 +7,25 @@ importlib.reload(explanations)
 import pandas as pd
 import data_loader
 import data_processing
+import json
+import analytics
 import visualizations
 import logger
 import os
-import explanations
-import importlib
 import i18n
-importlib.reload(explanations)
+import interaction_ui
 importlib.reload(i18n)
-importlib.reload(i18n)
+importlib.reload(interaction_ui)
 
+
+# Roteamento do painel de administração oculto
+if "admin" in st.query_params:
+    if not st.session_state.get("persona_test_mode", False):
+        import admin_panel
+        import importlib
+        importlib.reload(admin_panel)
+        admin_panel.show_admin_panel()
+        st.stop()
 
 # Sincroniza idioma a partir da URL (se houver) apenas na primeira carga
 if "language" not in st.session_state:
@@ -39,6 +48,19 @@ logger.init_db()
 
 # Configuração Básica da Página
 st.set_page_config(page_title="Estudo de Atribuições PCSP", layout="wide")
+
+# --- MODO TESTE DE PERSONA (UI) ---
+persona_placeholder = None
+if st.session_state.get("persona_test_mode", False):
+    st.sidebar.markdown("### 🔬 Modo Teste de Persona")
+    st.sidebar.caption("Navegue pela aplicação para ver a inferência mudar em tempo real baseada no seu comportamento.")
+    
+    persona_placeholder = st.sidebar.empty()
+    
+    if st.sidebar.button("Sair do Teste (Voltar ao Admin)"):
+        st.session_state["persona_test_mode"] = False
+        st.rerun()
+    st.sidebar.markdown("---")
 
 # --- RODAPÉ FLUTUANTE DE CONTATOS E REFERÊNCIAS (Injeção Direta no DOM) ---
 footer_html = """
@@ -135,12 +157,12 @@ footer_html = """
         </style>
         
         <div class="hud-icon">
-            <span style="font-size: 1.2rem;">💬</span> __FOOTER_TITLE__
+            <span style="font-size: 1.2rem;">📚</span> __FOOTER_TITLE__
         </div>
         <div class="hud-content">
             <h4>__REF_TITLE__</h4>
             <span style="font-size: 0.75rem; color: #A0A0A0; display: block; margin: -5px 0 8px 0; font-style: italic;">__REF_DESC__</span>
-            <a href="https://github.com/phsmaia/Estudo_Atribuicoes_PCSP_2024" target="_blank">__REPO__</a>
+            <a href="https://github.com/phsmaia/Estudo_Atribuicoes_PCSP" target="_blank">__REPO__</a>
             <a href="https://periodicos.pf.gov.br/index.php/RBCP/pt_BR/article/view/4693" target="_blank">__ARTICLE__</a>
             <a href="https://zenodo.org/records/14284483" target="_blank">__DATA__</a>
             <h4 style="margin-top: 15px;">__CONTACT_TITLE__</h4>
@@ -166,6 +188,121 @@ for placeholder, key in [
     footer_html = footer_html.replace(placeholder, i18n.t(key))
 
 components.html(footer_html, height=0)
+import interaction_ui
+import json
+
+targeted_loader_js = f"""
+<script>
+    if (!window.parent.document.getElementById('targeted-loader-engine')) {{
+        const script = window.parent.document.createElement('script');
+        script.id = 'targeted-loader-engine';
+        script.innerHTML = `
+            if (!window.__lastWidgetTracker) {{
+                window.__lastWidgetTracker = true;
+                window.__lastWidget = null;
+                window.document.addEventListener('mousedown', function(e) {{
+                    let t = e.target;
+                    while(t && t !== window.document) {{
+                        const testid = t.getAttribute ? t.getAttribute('data-testid') : null;
+                        if (testid && testid.startsWith('st')) {{
+                            window.__lastWidget = t;
+                            break;
+                        }}
+                        t = t.parentNode;
+                    }}
+                }}, true);
+            }}
+            
+            window.__hud_msgs = {json.dumps(i18n.t("loading_msgs"))};
+            window.document.addEventListener('mousedown', function(e) {{
+                let target = e.target;
+                let isTrigger = false;
+                while(target && target !== window.document) {{
+                    if (target.getAttribute) {{
+                        const testid = (target.getAttribute('data-testid') || '').toLowerCase();
+                        const role = (target.getAttribute('role') || '').toLowerCase();
+                        const bsweb = (target.getAttribute('data-baseweb') || '').toLowerCase();
+                        const cls = (target.className || '');
+                        const clsStr = typeof cls === 'string' ? cls.toLowerCase() : '';
+                        
+                        if (
+                            testid.includes('radio') || testid.includes('checkbox') || testid.includes('select') || 
+                            testid.includes('slider') || testid.includes('segment') || testid.includes('tab') || testid.includes('button') ||
+                            role.includes('radio') || role.includes('tab') || role.includes('slider') || 
+                            role.includes('combobox') || role.includes('listbox') || role.includes('option') || 
+                            role.includes('switch') || role.includes('checkbox') || role.includes('button') ||
+                            bsweb.includes('radio') || bsweb.includes('checkbox') || bsweb.includes('select') || 
+                            bsweb.includes('slider') || bsweb.includes('tab') || bsweb.includes('button') ||
+                            clsStr.includes('st-core-button') || clsStr.includes('radio') || clsStr.includes('segmentedcontrol') || clsStr.includes('tab')
+                        ) {{
+                            if (!testid.includes('markdown')) {{
+                                isTrigger = true;
+                                break;
+                            }}
+                        }}
+                    }}
+                    target = target.parentNode;
+                }}
+                
+                if (!isTrigger) return;
+                
+                // Clear any existing custom loaders
+                const oldLoaders = window.parent.document.querySelectorAll('.custom-inline-loader');
+                oldLoaders.forEach(l => l.remove());
+
+                // Adiciona o CSS de sirene intermitente se não existir
+                if (!window.parent.document.getElementById('hud-strobe-css')) {{
+                    const style = window.parent.document.createElement('style');
+                    style.id = 'hud-strobe-css';
+                    style.innerHTML = "" + 
+                        "@keyframes hud_strobe {{ " +
+                            "0%, 10% {{ box-shadow: 0 0 15px rgba(255, 0, 50, 0.9); background: rgba(255, 0, 50, 0.95); }} " +
+                            "11%, 15% {{ box-shadow: none; background: rgba(0, 0, 0, 0.8); }} " +
+                            "16%, 25% {{ box-shadow: 0 0 15px rgba(255, 0, 50, 0.9); background: rgba(255, 0, 50, 0.95); }} " +
+                            "26%, 49% {{ box-shadow: none; background: rgba(0, 0, 0, 0.8); }} " +
+                            "50%, 60% {{ box-shadow: 0 0 15px rgba(0, 100, 255, 0.9); background: rgba(0, 100, 255, 0.95); }} " +
+                            "61%, 65% {{ box-shadow: none; background: rgba(0, 0, 0, 0.8); }} " +
+                            "66%, 75% {{ box-shadow: 0 0 15px rgba(0, 100, 255, 0.9); background: rgba(0, 100, 255, 0.95); }} " +
+                            "76%, 100% {{ box-shadow: none; background: rgba(0, 0, 0, 0.8); }} " +
+                        "}} " +
+                        ".custom-inline-loader {{ " +
+                            "position: fixed; top: 25px; left: 50%; transform: translateX(-50%); z-index: 9999999; " +
+                            "color: white; padding: 8px 20px; border-radius: 30px; font-size: 1rem; font-weight: bold; " +
+                            "animation: hud_strobe 1.2s infinite; border: 1px solid rgba(255,255,255,0.2); " +
+                            "box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; " +
+                            "pointer-events: none; " +
+                        "}}";
+                    window.parent.document.head.appendChild(style);
+                }}
+
+                const msgs = window.__hud_msgs || ["Carregando..."];
+                const randMsg = msgs[Math.floor(Math.random() * msgs.length)];
+                
+                const loaderHTML = '<div class="custom-inline-loader"><span style="display:inline-block; animation: spinLoader 1s linear infinite;">🚨</span> ' + randMsg + '</div>';
+                
+                window.parent.document.body.insertAdjacentHTML('beforeend', loaderHTML);
+                
+                if (!window.document.getElementById('loader-anim-css')) {{
+                    const style = window.document.createElement('style');
+                    style.id = 'loader-anim-css';
+                    style.innerHTML = '@keyframes spinLoader {{ 100% {{ transform: rotate(360deg); }} }}';
+                    window.document.head.appendChild(style);
+                }}
+                
+                // BUGFIX: Remove loader automaticamente após 3.5s para evitar que ele fique preso na tela
+                setTimeout(() => {{
+                    const loadersToClean = window.parent.document.querySelectorAll('.custom-inline-loader');
+                    loadersToClean.forEach(l => l.remove());
+                }}, 3500);
+            }}, true);
+        `;
+        window.parent.document.head.appendChild(script);
+    }} else {{
+        window.parent.__hud_msgs = {json.dumps(i18n.t("loading_msgs"))};
+    }}
+</script>
+"""
+components.html(targeted_loader_js, height=0)
 
 # Injeção de CSS para destaques críticos (Transparência Matemática e Status Bar)
 st.markdown("""
@@ -184,6 +321,41 @@ div[data-testid="stVerticalBlock"] > div {
 /* Fundo Elegante e Trava contra barras de rolagem artificiais */
 .stApp {
     background: radial-gradient(circle at 50% 0%, #121c2b 0%, #0e1117 60%) !important;
+}
+
+/* --- Ambient Police Lights (Subtle & Cinematic) --- */
+.stApp::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: screen;
+    background: radial-gradient(circle at 15% 20%, rgba(255, 0, 0, 0.25), transparent 60%),
+                radial-gradient(circle at 85% 80%, rgba(255, 0, 0, 0.15), transparent 60%);
+    animation: ambientRed 8s infinite alternate ease-in-out;
+}
+
+.stApp::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: screen;
+    background: radial-gradient(circle at 85% 20%, rgba(0, 80, 255, 0.25), transparent 60%),
+                radial-gradient(circle at 15% 80%, rgba(0, 80, 255, 0.15), transparent 60%);
+    animation: ambientBlue 10s infinite alternate ease-in-out;
+}
+
+@keyframes ambientRed {
+    0% { opacity: 0.3; transform: scale(1); }
+    100% { opacity: 0.7; transform: scale(1.1); }
+}
+
+@keyframes ambientBlue {
+    0% { opacity: 0.7; transform: scale(1.1); }
+    100% { opacity: 0.3; transform: scale(1); }
 }
 
 /* Atrasos escalonados */
@@ -249,7 +421,170 @@ div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor):has(div[data-te
 </style>
 """, unsafe_allow_html=True)
 
-# --- CARREGAMENTO DE DADOS ---
+# --- CARREGAMENTO DE DADOS COM SPLASH SCREEN ---
+if "first_load_done" not in st.session_state:
+    msgs_json = json.dumps(i18n.t("loading_msgs"))
+    title_str = i18n.t("title")
+    
+    splash_html = f"""
+    <script>
+    if (!window.parent.document.getElementById('custom-splash-screen')) {{
+        const splash = window.parent.document.createElement('div');
+        splash.id = 'custom-splash-screen';
+        splash.innerHTML = `
+            <style>
+            #custom-splash-screen {{
+                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                background: #0b0f19;
+                z-index: 9999999; display: flex; flex-direction: column;
+                align-items: center; justify-content: center; color: white;
+                font-family: sans-serif; overflow: hidden;
+            }}
+            .police-lights {{
+                position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                background: transparent;
+                animation: strobe 1.2s infinite;
+                pointer-events: none;
+            }}
+            @keyframes strobe {{
+                0%, 10% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0.25) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0) 0%, transparent 40%); opacity: 1; transform: scale(1.05); }}
+                11%, 15% {{ background: transparent; opacity: 0.3; transform: scale(1); }}
+                16%, 25% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0.25) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0) 0%, transparent 40%); opacity: 1; transform: scale(1.05); }}
+                
+                26%, 49% {{ background: transparent; opacity: 0.3; transform: scale(1); }}
+                
+                50%, 60% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0.25) 0%, transparent 40%); opacity: 1; transform: scale(1.05); }}
+                61%, 65% {{ background: transparent; opacity: 0.3; transform: scale(1); }}
+                66%, 75% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0.25) 0%, transparent 40%); opacity: 1; transform: scale(1.05); }}
+                
+                76%, 100% {{ background: transparent; opacity: 0.3; transform: scale(1); }}
+            }}
+            .fingerprint-btn {{
+                width: 90px; height: 90px; border-radius: 50%;
+                border: 2px solid rgba(77, 166, 255, 0.3);
+                display: flex; align-items: center; justify-content: center;
+                margin-bottom: 25px; cursor: pointer; position: relative;
+                background: rgba(14, 17, 23, 0.5); backdrop-filter: blur(5px);
+                transition: all 0.3s ease;
+            }}
+            .fingerprint-btn svg {{
+                width: 45px; height: 45px; stroke: #4da6ff; fill: none; transition: all 0.3s ease;
+            }}
+            .fingerprint-btn:hover {{
+                border-color: #4da6ff; box-shadow: 0 0 20px rgba(77, 166, 255, 0.4);
+            }}
+            .fingerprint-btn.scanning {{
+                border-color: #00ffcc; box-shadow: 0 0 30px rgba(0, 255, 204, 0.6);
+            }}
+            .fingerprint-btn.scanning svg {{ stroke: #00ffcc; }}
+            .scan-line {{
+                position: absolute; top: 10%; left: 15%; width: 70%; height: 3px;
+                background: #00ffcc; box-shadow: 0 0 12px #00ffcc;
+                animation: scanAnim 1.5s infinite ease-in-out;
+                display: none; border-radius: 2px;
+            }}
+            .fingerprint-btn.scanning .scan-line {{ display: block; }}
+            @keyframes scanAnim {{ 0% {{ top: 15%; }} 50% {{ top: 85%; }} 100% {{ top: 15%; }} }}
+            
+            .progress-bar-container {{
+                width: 300px; height: 6px; background: rgba(255,255,255,0.1);
+                border-radius: 3px; margin: 25px 0; overflow: hidden; position: relative;
+            }}
+            .progress-bar-fill {{
+                position: absolute; top: 0; left: 0; height: 100%; background: #4da6ff;
+                width: 30%; animation: loadIndeterminate 1.5s infinite ease-in-out;
+                border-radius: 3px;
+                transition: background 0.3s ease, box-shadow 0.3s ease;
+            }}
+            .progress-bar-fill.scanning {{
+                background: #00ffcc;
+                box-shadow: 0 0 10px rgba(0, 255, 204, 0.6);
+            }}
+            @keyframes loadIndeterminate {{ 0% {{ left: -30%; }} 100% {{ left: 100%; }} }}
+            </style>
+            
+            <div class="police-lights"></div>
+            
+            <div class="fingerprint-btn" id="interactive-badge" title="Pressione para escaneamento biométrico (Interativo)">
+                <!-- Ícone SVG de Impressão Digital / Distintivo -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                    <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"/><path d="M12 11v2a14 14 0 0 0 2.5 8M8 15a18 18 0 0 0 1.8 6m-4.9-2a22 22 0 0 1-.9-7v-1a8 8 0 0 1 12-6.95"/>
+                </svg>
+                <div class="scan-line"></div>
+            </div>
+            
+            <h2 style="margin-bottom: 10px; color: #E0E0E0; text-align: center; text-transform: uppercase; letter-spacing: 2px;">{title_str}</h2>
+            <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+            <div id="splash-msg" style="color: #4da6ff; font-weight: bold; font-size: 1.1rem; height: 30px;">Carregando...</div>
+        `;
+        window.parent.document.body.appendChild(splash);
+        
+        // Interatividade divertida do botão
+        const badge = window.parent.document.getElementById('interactive-badge');
+        const msgEl = window.parent.document.getElementById('splash-msg');
+        const pbFill = window.parent.document.querySelector('.progress-bar-fill');
+        
+        badge.addEventListener('mousedown', () => {{
+            badge.classList.add('scanning');
+            if(pbFill) pbFill.classList.add('scanning');
+            msgEl.innerText = "🕵️‍♂️ Analisando biometria...";
+            msgEl.style.color = "#00ffcc";
+        }});
+        badge.addEventListener('mouseup', () => {{
+            badge.classList.remove('scanning');
+            if(pbFill) pbFill.classList.remove('scanning');
+            msgEl.style.color = "#4da6ff";
+        }});
+        badge.addEventListener('mouseleave', () => {{
+            badge.classList.remove('scanning');
+            if(pbFill) pbFill.classList.remove('scanning');
+            msgEl.style.color = "#4da6ff";
+        }});
+        
+        const msgs = {msgs_json};
+        msgEl.innerText = msgs[0];
+        
+        setInterval(() => {{
+            if (!badge.classList.contains('scanning')) {{
+                msgEl.innerText = msgs[Math.floor(Math.random() * msgs.length)];
+            }}
+        }}, 2000);
+        
+        setTimeout(() => {{
+            const btns = window.parent.document.querySelectorAll('.stButton button p');
+            for (let b of btns) {{
+                if (b.innerText === 'continue_load') {{
+                    b.parentElement.click();
+                    break;
+                }}
+            }}
+        }}, 200);
+    }}
+    </script>
+    """
+    components.html(splash_html, height=0)
+    
+    st.markdown("<div style='display:none;'>", unsafe_allow_html=True)
+    btn = st.button("continue_load", key="btn_continue_load")
+    st.markdown("</div>", unsafe_allow_html=True)
+    
+    if btn:
+        st.session_state.first_load_done = True
+        st.rerun()
+    st.stop()
+else:
+    remove_splash_js = """
+    <script>
+    const splash = window.parent.document.getElementById('custom-splash-screen');
+    if (splash) {
+        splash.style.opacity = '0';
+        splash.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => splash.remove(), 500);
+    }
+    </script>
+    """
+    components.html(remove_splash_js, height=0)
+
 datasets = data_loader.get_all_datasets()
 opcoes_cenarios = [
     "Atual Sem Correção",
@@ -295,6 +630,7 @@ with st.container():
     def _muda_idioma():
         val = st.session_state.lang_radio
         st.session_state.language = 'PT-BR' if 'PT-BR' in val else 'EN'
+        analytics.log_event("change_language", {"language": st.session_state.language})
 
     with col_btn:
         c1, c2 = st.columns([6, 4], vertical_alignment="center")
@@ -322,27 +658,40 @@ with st.container():
     with col_label:
         st.markdown(f"<h4 style='margin:0; margin-top:5px; font-size:1.1rem; color:#ccc;'>{i18n.t('view_modes')}</h4>", unsafe_allow_html=True)
     with col_radio:
-        if 'modo_index' not in st.session_state:
-            st.session_state.modo_index = 0
-            
         opcoes_modos = [i18n.t("mode_1"), i18n.t("mode_2"), i18n.t("mode_3"), i18n.t("mode_4")]
         
         modo_visao = st.radio(
             i18n.t("nav_analytic"),
             opcoes_modos,
-            index=st.session_state.modo_index,
+            key="modo_visao_radio",
             horizontal=True,
             label_visibility="collapsed"
         )
         
-        st.session_state.modo_index = opcoes_modos.index(modo_visao)
+        if 'last_modo_visao' not in st.session_state:
+            st.session_state.last_modo_visao = modo_visao
+        
+        if st.session_state.last_modo_visao != modo_visao:
+            analytics.log_event("change_mode", {"mode": modo_visao})
+            st.session_state.last_modo_visao = modo_visao
         
     col_exp_1, col_exp_2 = st.columns([3, 7])
     with col_exp_1:
-        st.toggle(i18n.t("explanation_mode"), key="show_explanations")
+        show_exp = st.toggle(i18n.t("explanation_mode"), key="show_explanations")
+        if 'last_show_exp' not in st.session_state:
+            st.session_state.last_show_exp = show_exp
+        if st.session_state.last_show_exp != show_exp:
+            analytics.log_event("toggle_explanations", {"enabled": show_exp})
+            st.session_state.last_show_exp = show_exp
+            
     with col_exp_2:
         if st.session_state.get('show_explanations', False):
-            st.radio(i18n.t("reading_tone"), ["tecnico", "leigo"], format_func=lambda x: i18n.t("tone_academic") if x == "tecnico" else i18n.t("tone_layman"), horizontal=True, label_visibility="collapsed", key="explanation_tone")
+            tone = st.radio(i18n.t("reading_tone"), ["tecnico", "leigo"], format_func=lambda x: i18n.t("tone_academic") if x == "tecnico" else i18n.t("tone_layman"), horizontal=True, label_visibility="collapsed", key="explanation_tone")
+            if 'last_tone' not in st.session_state:
+                st.session_state.last_tone = tone
+            if st.session_state.last_tone != tone:
+                analytics.log_event("toggle_explanations", {"tone": tone})
+                st.session_state.last_tone = tone
         
     is_sample_biased_global = False
     
@@ -404,6 +753,12 @@ with st.container():
                     format_func=lambda x: i18n.traduzir_cargo(x) if st.session_state.get('language', 'PT-BR') == 'EN' else x,
                     key="filtro_cargos"
                 )
+                
+                if 'last_filtro_cargos' not in st.session_state:
+                    st.session_state.last_filtro_cargos = filtro_cargos
+                if st.session_state.last_filtro_cargos != filtro_cargos:
+                    analytics.log_event("filter_change", {"filter": "cargos", "values": filtro_cargos})
+                    st.session_state.last_filtro_cargos = filtro_cargos
 
                 cargos_destaque = st.multiselect(
                     i18n.t("visual_highlight"),
@@ -550,37 +905,31 @@ if is_sample_biased_global:
     st.warning(explanations.get_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="⚠️")
 
 if modo_visao == i18n.t("mode_2"):
-    with st.spinner("🚓 Cruzando evidências de cenários... Por favor, aguarde." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🚓 Cross-referencing scenario evidence... Please wait."):
+    with st.spinner("⏳ Carregando visão..." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "⏳ Loading view..."):
         import comparative_view
         import importlib
         importlib.reload(comparative_view)
         comparative_view.render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b, carreira_sel_comparativo, cargos_destaque_2)
-    st.stop()
-    
 elif modo_visao == i18n.t("mode_3"):
-    with st.spinner("🕵️‍♂️ Compilando a visão macro da corporação... Por favor, aguarde." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🕵️‍♂️ Compiling macro corporate view... Please wait."):
+    with st.spinner("⏳ Carregando visão..." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "⏳ Loading view..."):
         import timeline_view
         import importlib
         importlib.reload(timeline_view)
         timeline_view.render_timeline_mode(opcoes_cenarios, mapa_cenarios)
-    st.stop()
-    
 elif modo_visao == i18n.t("mode_4"):
-    with st.spinner("🔍 Rastreando rotas evolutivas longitudinais... Por favor, aguarde." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🔍 Tracking longitudinal evolutionary routes... Please wait."):
+    with st.spinner("⏳ Carregando visão..." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "⏳ Loading view..."):
         import longitudinal_view
         import importlib
         importlib.reload(longitudinal_view)
         longitudinal_view.render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos_long, cargos_destaque_long)
-    st.stop()
-    
 
 # Registrar log invisível de visita
 if 'visit_logged' not in st.session_state:
-    logger.log_visit(cenario_sel)
+    cenario_para_log = cenario_sel if 'cenario_sel' in locals() else modo_visao
+    logger.log_visit(cenario_para_log)
 
-
-if df_cenario is not None and not df_cenario.empty:
-    with st.spinner("🚨 Processando evidências normativas e consolidando matriz... Por favor, aguarde." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🚨 Processing normative evidence and consolidating matrix... Please wait."):
+if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.empty:
+    with st.spinner("⏳ Carregando visão..." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "⏳ Loading view..."):
         # Higienização de Nomes Longos que quebram a interface
         if 'Carreira' in df_cenario.columns:
             df_cenario['Carreira'] = df_cenario['Carreira'].replace({
@@ -734,9 +1083,9 @@ if df_cenario is not None and not df_cenario.empty:
     lbl_matriz_translated = i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')
     fig_bin = visualizations.plot_binary_heatmap(df_to_use_siglas, f"{i18n.t('title_matrix_prefix')} {lbl_matriz_translated} - {i18n.t(cenario_sel)}", colorscale="Teal", dic_reverso=dic_reverso, cargos_destaque=cargos_destaque_ui)
     st.plotly_chart(fig_bin, use_container_width=True)
+    if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.1 Matriz de Atribuicoes", "1_1")
     if st.session_state.get('show_explanations', False):
-        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
-        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        tone_key = st.session_state.get('explanation_tone', 'tecnico')
         st.info(explanations.get_explanation("matriz", tone_key, language=st.session_state.get('language', 'PT-BR')))
     
     # 1.2. Matriz de Adjacência
@@ -746,9 +1095,9 @@ if df_cenario is not None and not df_cenario.empty:
     adj_matrix = data_processing.gerar_matriz_adjacencia(df_to_use)
     fig_adj = visualizations.plot_adjacency_heatmap(adj_matrix, f"{i18n.t('title_adj_prefix')} - {i18n.t(cenario_sel)}", text_matrix=text_matrix, cargos_destaque=cargos_destaque_ui)
     st.plotly_chart(fig_adj, use_container_width=True)
+    if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.2 Matriz de Adjacencia", "1_2")
     if st.session_state.get('show_explanations', False):
-        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
-        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        tone_key = st.session_state.get('explanation_tone', 'tecnico')
         st.info(explanations.get_explanation("adjacencia", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
@@ -900,8 +1249,7 @@ if df_cenario is not None and not df_cenario.empty:
             st.dataframe(df_filtro_atrib.style.apply(highlight_aba2, axis=1), use_container_width=True)
 
     if st.session_state.get('show_explanations', False):
-        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
-        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        tone_key = st.session_state.get('explanation_tone', 'tecnico')
         st.info(explanations.get_explanation("explorador", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
@@ -914,9 +1262,9 @@ if df_cenario is not None and not df_cenario.empty:
     nodes_data, edges_data, pos = data_processing.gerar_dados_grafo(adj_matrix, threshold=threshold_adj, text_matrix=text_matrix)
     fig_grafo = visualizations.plot_network_graph(nodes_data, edges_data, i18n.t("title_network").format(threshold=threshold_adj) + f" - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
     st.plotly_chart(fig_grafo, use_container_width=True)
+    if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.4 Grafo de Similaridade", "1_4")
     if st.session_state.get('show_explanations', False):
-        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
-        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        tone_key = st.session_state.get('explanation_tone', 'tecnico')
         st.info(explanations.get_explanation("grafo", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
@@ -944,9 +1292,9 @@ if df_cenario is not None and not df_cenario.empty:
     
     fig_gower_heat = visualizations.plot_gower_heatmap(df_gower, f"{i18n.t('title_gower_prefix')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
     st.plotly_chart(fig_gower_heat, use_container_width=True)
+    if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.5 Mapa de Calor Gower", "1_5")
     if st.session_state.get('show_explanations', False):
-        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
-        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        tone_key = st.session_state.get('explanation_tone', 'tecnico')
         st.info(explanations.get_explanation("gower", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
@@ -965,9 +1313,9 @@ if df_cenario is not None and not df_cenario.empty:
     )
     fig_gower_ruler = visualizations.plot_gower_ruler(df_gower, reference_career=ref_cargo, cargos_destaque=cargos_destaque)
     st.plotly_chart(fig_gower_ruler, use_container_width=True)
+    if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.6 Regua Gower", "1_6")
     if st.session_state.get('show_explanations', False):
-        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
-        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        tone_key = st.session_state.get('explanation_tone', 'tecnico')
         st.info(explanations.get_explanation("regua", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
@@ -980,12 +1328,12 @@ if df_cenario is not None and not df_cenario.empty:
     if len(df_gower.columns) > 1:
         fig_dendro = visualizations.plot_dendrogram(df_gower, f"{i18n.t('dendro_title')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
         st.plotly_chart(fig_dendro, use_container_width=True)
+        if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.7 Dendograma", "1_7")
     else:
         st.warning(i18n.t("dendro_warning"))
 
     if st.session_state.get('show_explanations', False):
-        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
-        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        tone_key = st.session_state.get('explanation_tone', 'tecnico')
         st.info(explanations.get_explanation("dendograma", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("---")
@@ -1005,16 +1353,35 @@ if df_cenario is not None and not df_cenario.empty:
         cargos_destaque=cargos_destaque_ui
     )
     st.plotly_chart(fig_upset, use_container_width=True)
+    if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.8 UpSet Plot", "1_8")
     
     if st.session_state.get('show_explanations', False):
-        raw_tone = st.session_state.get('explanation_tone', i18n.t("tone_academic"))
-        tone_key = "tecnico" if raw_tone == i18n.t("tone_academic") else "leigo"
+        tone_key = st.session_state.get('explanation_tone', 'tecnico')
         st.info(explanations.get_explanation("upset", tone_key, language=st.session_state.get('language', 'PT-BR')))
 
-else:
+elif modo_visao == i18n.t("mode_1"):
     st.error("Cenário indisponível.")
+
+# Renderizar Botão Flutuante de Comentários (Geral para a Visão Atual)
+try:
+    interaction_ui.render_interactions(modo_visao)
+except Exception as e:
+    pass
 
 # Padding para não esconder gráficos atrás do botão de rodapé
 st.markdown("<div style='height: 150px;'></div>", unsafe_allow_html=True)
 
+if persona_placeholder is not None:
+    try:
+        from database import get_db_session, AnalyticsSession
+        import analytics
+        db = get_db_session()
+        session_id = analytics.get_session_id()
+        analytics_session = db.query(AnalyticsSession).filter_by(session_id=session_id).first()
+        inferred = analytics_session.inferred_persona if analytics_session else "Cidadão/Curioso"
+        db.close()
+    except Exception:
+        inferred = "Erro ao carregar"
+        
+    persona_placeholder.info(f"**Sua Persona Atual:**\n\n{inferred}")
 
