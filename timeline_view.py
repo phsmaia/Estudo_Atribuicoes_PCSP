@@ -4,6 +4,7 @@ import plotly.express as px
 import data_processing
 import numpy as np
 import json
+from floating_toc import render_toc
 import os
 import explanations
 import i18n
@@ -53,7 +54,7 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
             colunas_ativas = df_temp.loc[:, df_temp.sum(axis=0) > 0]
             media_compartilhamento = colunas_ativas.sum(axis=0).mean() if not colunas_ativas.empty else 0
             
-            gower_df = data_processing.calcular_distancias_gower(df_temp)
+            gower_df = data_processing.calcular_distancias(df_temp, metric='gower')
             if len(gower_df) > 1:
                 mask = np.triu(np.ones(gower_df.shape), k=1).astype(bool)
                 media_gower = gower_df.where(mask).mean().mean()
@@ -126,6 +127,7 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
     fig1.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
     
     with col1:
+        st.markdown("<div id='toc-gower'></div>", unsafe_allow_html=True)
         st.subheader(i18n.t("m3_sub_gower_title"), help=i18n.t("m3_sub_gower_help"))
         st.plotly_chart(fig1, use_container_width=True)
         interaction_ui.render_like_button("3.1 Distancia Media Gower", "3_1")
@@ -139,6 +141,7 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
     fig2.update_traces(textposition='outside')
     
     with col2:
+        st.markdown("<div id='toc-vol'></div>", unsafe_allow_html=True)
         st.subheader(i18n.t("m3_sub_vol_title"), help=i18n.t("m3_sub_vol_help"))
         st.plotly_chart(fig2, use_container_width=True)
         interaction_ui.render_like_button("3.2 Volume de Atribuicoes", "3_2")
@@ -153,6 +156,7 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
     fig3.update_traces(texttemplate='%{text:.2f}', textposition='outside')
     fig3.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
     
+    st.markdown("<div id='toc-share'></div>", unsafe_allow_html=True)
     st.subheader(i18n.t("m3_sub_share_title"), help=i18n.t("m3_sub_share_help"))
     st.plotly_chart(fig3, use_container_width=True)
     interaction_ui.render_like_button("3.3 Nivel de Compartilhamento", "3_3")
@@ -161,3 +165,9 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
         st.info(explanations.get_explanation("m3_macro_33", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
 
     st.markdown("<div style='height: 150px;'></div>", unsafe_allow_html=True)
+    
+    render_toc([
+        (i18n.t("m3_sub_gower_title", default="Distância Gower"), "toc-gower"),
+        (i18n.t("m3_sub_vol_title", default="Volume"), "toc-vol"),
+        (i18n.t("m3_sub_share_title", default="Compartilhamento"), "toc-share")
+    ])

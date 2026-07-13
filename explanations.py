@@ -35,13 +35,13 @@ def get_explanation(section, tone="tecnico", language="PT-BR"):
                 "adjacencia": "**📖 Scientific Comprehension: Adjacency Matrix**\n\nThe adjacency matrix measures co-occurrence.\n- **Calculation:** Dot Product of the binary matrix by its transpose.\n- **Interpretation:** Reveals absolute values. If the cell between Expert and Fingerprint Examiner shows '3', it means their matrices collide positively in exactly three normative sentences.",
                 "explorador": "**📖 Scientific Comprehension: Dynamic Crosstab**\n\nExploratory tool that replicates the analytical model.\n- **Purpose:** Allows drill-down into sparse matrices to qualitatively inspect *which* variables constitute the intersection between roles.",
                 "grafo": "**📖 Scientific Comprehension: Graph Diagram (NetworkX)**\n\nTopological network visualization of normative interactions.\n- **Applied Physics:** Uses the *Fruchterman-Reingold (Spring Layout)* algorithm.\n- **Interpretation:** Edges are adjacency connections. Roles with many common functions 'pull' each other to form dense clusters.",
-                "gower": "**📖 Scientific Comprehension: Gower Distance Matrix**\n\nThe Gower Similarity Coefficient is an asymmetric calculation method for categorical/binary data.\n- **Advance over Adjacency:** Computes and penalizes inequalities (what one role does and the other doesn't).\n- **Metric:** Ranges from 0.0 to 1.0. Values close to 0.0 represent very high similarity.",
+                "gower": "**📖 Scientific Comprehension: Distance and Similarity Matrices (Errata)**\n\nMetrics calculate coefficients from 0.0 to 1.0. Values close to 1 represent total dissimilarity.\n- **Symmetric Metrics (e.g. Original Gower):** Count 'double zeros' (tasks neither role performs) as similarities, bringing roles closer for not having the same functions.\n- **Asymmetric Metrics (e.g. Jaccard):** Ignore 'double zeros', basing similarity strictly on active functions.\n- **🚨 Errata from the Published Article (RBCP):** The article text argues for asymmetric math (Jaccard). However, the published tables and charts reproduced the exact values of the **Symmetric Gower** distance. The application allows you to use 'Gower' to reproduce and audit the printed figures, or 'Jaccard' to apply the strict mathematical theory proposed in the text.",
                 "regua": "**📖 Scientific Comprehension: Relative Distance Ruler**\n\nOne-dimensional projection of the Gower Coefficient focused on a 'zero point'.\n- **Interpretation:** Projects the Euclidean distance of the other roles from a fixed base.",
-                "dendograma": "**📖 Scientific Comprehension: Hierarchical Tree (Dendrogram)**\n\nTaxonomic classification of careers based on the distance matrix.\n- **Algorithm:** Agglomerative Hierarchical Clustering (*Single-linkage* method).",
+                "dendograma": "**📖 Scientific Comprehension: Hierarchical Tree (Dendrogram)**\n\nTaxonomic classification of careers based on the distance matrix.\n- **Algorithm:** Agglomerative Hierarchical Clustering.\n- **Linkage Methods:** 'Single' connects by the nearest neighbor (creates chains). 'Complete' connects by the furthest neighbor (creates tight spherical clusters). 'Average' connects by the mean distance of all points (robust middle-ground).",
                 "upset": "**📖 Scientific Comprehension: Set Diagram (UpSet Plot)**\n\nAdvanced model for intersection visualization, superior to the classic Venn Diagram.\n- **Geometry:** Scans all matrix permutations and plots them as a barcode.",
                 "m2_delta": "**📖 Scientific Comprehension: Gower Distance Delta**\n\nThe vector delta calculation measures the variation of a career's Gower distance at two different times.\n- **Interpretation:** A negative variation signals functional agglutination (roles became more similar/hybrid). A positive variation indicates that the roles isolated themselves functionally.",
                 "m2_fluxo": "**📖 Scientific Comprehension: Normative Flow (Intersection Balance)**\n\nDemonstrates the exact fluctuation of binary coordinates (0 ➔ 1 or 1 ➔ 0).\n- **Interpretation:** Shows, without mathematical abstraction, exactly what a role was permitted to do and what was normatively suppressed, evidencing the scope of the structural mutation.",
-                "m2_radar": "**📖 Scientific Comprehension: Jaccard Affinity (Plane Geometry)**\n\nThe Jaccard Index compares the intersection against the union of two sets.\n- **Interpretation:** Projected on a polar plane (radar), this chart reveals the 'area of action'. The visual difference in area between Scenario A and Scenario B demonstrates whether the career lost transversal capillarity in the institution or expanded its functional boundaries.",
+                "m2_radar": "**📖 Scientific Comprehension: Affinity Metrics (Plane Geometry)**\n\nMeasures the intersection against the distinct functions. Can be customized:\n- **Jaccard:** Standard intersection/union proportion.\n- **Sokal & Sneath:** Double penalizes exclusive functions (mismatches).\n- **Dice / Gower 2:** Double weights shared functions (matches).\n- **Overlap:** Measures if one role is a strict subset of another.\n- **Cosine:** Geometric mean proportion.",
                 "m2_grafo": "**📖 Scientific Comprehension: Topological Centrality Delta**\n\nCompares the density of connections (edges) in the two graph networks generated by adjacency.\n- **Interpretation:** A career that gains many new edges in the target scenario is assuming a central 'hub' position in the institution. If it loses edges, it is becoming an isolated node at the edge of the network.",
                 "m2_dendro": "**📖 Scientific Comprehension: Phylogenetic Jump (Clades)**\n\nEvaluates whether vector distances altered the career's closest Euclidean neighbor.\n- **Interpretation:** A change of neighbor (branch in the tree) is the strongest indicator of a methodological rupture: it means the functional DNA of that role was so altered that it needed to be reclassified to another 'family' within the Police.",
                 "m3_macro": "**📖 Scientific Comprehension: Global Analysis by Intersection Matrix**\n\nThe stacked visualization evidences secular trends in the Police matrices.\n- **Interpretation:** An increase in the 'Exclusive' block and a reduction in 'Shared' points to institutional specialization (segmentation). The reverse points to generalism and overlap of systemic competencies.",
@@ -62,7 +62,7 @@ def get_explanation(section, tone="tecnico", language="PT-BR"):
                 "adjacencia": "**💡 Simplified Explanation: Adjacency (The Scoreboard)**\n\nThis is a scoreboard of coincidences. If you see the number '5' between two careers, it means they share exactly 5 identical tasks in their laws.",
                 "explorador": "**💡 Simplified Explanation: The Explorer**\n\nHere you can open the 'hood' of the mathematics. Instead of just seeing that two roles share 10 tasks, you can filter and read exactly what those 10 tasks are.",
                 "grafo": "**💡 Simplified Explanation: The Constellation (Graph)**\n\nThink of this as a solar system. Roles that share many tasks have a strong gravity and pull together into a cluster. Roles with unique tasks are pushed away to the edges.",
-                "gower": "**💡 Simplified Explanation: The Gower Map**\n\nUnlike the scoreboard that only counts what they have in common, Gower is strict: it penalizes what is different. Red means they are practically twins. Blue means they are completely different.",
+                "gower": "**💡 Simplified Explanation: Similarity Maps (Errata)**\n\nUnlike the scoreboard that only counts what they have in common, these metrics penalize what is different.\n- **Errata from the Published Article:** The article's text argues for the **Jaccard** metric (which ignores tasks that neither role performs). However, the values and charts printed in the article were calculated by the algorithm as **Gower** (which considers that 'not performing a task' is also a similarity). By selecting 'Gower (Used in the Article)' you see exactly what was published. By selecting 'Jaccard' you see the intended theory applied strictly.",
                 "regua": "**💡 Simplified Explanation: The Ruler**\n\nIt places your chosen career at the zero mark of a ruler, and lines up all the others. The further to the right a career appears, the less it has in common with your chosen career.",
                 "dendograma": "**💡 Simplified Explanation: The Family Tree**\n\nReads like an evolutionary tree. If two roles branch off from the same tip, they are functionally 'siblings'. If they separate at the root, they are 'distant cousins'.",
                 "upset": "**💡 Simplified Explanation: The Combinations (UpSet)**\n\nInstead of messy overlapping circles (Venn), this chart creates a 'barcode' of combinations. Look at the dots below: if 3 roles have a dot, the bar above them shows exactly how many exclusive tasks that trio shares.",
@@ -112,11 +112,12 @@ Visualização topológica de rede das interações normativas.
 - **Física Aplicada:** Utiliza o algoritmo *Fruchterman-Reingold (Spring Layout)*.
 - **Interpretação:** As arestas (linhas) são conexões de adjacência (compartilhamento de funções). O algoritmo simula repulsão e atração magnética. Cargos com muitas funções em comum "puxam-se" mutuamente para formar aglomerados (clusters) densos no centro ou extremidades da rede. Nós (cargos) sem conexões com a malha principal são repelidos para as bordas (dissimilaridade total).""",
             
-            "gower": """**📖 Compreensão Científica: Matriz de Distância de Gower**
-
-O Coeficiente de Similaridade de Gower é um método de cálculo assimétrico para dados categóricos/binários.
-- **Avanço em relação à Adjacência:** Enquanto a adjacência conta apenas as "igualdades positivas", a distância de Gower computa e penaliza as desigualdades (o que um cargo faz e o outro não).
-- **Métrica:** Varia de 0.0 a 1.0. Valores próximos de 0.0 (cores quentes/escuras) representam altíssima similaridade (distância nula). Valores próximos a 1.0 representam dissimilaridade total. Igualdades negativas (ex: o fato de que nem Delegado nem Investigador realizam exames de DNA) são descartadas do peso para não aproximar artificialmente os cargos.""",
+            "gower": """**📖 Compreensão Científica: Matrizes de Distância e Similaridade (Errata)**
+            
+As métricas calculam coeficientes de 0.0 a 1.0 (ou 0% a 100%). Valores próximos a 1 na distância representam dissimilaridade total.
+- **Métricas Simétricas (Ex: Gower Original):** Contabilizam os "zeros duplos" (tarefas que ambos não fazem) como semelhanças, aproximando cargos por não possuírem as mesmas funções.
+- **Métricas Assimétricas (Ex: Jaccard):** Ignoram os "zeros duplos", baseando a similaridade estritamente nas funções ativas.
+- **🚨 Errata do Artigo Publicado (RBCP):** O texto do artigo defende a matemática assimétrica (Jaccard) para não "aproximar artificialmente os cargos". Contudo, as tabelas, mapas de calor e réguas publicadas nas páginas da revista reproduziram os valores exatos da distância **Simétrica de Gower** (onde a biblioteca computou as igualdades negativas como similaridades, como o valor 0.71 para Perito x Papiloscopista). A aplicação permite que você utilize a opção "Gower" para reproduzir e auditar as figuras do artigo impresso, ou "Jaccard" para aplicar a rigorosa teoria matemática proposta no texto da obra.""",
             
             "regua": """**📖 Compreensão Científica: Régua de Distanciamento Relativo**
 
@@ -126,7 +127,8 @@ Projeção unidimensional do Coeficiente de Gower focada em um "ponto zero".
             "dendograma": """**📖 Compreensão Científica: Árvore Hierárquica (Dendograma)**
 
 Classificação taxionômica das carreiras baseada na matriz de distâncias.
-- **Algoritmo:** Clusterização Hierárquica Aglomerativa (método *Single-linkage*, ou vizinho mais próximo).
+- **Algoritmo:** Clusterização Hierárquica Aglomerativa.
+- **Métodos de Agrupamento (Linkage):** 'Single' aproxima pelo vizinho mais próximo (tende a criar correntes alongadas). 'Complete' aproxima pelo vizinho mais distante (força clusters coesos e fechados). 'Average' aproxima pela média das distâncias (meio-termo robusto).
 - **Interpretação:** O eixo X mede o nível de especialização/distância. A árvore (clados) dicotomiza os cargos da base para a ponta. Ramos que se separam logo no início (à esquerda) indicam matrizes basais/generalistas comuns a muitos. Ramos que se agrupam apenas lá na ponta (à direita) representam altíssima proximidade funcional especializada.""",
             
             "upset": """**📖 Compreensão Científica: Diagrama de Conjuntos (UpSet Plot)**
@@ -144,10 +146,15 @@ O cálculo de delta vetorial mede a variação da distância de Gower de um carg
 Demonstra a flutuação exata das coordenadas binárias (0 ➔ 1 ou 1 ➔ 0).
 - **Interpretação:** Exibe, sem abstração matemática, o que exatamente um cargo passou a ter permissão de fazer e o que lhe foi suprimido normativamente, evidenciando o escopo da mutação estrutural.""",
             
-            "m2_radar": """**📖 Compreensão Científica: Afinidade Jaccard (Geometria Plana)**
+            "m2_radar": """**📖 Compreensão Científica: Métricas de Afinidade (Geometria Plana)**
 
-O Índice de Jaccard compara a intersecção contra a união de dois conjuntos.
-- **Interpretação:** Projetado em um plano polar (radar), este gráfico revela a "área de atuação". A diferença visual de área entre o Cenário A e o Cenário B demonstra se a carreira perdeu capilaridade transversal na instituição ou se expandiu suas fronteiras funcionais.""",
+O índice mede a intersecção contra as particularidades de dois conjuntos.
+- **Métricas Personalizáveis:**
+  - **Jaccard:** Proporção clássica (Intersecção / União).
+  - **Sokal & Sneath:** Penaliza duplamente funções exclusivas de um cargo.
+  - **Dice / Gower 2:** Bonifica duplamente as funções compartilhadas.
+  - **Overlap:** Mede se um cargo é quase um subconjunto de funções do outro.
+  - **Cosine:** Média geométrica de compartilhamento.""",
             
             "m2_grafo": """**📖 Compreensão Científica: Delta de Centralidade Topológica**
 
@@ -242,11 +249,10 @@ Aqui você pode investigar com uma lupa o que está por trás dos números.
 Este gráfico cria um modelo físico onde os cargos são como ímãs.
 - **Como ler:** As linhas que conectam as "bolas" (cargos) representam tarefas divididas. Quanto mais funções em comum, mais forte é a atração magnética. Por isso, cargos parecidos terminam sendo "puxados" para formar um bolinho juntos, enquanto cargos muito diferentes ficam soltos e isolados nas pontas.""",
             
-            "gower": """**🗣️ Entendendo de forma simples: O Mapa de Afinidade Real**
+            "gower": """**🗣️ Entendendo de forma simples: Mapas de Distância (Errata)**
 
-Diferente da tabela de amizade (que só vê o que é igual), este mapa mede a diferença real (calculada por um método chamado Gower).
-- **Por que é melhor:** Ele leva em conta não só o que dois cargos fazem de parecido, mas **desconta** o peso das coisas que eles fazem de totalmente diferente. 
-- **Como ler:** Cores fortes/quentes significam que os cargos são quase clones um do outro em suas leis. Cores fracas indicam que eles têm pouco a ver.""",
+Diferente da tabela de amizade (que só vê o que é igual), estas métricas descontam e medem diferenças.
+- **Errata do Artigo Publicado:** O texto do artigo original afirma que utilizou Jaccard (que ignora tarefas que ambos não fazem). Porém, os gráficos e tabelas impressos na revista foram calculados pelo algoritmo como Gower (que considera que não fazer uma tarefa também é uma similaridade). Escolha "Gower" para ver exatamente o que foi publicado, ou "Jaccard" para aplicar a teoria rigorosa da obra.""",
             
             "regua": """**🗣️ Entendendo de forma simples: A Régua de Distância**
 

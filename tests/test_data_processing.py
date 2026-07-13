@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from data_processing import remover_atribuicoes_comuns, condensar_dataframe, gerar_matriz_adjacencia, calcular_distancias_gower
+from data_processing import remover_atribuicoes_comuns, condensar_dataframe, gerar_matriz_adjacencia, calcular_distancias
 
 def test_remover_atribuicoes_comuns():
     # Setup
@@ -67,7 +67,7 @@ def test_gerar_matriz_adjacencia():
     # A e C não intersecionam -> 0
     assert adj.loc['Cargo A', 'Cargo C'] == 0
 
-def test_calcular_distancias_gower():
+def test_calcular_distancias():
     # Setup
     df = pd.DataFrame({
         'Atr_1': [1, 1, 0],
@@ -76,7 +76,7 @@ def test_calcular_distancias_gower():
     }, index=['Cargo A', 'Cargo B', 'Cargo C'])
     
     # Exec
-    dist = calcular_distancias_gower(df)
+    dist = calcular_distancias(df, metric='jaccard')
     
     # Assert
     # Diagonal should be 0

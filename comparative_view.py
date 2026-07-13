@@ -3,11 +3,11 @@ import pandas as pd
 import json
 import plotly.express as px
 import plotly.graph_objects as go
-from data_processing import calcular_distancias_gower
+from data_processing import calcular_distancias
 import explanations
 import i18n
 import interaction_ui
-
+from floating_toc import render_toc
 def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b, cargo_foco_a, cargos_destaque=None):
     if cenario_a == cenario_b:
         st.warning(i18n.t("warning_diff_scenarios"))
@@ -75,8 +75,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             
         mapping_a_to_b[val_a] = val_b
 
-    gower_a = calcular_distancias_gower(df_a)
-    gower_b = calcular_distancias_gower(df_b)
+    gower_a = calcular_distancias(df_a, metric='jaccard')
+    gower_b = calcular_distancias(df_b, metric='jaccard')
 
     cargos_a = list(mapping_a_to_b.keys())
     cargos_a = list(dict.fromkeys(cargos_a))
@@ -132,6 +132,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             c_idx += 1
 
     st.markdown("---")
+    st.markdown("<div id='toc-delta'></div>", unsafe_allow_html=True)
     st.subheader(
         i18n.t("sub_delta_title").format(cenario_a=i18n.t(cenario_a), cenario_b=i18n.t(cenario_b)),
         help=i18n.t("sub_delta_help")
@@ -188,6 +189,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
     
     st.markdown("---")
     
+    st.markdown("<div id='toc-flow'></div>", unsafe_allow_html=True)
     st.subheader(
         i18n.t("sub_flow_title"),
         help=i18n.t("sub_flow_help")
@@ -259,6 +261,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
 
     st.markdown("---")
     
+    st.markdown("<div id='toc-radar'></div>", unsafe_allow_html=True)
     st.subheader(
         i18n.t("sub_radar_title"),
         help=i18n.t("sub_radar_help")
@@ -273,21 +276,53 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             
         fig_radar = go.Figure()
         
-        def calc_jaccard(df, c1, c2):
+        def calc_similarity(df, c1, c2, metric):
             if c1 not in df['Carreira'].values or c2 not in df['Carreira'].values: return 0.0
             r1 = pd.to_numeric(df[df['Carreira'] == c1].iloc[0].drop('Carreira'), errors='coerce').fillna(0)
             r2 = pd.to_numeric(df[df['Carreira'] == c2].iloc[0].drop('Carreira'), errors='coerce').fillna(0)
-            intersection = ((r1 == 1) & (r2 == 1)).sum()
-            union = ((r1 == 1) | (r2 == 1)).sum()
-            return intersection / union if union > 0 else 0.0
             
-        # Afinidade calculada por Jaccard (Somente compartilhamentos positivos importam)
-        vals_a = [calc_jaccard(df_a, cargo_foco_a, c) for c in todas_carreiras]
+            a = ((r1 == 1) & (r2 == 1)).sum()
+            b = ((r1 == 1) & (r2 == 0)).sum()
+            c = ((r1 == 0) & (r2 == 1)).sum()
+            
+            if metric == 'jaccard':
+                return a / (a + b + c) if (a + b + c) > 0 else 0.0
+            elif metric == 'sokalsneath':
+                return a / (a + 2*(b + c)) if (a + 2*(b + c)) > 0 else 0.0
+            elif metric == 'dice':
+                return 2*a / (2*a + b + c) if (2*a + b + c) > 0 else 0.0
+            elif metric == 'overlap':
+                min_ab_ac = min(a + b, a + c)
+                return a / min_ab_ac if min_ab_ac > 0 else 0.0
+            elif metric == 'cosine':
+                import math
+                denom = math.sqrt((a + b) * (a + c))
+                return a / denom if denom > 0 else 0.0
+            return 0.0
+            
+        # Afinidade calculada pela métrica selecionada
+        # Para isso precisamos do selectbox da métrica
+        metric_options = {
+            'jaccard': i18n.t("metric_jaccard", default="Jaccard (usado no artigo)"),
+            'sokalsneath': i18n.t("metric_sokal", default="Sokal & Sneath"),
+            'dice': i18n.t("metric_dice", default="Sørensen-Dice / Gower & Legendre 2"),
+            'overlap': i18n.t("metric_overlap", default="Overlap Coefficient"),
+            'cosine': i18n.t("metric_cosine", default="Cosine Similarity")
+        }
+        
+        selected_radar_metric = st.selectbox(
+            i18n.t("select_radar_metric", default="Métrica de Afinidade no Radar"),
+            list(metric_options.keys()),
+            format_func=lambda x: metric_options[x],
+            key="radar_metric_selectbox"
+        )
+        
+        vals_a = [calc_similarity(df_a, cargo_foco_a, c, selected_radar_metric) for c in todas_carreiras]
         
         vals_b = []
         for c in todas_carreiras:
             cb = mapping_a_to_b.get(c)
-            vals_b.append(calc_jaccard(df_b, cargo_foco_b, cb))
+            vals_b.append(calc_similarity(df_b, cargo_foco_b, cb, selected_radar_metric))
         todas_carreiras_display = [i18n.traduzir_cargo(c) if traduzir else c for c in todas_carreiras]
                 
         fig_radar.add_trace(go.Scatterpolar(
@@ -411,6 +446,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
 
     st.markdown("---")
     
+    st.markdown("<div id='toc-network'></div>", unsafe_allow_html=True)
     st.subheader(
         i18n.t("sub_network_comp_title"),
         help=i18n.t("sub_network_comp_help")
@@ -515,27 +551,62 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
 
     st.markdown("---")
 
+    st.markdown("<div id='toc-tree'></div>", unsafe_allow_html=True)
     st.subheader(
         i18n.t("sub_tree_comp_title"),
         help=i18n.t("sub_tree_comp_help")
     )
     
-    # O Dendrograma precisa do gower_a e gower_b (já calculados anteriormente)
+    # O Dendrograma precisa do gower_a e gower_b
     # Apenas se houver mais de um cargo para poder clusterizar
     if len(gower_a.columns) > 1 and len(gower_b.columns) > 1:
-        if lang == 'EN' and traduzir:
-            gower_a_disp = gower_a.rename(index=i18n.dic_traducao_cargos, columns=i18n.dic_traducao_cargos)
-            gower_b_disp = gower_b.rename(index=i18n.dic_traducao_cargos, columns=i18n.dic_traducao_cargos)
-            destaques_a_disp = [i18n.dic_traducao_cargos.get(c, c) for c in destaques_completos if c in gower_a.columns] or None
-            destaques_b_disp = [i18n.dic_traducao_cargos.get(c, c) for c in destaques_b if c in gower_b.columns] or None
-        else:
-            gower_a_disp = gower_a
-            gower_b_disp = gower_b
-            destaques_a_disp = [c for c in destaques_completos if c in gower_a.columns] or None
-            destaques_b_disp = [c for c in destaques_b if c in gower_b.columns] or None
+        st.markdown("### " + i18n.t("config_metrics", default="Configurações de Distância e Agrupamento"))
+        col_metric_dendro, col_linkage_dendro = st.columns(2)
+        metric_options_dendro = {
+            'gower': i18n.t("metric_gower", default="Distância de Gower (usado no artigo - ver Errata)"),
+            'jaccard': i18n.t("metric_jaccard", default="Jaccard (Assimétrica)"),
+            'sokalsneath': i18n.t("metric_sokal", default="Sokal & Sneath"),
+            'dice': i18n.t("metric_dice", default="Sørensen-Dice / Gower & Legendre 2"),
+            'overlap': i18n.t("metric_overlap", default="Overlap Coefficient"),
+            'cosine': i18n.t("metric_cosine", default="Cosine Similarity")
+        }
+        with col_metric_dendro:
+            selected_metric_dendro = st.selectbox(
+                i18n.t("select_metric", default="Selecione a Métrica de Similaridade"),
+                list(metric_options_dendro.keys()),
+                format_func=lambda x: metric_options_dendro[x],
+                key="dendro_metric_selectbox"
+            )
+        with col_linkage_dendro:
+            linkage_options = {
+                'single': i18n.t("linkage_single", default="Single Linkage (usado no artigo)"),
+                'complete': i18n.t("linkage_complete", default="Complete Linkage"),
+                'average': i18n.t("linkage_average", default="Average Linkage (UPGMA)")
+            }
+            selected_linkage_dendro = st.selectbox(
+                i18n.t("select_linkage", default="Selecione o Método de Agrupamento (Linkage)"),
+                list(linkage_options.keys()),
+                format_func=lambda x: linkage_options[x],
+                key="dendro_linkage_selectbox"
+            )
             
-        fig_dendro_a = visualizations.plot_dendrogram(gower_a_disp, f"{i18n.t('tree_graph_base')} ({cenario_a})", cargos_destaque=destaques_a_disp)
-        fig_dendro_b = visualizations.plot_dendrogram(gower_b_disp, f"{i18n.t('tree_graph_target')} ({cenario_b})", cargos_destaque=destaques_b_disp)
+        # Recalcular com a métrica selecionada
+        gower_a_dendro = calcular_distancias(df_a, metric=selected_metric_dendro)
+        gower_b_dendro = calcular_distancias(df_b, metric=selected_metric_dendro)
+        
+        if lang == 'EN' and traduzir:
+            gower_a_disp = gower_a_dendro.rename(index=i18n.dic_traducao_cargos, columns=i18n.dic_traducao_cargos)
+            gower_b_disp = gower_b_dendro.rename(index=i18n.dic_traducao_cargos, columns=i18n.dic_traducao_cargos)
+            destaques_a_disp = [i18n.dic_traducao_cargos.get(c, c) for c in destaques_completos if c in gower_a_dendro.columns] or None
+            destaques_b_disp = [i18n.dic_traducao_cargos.get(c, c) for c in destaques_b if c in gower_b_dendro.columns] or None
+        else:
+            gower_a_disp = gower_a_dendro
+            gower_b_disp = gower_b_dendro
+            destaques_a_disp = [c for c in destaques_completos if c in gower_a_dendro.columns] or None
+            destaques_b_disp = [c for c in destaques_b if c in gower_b_dendro.columns] or None
+            
+        fig_dendro_a = visualizations.plot_dendrogram(gower_a_disp, f"{i18n.t('tree_graph_base')} ({cenario_a})", cargos_destaque=destaques_a_disp, linkage_method=selected_linkage_dendro)
+        fig_dendro_b = visualizations.plot_dendrogram(gower_b_disp, f"{i18n.t('tree_graph_target')} ({cenario_b})", cargos_destaque=destaques_b_disp, linkage_method=selected_linkage_dendro)
         
         col_dendro1, col_dendro2 = st.columns(2)
         with col_dendro1:
@@ -547,16 +618,16 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         st.caption(i18n.t("tree_details_caption"))
         
         tabela_dendro = []
-        for c in gower_a.columns:
+        for c in gower_a_dendro.columns:
             # Encontrar o vizinho mais próximo no cenário A
-            dist_a = gower_a[c].drop(c)
+            dist_a = gower_a_dendro[c].drop(c)
             vizinho_a = dist_a.idxmin()
             val_a = dist_a.min()
             
             # Encontrar o correspondente de 'c' no cenário B
             cb = mapping_a_to_b.get(c, c)
-            if cb in gower_b.columns:
-                dist_b = gower_b[cb].drop(cb)
+            if cb in gower_b_dendro.columns:
+                dist_b = gower_b_dendro[cb].drop(cb)
                 vizinho_b = dist_b.idxmin()
                 val_b = dist_b.min()
                 
@@ -620,3 +691,11 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         st.info(explanations.get_explanation("m2_dendro", st.session_state.get('explanation_tone', 'tecnico'), st.session_state.get('language', 'PT-BR')))
 
     st.markdown("<div style='height: 150px;'></div>", unsafe_allow_html=True)
+    
+    render_toc([
+        (i18n.t("sub_delta_title", default="Discrepâncias").split("{")[0].strip(), "toc-delta"),
+        (i18n.t("sub_flow_title", default="Fluxo de Atribuições"), "toc-flow"),
+        (i18n.t("sub_radar_title", default="Similaridade Geral"), "toc-radar"),
+        (i18n.t("sub_network_comp_title", default="Rede (Grafo)"), "toc-network"),
+        (i18n.t("sub_tree_comp_title", default="Agrupamento Hierárquico"), "toc-tree")
+    ])

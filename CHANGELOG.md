@@ -4,9 +4,21 @@ Todas as modificações notáveis neste projeto serão documentadas neste arquiv
 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
-## [Unreleased] - 2026-07-10
+## [Unreleased] - 2026-07-12
 
 ### Added
+- **UI/UX Navegação Flutuante**: Inclusão de TOC (Table of Contents) flutuante à direita da tela na Visão Geral (Modo 1) para facilitar o salto entre subseções extensas (`floating_toc.py`).
+- **Errata Científica Metodológica**: Inclusão de explicações detalhadas em Português e Inglês, no escopo Técnico e Leigo, explicitando a diferença real entre as métricas de Jaccard e Gower e destacando a discrepância metodológica dos gráficos do artigo publicado (`explanations.py`).
+
+### Changed
+- **Desacoplamento Cognitivo de Métricas**: Substituição do menu global de métricas por seletores de Distância e Agrupamento individuais embutidos discretamente abaixo de cada gráfico dependente (Seções 1.5, 1.6 e 1.7), prevenindo vazamento de contexto no fluxo de leitura leigo.
+- **Isolamento de Estado de Menu**: Separação estrutural de layout nas gavetas (*popovers*) dos Modos de Visão e Configurações Analíticas, garantindo renderização harmônica com o novo TOC.
+
+### Fixed
+- **Anomalia de Renderização de Eixos**: Correção do erro no seletor de Carreira Base da Régua de Afinidade (1.6) que, por distorção matricial, exibia dezenas de atribuições textuais em vez de nomes de cargos.
+- **Falhas de Casting do Protobuf (Streamlit)**: Resolução de crashes de UI do Pandas via cast forçado de string pura `[str(x)]` nos seletores de referência.
+
+## [Unreleased] - 2026-07-10
 - **Expansão de Traduções (Modos 3 e 4)**: Inclusão completa das chaves de internacionalização da interface, tooltips (ajudas e explicações dos gráficos) e cabeçalhos para os rastreamentos longitudinal e global em inglês (`i18n.py`).
 - **Glossários e Ajuda Integrados**: Propagação dos módulos "Brazilian Police Roles Glossary" e "Assignments Translation Table" nos cabeçalhos dos Modos 2 e 4 em ambiente inglês, dispensando a necessidade de retornar ao explorador individual para checar conversões.
 

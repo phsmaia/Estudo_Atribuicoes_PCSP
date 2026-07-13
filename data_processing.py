@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import numpy as np
 
 @st.cache_data(show_spinner=False)
 def remover_atribuicoes_comuns(df: pd.DataFrame) -> pd.DataFrame:
@@ -177,25 +178,41 @@ def obter_atribuicoes_comuns_textuais(df: pd.DataFrame, dic_siglas: dict, expand
     return text_matrix
 
 import gower
-from scipy.spatial.distance import squareform
+from scipy.spatial.distance import pdist, squareform
 from scipy.cluster.hierarchy import linkage
 
+def overlap_dist(u, v):
+    u = u.astype(bool)
+    v = v.astype(bool)
+    a = np.sum(u & v)
+    b = np.sum(u & ~v)
+    c = np.sum(~u & v)
+    min_ab_ac = min(a+b, a+c)
+    if min_ab_ac == 0:
+        return 1.0 # Distância máxima
+    return 1.0 - (a / min_ab_ac)
+
 @st.cache_data(show_spinner=False)
-def calcular_distancias_gower(df: pd.DataFrame) -> pd.DataFrame:
+def calcular_distancias(df: pd.DataFrame, metric: str = 'jaccard') -> pd.DataFrame:
     """
-    Calcula a matriz de distâncias usando o algoritmo de Gower.
+    Calcula a matriz de distâncias usando a métrica escolhida.
     """
     df_temp = df.copy()
     if 'Carreira' in df_temp.columns:
         df_temp = df_temp.set_index('Carreira')
     df_temp = df_temp.apply(pd.to_numeric, errors='coerce').fillna(0)
     
-    # Cast explícito para float para evitar UFuncOutputCastingError do Numpy 2.0 no Gower
+    # Cast explícito para float
     df_temp = df_temp.astype(float)
     
-    # A matriz de Gower retorna distâncias (0 = idêntico, 1 = dissimilar)
-    dist_matrix = gower.gower_matrix(df_temp)
-    
-    # Converte em dataframe para facilidade
-    df_gower = pd.DataFrame(dist_matrix, index=df_temp.index, columns=df_temp.index)
-    return df_gower
+    if metric == 'gower':
+        # Mantendo gower por compatibilidade, embora seja simétrico
+        dist_matrix = gower.gower_matrix(df_temp)
+    else:
+        # Se for string reconhecida pelo pdist ou função
+        metric_arg = overlap_dist if metric == 'overlap' else metric
+        dist_array = pdist(df_temp, metric=metric_arg)
+        dist_matrix = squareform(dist_array)
+        
+    df_dist = pd.DataFrame(dist_matrix, index=df_temp.index, columns=df_temp.index)
+    return df_dist

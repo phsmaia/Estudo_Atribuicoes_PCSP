@@ -270,7 +270,7 @@ def plot_gower_heatmap(df_gower: pd.DataFrame, title: str, cargos_destaque: list
                 
     return fig
 
-def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado de Polícia", cargos_destaque: list = None) -> go.Figure:
+def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado de Polícia", cargos_destaque: list = None, full_scale: bool = True) -> go.Figure:
     """
     Cria uma régua 1D (Scatter plot) baseada na distância de Gower de todos os cargos
     em relação a um cargo de referência (Delegado de Polícia, assumindo x=0).
@@ -332,13 +332,16 @@ def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado d
         height=500,
         autosize=True
     )
+    
+    if full_scale:
+        fig.update_layout(xaxis=dict(range=[-0.05, 1.05]))
                   
     return fig
 
 import plotly.figure_factory as ff
 from scipy.spatial.distance import squareform
 
-def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = None) -> go.Figure:
+def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = None, linkage_method: str = 'single') -> go.Figure:
     """
     Gera um dendograma a partir da matriz de distâncias de Gower.
     """
@@ -360,7 +363,7 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
     
     # Para usar o Plotly, precisamos criar um linkage
     from scipy.cluster.hierarchy import linkage
-    Z = linkage(condensed_dist, method='single')
+    Z = linkage(condensed_dist, method=linkage_method)
     
     # Plotly figure factory aceita a matriz condensada ou dados crus.
     # Como já temos distâncias, a forma mais segura no Plotly é via scipy -> plotly dendrogram manual,
@@ -370,7 +373,7 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
         dist_array,
         labels=labels,
         orientation='left',
-        linkagefun=lambda x: linkage(squareform(x) if x.ndim == 2 else x, method='single')
+        linkagefun=lambda x: linkage(squareform(x) if x.ndim == 2 else x, method=linkage_method)
     )
     
     fig.update_layout(

@@ -16,6 +16,10 @@ import i18n
 import interaction_ui
 importlib.reload(i18n)
 importlib.reload(interaction_ui)
+importlib.reload(visualizations)
+import floating_toc
+importlib.reload(floating_toc)
+from floating_toc import render_toc
 
 
 # Roteamento do painel de administração oculto
@@ -654,17 +658,21 @@ with st.container():
     # Removemos o HTML do layout inicial porque o render final dos badges ocorre lá embaixo
     status_bar_placeholder.markdown("<div style='border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;'></div>", unsafe_allow_html=True)
 
-    col_label, col_radio = st.columns([2, 8])
-    with col_label:
-        st.markdown(f"<h4 style='margin:0; margin-top:5px; font-size:1.1rem; color:#ccc;'>{i18n.t('view_modes')}</h4>", unsafe_allow_html=True)
-    with col_radio:
+    current_mode_for_layout = st.session_state.get("modo_visao_radio", i18n.t("mode_1"))
+    if current_mode_for_layout == i18n.t("mode_3"):
+        col_menu_global = st.container()
+        col_menu_especifico = st.container()
+    else:
+        col_menu_global, col_menu_especifico = st.columns(2)
+    with col_menu_global.popover("⚙️ Modos de Visão e Explicações", use_container_width=True):
+        st.markdown(f"<h4 style='margin:0; margin-bottom:10px; font-size:1.1rem; color:#ccc;'>{i18n.t('view_modes')}</h4>", unsafe_allow_html=True)
         opcoes_modos = [i18n.t("mode_1"), i18n.t("mode_2"), i18n.t("mode_3"), i18n.t("mode_4")]
         
         modo_visao = st.radio(
             i18n.t("nav_analytic"),
             opcoes_modos,
             key="modo_visao_radio",
-            horizontal=True,
+            horizontal=False,
             label_visibility="collapsed"
         )
         
@@ -674,9 +682,9 @@ with st.container():
         if st.session_state.last_modo_visao != modo_visao:
             analytics.log_event("change_mode", {"mode": modo_visao})
             st.session_state.last_modo_visao = modo_visao
+            
+        st.divider()
         
-    col_exp_1, col_exp_2 = st.columns([3, 7])
-    with col_exp_1:
         show_exp = st.toggle(i18n.t("explanation_mode"), key="show_explanations")
         if 'last_show_exp' not in st.session_state:
             st.session_state.last_show_exp = show_exp
@@ -684,7 +692,6 @@ with st.container():
             analytics.log_event("toggle_explanations", {"enabled": show_exp})
             st.session_state.last_show_exp = show_exp
             
-    with col_exp_2:
         if st.session_state.get('show_explanations', False):
             tone = st.radio(i18n.t("reading_tone"), ["tecnico", "leigo"], format_func=lambda x: i18n.t("tone_academic") if x == "tecnico" else i18n.t("tone_layman"), horizontal=True, label_visibility="collapsed", key="explanation_tone")
             if 'last_tone' not in st.session_state:
@@ -697,7 +704,7 @@ with st.container():
     
     # --- CONTROLES SUPERIORES (APENAS EXPLORADOR INDIVIDUAL) ---
     if modo_visao == i18n.t("mode_1"):
-        with st.popover(i18n.t("config_analytic"), use_container_width=True):
+        with col_menu_especifico.popover(i18n.t("config_analytic"), use_container_width=True):
             col1, col2, col3 = st.columns([1, 1, 1.5])
             
             with col1:
@@ -787,7 +794,7 @@ with st.container():
 
     elif modo_visao == i18n.t("mode_2"):
         traduzir_cargos = st.session_state.get('language', 'PT-BR') == 'EN'
-        with st.popover(i18n.t("config_compare"), use_container_width=True):
+        with col_menu_especifico.popover(i18n.t("config_compare"), use_container_width=True):
             col_a, col_b = st.columns(2)
             cenario_a = col_a.selectbox(i18n.t("scenario_a"), opcoes_cenarios, index=0, format_func=lambda x: i18n.t(x), key="cenario_a_sel")
             cenario_b = col_b.selectbox(i18n.t("scenario_b"), opcoes_cenarios, index=1, format_func=lambda x: i18n.t(x), key="cenario_b_sel")
@@ -869,7 +876,7 @@ with st.container():
         except Exception:
             pass
             
-        with st.popover(i18n.t("m4_config_title"), use_container_width=True):
+        with col_menu_especifico.popover(i18n.t("m4_config_title"), use_container_width=True):
             st.markdown(f"<p style='margin-top:-10px; color:#aaa; font-size:0.9rem;'>{i18n.t('m4_config_desc')}</p>", unsafe_allow_html=True)
             filtro_cargos_long = st.multiselect(
                 i18n.t("m4_filter_roles"), 
@@ -1078,6 +1085,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
 
     if is_sample_biased:
         st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.markdown("<div id='toc-matrix'></div>", unsafe_allow_html=True)
     st.subheader(f"{i18n.t('sub_matrix')} ({i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')})", help=i18n.t('sub_matrix_help'))
     st.markdown(f"<p style='font-size: 0.85rem; color: #9E9E9E; margin-top: -15px; margin-bottom: 10px;'>{i18n.t('tip_hover')}</p>", unsafe_allow_html=True)
     lbl_matriz_translated = i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')
@@ -1091,6 +1099,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     # 1.2. Matriz de Adjacência
     if is_sample_biased:
         st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.markdown("<div id='toc-adj'></div>", unsafe_allow_html=True)
     st.subheader(i18n.t('sub_adj'), help=i18n.t('sub_adj_help'))
     adj_matrix = data_processing.gerar_matriz_adjacencia(df_to_use)
     fig_adj = visualizations.plot_adjacency_heatmap(adj_matrix, f"{i18n.t('title_adj_prefix')} - {i18n.t(cenario_sel)}", text_matrix=text_matrix, cargos_destaque=cargos_destaque_ui)
@@ -1105,6 +1114,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     # 1.3. Explorador Dinâmico
     if is_sample_biased:
         st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.markdown("<div id='toc-dyn'></div>", unsafe_allow_html=True)
     st.subheader(i18n.t('sub_dyn'), help=i18n.t('sub_dyn_help'))
     
     df_explorer = df_original_limpo.set_index('Carreira') if 'Carreira' in df_original_limpo.columns else df_original_limpo.copy()
@@ -1257,6 +1267,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     # 1.4. Grafo de Similaridade
     if is_sample_biased:
         st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.markdown("<div id='toc-graph'></div>", unsafe_allow_html=True)
     st.subheader(i18n.t("sub_graph"), help=i18n.t("sub_graph_help"))
     threshold_adj = st.slider(i18n.t("threshold_adj"), min_value=1, max_value=15, value=1, step=1)
     nodes_data, edges_data, pos = data_processing.gerar_dados_grafo(adj_matrix, threshold=threshold_adj, text_matrix=text_matrix)
@@ -1272,6 +1283,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     # 1.5. Mapa de Calor Gower
     if is_sample_biased:
         st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.markdown("<div id='toc-gower'></div>", unsafe_allow_html=True)
     st.subheader(i18n.t("sub_gower"), help=i18n.t("sub_gower_help"))
     
     df_para_gower = df_to_use.copy()
@@ -1284,13 +1296,28 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         pseudo_row.name = "Policial Civil (todos os cargos)"
         df_para_gower.loc[pseudo_row.name] = pseudo_row
         
-    df_gower = data_processing.calcular_distancias_gower(df_para_gower)
+    metric_options = {
+        'gower': i18n.t("metric_gower", default="Distância de Gower (usado no artigo - ver Errata)"),
+        'jaccard': i18n.t("metric_jaccard", default="Jaccard (Assimétrica)"),
+        'sokalsneath': i18n.t("metric_sokal", default="Sokal & Sneath"),
+        'dice': i18n.t("metric_dice", default="Sørensen-Dice / Gower & Legendre 2"),
+        'overlap': i18n.t("metric_overlap", default="Overlap Coefficient (Szymkiewicz–Simpson)"),
+        'cosine': i18n.t("metric_cosine", default="Cosine Similarity (Ochiai)")
+    }
+    selected_metric_key_15 = st.selectbox(
+        i18n.t("select_metric", default="Selecione a Métrica de Similaridade"),
+        list(metric_options.keys()),
+        format_func=lambda x: metric_options[x],
+        key="metric_selectbox_15"
+    )
+        
+    df_gower_15 = data_processing.calcular_distancias(df_para_gower, metric=selected_metric_key_15)
     
     if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
-        df_gower.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower.index]
-        df_gower.columns = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower.columns]
+        df_gower_15.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_15.index]
+        df_gower_15.columns = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_15.columns]
     
-    fig_gower_heat = visualizations.plot_gower_heatmap(df_gower, f"{i18n.t('title_gower_prefix')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
+    fig_gower_heat = visualizations.plot_gower_heatmap(df_gower_15, f"{i18n.t('title_gower_prefix')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
     st.plotly_chart(fig_gower_heat, use_container_width=True)
     if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.5 Mapa de Calor Gower", "1_5")
     if st.session_state.get('show_explanations', False):
@@ -1302,16 +1329,40 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     # 1.6. Régua Gower
     if is_sample_biased:
         st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.markdown("<div id='toc-ruler'></div>", unsafe_allow_html=True)
     st.subheader(i18n.t("sub_ruler"), help=i18n.t("sub_ruler_help"))
 
-    ref_cargo_opcoes = list(df_gower.columns)
-    ref_cargo = st.selectbox(
-        i18n.t("select_ruler_role"), 
-        ref_cargo_opcoes, 
-        index=0,
-        format_func=lambda x: f"{x} {i18n.t('used_in_paper')}" if x in ["Delegado de Polícia", "Police Chief"] else x
-    )
-    fig_gower_ruler = visualizations.plot_gower_ruler(df_gower, reference_career=ref_cargo, cargos_destaque=cargos_destaque)
+    if 'df_para_gower' in locals():
+        ref_cargo_opcoes = list(df_para_gower['Carreira']) if 'Carreira' in df_para_gower.columns else [str(x) for x in df_para_gower.index]
+    else:
+        ref_cargo_opcoes = []
+    
+    col_ref_16, col_metric_16 = st.columns(2)
+    with col_ref_16:
+        ref_cargo = st.selectbox(
+            i18n.t("select_ruler_role"), 
+            ref_cargo_opcoes, 
+            index=0,
+            format_func=lambda x: f"{x} {i18n.t('used_in_paper')}" if x in ["Delegado de Polícia", "Police Chief"] else x,
+            key="ruler_ref_selectbox"
+        )
+    with col_metric_16:
+        selected_metric_key_16 = st.selectbox(
+            i18n.t("select_metric", default="Selecione a Métrica de Similaridade"),
+            list(metric_options.keys()),
+            format_func=lambda x: metric_options[x],
+            key="metric_selectbox_16"
+        )
+        
+    df_gower_16 = data_processing.calcular_distancias(df_para_gower, metric=selected_metric_key_16)
+    if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
+        df_gower_16.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_16.index]
+        df_gower_16.columns = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_16.columns]
+    
+    # Checkbox para habilitar ou desabilitar o zoom automático no eixo X
+    auto_zoom = st.checkbox(i18n.t("ruler_zoom_toggle", default="🔍 Habilitar Zoom Automático (Ajustar gráfico à dispersão)"), value=True, key="ruler_zoom_16")
+    
+    fig_gower_ruler = visualizations.plot_gower_ruler(df_gower_16, reference_career=ref_cargo, cargos_destaque=cargos_destaque, full_scale=not auto_zoom)
     st.plotly_chart(fig_gower_ruler, use_container_width=True)
     if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.6 Regua Gower", "1_6")
     if st.session_state.get('show_explanations', False):
@@ -1323,10 +1374,38 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     # 1.7. Dendograma
     if is_sample_biased:
         st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.markdown("<div id='toc-dendro'></div>", unsafe_allow_html=True)
     st.subheader(i18n.t("sub_dendro"), help=i18n.t("sub_dendro_help"))
+
+    col_metric_17, col_linkage_17 = st.columns(2)
+    with col_metric_17:
+        selected_metric_key_17 = st.selectbox(
+            i18n.t("select_metric", default="Selecione a Métrica de Similaridade"),
+            list(metric_options.keys()),
+            format_func=lambda x: metric_options[x],
+            key="metric_selectbox_17"
+        )
+    with col_linkage_17:
+        linkage_options_17 = {
+            'single': i18n.t("linkage_single", default="Single Linkage (usado no artigo)"),
+            'complete': i18n.t("linkage_complete", default="Complete Linkage"),
+            'average': i18n.t("linkage_average", default="Average Linkage (UPGMA)")
+        }
+        selected_linkage_17 = st.selectbox(
+            i18n.t("select_linkage", default="Selecione o Método de Agrupamento (Linkage)"),
+            list(linkage_options_17.keys()),
+            format_func=lambda x: linkage_options_17[x],
+            key="linkage_selectbox_17"
+        )
+        
+    df_gower_17 = data_processing.calcular_distancias(df_para_gower, metric=selected_metric_key_17)
+    if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
+        df_gower_17.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_17.index]
+        df_gower_17.columns = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_17.columns]
+
     st.markdown(i18n.t("dendro_method"))
-    if len(df_gower.columns) > 1:
-        fig_dendro = visualizations.plot_dendrogram(df_gower, f"{i18n.t('dendro_title')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
+    if len(df_gower_17.columns) > 1:
+        fig_dendro = visualizations.plot_dendrogram(df_gower_17, f"{i18n.t('dendro_title')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui, linkage_method=selected_linkage_17)
         st.plotly_chart(fig_dendro, use_container_width=True)
         if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.7 Dendograma", "1_7")
     else:
@@ -1341,6 +1420,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     # 1.8. UpSet Plot (Alternativa ao Venn)
     if is_sample_biased:
         st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+    st.markdown("<div id='toc-upset'></div>", unsafe_allow_html=True)
     st.subheader(i18n.t("sub_upset"), help=i18n.t("sub_upset_help"))
     
     df_upset = df_original_limpo.set_index('Carreira') if 'Carreira' in df_original_limpo.columns else df_original_limpo.copy()
@@ -1358,6 +1438,17 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     if st.session_state.get('show_explanations', False):
         tone_key = st.session_state.get('explanation_tone', 'tecnico')
         st.info(explanations.get_explanation("upset", tone_key, language=st.session_state.get('language', 'PT-BR')))
+        
+    render_toc([
+        (i18n.t("sub_matrix", default="Matriz"), "toc-matrix"),
+        (i18n.t("sub_adj", default="Adjacência"), "toc-adj"),
+        (i18n.t("sub_dyn", default="Explorador"), "toc-dyn"),
+        (i18n.t("sub_graph", default="Rede"), "toc-graph"),
+        (i18n.t("sub_gower", default="Mapa Gower"), "toc-gower"),
+        (i18n.t("sub_ruler", default="Régua Gower"), "toc-ruler"),
+        (i18n.t("sub_dendro", default="Dendrograma"), "toc-dendro"),
+        (i18n.t("sub_upset", default="UpSet Plot"), "toc-upset")
+    ])
 
 elif modo_visao == i18n.t("mode_1"):
     st.error("Cenário indisponível.")
