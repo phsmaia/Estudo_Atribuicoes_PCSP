@@ -106,7 +106,7 @@ def render_toc(sections, title="ÍNDICE"):
     
     js = f"""
     <script>
-    document.addEventListener("DOMContentLoaded", function() {{
+    (function() {{
         const parentDoc = window.parent.document;
         
         // Remove TOC anterior se existir (quando o Streamlit re-renderiza)
@@ -182,7 +182,7 @@ def render_toc(sections, title="ÍNDICE"):
             }});
             
         }}, 1000); 
-    }});
+    }})();
     </script>
     """
     

@@ -240,6 +240,7 @@ def plot_gower_heatmap(df_gower: pd.DataFrame, title: str, cargos_destaque: list
         x=gower_vis.columns,
         y=gower_vis.index,
         colorscale="RdYlBu",
+        zmin=0.0, zmax=1.0,
         xgap=1, ygap=1,
         hovertemplate=f"<b>{i18n.t('hover_career_a')}:</b> %{{y}}<br><b>{i18n.t('hover_career_b')}:</b> %{{x}}<br><b>{i18n.t('hover_gower_dist')}:</b> %{{z:.4f}}<extra></extra>"
     ))
@@ -270,6 +271,94 @@ def plot_gower_heatmap(df_gower: pd.DataFrame, title: str, cargos_destaque: list
                 
     return fig
 
+def plot_distance_histogram(df_dist: pd.DataFrame, title: str, full_scale: bool = True) -> go.Figure:
+    """
+    Gera um gráfico de bolinhas (Dot Plot / Jitter Scatter) da distribuição das distâncias
+    para entender o comportamento da métrica, com cores e hover detalhado.
+    """
+    import numpy as np
+    
+    # Extract upper triangle values (excluding diagonal) to avoid duplication
+    arr = df_dist.values
+    mask = np.triu(np.ones_like(arr, dtype=bool), k=1)
+    
+    rows, cols = np.where(mask)
+    distances = arr[rows, cols]
+    
+    # Criar textos de hover com os pares de cargos
+    cargos = df_dist.index.tolist()
+    pairs = [f"{cargos[r]} ↔ {cargos[c]}" for r, c in zip(rows, cols)]
+    
+    # Criar um eixo Y aleatório (jitter) para espalhar as bolinhas
+    jitter_y = np.random.uniform(-0.5, 0.5, size=len(distances))
+    
+    fig = go.Figure()
+    
+    # Adicionar zonas de similaridade (mesmo padrão da Régua Gower)
+    fig.add_vrect(x0=-0.05, x1=0.15, fillcolor="rgba(0, 255, 0, 0.1)", line_width=0, layer="below", annotation_text=i18n.t("zone_very_high", default="Muito Alta"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#00cc00")
+    fig.add_vrect(x0=0.15, x1=0.35, fillcolor="rgba(144, 238, 144, 0.1)", line_width=0, layer="below", annotation_text=i18n.t("zone_high", default="Alta"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#90ee90")
+    fig.add_vrect(x0=0.35, x1=0.50, fillcolor="rgba(255, 255, 0, 0.1)", line_width=0, layer="below", annotation_text=i18n.t("zone_moderate", default="Moderada"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#cccc00")
+    fig.add_vrect(x0=0.50, x1=0.65, fillcolor="rgba(255, 165, 0, 0.1)", line_width=0, layer="below", annotation_text=i18n.t("zone_low", default="Baixa"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff9900")
+    fig.add_vrect(x0=0.65, x1=1.05, fillcolor="rgba(255, 0, 0, 0.1)", line_width=0, layer="below", annotation_text=i18n.t("zone_very_low", default="Muito Baixa"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff4444")
+    
+    # Adicionar as bolinhas com escala de cor
+    fig.add_trace(go.Scatter(
+        x=distances,
+        y=jitter_y,
+        mode='markers',
+        text=pairs,
+        marker=dict(
+            color=distances,
+            colorscale='RdYlGn_r', # Verde para distâncias baixas, Vermelho para altas
+            cmin=0.0,
+            cmax=1.0,
+            size=10,
+            opacity=0.8,
+            line=dict(width=1, color='rgba(255, 255, 255, 0.8)')
+        ),
+        hovertemplate="<b>Par:</b> %{text}<br><b>" + i18n.t('dist_value', default='Distância') + ":</b> %{x:.3f}<extra></extra>"
+    ))
+    
+    # Linhas de média e mediana
+    mean_dist = np.mean(distances)
+    median_dist = np.median(distances)
+    
+    fig.add_vline(x=mean_dist, line_width=2, line_dash="dash", line_color="red", 
+                  annotation_text=f"{i18n.t('lbl_average', default='Média')}: {mean_dist:.2f}", annotation_position="bottom right",
+                  annotation_font_color="red")
+                  
+    fig.add_vline(x=median_dist, line_width=2, line_dash="dot", line_color="orange", 
+                  annotation_text=f"{i18n.t('lbl_median', default='Mediana')}: {median_dist:.2f}", annotation_position="bottom left",
+                  annotation_font_color="orange")
+    
+    xaxis_dict = dict(
+        showgrid=True,
+        gridcolor='rgba(255, 255, 255, 0.1)'
+    )
+    if full_scale:
+        xaxis_dict['range'] = [-0.05, 1.05]
+        xaxis_dict['tickmode'] = 'linear'
+        xaxis_dict['dtick'] = 0.1
+    else:
+        min_dist = np.min(distances) if len(distances) > 0 else 0
+        max_dist = np.max(distances) if len(distances) > 0 else 1
+        padding = (max_dist - min_dist) * 0.1
+        if padding == 0:
+            padding = 0.1
+        xaxis_dict['range'] = [max(-0.05, min_dist - padding), min(1.05, max_dist + padding)]
+        
+    fig.update_layout(
+        title=title,
+        title_font_size=16,
+        xaxis_title=i18n.t("dist_value", default="Valor da Distância"),
+        yaxis_title="",
+        margin=dict(l=20, r=20, t=60, b=20),
+        height=300,
+        xaxis=xaxis_dict,
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-0.6, 0.8])
+    )
+    return fig
+
 def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado de Polícia", cargos_destaque: list = None, full_scale: bool = True) -> go.Figure:
     """
     Cria uma régua 1D (Scatter plot) baseada na distância de Gower de todos os cargos
@@ -282,6 +371,20 @@ def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado d
     dist_serie = df_gower[reference_career].sort_values()
     
     fig = go.Figure()
+    
+    # Adicionar Zonas de Similaridade (Fundo Colorido)
+    # Verde (0 a 0.33) - Alta Similaridade
+    fig.add_vrect(x0=0, x1=0.33, fillcolor="green", opacity=0.1, layer="below", line_width=0,
+                  annotation_text=i18n.t("zone_high_sim", default="Alta Similaridade"), annotation_position="top left",
+                  annotation_font_color="green", annotation_font_size=10)
+    # Amarelo (0.33 a 0.66) - Similaridade Moderada
+    fig.add_vrect(x0=0.33, x1=0.66, fillcolor="yellow", opacity=0.1, layer="below", line_width=0,
+                  annotation_text=i18n.t("zone_mod_sim", default="Similaridade Moderada"), annotation_position="top left",
+                  annotation_font_color="goldenrod", annotation_font_size=10)
+    # Vermelho (0.66 a 1.0+) - Baixa Similaridade
+    fig.add_vrect(x0=0.66, x1=1.05, fillcolor="red", opacity=0.1, layer="below", line_width=0,
+                  annotation_text=i18n.t("zone_low_sim", default="Baixa Similaridade"), annotation_position="top left",
+                  annotation_font_color="red", annotation_font_size=10)
     
     # Adicionamos os pontos ao scatter. O eixo X é a distância, o eixo Y pode ser 0.
     media_dist = dist_serie.mean()
@@ -328,6 +431,7 @@ def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado d
         title_font_size=18,
         xaxis_title=i18n.t('hover_gower_dist'),
         yaxis_title=None,
+        yaxis=dict(showgrid=True, gridcolor='rgba(0, 0, 0, 0.25)', gridwidth=1),
         margin=dict(l=150, r=50, t=50, b=50),
         height=500,
         autosize=True
@@ -335,6 +439,13 @@ def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado d
     
     if full_scale:
         fig.update_layout(xaxis=dict(range=[-0.05, 1.05]))
+    else:
+        min_val = dist_serie.min()
+        max_val = dist_serie.max()
+        padding = (max_val - min_val) * 0.05
+        if padding == 0: 
+            padding = 0.05
+        fig.update_layout(xaxis=dict(range=[max(-0.05, min_val - padding), max_val + padding]))
                   
     return fig
 
@@ -362,8 +473,24 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
     condensed_dist = squareform(dist_array)
     
     # Para usar o Plotly, precisamos criar um linkage
-    from scipy.cluster.hierarchy import linkage
+    from scipy.cluster.hierarchy import linkage, cophenet
     Z = linkage(condensed_dist, method=linkage_method)
+    
+    # Calcular Correlação Cofenética
+    c, coph_dists = cophenet(Z, condensed_dist)
+    import i18n
+    
+    if c >= 0.90:
+        coph_color = "#00cc00" # Verde
+    elif c >= 0.75:
+        coph_color = "#ffcc00" # Amarelo escuro/Ouro
+    elif c >= 0.50:
+        coph_color = "#ff9900" # Laranja
+    else:
+        coph_color = "#ff3333" # Vermelho
+        
+    c_label = i18n.t('coph_corr_label', 'Correlação Cofenética:')
+    coph_text = f"<span style='color:{coph_color}'><b>{c_label} {c:.3f}</b></span>"
     
     # Plotly figure factory aceita a matriz condensada ou dados crus.
     # Como já temos distâncias, a forma mais segura no Plotly é via scipy -> plotly dendrogram manual,
@@ -377,7 +504,7 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
     )
     
     fig.update_layout(
-        title=title,
+        title=f"{title}<br><sup>{coph_text}</sup>",
         title_font_size=18,
         height=600,
         margin=dict(l=250, r=50, t=50, b=50),

@@ -4,6 +4,17 @@ Todas as modificações notáveis neste projeto serão documentadas neste arquiv
 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [Unreleased] - 2026-07-20
+
+### Changed
+- **Navegação Rápida Uniformizada**: Implementação da navegação rápida (`st.radio` superior) nos Modos 3 (Linha do Tempo) e 4 (Evolução Longitudinal), padronizando a filtragem de componentes em todos os modos e reduzindo o carregamento simultâneo excessivo.
+- **Reestruturação Lógica do Modo 2**: Reorganização da ordem das subseções comparativas (Macro -> Micro -> Estrutural) e unificação das seções de afinidade analítica (Radar e Tabela).
+- **Remoção de TOC Flutuante**: O antigo menu flutuante lateral (`render_toc`) foi inteiramente erradicado dos Modos 2, 3 e 4 para garantir harmonia visual e evitar vazamento lateral na UI.
+
+### Fixed
+- **Anomalia de `NameError` no Modo 1**: Resolvida falha de carregamento global no `app.py` que impedia o acesso direto a subseções devido à falta de processamento de variáveis essenciais (ex: `adj_matrix`) fora do loop.
+- **Dissonância de Dicionário em Inglês**: Corrigidas chaves de idioma nos Modos 2, 3 e 4 que impediam os rádios de navegação rápida de mapear corretamente as âncoras na mudança de layout.
+
 ## [Unreleased] - 2026-07-12
 
 ### Added

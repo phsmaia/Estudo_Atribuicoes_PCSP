@@ -193,9 +193,9 @@ def overlap_dist(u, v):
     return 1.0 - (a / min_ab_ac)
 
 @st.cache_data(show_spinner=False)
-def calcular_distancias(df: pd.DataFrame, metric: str = 'jaccard') -> pd.DataFrame:
+def calcular_distancias(df: pd.DataFrame, metric: str = 'jaccard', _cache_buster: int = 1) -> pd.DataFrame:
     """
-    Calcula a matriz de distâncias usando a métrica escolhida.
+    Calcula a matriz de distâncias usando a métrica escolhida. (Cache invalidado)
     """
     df_temp = df.copy()
     if 'Carreira' in df_temp.columns:
@@ -204,6 +204,11 @@ def calcular_distancias(df: pd.DataFrame, metric: str = 'jaccard') -> pd.DataFra
     
     # Cast explícito para float
     df_temp = df_temp.astype(float)
+    
+    # Remover colunas sem variância (mesmo valor para todos os cargos)
+    # Isso evita divisão por zero no cálculo de distâncias como Gower
+    nunique = df_temp.nunique()
+    df_temp = df_temp.loc[:, nunique > 1]
     
     if metric == 'gower':
         # Mantendo gower por compatibilidade, embora seja simétrico
@@ -216,3 +221,76 @@ def calcular_distancias(df: pd.DataFrame, metric: str = 'jaccard') -> pd.DataFra
         
     df_dist = pd.DataFrame(dist_matrix, index=df_temp.index, columns=df_temp.index)
     return df_dist
+
+from scipy.cluster.hierarchy import cophenet
+import numpy as np
+
+@st.cache_data(show_spinner=False)
+def get_cophenetic_comparison_table(df: pd.DataFrame, _cache_buster: int = 2) -> pd.DataFrame:
+    """
+    Gera uma tabela com os índices cofenéticos para diferentes métricas e métodos de linkage. (Cache Invalidado)
+    """
+    metrics = ['gower', 'jaccard', 'sokalsneath', 'dice', 'overlap', 'cosine']
+    linkages = ['single', 'complete', 'average']
+    
+    results = []
+    for m in metrics:
+        try:
+            df_dist = calcular_distancias(df, metric=m)
+            dist_array = (df_dist.values + df_dist.values.T) / 2
+            np.fill_diagonal(dist_array, 0)
+            
+            # Replace NaNs with 1.0 (max distance) to avoid linkage failure
+            dist_array = np.nan_to_num(dist_array, nan=1.0)
+            
+            condensed_dist = squareform(dist_array)
+            
+            row = {"Métrica": m}
+            for l in linkages:
+                try:
+                    Z = linkage(condensed_dist, method=l)
+                    c, _ = cophenet(Z, condensed_dist)
+                    if np.isnan(c):
+                        c = 0.0
+                    row[l.capitalize()] = c
+                except Exception:
+                    row[l.capitalize()] = 0.0
+            results.append(row)
+        except Exception:
+            continue
+            
+    df_results = pd.DataFrame(results)
+    if df_results.empty:
+        return df_results
+        
+    df_results['Métrica'] = df_results['Métrica'].map({
+        'gower': 'Gower',
+        'jaccard': 'Jaccard',
+        'sokalsneath': 'Sokal & Sneath',
+        'dice': 'Sørensen-Dice',
+        'overlap': 'Overlap',
+        'cosine': 'Cosine'
+    })
+    
+    # Calculate global ranking
+    all_vals = []
+    for l in linkages:
+        col = l.capitalize()
+        all_vals.extend([x for x in df_results[col] if pd.notnull(x)])
+    
+    # Sort descending and get unique values for ranking
+    all_vals = sorted(list(set(all_vals)), reverse=True)
+    
+    # Format table with 2 decimal places and rank
+    for l in linkages:
+        col = l.capitalize()
+        formatted_col = []
+        for val in df_results[col]:
+            if pd.notnull(val):
+                rank = all_vals.index(val) + 1
+                formatted_col.append(f"{val:.2f} ({rank}º)")
+            else:
+                formatted_col.append("N/A")
+        df_results[col] = formatted_col
+        
+    return df_results

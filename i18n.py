@@ -193,6 +193,7 @@ def traduzir_atribuicao(atrib_pt):
 TRANSLATIONS = {
     "PT-BR": {
         "title": "Painel Interativo: Estudo de Atribuições da PCSP",
+        "modes_and_explanations": "⚙️ Modos de Visão e Explicações",
         "view_modes": "Modos de Visão:",
         "nav_analytic": "Navegação Analítica:",
         "mode_1": "1. Explorador Individual",
@@ -252,7 +253,15 @@ TRANSLATIONS = {
         "tip_hover": "💡 <em>Dica: Passe o mouse sobre as células (quadrados coloridos) para ler a atribuição normativa completa.</em>",
         "sub_adj": "1.2. Matriz de Adjacência (Atribuições Compartilhadas)",
         "sub_adj_help": "**Como interpretar:** Exibe a contagem absoluta de quantas atribuições normativas dois cargos distintos compartilham entre si. Valores mais altos (cores fortes) indicam forte justaposição funcional.\n\n**Cálculo:** Feito através do Produto Escalar cruzando a Matriz de Atribuições contra si própria (sua transposta).",
-        "sub_dyn": "1.3. Explorador Dinâmico de Atribuições",
+        "adj_kpi_title": "📊 Conectividade e KPIs",
+        "adj_kpi_hub": "Mais Tarefas em Comum",
+        "adj_kpi_isolated": "Menos Tarefas em Comum",
+        "adj_kpi_connections": "interseções somadas",
+        "adj_top_pairs": "Top 5 Pares (Maior Sinergia)",
+        "adj_tbl_pair": "Par de Cargos",
+        "adj_tbl_shared": "Tarefas em Comum",
+        "adj_bar_title": "Grau de Conectividade Total (Soma de Adjacências)",
+        "sub_dyn": "1.3. Explorador Dinâmico de Interseções",
         "sub_dyn_help": "**Como interpretar:** Permite cruzar dados manualmente simulando as tabelas dinâmicas do estudo original. Nota: No artigo o cruzamento limitou-se a 3 carreiras por falta de espaço em página, mas aqui o sistema calcula e confronta todas as carreiras ativas simultaneamente.\n\n**Porcentagens:** Exibe o volume de atribuições que cada cargo representa em relação ao somatório total de atribuições únicas na Polícia Civil.",
         "warning_bias": "⚠️ VIÉS AMOSTRAL",
         "roles_explanation": "💡 **Sobre os Nomes dos Cargos:** Os títulos oficiais (*Investigador de Polícia, Perito Criminal*, etc.) são mantidos em português para preservar a integridade jurídica e a precisão documental do estudo, já que não existem traduções equivalentes diretas para a estrutura policial brasileira em outras culturas.",
@@ -306,7 +315,9 @@ TRANSLATIONS = {
         "sub_delta_title": "2.1. Delta de Similaridade ({cenario_a} → {cenario_b})",
         "sub_delta_help": "**O que é isso?**\nEste mapa de calor matemático calcula a diferença vetorial exata entre os dois cenários.\n\n**Como ler:**\n- **Azul (Negativo)**: A distância entre os cargos diminuiu. Eles se tornaram mais parecidos (Aglutinação de funções).\n- **Vermelho (Positivo)**: A distância aumentou. Eles se afastaram e tornaram-se mais exclusivos/distintos.\n- **Branco (Zero)**: Não houve alteração na relação matemática entre os cargos.",
         "delta_subtitle": "Valores negativos (Azul) indicam aproximação (ficaram mais similares). Valores positivos (Vermelho) indicam distanciamento.",
-        "sub_flow_title": "2.2. Fluxo Normativo (Ganhos e Perdas)",
+        "sub_dist_title": "2.2. Distribuição de Distâncias Funcionais",
+        "sub_dist_help": "**O que é isso?**\nUm panorama macro de como as carreiras estão dispersas e isoladas. **Como ler:** Picos altos no início do eixo X indicam muitas carreiras muito parecidas (Aglutinação). Picos espalhados para o final do eixo indicam muitas carreiras isoladas (Fragmentação).",
+        "sub_flow_title": "2.3. Fluxo Normativo (Ganhos e Perdas)",
         "sub_flow_help": "**O que é isso?**\nExibe explicitamente quais atribuições foram adicionadas (ganho), removidas (perda) ou mantidas para a carreira selecionada na transição entre os cenários.",
         "flow_no_career_warning": "💡 Selecione uma 'Carreira para Análise Detalhada' no topo para visualizar o Fluxo Normativo (Ganhos e Perdas).",
         "status_lost": "🔴 Perdeu",
@@ -317,12 +328,12 @@ TRANSLATIONS = {
         "flow_filter_label": "Filtrar Status da Atribuição:",
         "flow_no_attr_warning": "Nenhuma atribuição encontrada para esta carreira.",
         "flow_career_not_found": "Carreira não localizada nos dados para comparação direta de atribuições.",
-        "sub_radar_title": "2.3. Régua Evolutiva por Cargo (Radar de Afinidade)",
+        "sub_radar_title": "2.4. Régua Evolutiva por Cargo (Radar de Afinidade)",
         "sub_radar_help": "**O que é isso?**\nUm gráfico bidimensional que sobrepõe a similaridade do cargo selecionado contra as outras carreiras da polícia nos dois cenários.\n\n**Como ler:**\n- Quanto mais a ponta do radar se esticar para a borda externa, mais as carreiras são **similares**.\n- Se a área laranja (Cenário Alvo) for maior que a ciano (Cenário Base), o cargo selecionado *absorveu* funções e se aproximou das demais carreiras.\n- Se a área encolher, o cargo sofreu um expurgo normativo e isolou-se.",
         "radar_no_career_warning": "💡 Selecione uma 'Carreira para Análise Detalhada' no topo para visualizar o Radar de Afinidade e o Detalhamento Analítico.",
         "radar_hover": "<b>Carreira:</b> %{theta}<br><b>Afinidade Jaccard:</b> %{r:.1%}<extra></extra>",
         "radar_highlight": "Destaque",
-        "sub_affinity_title": "#### 2.4. Detalhamento Analítico de Afinidade",
+        "sub_affinity_title": "#### Detalhamento Analítico de Afinidade",
         "sub_affinity_help": "**Como a afinidade é calculada?**\nA Afinidade é calculada matematicamente pelo **Índice de Similaridade de Jaccard**. Ela leva em conta estritamente o que é *COMPARTILHADO E PRESENTE* entre os cargos. Atribuições que **nenhum dos dois** exerce não entram na conta e não aproximam artificialmente os cargos, corrigindo falhas analíticas de matrizes simples. Se Afinidade for `100%`, eles exercem exatamente as mesmas funções em comum.",
         "trend_approached": "🟢 ↗ Aproximou",
         "trend_distanced": "🔴 ↘ Afastou",
@@ -434,6 +445,9 @@ TRANSLATIONS = {
         "m3_sub_share_title": "3.3. Nível de Compartilhamento",
         "m3_sub_share_help": "**O que é isso?**\nMostra, em média, por quantos cargos uma atribuição é dividida na corporação.\n\n**Como ler:**\n- Valores maiores indicam diluição de exclusividade (ex: muitas atribuições sendo feitas por múltiplos cargos simultaneamente).",
         "m3_share_desc": "Mostra em média por quantos cargos cada atribuição é dividida. Valores altos indicam diluição de exclusividade.",
+        "m3_sub_coph_title": "3.4. Índice Cofenético (Fidelidade)",
+        "m3_sub_coph_help": "**O que é isso?**\nMede a fidelidade do agrupamento hierárquico (Gower-Average). Valores mais altos indicam uma estrutura mais organizada.",
+        "m3_coph_desc": "O quão bem a estrutura da Polícia se encaixa num modelo hierárquico claro através dos cenários.",
         
         # --- MODO 4: RASTREAMENTO LONGITUDINAL ---
         "m4_intro_title": "### 🧬 Rastreamento Longitudinal por Carreira",
@@ -505,10 +519,24 @@ TRANSLATIONS = {
             "🕵️ Coletando evidências...",
             "🔬 Analisando vestígios...",
             "📡 Rastreando sinais..."
-        ]
+        ],
+        "modal_metrics_title": "📊 Comparativo das Métricas de Distância",
+        "modal_linkages_title": "📊 Comparativo dos Métodos de Agrupamento (Linkage)",
+        "metric_desc_gower": "Lida bem com dados binários e categóricos. Avalia a proporção de concordância. (Usada no artigo)",
+        "metric_desc_jaccard": "Ignora ausências duplas (0-0). Ótima se 'não ter uma atribuição' não significa similaridade.",
+        "metric_desc_sokal": "Dá peso duplo às discordâncias. Mais rigorosa e afasta carreiras com pequenas diferenças.",
+        "metric_desc_dice": "Dá mais peso às presenças duplas (1-1). Destaca o que as carreiras têm em comum.",
+        "metric_desc_overlap": "Foca em subconjuntos. Se uma carreira faz tudo que a outra faz, a distância é 0.",
+        "metric_desc_cosine": "Mede o ângulo vetorial. Muito usada em textos, foca na direção e não no tamanho.",
+        "linkage_desc_single": "Junta pelo vizinho mais próximo. Tende a formar cadeias compridas (efeito escada).",
+        "linkage_desc_complete": "Junta pelo vizinho mais distante. Forma grupos esféricos e compactos.",
+"linkage_desc_average": "Usa a média de todas as distâncias. Um meio-termo equilibrado (UPGMA).",
+        "coph_corr_label": "Correlação Cofenética:",
+        "coph_corr_help": "Mede (de 0 a 1) o quanto o dendrograma preserva as distâncias originais. Valores próximos a 1 indicam que a árvore representa fielmente as distâncias."
     },
     "EN": {
-        "title": "Interactive Dashboard: PCSP Assignments Study",
+        "title": "Interactive Dashboard: PCSP Roles Study",
+        "modes_and_explanations": "⚙️ View Modes and Explanations",
         "view_modes": "View Modes:",
         "nav_analytic": "Analytic Navigation:",
         "mode_1": "1. Individual Explorer",
@@ -755,6 +783,9 @@ TRANSLATIONS = {
         "m3_sub_share_title": "3.3. Sharing Level",
         "m3_sub_share_help": "**What is this?**\nShows, on average, how many roles an assignment is divided by in the corporation.\n\n**How to read:**\n- Higher values indicate dilution of exclusivity (e.g., many assignments being performed by multiple roles simultaneously).",
         "m3_share_desc": "Shows on average how many roles each assignment is divided by. High values indicate dilution of exclusivity.",
+        "m3_sub_coph_title": "3.4. Cophenetic Index (Fidelity)",
+        "m3_sub_coph_help": "**What is this?**\nMeasures the fidelity of the hierarchical clustering (Gower-Average). Higher values indicate a more organized structure.",
+        "m3_coph_desc": "How well the Police structure fits a clear hierarchical model across the scenarios.",
         
         # --- MODO 4: RASTREAMENTO LONGITUDINAL ---
         "m4_intro_title": "### 🧬 Longitudinal Tracking by Career",
@@ -826,7 +857,20 @@ TRANSLATIONS = {
             "🕵️ Collecting evidence...",
             "🔬 Analyzing traces...",
             "📡 Tracking signals..."
-        ]
+        ],
+        "modal_metrics_title": "📊 Distance Metrics Comparison",
+        "modal_linkages_title": "📊 Linkage Methods Comparison",
+        "metric_desc_gower": "Handles binary/categorical data well. Evaluates agreement proportion. (Used in the paper)",
+        "metric_desc_jaccard": "Ignores double absences (0-0). Great if 'not having an assignment' doesn't imply similarity.",
+        "metric_desc_sokal": "Gives double weight to disagreements. More rigorous, distancing careers with minor differences.",
+        "metric_desc_dice": "Gives more weight to double presences (1-1). Highlights what careers have in common.",
+        "metric_desc_overlap": "Focuses on subsets. If one career does everything the other does, the distance is 0.",
+        "metric_desc_cosine": "Measures vector angle. Widely used in texts, focuses on direction rather than size.",
+        "linkage_desc_single": "Joins by the nearest neighbor. Tends to form long chains (ladder effect).",
+        "linkage_desc_complete": "Joins by the furthest neighbor. Forms spherical and compact clusters.",
+        "linkage_desc_average": "Uses the average of all distances. A balanced middle ground (UPGMA).",
+        "coph_corr_label": "Cophenetic Correlation:",
+        "coph_corr_help": "Measures (from 0 to 1) how well the dendrogram preserves original distances. Values close to 1 indicate the tree faithfully represents the distances."
     }
 }
 

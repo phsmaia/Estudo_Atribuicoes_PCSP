@@ -7,11 +7,10 @@ import json
 import os
 import explanations
 import i18n
-from floating_toc import render_toc
 import interaction_ui
 import hashlib
 
-def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, cargos_destaque):
+def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, cargos_destaque, current_section=None):
     lang = st.session_state.get('language', 'PT-BR')
     traduzir = lang == 'EN'
 
@@ -266,25 +265,22 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
         if explanation_key and st.session_state.get('show_explanations', False):
             st.info(explanations.get_explanation(explanation_key, tone=st.session_state.get('explanation_tone', 'tecnico'), language=lang))
 
-    render_dashboard_aba(i18n.t("m4_sub_volume_title"), i18n.t("m4_sub_volume_desc"), hist_volume, "m4_micro_41", help_text=i18n.t("m4_sub_volume_help"), anchor_id="toc-volume")
+    if current_section is None or current_section == "m4_sub_volume_title":
+        render_dashboard_aba(i18n.t("m4_sub_volume_title"), i18n.t("m4_sub_volume_desc"), hist_volume, "m4_micro_41", help_text=i18n.t("m4_sub_volume_help"), anchor_id="toc-volume")
         
-    render_dashboard_aba(i18n.t("m4_sub_exclusive_title"), i18n.t("m4_sub_exclusive_desc"), hist_exclusivas, "m4_micro_42", help_text=i18n.t("m4_sub_exclusive_help"), anchor_id="toc-exclusive")
+    if current_section is None or current_section == "m4_sub_exclusive_title":
+        render_dashboard_aba(i18n.t("m4_sub_exclusive_title"), i18n.t("m4_sub_exclusive_desc"), hist_exclusivas, "m4_micro_42", help_text=i18n.t("m4_sub_exclusive_help"), anchor_id="toc-exclusive")
         
-    render_dashboard_aba(i18n.t("m4_sub_shared_title"), i18n.t("m4_sub_shared_desc"), hist_compartilhadas, "m4_micro_43", help_text=i18n.t("m4_sub_shared_help"), anchor_id="toc-shared")
+    if current_section is None or current_section == "m4_sub_shared_title":
+        render_dashboard_aba(i18n.t("m4_sub_shared_title"), i18n.t("m4_sub_shared_desc"), hist_compartilhadas, "m4_micro_43", help_text=i18n.t("m4_sub_shared_help"), anchor_id="toc-shared")
         
-    render_dashboard_aba(i18n.t("m4_sub_adj_title"), i18n.t("m4_sub_adj_desc"), hist_adj, "m4_micro_44", help_text=i18n.t("m4_sub_adj_help"), anchor_id="toc-adj")
+    if current_section is None or current_section == "m4_sub_adj_title":
+        render_dashboard_aba(i18n.t("m4_sub_adj_title"), i18n.t("m4_sub_adj_desc"), hist_adj, "m4_micro_44", help_text=i18n.t("m4_sub_adj_help"), anchor_id="toc-adj")
         
-    render_dashboard_aba(i18n.t("m4_sub_gower_title"), i18n.t("m4_sub_gower_desc"), hist_gower, "m4_micro_45", is_float=True, help_text=i18n.t("m4_sub_gower_help"), anchor_id="toc-gower")
+    if current_section is None or current_section == "m4_sub_gower_title":
+        render_dashboard_aba(i18n.t("m4_sub_gower_title"), i18n.t("m4_sub_gower_desc"), hist_gower, "m4_micro_45", is_float=True, help_text=i18n.t("m4_sub_gower_help"), anchor_id="toc-gower")
         
-    render_dashboard_aba(i18n.t("m4_sub_neighbor_title"), i18n.t("m4_sub_neighbor_desc"), hist_vizinho, "m4_micro_46", is_string=True, help_text=i18n.t("m4_sub_neighbor_help"), anchor_id="toc-neighbor")
+    if current_section is None or current_section == "m4_sub_neighbor_title":
+        render_dashboard_aba(i18n.t("m4_sub_neighbor_title"), i18n.t("m4_sub_neighbor_desc"), hist_vizinho, "m4_micro_46", is_string=True, help_text=i18n.t("m4_sub_neighbor_help"), anchor_id="toc-neighbor")
 
     st.markdown("<div style='height: 150px;'></div>", unsafe_allow_html=True)
-    
-    render_toc([
-        (i18n.t("m4_sub_volume_title", default="Volume"), "toc-volume"),
-        (i18n.t("m4_sub_exclusive_title", default="Exclusivas"), "toc-exclusive"),
-        (i18n.t("m4_sub_shared_title", default="Compartilhadas"), "toc-shared"),
-        (i18n.t("m4_sub_adj_title", default="Grau de Rede"), "toc-adj"),
-        (i18n.t("m4_sub_gower_title", default="Distância Média"), "toc-gower"),
-        (i18n.t("m4_sub_neighbor_title", default="Vizinho"), "toc-neighbor")
-    ])

@@ -48,6 +48,7 @@ def get_explanation(section, tone="tecnico", language="PT-BR"):
                 "m3_macro_31": "**📖 Scientific Comprehension: Total Volume per Scenario**\n\nDemonstrates the gross quantity of consolidated assignments in each temporal cut.\n- **Interpretation:** Verifies whether the regulations, in general, are expanding the functional scope of the Civil Police or shrinking the described assignments.",
                 "m3_macro_32": "**📖 Scientific Comprehension: Exclusive vs Shared Proportion**\n\nEvaluates the percentage relationship between functions that belong to only one role and functions that belong to multiple roles.\n- **Interpretation:** A gain in exclusive assignments suggests greater specialization and isolation of careers. An increase in shared assignments indicates generalism and legal overlap.",
                 "m3_macro_33": "**📖 Scientific Comprehension: Average Degree of Sharing**\n\nMeasures, on average, by how many different careers a normative assignment is divided.\n- **Interpretation:** High values demonstrate high capillarity of functions (generic assignments present in several regulations). Low values indicate that the assignments are well-niched.",
+                "m3_coph": "**📖 Scientific Comprehension: Cophenetic Index (Hierarchical Fidelity)**\n\nEvaluates the preservation of the taxonomic structure when reduced to the dendrogram.\n- **Interpretation:** Measures the correlation between the original distance and the distance in the agglomerative tree. Values close to 1.0 attest that the institution has a clear mathematical hierarchy. Drops in the index reveal a structural collapse, where roles mix in a chaotic horizontal tangle, destroying the formation of pure trees.",
                 "m4_micro": "**📖 Scientific Comprehension: Individual Evolutionary Tracking (Time Series)**\n\nDisaggregates global metrics and projects point variation across the 5 normative eras for isolated roles.\n- **Interpretation:** Analyzes the gain/loss of absolute functional volume (total), the fluctuation of magnetic distances, and the jumps of topological neighborhood. Serves to track the individualized historical genealogy.",
                 "m4_micro_inicio": "**📖 Scientific Comprehension: Individual Evolutionary Tracking**\n\nDisaggregates global metrics and projects point variation across the 5 normative eras for isolated roles.\n- **Interpretation:** Analyzes the career variation in absolute volume, adjacency connections, Gower proximity, and phylogenetic jumps.",
                 "m4_micro_41": "**📖 Scientific Comprehension: Functional Volume Fluctuation**\n\nTime series of the absolute count of active condensed assignments in the career profile.\n- **Interpretation:** Evidences growth (legal expansion of the role) or shrinkage (normative emptying).",
@@ -75,6 +76,7 @@ def get_explanation(section, tone="tecnico", language="PT-BR"):
                 "m3_macro_31": "**💡 Simplified Explanation: Total Growth**\n\nSums up everything the Police does in each era.\n- **How to read:** Went up? The Police has more rules about what to do. Went down? They shrank the assignments in the regulations.",
                 "m3_macro_32": "**💡 Simplified Explanation: Exclusive vs Shared**\n\nCompares what belongs to only one profession with what 'everyone does'.\n- **How to read:** More red color (exclusive) means everyone is more in their own square. More blue (shared) means the careers are acting in the same areas.",
                 "m3_macro_33": "**💡 Simplified Explanation: Average Sharing**\n\nOn average, by how many people is a task divided?\n- **How to read:** If the average goes up, tasks are increasingly diluted among several roles. If it goes down, functions are more specific to each profession.",
+                "m3_coph": "**💡 Simplified Explanation: Hierarchical Organization (Fidelity)**\n\nAre the roles really organized in a clear hierarchy or is it a mess?\n- **How to read:** If the line drops over the scenarios, it proves mathematically that the Police structure is becoming a chaotic tangle where it's no longer possible to cleanly separate professions into hierarchical 'branches'.",
                 "m4_micro": "**💡 Simplified Explanation: Individual History (Role X-Ray)**\n\nIt's like the role's vaccination card or school report card over time.\n- **How to read:** You follow the same line across all 5 scenarios. You can clearly see if, over the decades, the role gained workload (went up) or lost (went down), and if it got closer or further from other professions.",
                 "m4_micro_inicio": "**💡 Simplified Explanation: The Role's X-Ray over Time**\n\nIt is the history of how the career changed from the first regulation to today.\n- **How to read:** Follow your career's line and see if, over the years, it gained or lost strength, and if it is getting more similar or different from the others.",
                 "m4_micro_41": "**💡 Simplified Explanation: Total Functions**\n\nThe basic count of 'how many things' the role does.\n- **How to read:** Line going up means the role gained new responsibilities in the law. Line going down means emptying.",
@@ -185,6 +187,11 @@ Avalia a relação percentual entre funções que pertencem a apenas um cargo e 
 
 Mede, em média, por quantas carreiras distintas uma atribuição normativa é dividida.
 - **Interpretação:** Valores altos demonstram alta capilaridade das funções (atribuições genéricas presentes em vários editais). Valores baixos indicam que as atribuições estão bem nichadas.""",
+            
+            "m3_coph": """**📖 Compreensão Científica: Índice Cofenético (Fidelidade Hierárquica)**
+            
+Avalia a preservação da estrutura taxonômica quando reduzida ao dendrograma.
+- **Interpretação:** Mede a correlação entre a distância original e a distância na árvore aglomerativa. Valores próximos de 1,0 atestam que a instituição possui uma hierarquia matemática nítida. Quedas no índice revelam um colapso estrutural, onde os cargos se misturam num emaranhado horizontal caótico, destruindo a formação de árvores puras.""",
             
             "m4_micro": """**📖 Compreensão Científica: Rastreamento Evolutivo Individual (Séries Temporais)**
 
@@ -314,6 +321,11 @@ Compara o que é de uma profissão só com o que "todo mundo faz".
 Em média, por quantas pessoas uma tarefa é dividida?
 - **Como ler:** Se a média sobe, as tarefas estão cada vez mais diluídas entre vários cargos. Se desce, as funções estão mais específicas para cada profissão.""",
             
+            "m3_coph": """**🗣️ Entendendo de forma simples: Organização Hierárquica (Fidelidade)**
+            
+Os cargos estão realmente organizados numa hierarquia clara ou virou bagunça?
+- **Como ler:** Se a linha cair ao longo dos cenários, prova matematicamente que a estrutura da Polícia está virando um emaranhado caótico onde não é mais possível separar as profissões em "galhos" hierárquicos limpos.""",
+            
             "m4_micro": """**🗣️ Entendendo de forma simples: Histórico Individual (Raio-X do Cargo)**
 
 É como a carteirinha de vacinação ou o boletim escolar do cargo ao longo do tempo.
@@ -364,3 +376,38 @@ Quem é o cargo mais parecido com o seu?
         t = "tecnico"
         
     return explanations.get(t, explanations["tecnico"]).get(section, "")
+
+import pandas as pd
+import i18n
+import streamlit as st
+
+def get_metrics_comparison_df():
+    lang = st.session_state.get('language', 'PT-BR')
+    col_metric = "Métrica" if lang == "PT-BR" else "Metric"
+    col_focus = "Foco Principal" if lang == "PT-BR" else "Main Focus"
+    col_strict = "Rigidez" if lang == "PT-BR" else "Strictness"
+    col_desc = "Descrição" if lang == "PT-BR" else "Description"
+    
+    data = [
+        {col_metric: "Gower", col_focus: "Presenças e Ausências" if lang == "PT-BR" else "Presences and Absences", col_strict: "Média" if lang == "PT-BR" else "Medium", col_desc: i18n.t("metric_desc_gower")},
+        {col_metric: "Jaccard", col_focus: "Ignora 0-0" if lang == "PT-BR" else "Ignores 0-0", col_strict: "Alta" if lang == "PT-BR" else "High", col_desc: i18n.t("metric_desc_jaccard")},
+        {col_metric: "Sokal & Sneath", col_focus: "Pune discordâncias" if lang == "PT-BR" else "Penalizes mismatches", col_strict: "Muito Alta" if lang == "PT-BR" else "Very High", col_desc: i18n.t("metric_desc_sokal")},
+        {col_metric: "Sørensen-Dice", col_focus: "Premia concordâncias (1-1)" if lang == "PT-BR" else "Rewards matches (1-1)", col_strict: "Baixa" if lang == "PT-BR" else "Low", col_desc: i18n.t("metric_desc_dice")},
+        {col_metric: "Overlap", col_focus: "Subconjuntos" if lang == "PT-BR" else "Subsets", col_strict: "Muito Baixa" if lang == "PT-BR" else "Very Low", col_desc: i18n.t("metric_desc_overlap")},
+        {col_metric: "Cosine", col_focus: "Ângulo Vetorial" if lang == "PT-BR" else "Vector Angle", col_strict: "Média" if lang == "PT-BR" else "Medium", col_desc: i18n.t("metric_desc_cosine")}
+    ]
+    return pd.DataFrame(data)
+
+def get_linkages_comparison_df():
+    lang = st.session_state.get('language', 'PT-BR')
+    col_method = "Método" if lang == "PT-BR" else "Method"
+    col_behavior = "Comportamento" if lang == "PT-BR" else "Behavior"
+    col_shape = "Formato Resultante" if lang == "PT-BR" else "Resulting Shape"
+    col_desc = "Descrição" if lang == "PT-BR" else "Description"
+    
+    data = [
+        {col_method: "Single", col_behavior: "Vizinho mais próximo" if lang == "PT-BR" else "Nearest neighbor", col_shape: "Escada" if lang == "PT-BR" else "Chain/Ladder", col_desc: i18n.t("linkage_desc_single")},
+        {col_method: "Complete", col_behavior: "Vizinho mais distante" if lang == "PT-BR" else "Furthest neighbor", col_shape: "Esferas Compactas" if lang == "PT-BR" else "Compact Spheres", col_desc: i18n.t("linkage_desc_complete")},
+        {col_method: "Average (UPGMA)", col_behavior: "Média das distâncias" if lang == "PT-BR" else "Average of all distances", col_shape: "Equilibrado" if lang == "PT-BR" else "Balanced", col_desc: i18n.t("linkage_desc_average")}
+    ]
+    return pd.DataFrame(data)

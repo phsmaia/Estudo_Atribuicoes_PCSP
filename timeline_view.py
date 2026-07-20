@@ -4,13 +4,13 @@ import plotly.express as px
 import data_processing
 import numpy as np
 import json
-from floating_toc import render_toc
+
 import os
 import explanations
 import i18n
 import interaction_ui
 
-def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
+def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
     st.markdown(i18n.t("m3_intro"))
     
     # --- CARREGAMENTO DO DICIONÁRIO DE MAPA GERAL ---
@@ -58,15 +58,32 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
             if len(gower_df) > 1:
                 mask = np.triu(np.ones(gower_df.shape), k=1).astype(bool)
                 media_gower = gower_df.where(mask).mean().mean()
+                
+                # Cálculo do Índice Cofenético (Gower -> Average)
+                try:
+                    from scipy.cluster.hierarchy import linkage, cophenet
+                    from scipy.spatial.distance import squareform
+                    dist_array = (gower_df.values + gower_df.values.T) / 2
+                    np.fill_diagonal(dist_array, 0)
+                    dist_array = np.nan_to_num(dist_array, nan=1.0)
+                    condensed_dist = squareform(dist_array)
+                    Z = linkage(condensed_dist, method='average')
+                    coph_idx, _ = cophenet(Z, condensed_dist)
+                    if np.isnan(coph_idx):
+                        coph_idx = 0.0
+                except Exception:
+                    coph_idx = 0.0
             else:
                 media_gower = 0
+                coph_idx = 0.0
                 
             data_macro.append({
-                "Cenário": i18n.t(cenario) if i18n.t(cenario) != cenario else cenario,
+                i18n.t("m3_col_scenario"): i18n.t(cenario) if i18n.t(cenario) != cenario else cenario,
                 i18n.t("m3_col_active_roles"): len(df_temp.index),
                 i18n.t("m3_col_total_unique"): num_atribuicoes_ativas,
                 i18n.t("m3_col_sharing_level"): media_compartilhamento,
-                i18n.t("m3_col_gower"): media_gower
+                i18n.t("m3_col_gower"): media_gower,
+                i18n.t("m3_sub_coph_title").split(". ")[-1] if ". " in i18n.t("m3_sub_coph_title") else i18n.t("m3_sub_coph_title"): coph_idx
             })
             
             # --- MICRO MÉTRICAS (LONGITUDINAL) ---
@@ -117,16 +134,15 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
                     hist_vizinho[c_base][cenario] = "Extinto"
 
     # --- RENDERIZAÇÃO DA VISÃO MACRO ---
+    # --- RENDERIZAÇÃO DA VISÃO MACRO ---
     df_metrics = pd.DataFrame(data_macro)
     
-    col1, col2 = st.columns(2)
-    
-    fig1 = px.bar(df_metrics, x="Cenário", y=i18n.t("m3_col_gower"), text=i18n.t("m3_col_gower"),
-                   color=i18n.t("m3_col_gower"), color_continuous_scale="Teal")
-    fig1.update_traces(texttemplate='%{text:.3f}', textposition='outside')
-    fig1.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
-    
-    with col1:
+    if current_section is None or current_section == "m3_sub_gower_title":
+        fig1 = px.scatter(df_metrics, x=i18n.t("m3_col_scenario"), y=i18n.t("m3_col_gower"), text=i18n.t("m3_col_gower"),
+                       color=i18n.t("m3_col_gower"), color_continuous_scale="Teal")
+        fig1.update_traces(texttemplate='%{text:.3f}', textposition='top center', marker=dict(size=25))
+        fig1.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
+        
         st.markdown("<div id='toc-gower'></div>", unsafe_allow_html=True)
         st.subheader(i18n.t("m3_sub_gower_title"), help=i18n.t("m3_sub_gower_help"))
         st.plotly_chart(fig1, use_container_width=True)
@@ -134,13 +150,14 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
         st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_gower_desc')}</p>", unsafe_allow_html=True)
         if st.session_state.get('show_explanations', False):
             st.info(explanations.get_explanation("gower", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
-    
-    fig2 = px.bar(df_metrics, x="Cenário", y=i18n.t("m3_col_total_unique"), text=i18n.t("m3_col_total_unique"),
-                  color=i18n.t("m3_col_total_unique"), color_continuous_scale="Viridis")
-    fig2.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
-    fig2.update_traces(textposition='outside')
-    
-    with col2:
+        st.markdown("---")
+        
+    if current_section is None or current_section == "m3_sub_vol_title":
+        fig2 = px.scatter(df_metrics, x=i18n.t("m3_col_scenario"), y=i18n.t("m3_col_total_unique"), text=i18n.t("m3_col_total_unique"),
+                      color=i18n.t("m3_col_total_unique"), color_continuous_scale="Viridis")
+        fig2.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
+        fig2.update_traces(textposition='top center', marker=dict(size=25))
+        
         st.markdown("<div id='toc-vol'></div>", unsafe_allow_html=True)
         st.subheader(i18n.t("m3_sub_vol_title"), help=i18n.t("m3_sub_vol_help"))
         st.plotly_chart(fig2, use_container_width=True)
@@ -148,26 +165,34 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios):
         st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_vol_desc')}</p>", unsafe_allow_html=True)
         if st.session_state.get('show_explanations', False):
             st.info(explanations.get_explanation("m3_macro_31", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
+        st.markdown("---")
+    
+    if current_section is None or current_section == "m3_sub_share_title":
+        fig3 = px.scatter(df_metrics, x=i18n.t("m3_col_scenario"), y=i18n.t("m3_col_sharing_level"), text=i18n.t("m3_col_sharing_level"),
+                       color=i18n.t("m3_col_sharing_level"), color_continuous_scale="Oranges")
+        fig3.update_traces(texttemplate='%{text:.2f}', textposition='top center', marker=dict(size=25))
+        fig3.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
         
-    st.markdown("---")
+        st.markdown("<div id='toc-share'></div>", unsafe_allow_html=True)
+        st.subheader(i18n.t("m3_sub_share_title"), help=i18n.t("m3_sub_share_help"))
+        st.plotly_chart(fig3, use_container_width=True)
+        interaction_ui.render_like_button("3.3 Nivel de Compartilhamento", "3_3")
+        st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_share_desc')}</p>", unsafe_allow_html=True)
+        if st.session_state.get('show_explanations', False):
+            st.info(explanations.get_explanation("m3_macro_33", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
+        st.markdown("---")
     
-    fig3 = px.bar(df_metrics, x="Cenário", y=i18n.t("m3_col_sharing_level"), text=i18n.t("m3_col_sharing_level"),
-                   color=i18n.t("m3_col_sharing_level"), color_continuous_scale="Oranges")
-    fig3.update_traces(texttemplate='%{text:.2f}', textposition='outside')
-    fig3.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
-    
-    st.markdown("<div id='toc-share'></div>", unsafe_allow_html=True)
-    st.subheader(i18n.t("m3_sub_share_title"), help=i18n.t("m3_sub_share_help"))
-    st.plotly_chart(fig3, use_container_width=True)
-    interaction_ui.render_like_button("3.3 Nivel de Compartilhamento", "3_3")
-    st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_share_desc')}</p>", unsafe_allow_html=True)
-    if st.session_state.get('show_explanations', False):
-        st.info(explanations.get_explanation("m3_macro_33", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
-
-    st.markdown("<div style='height: 150px;'></div>", unsafe_allow_html=True)
-    
-    render_toc([
-        (i18n.t("m3_sub_gower_title", default="Distância Gower"), "toc-gower"),
-        (i18n.t("m3_sub_vol_title", default="Volume"), "toc-vol"),
-        (i18n.t("m3_sub_share_title", default="Compartilhamento"), "toc-share")
-    ])
+    if current_section is None or current_section == "m3_sub_coph_title":
+        fig4 = px.scatter(df_metrics, x=i18n.t("m3_col_scenario"), y=i18n.t("m3_sub_coph_title").split(". ")[-1] if ". " in i18n.t("m3_sub_coph_title") else i18n.t("m3_sub_coph_title"), text=i18n.t("m3_sub_coph_title").split(". ")[-1] if ". " in i18n.t("m3_sub_coph_title") else i18n.t("m3_sub_coph_title"),
+                       color=i18n.t("m3_sub_coph_title").split(". ")[-1] if ". " in i18n.t("m3_sub_coph_title") else i18n.t("m3_sub_coph_title"), color_continuous_scale="RdYlGn")
+        fig4.update_traces(texttemplate='%{text:.3f}', textposition='top center', marker=dict(size=25))
+        fig4.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
+        
+        st.markdown("<div id='toc-coph'></div>", unsafe_allow_html=True)
+        st.subheader(i18n.t("m3_sub_coph_title"), help=i18n.t("m3_sub_coph_help"))
+        st.plotly_chart(fig4, use_container_width=True)
+        interaction_ui.render_like_button("3.4 Indice Cofenético", "3_4")
+        st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_coph_desc')}</p>", unsafe_allow_html=True)
+        if st.session_state.get('show_explanations', False):
+            st.info(explanations.get_explanation("m3_coph", tone=st.session_state.get('explanation_tone', 'tecnico'), language=st.session_state.get('language', 'PT-BR')))
+        st.markdown("<div style='height: 150px;'></div>", unsafe_allow_html=True)
