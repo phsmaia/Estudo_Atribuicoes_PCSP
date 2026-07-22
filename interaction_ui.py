@@ -27,7 +27,7 @@ def render_like_button(section_name: str, key_suffix: str = ""):
     
     with col2:
         # Mostra o total de curtidas logo acima do botão para ficar alinhado
-        st.markdown(f"<div style='font-size: 0.85rem; color: #a0a0a0; margin-bottom: 5px;'>Total de Curtidas: <b style='color: #4da6ff; font-size: 1rem;'>{likes_count}</b></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 0.85rem; color: var(--text-color); opacity: 0.8; margin-bottom: 5px;'>Total de Curtidas: <b style='color: #4da6ff; font-size: 1rem;'>{likes_count}</b></div>", unsafe_allow_html=True)
         
         if has_liked:
             # Estado já curtido: ícone de tiro/explosão e texto
@@ -53,24 +53,24 @@ def render_like_button(section_name: str, key_suffix: str = ""):
                 style.innerHTML = `
                     .liked-police-btn {{
                         animation: strobe_like 1.2s infinite !important;
-                        border: 1px solid rgba(255,255,255,0.2) !important;
+                        border: 1px solid rgba(128,128,128,0.3) !important;
                     }}
                     .liked-police-btn p {{
-                        color: #E0E0E0 !important;
+                        color: var(--text-color) !important;
                         font-weight: bold !important;
                     }}
                     @keyframes strobe_like {{
                         0%, 10% {{ box-shadow: 0 0 15px rgba(255, 0, 50, 0.5); background: rgba(255, 0, 50, 0.15); border-color: rgba(255,0,50,0.5) !important; }}
-                        11%, 15% {{ box-shadow: none; background: transparent; border-color: rgba(255,255,255,0.2) !important; }}
+                        11%, 15% {{ box-shadow: none; background: transparent; border-color: rgba(128,128,128,0.3) !important; }}
                         16%, 25% {{ box-shadow: 0 0 15px rgba(255, 0, 50, 0.5); background: rgba(255, 0, 50, 0.15); border-color: rgba(255,0,50,0.5) !important; }}
                         
-                        26%, 49% {{ box-shadow: none; background: transparent; border-color: rgba(255,255,255,0.2) !important; }}
+                        26%, 49% {{ box-shadow: none; background: transparent; border-color: rgba(128,128,128,0.3) !important; }}
                         
                         50%, 60% {{ box-shadow: 0 0 15px rgba(0, 100, 255, 0.5); background: rgba(0, 100, 255, 0.15); border-color: rgba(0,100,255,0.5) !important; }}
-                        61%, 65% {{ box-shadow: none; background: transparent; border-color: rgba(255,255,255,0.2) !important; }}
+                        61%, 65% {{ box-shadow: none; background: transparent; border-color: rgba(128,128,128,0.3) !important; }}
                         66%, 75% {{ box-shadow: 0 0 15px rgba(0, 100, 255, 0.5); background: rgba(0, 100, 255, 0.15); border-color: rgba(0,100,255,0.5) !important; }}
                         
-                        76%, 100% {{ box-shadow: none; background: transparent; border-color: rgba(255,255,255,0.2) !important; }}
+                        76%, 100% {{ box-shadow: none; background: transparent; border-color: rgba(128,128,128,0.3) !important; }}
                     }}
                 `;
                 window.parent.document.head.appendChild(style);
@@ -89,8 +89,16 @@ def render_like_button(section_name: str, key_suffix: str = ""):
     db.close()
 
 
-@st.dialog("💬")
+@st.dialog("💬 Comentários e Sugestões")
 def modal_comentarios(global_topic: str):
+    if st.session_state.get("light_mode"):
+        st.markdown("""<style>
+        div[role="dialog"], div[data-testid="stModal"] > div, div[data-testid="stDialog"] > div { background-color: #FFFFFF !important; border: 1px solid #CED4DA !important; }
+        div[role="dialog"] *, div[data-testid="stModal"] *, div[data-testid="stDialog"] * { color: #1E2329 !important; }
+        </style>""", unsafe_allow_html=True)
+        
+    st.markdown(f"**Deixe seu feedback sobre:** {global_topic}")
+    
     """
     Modal (pop-up central) nativo do Streamlit que é muito superior ao popover 
     para ler e escrever textos.
@@ -243,13 +251,13 @@ def render_floating_comments(global_topic: str):
                 position: fixed;
                 bottom: 25px;
                 left: 25px;
-                background: rgba(14, 17, 23, 0.90);
+                background: var(--background-color, rgba(14, 17, 23, 0.90));
                 backdrop-filter: blur(15px);
-                border: 1px solid rgba(255, 255, 255, 0.15);
+                border: 1px solid var(--text-color, rgba(255, 255, 255, 0.15));
                 border-radius: 30px;
                 padding: 0 20px;
                 z-index: 999999;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
                 transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
                 width: 170px;
                 height: 50px;
@@ -258,7 +266,7 @@ def render_floating_comments(global_topic: str):
                 justify-content: center;
                 cursor: pointer;
                 font-family: sans-serif;
-                color: #E0E0E0;
+                color: var(--text-color, #E0E0E0);
                 font-weight: bold;
                 font-size: 0.95rem;
                 gap: 8px;

@@ -30,7 +30,7 @@ def plot_binary_heatmap(df: pd.DataFrame, title: str, colorscale: str = "Teal", 
         x=df_temp.columns,
         y=df_temp.index,
         colorscale=colorscale,
-        xgap=1, ygap=1,
+        xgap=2, ygap=2,
         text=hover_text,
         hoverinfo="text",
         showscale=False
@@ -176,7 +176,7 @@ def plot_network_graph(nodes_data: list, edges_data: list, title: str, cargos_de
                 )
     return fig
 
-def plot_adjacency_heatmap(adj_matrix: pd.DataFrame, title: str, text_matrix: pd.DataFrame = None, cargos_destaque: list = None) -> go.Figure:
+def plot_adjacency_heatmap(adj_matrix: pd.DataFrame, title: str, text_matrix: pd.DataFrame = None, cargos_destaque: list = None, colorscale="YlGnBu") -> go.Figure:
     """
     Gera um mapa de calor para a matriz de adjacência (número de atribuições em comum).
     """
@@ -197,7 +197,7 @@ def plot_adjacency_heatmap(adj_matrix: pd.DataFrame, title: str, text_matrix: pd
         x=adj_vis.columns,
         y=adj_vis.index,
         customdata=custom_data,
-        colorscale="YlGnBu",
+        colorscale=colorscale,
         xgap=1, ygap=1,
         hovertemplate=hovertemplate
     ))

@@ -54,6 +54,155 @@ logger.init_db()
 # Configuração Básica da Página
 st.set_page_config(page_title="Estudo de Atribuições PCSP", layout="wide")
 
+# Sincroniza o modo de tema com a URL (para sobreviver a reloads)
+if "light_mode" not in st.session_state:
+    st.session_state.light_mode = st.query_params.get("theme") == "light"
+
+# --- MONKEY PATCH PARA SUPORTE A LIGHT MODE EM PLOTLY ---
+_original_plotly_chart = st.plotly_chart
+def _custom_plotly_chart(figure_or_data, **kwargs):
+    if st.session_state.get("light_mode"):
+        if hasattr(figure_or_data, "update_layout"):
+            figure_or_data.update_layout(
+                template="plotly_white",
+                paper_bgcolor="#F4F6F9",
+                plot_bgcolor="#F4F6F9",
+                font=dict(color="#1E2329")
+            )
+            figure_or_data.update_xaxes(color="#1E2329", gridcolor="#E1E5EA", tickfont=dict(color="#1E2329"))
+            figure_or_data.update_yaxes(color="#1E2329", gridcolor="#E1E5EA", tickfont=dict(color="#1E2329"))
+        kwargs["theme"] = None
+    return _original_plotly_chart(figure_or_data, **kwargs)
+st.plotly_chart = _custom_plotly_chart
+
+if st.session_state.get("light_mode"):
+    st.markdown("""
+        <style>
+        /* Fundo principal suave (não branco puro) */
+        [data-testid="stAppViewContainer"] { background-color: #F4F6F9 !important; color: #1E2329 !important; }
+        [data-testid="stSidebar"] { background-color: #E8ECEF !important; color: #1E2329 !important; }
+        [data-testid="stHeader"] { background-color: transparent !important; }
+        
+        /* Preservar as luzes azul e vermelha no fundo invertendo o modo de mesclagem */
+        .stApp::before, .stApp::after { mix-blend-mode: multiply !important; opacity: 0.25 !important; }
+        
+        /* Textos Gerais */
+        .stMarkdown, .stText, p, span, h1, h2, h3, h4, h5, h6, label { color: #1E2329 !important; }
+        
+        /* Menus (Selectboxes, Dropdowns) */
+        div[data-baseweb="select"] > div { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
+        div[data-baseweb="select"] span { color: #1E2329 !important; }
+        /* Inputs, Textareas e Menus Suspensos (Dropdowns) */
+        .stTextArea textarea, .stTextInput input, [data-baseweb="textarea"] textarea, [data-baseweb="input"] input, [data-baseweb="textarea"], [data-baseweb="input"] {
+            background-color: #F0F2F6 !important;
+            color: #1E2329 !important;
+            border-color: #CED4DA !important;
+            -webkit-text-fill-color: #1E2329 !important;
+        }
+        
+        ul[role="listbox"], [data-baseweb="menu"], div[role="listbox"] {
+            background-color: #FFFFFF !important;
+            border: 1px solid #CED4DA !important;
+        }
+        
+        li[role="option"] { 
+            background-color: #FFFFFF !important;
+            color: #1E2329 !important; 
+        }
+        li[role="option"]:hover, li[role="option"][aria-selected="true"] { 
+            background-color: #F0F2F6 !important; 
+            color: #0072B2 !important;
+        }
+        
+        /* Abas (Tabs) */
+        button[data-baseweb="tab"] p { color: #5C6C7B !important; }
+        button[data-baseweb="tab"][aria-selected="true"] p { color: #0072B2 !important; font-weight: 600; }
+        
+        /* Tooltips e Balões de Ajuda */
+        [data-baseweb="tooltip"] > div, div[data-testid="stTooltipContent"], [data-baseweb="popover"] > div {
+            background-color: #FFFFFF !important;
+            color: #1E2329 !important;
+            border: 1px solid #CED4DA !important;
+        }
+        [data-testid="stTooltipHoverTarget"] {
+            color: #0072B2 !important;
+        }
+        [data-testid="stTooltipHoverTarget"] svg {
+            fill: #5C6C7B !important;
+            stroke: #5C6C7B !important;
+            color: #5C6C7B !important;
+        }
+        
+        /* Botões */
+        button[kind="secondary"] { background-color: #FFFFFF !important; color: #1E2329 !important; border-color: #CED4DA !important; }
+        
+        /* Ajustar containers escuros (Header fixo e Caixas) */
+        div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor) { background-color: rgba(244, 246, 249, 0.95) !important; border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important; }
+        .transparency-box { background-color: #FFFFFF !important; }
+        /* Forçar variáveis nativas do Streamlit para Light Mode em todos os elementos flutuantes */
+        :root, .stApp, [data-baseweb], div[role="dialog"] {
+            --background-color: #FFFFFF !important;
+            --secondary-background-color: #F0F2F6 !important;
+            --text-color: #1E2329 !important;
+            --primary-color: #0072B2 !important;
+        }
+        
+        .status-badge { background-color: #FFFFFF !important; border: 1px solid #CED4DA !important; color: #1E2329 !important; }
+        .status-badge strong { color: #0072B2 !important; }
+        
+        /* Tabela Light (HTML customizada) */
+        .light-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; font-family: sans-serif; }
+        .light-table th { background-color: #F0F2F6 !important; color: #1E2329 !important; padding: 10px; text-align: left; border: 1px solid #CED4DA !important; }
+        .light-table td { padding: 10px; border: 1px solid #CED4DA !important; color: #1E2329; }
+        .light-table tr:hover { background-color: #F8F9FA !important; }
+        
+        /* Expander (Modos de Visão e Explicações) e Configurações Analíticas */
+        [data-testid="stExpander"], .stExpander, div[data-testid="stExpander"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
+        [data-testid="stExpander"] summary, .stExpander summary { color: #1E2329 !important; background-color: #FFFFFF !important; }
+        [data-testid="stExpander"] summary:hover, .stExpander summary:hover { background-color: #F0F2F6 !important; }
+        [data-testid="stExpander"] summary p, .stExpander summary p { color: #1E2329 !important; font-weight: 600 !important; }
+        [data-testid="stExpanderDetails"], .stExpanderDetails, div[data-testid="stExpanderDetails"] { background-color: #FFFFFF !important; color: #1E2329 !important; }
+        [data-testid="stExpanderDetails"] p, [data-testid="stExpanderDetails"] h4, [data-testid="stExpanderDetails"] span, [data-testid="stExpanderDetails"] *, .stExpanderDetails p, .stExpanderDetails h4, .stExpanderDetails span, .stExpanderDetails * { color: #1E2329 !important; }
+        
+        /* Toasts (Mensagens flutuantes) */
+        [data-testid="stToast"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
+        [data-testid="stToast"] > div, [data-testid="stToast"] p { color: #1E2329 !important; }
+        
+        /* Popovers (Modos de Visão / Configurações) */
+        [data-testid="stPopoverBody"], div[data-testid="stPopoverBody"], .stPopoverBody, div[data-baseweb="popover"] > div, div[data-baseweb="popover"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; color: #1E2329 !important; }
+        [data-testid="stPopoverBody"] p, [data-testid="stPopoverBody"] h4, [data-testid="stPopoverBody"] span, [data-testid="stPopoverBody"] label, [data-testid="stPopoverBody"] *, div[data-baseweb="popover"] * { color: #1E2329 !important; }
+        
+        /* Caixas de Alerta (st.info) */
+        [data-testid="stAlert"] { background-color: #E8F4F8 !important; border: 1px solid #B6D4E3 !important; color: #1E2329 !important; }
+        [data-testid="stAlert"] p, [data-testid="stAlert"] * { color: #1E2329 !important; }
+        
+        /* Custom Metric Boxes */
+        .custom-metric-box { background: #FFFFFF !important; border-color: #CED4DA !important; color: #1E2329 !important; }
+        .custom-metric-box * { color: #1E2329 !important; }
+        
+        /* Tooltips e labels */
+        [data-testid="stWidgetLabel"] { color: #1E2329 !important; }
+        
+        /* Modals e Dialogs */
+        [data-testid="stDialog"] > div, [data-testid="stModal"] > div, div[role="dialog"] > div, div[data-baseweb="modal"] > div { background-color: #FFFFFF !important; border: 1px solid #CED4DA !important; }
+        [data-testid="stDialog"] *, [data-testid="stModal"] *, div[role="dialog"] *, div[data-baseweb="modal"] * { color: #1E2329 !important; }
+        
+        /* Inputs, Selects, Menus suspensos (Dropdowns) */
+        [data-baseweb="select"] > div, [data-baseweb="menu"], ul[role="listbox"], ul[role="listbox"] li { background-color: #FFFFFF !important; color: #1E2329 !important; }
+        [data-baseweb="select"] *, [data-baseweb="menu"] *, ul[role="listbox"] * { color: #1E2329 !important; }
+        [data-testid="stSelectbox"] label, [data-testid="stMultiSelect"] label, [data-testid="stRadio"] label { color: #1E2329 !important; }
+        
+        /* Tabs active state */
+        [data-baseweb="tab"][aria-selected="true"] { background-color: transparent !important; }
+        </style>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+        <style>
+        .custom-metric-box { background: #1E1E1E !important; border: 1px solid #333 !important; padding: 15px; border-radius: 10px; }
+        </style>
+    """, unsafe_allow_html=True)
+
 # --- MODO TESTE DE PERSONA (UI) ---
 persona_placeholder = None
 if st.session_state.get("persona_test_mode", False):
@@ -68,6 +217,12 @@ if st.session_state.get("persona_test_mode", False):
     st.sidebar.markdown("---")
 
 # --- RODAPÉ FLUTUANTE DE CONTATOS E REFERÊNCIAS (Injeção Direta no DOM) ---
+footer_bg = "rgba(255, 255, 255, 0.95)" if st.session_state.get("light_mode") else "rgba(14, 17, 23, 0.90)"
+footer_border = "rgba(0, 0, 0, 0.15)" if st.session_state.get("light_mode") else "rgba(255, 255, 255, 0.15)"
+footer_text = "#1E2329" if st.session_state.get("light_mode") else "#E0E0E0"
+footer_subtext = "#5C6C7B" if st.session_state.get("light_mode") else "#A0A0A0"
+footer_link = "#0072B2" if st.session_state.get("light_mode") else "#4da6ff"
+
 footer_html = """
 <script>
     // Tenta remover o footer antigo caso o Streamlit faça um re-run da tela
@@ -85,9 +240,9 @@ footer_html = """
             position: fixed;
             bottom: 25px;
             right: 25px;
-            background: rgba(14, 17, 23, 0.90);
+            background: __BG_COLOR__;
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid __BORDER_COLOR__;
             border-radius: 30px;
             padding: 0 20px;
             z-index: 999999;
@@ -117,7 +272,7 @@ footer_html = """
             height: 50px;
             cursor: pointer;
             flex-shrink: 0;
-            color: #E0E0E0;
+            color: __TEXT_COLOR__;
             font-weight: bold;
             font-size: 0.95rem;
             gap: 8px;
@@ -137,7 +292,7 @@ footer_html = """
             display: block;
         }
         .hud-content a {
-            color: #4da6ff;
+            color: __LINK_COLOR__;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -150,11 +305,11 @@ footer_html = """
         }
         .hud-content a:hover {
             text-decoration: underline;
-            background: rgba(255,255,255,0.05);
+            background: rgba(128,128,128,0.1);
         }
         .hud-content h4 {
             margin: 0 0 10px 0;
-            color: #E0E0E0;
+            color: __TEXT_COLOR__;
             font-size: 1rem;
             border-bottom: 1px solid #333;
             padding-bottom: 5px;
@@ -166,12 +321,12 @@ footer_html = """
         </div>
         <div class="hud-content">
             <h4>__REF_TITLE__</h4>
-            <span style="font-size: 0.75rem; color: #A0A0A0; display: block; margin: -5px 0 8px 0; font-style: italic;">__REF_DESC__</span>
+            <span style="font-size: 0.75rem; color: __SUBTEXT_COLOR__; display: block; margin: -5px 0 8px 0; font-style: italic;">__REF_DESC__</span>
             <a href="https://github.com/phsmaia/Estudo_Atribuicoes_PCSP" target="_blank">__REPO__</a>
             <a href="https://periodicos.pf.gov.br/index.php/RBCP/pt_BR/article/view/4693" target="_blank">__ARTICLE__</a>
             <a href="https://zenodo.org/records/14284483" target="_blank">__DATA__</a>
             <h4 style="margin-top: 15px;">__CONTACT_TITLE__</h4>
-            <span style="font-size: 0.75rem; color: #A0A0A0; display: block; margin: -5px 0 8px 0; font-style: italic;">__CONTACT_DESC__</span>
+            <span style="font-size: 0.75rem; color: __SUBTEXT_COLOR__; display: block; margin: -5px 0 8px 0; font-style: italic;">__CONTACT_DESC__</span>
             <a href="mailto:maia.phs@gmail.com">📧 maia.phs@gmail.com</a>
             <a href="https://www.linkedin.com/in/pedromaiapapilodata/" target="_blank">__LINKEDIN__</a>
         </div>
@@ -191,6 +346,8 @@ for placeholder, key in [
     ('__LINKEDIN__', 'footer_linkedin')
 ]:
     footer_html = footer_html.replace(placeholder, i18n.t(key))
+
+footer_html = footer_html.replace('__BG_COLOR__', footer_bg).replace('__BORDER_COLOR__', footer_border).replace('__TEXT_COLOR__', footer_text).replace('__LINK_COLOR__', footer_link).replace('__SUBTEXT_COLOR__', footer_subtext)
 
 components.html(footer_html, height=0)
 import interaction_ui
@@ -255,27 +412,49 @@ targeted_loader_js = f"""
                 const oldLoaders = window.parent.document.querySelectorAll('.custom-inline-loader');
                 oldLoaders.forEach(l => l.remove());
 
-                // Adiciona o CSS de sirene intermitente se não existir
-                if (!window.parent.document.getElementById('hud-strobe-css')) {{
+                // Adiciona o CSS de sirene intermitente, adaptando-o para Light/Dark Mode
+                const urlParams = new URLSearchParams(window.parent.location.search);
+                const isLight = urlParams.get('theme') === 'light';
+                const styleId = isLight ? 'hud-strobe-css-light' : 'hud-strobe-css-dark';
+                
+                // Limpa estilos opostos ou antigos
+                const oldLight = window.parent.document.getElementById('hud-strobe-css-light');
+                if (oldLight) oldLight.remove();
+                const oldDark = window.parent.document.getElementById('hud-strobe-css-dark');
+                if (oldDark) oldDark.remove();
+                const oldOld = window.parent.document.getElementById('hud-strobe-css');
+                if (oldOld) oldOld.remove();
+
+                if (!window.parent.document.getElementById(styleId)) {{
                     const style = window.parent.document.createElement('style');
-                    style.id = 'hud-strobe-css';
+                    style.id = styleId;
+                    
+                    const bgRedOn = isLight ? 'rgba(255, 70, 90, 0.85)' : 'rgba(255, 0, 50, 0.95)';
+                    const bgRedOff = isLight ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.8)';
+                    const bgBlueOn = isLight ? 'rgba(70, 150, 255, 0.85)' : 'rgba(0, 100, 255, 0.95)';
+                    const shadowRed = isLight ? 'rgba(255, 70, 90, 0.4)' : 'rgba(255, 0, 50, 0.9)';
+                    const shadowBlue = isLight ? 'rgba(70, 150, 255, 0.4)' : 'rgba(0, 100, 255, 0.9)';
+                    const txtColor = isLight ? '#1E2329' : 'white';
+                    const txtColorOn = 'white';
+                    const borderOff = isLight ? '1px solid #CED4DA' : '1px solid rgba(255,255,255,0.2)';
+                    
                     style.innerHTML = "" + 
-                        "@keyframes hud_strobe {{ " +
-                            "0%, 10% {{ box-shadow: 0 0 15px rgba(255, 0, 50, 0.9); background: rgba(255, 0, 50, 0.95); }} " +
-                            "11%, 15% {{ box-shadow: none; background: rgba(0, 0, 0, 0.8); }} " +
-                            "16%, 25% {{ box-shadow: 0 0 15px rgba(255, 0, 50, 0.9); background: rgba(255, 0, 50, 0.95); }} " +
-                            "26%, 49% {{ box-shadow: none; background: rgba(0, 0, 0, 0.8); }} " +
-                            "50%, 60% {{ box-shadow: 0 0 15px rgba(0, 100, 255, 0.9); background: rgba(0, 100, 255, 0.95); }} " +
-                            "61%, 65% {{ box-shadow: none; background: rgba(0, 0, 0, 0.8); }} " +
-                            "66%, 75% {{ box-shadow: 0 0 15px rgba(0, 100, 255, 0.9); background: rgba(0, 100, 255, 0.95); }} " +
-                            "76%, 100% {{ box-shadow: none; background: rgba(0, 0, 0, 0.8); }} " +
+                        "@keyframes hud_strobe_" + (isLight?"light":"dark") + " {{ " +
+                            "0%, 10% {{ box-shadow: 0 0 15px " + shadowRed + "; background: " + bgRedOn + "; color: " + txtColorOn + "; border: transparent; }} " +
+                            "11%, 15% {{ box-shadow: none; background: " + bgRedOff + "; color: " + txtColor + "; border: " + borderOff + "; }} " +
+                            "16%, 25% {{ box-shadow: 0 0 15px " + shadowRed + "; background: " + bgRedOn + "; color: " + txtColorOn + "; border: transparent; }} " +
+                            "26%, 49% {{ box-shadow: none; background: " + bgRedOff + "; color: " + txtColor + "; border: " + borderOff + "; }} " +
+                            "50%, 60% {{ box-shadow: 0 0 15px " + shadowBlue + "; background: " + bgBlueOn + "; color: " + txtColorOn + "; border: transparent; }} " +
+                            "61%, 65% {{ box-shadow: none; background: " + bgRedOff + "; color: " + txtColor + "; border: " + borderOff + "; }} " +
+                            "66%, 75% {{ box-shadow: 0 0 15px " + shadowBlue + "; background: " + bgBlueOn + "; color: " + txtColorOn + "; border: transparent; }} " +
+                            "76%, 100% {{ box-shadow: none; background: " + bgRedOff + "; color: " + txtColor + "; border: " + borderOff + "; }} " +
                         "}} " +
                         ".custom-inline-loader {{ " +
                             "position: fixed; top: 25px; left: 50%; transform: translateX(-50%); z-index: 9999999; " +
-                            "color: white; padding: 8px 20px; border-radius: 30px; font-size: 1rem; font-weight: bold; " +
-                            "animation: hud_strobe 1.2s infinite; border: 1px solid rgba(255,255,255,0.2); " +
-                            "box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; " +
-                            "pointer-events: none; " +
+                            "padding: 8px 20px; border-radius: 30px; font-size: 1rem; font-weight: bold; " +
+                            "animation: hud_strobe_" + (isLight?"light":"dark") + " 1.2s infinite; " +
+                            "box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; " +
+                            "pointer-events: none; transition: all 0.2s ease;" +
                         "}}";
                     window.parent.document.head.appendChild(style);
                 }}
@@ -310,81 +489,107 @@ targeted_loader_js = f"""
 components.html(targeted_loader_js, height=0)
 
 # Injeção de CSS para destaques críticos (Transparência Matemática e Status Bar)
-st.markdown("""
+sticky_bg = "rgba(244, 246, 249, 0.95)" if st.session_state.get("light_mode") else "rgba(14, 17, 23, 0.95)"
+sticky_border = "rgba(0, 0, 0, 0.15)" if st.session_state.get("light_mode") else "rgba(255, 255, 255, 0.15)"
+
+st.markdown(f"""
 <style>
 /* Animação Premium: Fade & Focus (Sem alteração geométrica) */
-@keyframes smoothCascadeFocus {
-    0% { opacity: 0; filter: blur(5px); }
-    100% { opacity: 1; filter: blur(0); }
-}
+@keyframes smoothCascadeFocus {{
+    0% {{ opacity: 0; filter: blur(5px); }}
+    100% {{ opacity: 1; filter: blur(0); }}
+}}
 
-div[data-testid="stVerticalBlock"] > div {
+div[data-testid="stVerticalBlock"] > div {{
     opacity: 0; 
     animation: smoothCascadeFocus 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
+}}
 
 /* Fundo Elegante e Trava contra barras de rolagem artificiais */
-.stApp {
-    background: radial-gradient(circle at 50% 0%, #121c2b 0%, #0e1117 60%) !important;
-}
+.stApp {{
+    background: {'none' if st.session_state.get("light_mode") else 'radial-gradient(circle at 50% 0%, #121c2b 0%, #0e1117 60%)'} !important;
+}}
+</style>
+""", unsafe_allow_html=True)
 
+ambient_blend = "normal" if st.session_state.get("light_mode") else "screen"
+ambient_red_base = "rgba(255, 0, 0, 1.0)" if st.session_state.get("light_mode") else "rgba(255, 0, 0, 0.25)"
+ambient_red_fade = "rgba(255, 0, 0, 0.0)" if st.session_state.get("light_mode") else "rgba(255, 0, 0, 0.15)"
+ambient_blue_base = "rgba(0, 80, 255, 1.0)" if st.session_state.get("light_mode") else "rgba(0, 80, 255, 0.25)"
+ambient_blue_fade = "rgba(0, 80, 255, 0.0)" if st.session_state.get("light_mode") else "rgba(0, 80, 255, 0.15)"
+
+st.markdown(f"""
+<style>
 /* --- Ambient Police Lights (Subtle & Cinematic) --- */
-.stApp::before {
+.stApp::before {{
     content: "";
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
     pointer-events: none;
     z-index: 9999;
-    mix-blend-mode: screen;
-    background: radial-gradient(circle at 15% 20%, rgba(255, 0, 0, 0.25), transparent 60%),
-                radial-gradient(circle at 85% 80%, rgba(255, 0, 0, 0.15), transparent 60%);
+    mix-blend-mode: {ambient_blend};
+    background: radial-gradient(circle at 15% 20%, {ambient_red_base}, transparent 60%),
+                radial-gradient(circle at 85% 80%, {ambient_red_fade}, transparent 60%);
     animation: ambientRed 8s infinite alternate ease-in-out;
-}
+}}
 
-.stApp::after {
+.stApp::after {{
     content: "";
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
     pointer-events: none;
     z-index: 9999;
-    mix-blend-mode: screen;
-    background: radial-gradient(circle at 85% 20%, rgba(0, 80, 255, 0.25), transparent 60%),
-                radial-gradient(circle at 15% 80%, rgba(0, 80, 255, 0.15), transparent 60%);
+    mix-blend-mode: {ambient_blend};
+    background: radial-gradient(circle at 85% 20%, {ambient_blue_base}, transparent 60%),
+                radial-gradient(circle at 15% 80%, {ambient_blue_fade}, transparent 60%);
     animation: ambientBlue 10s infinite alternate ease-in-out;
-}
+}}
+</style>
+""", unsafe_allow_html=True)
 
-@keyframes ambientRed {
-    0% { opacity: 0.3; transform: scale(1); }
-    100% { opacity: 0.7; transform: scale(1.1); }
-}
+st.markdown("""
+<style>
+    @keyframes ambientRed {
+        0% { opacity: 0.3; transform: scale(1); }
+        100% { opacity: 0.7; transform: scale(1.1); }
+    }
+    
+    @keyframes ambientBlue {
+        0% { opacity: 0.7; transform: scale(1.1); }
+        100% { opacity: 0.3; transform: scale(1); }
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-@keyframes ambientBlue {
-    0% { opacity: 0.7; transform: scale(1.1); }
-    100% { opacity: 0.3; transform: scale(1); }
-}
-
+st.markdown(f"""
+<style>
 /* Atrasos escalonados */
-div[data-testid="stVerticalBlock"] > div:nth-child(1) { animation-delay: 0.05s; }
-div[data-testid="stVerticalBlock"] > div:nth-child(2) { animation-delay: 0.15s; }
-div[data-testid="stVerticalBlock"] > div:nth-child(3) { animation-delay: 0.25s; }
-div[data-testid="stVerticalBlock"] > div:nth-child(4) { animation-delay: 0.35s; }
-div[data-testid="stVerticalBlock"] > div:nth-child(5) { animation-delay: 0.45s; }
+div[data-testid="stVerticalBlock"] > div:nth-child(1) {{ animation-delay: 0.05s; }}
+div[data-testid="stVerticalBlock"] > div:nth-child(2) {{ animation-delay: 0.15s; }}
+div[data-testid="stVerticalBlock"] > div:nth-child(3) {{ animation-delay: 0.25s; }}
+div[data-testid="stVerticalBlock"] > div:nth-child(4) {{ animation-delay: 0.35s; }}
+div[data-testid="stVerticalBlock"] > div:nth-child(5) {{ animation-delay: 0.45s; }}
 
 /* Sticky Container Header */
-div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor):has(div[data-testid="stRadio"]) {
+div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor):has(div[data-testid="stRadio"]) {{
     position: sticky;
     top: 0;
     z-index: 999;
-    background-color: rgba(14, 17, 23, 0.95);
+    background-color: {sticky_bg};
     padding: 15px 20px 10px 20px;
     border-radius: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid {sticky_border};
     box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     margin-bottom: 25px;
     backdrop-filter: blur(10px);
-}
+}}
 
 /* Remover espaço em branco superior do Streamlit */
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<style>
 .block-container {
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
@@ -446,13 +651,27 @@ if "first_load_done" not in st.session_state:
     if (!window.parent.document.getElementById('custom-splash-screen')) {{
         const splash = window.parent.document.createElement('div');
         splash.id = 'custom-splash-screen';
+        
+        // Verifica URL Params para manter Light Mode durante Splash Screen
+        const urlParams = new URLSearchParams(window.parent.location.search);
+        const isLight = urlParams.get('theme') === 'light';
+        const bgColor = isLight ? '#E9ECEF' : '#0b0f19';
+        const textColor = isLight ? '#1E2329' : 'white';
+        const lightsOpacity = isLight ? '0.15' : '1.0';
+        const lightsBlend = isLight ? 'multiply' : 'screen';
+        const btnBg = isLight ? 'rgba(255, 255, 255, 0.8)' : 'rgba(14, 17, 23, 0.5)';
+        const btnBorder = isLight ? 'rgba(0, 114, 178, 0.3)' : 'rgba(77, 166, 255, 0.3)';
+        const btnBorderHover = isLight ? 'rgba(0, 114, 178, 0.6)' : 'rgba(77, 166, 255, 0.4)';
+        const strokeColor = isLight ? '#0072B2' : '#4da6ff';
+        const progressBg = isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+
         splash.innerHTML = `
             <style>
             #custom-splash-screen {{
                 position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-                background: #0b0f19;
+                background: ${{bgColor}};
                 z-index: 9999999; display: flex; flex-direction: column;
-                align-items: center; justify-content: center; color: white;
+                align-items: center; justify-content: center; color: ${{textColor}};
                 font-family: sans-serif; overflow: hidden;
             }}
             .police-lights {{
@@ -460,33 +679,34 @@ if "first_load_done" not in st.session_state:
                 background: transparent;
                 animation: strobe 1.2s infinite;
                 pointer-events: none;
+                mix-blend-mode: ${{lightsBlend}};
             }}
             @keyframes strobe {{
-                0%, 10% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0.25) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0) 0%, transparent 40%); opacity: 1; transform: scale(1.05); }}
-                11%, 15% {{ background: transparent; opacity: 0.3; transform: scale(1); }}
-                16%, 25% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0.25) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0) 0%, transparent 40%); opacity: 1; transform: scale(1.05); }}
+                0%, 10% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0.25) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0) 0%, transparent 40%); opacity: ${{lightsOpacity}}; transform: scale(1.05); }}
+                11%, 15% {{ background: transparent; opacity: 0.1; transform: scale(1); }}
+                16%, 25% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0.25) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0) 0%, transparent 40%); opacity: ${{lightsOpacity}}; transform: scale(1.05); }}
                 
-                26%, 49% {{ background: transparent; opacity: 0.3; transform: scale(1); }}
+                26%, 49% {{ background: transparent; opacity: 0.1; transform: scale(1); }}
                 
-                50%, 60% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0.25) 0%, transparent 40%); opacity: 1; transform: scale(1.05); }}
-                61%, 65% {{ background: transparent; opacity: 0.3; transform: scale(1); }}
-                66%, 75% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0.25) 0%, transparent 40%); opacity: 1; transform: scale(1.05); }}
+                50%, 60% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0.25) 0%, transparent 40%); opacity: ${{lightsOpacity}}; transform: scale(1.05); }}
+                61%, 65% {{ background: transparent; opacity: 0.1; transform: scale(1); }}
+                66%, 75% {{ background: radial-gradient(circle at 15% 50%, rgba(255, 0, 50, 0) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(0, 100, 255, 0.25) 0%, transparent 40%); opacity: ${{lightsOpacity}}; transform: scale(1.05); }}
                 
-                76%, 100% {{ background: transparent; opacity: 0.3; transform: scale(1); }}
+                76%, 100% {{ background: transparent; opacity: 0.1; transform: scale(1); }}
             }}
             .fingerprint-btn {{
                 width: 90px; height: 90px; border-radius: 50%;
-                border: 2px solid rgba(77, 166, 255, 0.3);
+                border: 2px solid ${{btnBorder}};
                 display: flex; align-items: center; justify-content: center;
                 margin-bottom: 25px; cursor: pointer; position: relative;
-                background: rgba(14, 17, 23, 0.5); backdrop-filter: blur(5px);
+                background: ${{btnBg}}; backdrop-filter: blur(5px);
                 transition: all 0.3s ease;
             }}
             .fingerprint-btn svg {{
-                width: 45px; height: 45px; stroke: #4da6ff; fill: none; transition: all 0.3s ease;
+                width: 45px; height: 45px; stroke: ${{strokeColor}}; fill: none; transition: all 0.3s ease;
             }}
             .fingerprint-btn:hover {{
-                border-color: #4da6ff; box-shadow: 0 0 20px rgba(77, 166, 255, 0.4);
+                border-color: ${{strokeColor}}; box-shadow: 0 0 20px ${{btnBorderHover}};
             }}
             .fingerprint-btn.scanning {{
                 border-color: #00ffcc; box-shadow: 0 0 30px rgba(0, 255, 204, 0.6);
@@ -502,7 +722,7 @@ if "first_load_done" not in st.session_state:
             @keyframes scanAnim {{ 0% {{ top: 15%; }} 50% {{ top: 85%; }} 100% {{ top: 15%; }} }}
             
             .progress-bar-container {{
-                width: 300px; height: 6px; background: rgba(255,255,255,0.1);
+                width: 300px; height: 6px; background: ${{progressBg}};
                 border-radius: 3px; margin: 25px 0; overflow: hidden; position: relative;
             }}
             .progress-bar-fill {{
@@ -633,6 +853,8 @@ st.markdown("""
     header[data-testid="stHeader"] {
         display: none;
     }
+    
+    .custom-metric-box { background: #1E1E1E; border: 1px solid #333; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -649,7 +871,7 @@ with st.container():
         analytics.log_event("change_language", {"language": st.session_state.language})
 
     with col_btn:
-        c1, c2 = st.columns([6, 4], vertical_alignment="center")
+        c1, c2, c3 = st.columns([5, 3, 2], vertical_alignment="center")
         with c1:
             st.markdown(
                 "<div style='text-align: right; font-size: 0.95rem; font-weight:600; color: #aaa; margin-top: -13px;'>Idioma / Language 🌐 <span title='Clique para alternar o idioma do painel / Click to switch dashboard language' style='cursor: help; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; border: 1px solid #aaa; font-size: 0.7rem; margin-left: 2px;'>?</span></div>", 
@@ -665,7 +887,16 @@ with st.container():
                 horizontal=True, 
                 label_visibility="collapsed"
             )
-                
+        with c3:
+            def _sync_theme():
+                st.session_state.light_mode = st.session_state.light_mode_toggle
+                if st.session_state.light_mode:
+                    st.query_params["theme"] = "light"
+                else:
+                    if "theme" in st.query_params:
+                        del st.query_params["theme"]
+            st.toggle("☀️ Light", value=st.session_state.get("light_mode", False), key="light_mode_toggle", on_change=_sync_theme)
+
     status_bar_placeholder = st.empty()
     # Removemos o HTML do layout inicial porque o render final dos badges ocorre lá embaixo
     status_bar_placeholder.markdown("<div style='border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;'></div>", unsafe_allow_html=True)
@@ -1084,7 +1315,8 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     
     lista_cargos_html = ""
     if filtro_cargos and len(filtro_cargos) < len(cargos_disponiveis):
-        lista_cargos_html = f"<div style='text-align: right; color: #C0C0C0; font-size: 0.9rem; margin-top: 5px; margin-bottom: 5px;'><strong>{i18n.t('badge_filtered_careers')}</strong> {', '.join(filtro_cargos)}</div>"
+        c_badge_cargos = "#1E2329" if st.session_state.get("light_mode") else "#C0C0C0"
+        lista_cargos_html = f"<div style='text-align: right; color: {c_badge_cargos}; font-size: 0.9rem; margin-top: 5px; margin-bottom: 5px;'><strong>{i18n.t('badge_filtered_careers')}</strong> {', '.join(filtro_cargos)}</div>"
     
     badge_destaque = ""
     if cargos_destaque:
@@ -1113,19 +1345,19 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     
     html_kpis = f"""
 <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
-<div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="{i18n.t('kpi_orig_help')}">
+<div class="custom-metric-box" style="flex: 1; min-width: 140px; text-align: center; padding: 10px; border-radius: 8px;" title="{i18n.t('kpi_orig_help')}">
 <div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">{i18n.t('kpi_orig_title')} <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
 <div style="font-size: 1.1rem; line-height: 1.2;">{len(df_original_limpo.columns)}</div>
 </div>
-<div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="{i18n.t('kpi_cond_help')}">
+<div class="custom-metric-box" style="flex: 1; min-width: 140px; text-align: center; padding: 10px; border-radius: 8px;" title="{i18n.t('kpi_cond_help')}">
 <div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">{i18n.t('kpi_cond_title')} <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
 <div style="font-size: 1.1rem; line-height: 1.2;">{len(df_condensado.columns)}</div>
 </div>
-<div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="{i18n.t('kpi_red_help')}">
+<div class="custom-metric-box" style="flex: 1; min-width: 140px; text-align: center; padding: 10px; border-radius: 8px;" title="{i18n.t('kpi_red_help')}">
 <div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">{i18n.t('kpi_red_title')} <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
 <div style="font-size: 1.1rem; color: #00C851; line-height: 1.2; font-weight: bold;">{reducao}</div>
 </div>
-<div style="flex: 1; min-width: 140px; text-align: center; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;" title="{i18n.t('kpi_pct_help')}">
+<div class="custom-metric-box" style="flex: 1; min-width: 140px; text-align: center; padding: 10px; border-radius: 8px;" title="{i18n.t('kpi_pct_help')}">
 <div style="font-size: 0.65rem; color: #9E9E9E; font-weight: 600; text-transform: uppercase;">{i18n.t('kpi_pct_title')} <span style="cursor:help; color:#888; font-size:0.75rem;">ⓘ</span></div>
 <div style="font-size: 1.1rem; color: #00C851; line-height: 1.2; font-weight: bold;">{pct_reducao:.1f}%</div>
 </div>
@@ -1172,7 +1404,8 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         st.subheader(f"{i18n.t('sub_matrix')} ({i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')})", help=i18n.t('sub_matrix_help'))
         st.markdown(f"<p style='font-size: 0.85rem; color: #9E9E9E; margin-top: -15px; margin-bottom: 10px;'>{i18n.t('tip_hover')}</p>", unsafe_allow_html=True)
         lbl_matriz_translated = i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')
-        fig_bin = visualizations.plot_binary_heatmap(df_to_use_siglas, f"{i18n.t('title_matrix_prefix')} {lbl_matriz_translated} - {i18n.t(cenario_sel)}", colorscale="Teal", dic_reverso=dic_reverso, cargos_destaque=cargos_destaque_ui)
+        c_scale = [[0, "#B0B5BA"], [1, "#0055A4"]] if st.session_state.get('light_mode') else "Teal"
+        fig_bin = visualizations.plot_binary_heatmap(df_to_use_siglas, f"{i18n.t('title_matrix_prefix')} {lbl_matriz_translated} - {i18n.t(cenario_sel)}", colorscale=c_scale, dic_reverso=dic_reverso, cargos_destaque=cargos_destaque_ui)
         st.plotly_chart(fig_bin, use_container_width=True)
         if st.session_state.get('show_explanations', False):
             tone_key = st.session_state.get('explanation_tone', 'tecnico')
@@ -1214,15 +1447,16 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             least_connected = i18n.traduzir_cargo(least_connected)
             
         # 1. KPIs Full Width
-        st.markdown(f"<h4 style='margin-bottom: 15px; color:#ccc; font-size: 1.1rem;'>{i18n.t('adj_kpi_title')}</h4>", unsafe_allow_html=True)
+        c_adj_kpi_title = "#1E2329" if st.session_state.get("light_mode") else "#ccc"
+        st.markdown(f"<h4 style='margin-bottom: 15px; color:{c_adj_kpi_title}; font-size: 1.1rem;'>{i18n.t('adj_kpi_title')}</h4>", unsafe_allow_html=True)
         st.markdown(f"""
         <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 25px;">
-            <div style="flex: 1; min-width: 120px; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;">
+            <div class="custom-metric-box" style="flex: 1; min-width: 120px; padding: 10px; border-radius: 8px;">
                 <div style="font-size: 0.65rem; color: #9E9E9E; text-transform: uppercase;">{i18n.t('adj_kpi_hub')}</div>
                 <div style="font-size: 0.9rem; font-weight: bold; color: #4da6ff; margin-bottom: 3px;">{most_connected}</div>
                 <div style="font-size: 0.75rem; color: #aaa;">{max_degree} {i18n.t('adj_kpi_connections')}</div>
             </div>
-            <div style="flex: 1; min-width: 120px; background: #1E1E1E; padding: 10px; border-radius: 8px; border: 1px solid #333;">
+            <div class="custom-metric-box" style="flex: 1; min-width: 120px; padding: 10px; border-radius: 8px;">
                 <div style="font-size: 0.65rem; color: #9E9E9E; text-transform: uppercase;">{i18n.t('adj_kpi_isolated')}</div>
                 <div style="font-size: 0.9rem; font-weight: bold; color: #ff6b6b; margin-bottom: 3px;">{least_connected}</div>
                 <div style="font-size: 0.75rem; color: #aaa;">{min_degree} {i18n.t('adj_kpi_connections')}</div>
@@ -1234,7 +1468,8 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         col_adj_1, col_adj_2 = st.columns([6, 4])
         
         with col_adj_1:
-            fig_adj = visualizations.plot_adjacency_heatmap(adj_matrix, f"{i18n.t('title_adj_prefix')} - {i18n.t(cenario_sel)}", text_matrix=text_matrix, cargos_destaque=cargos_destaque_ui)
+            c_scale_adj = [[0.0, "#B0B5BA"], [0.001, "#deebf7"], [1.0, "#08519c"]] if st.session_state.get("light_mode") else "YlGnBu"
+            fig_adj = visualizations.plot_adjacency_heatmap(adj_matrix, f"{i18n.t('title_adj_prefix')} - {i18n.t(cenario_sel)}", text_matrix=text_matrix, cargos_destaque=cargos_destaque_ui, colorscale=c_scale_adj)
             st.plotly_chart(fig_adj, use_container_width=True)
             if st.session_state.get('show_explanations', False):
                 tone_key = st.session_state.get('explanation_tone', 'tecnico')
@@ -1242,7 +1477,8 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             
         with col_adj_2:
             # Tabela Top Pares
-            st.markdown(f"<p style='font-size: 0.9rem; margin-bottom: 5px; color:#ddd;'><strong>{i18n.t('adj_top_pairs')}</strong></p>", unsafe_allow_html=True)
+            c_adj_top_pairs = "#1E2329" if st.session_state.get("light_mode") else "#ddd"
+            st.markdown(f"<p style='font-size: 0.9rem; margin-bottom: 5px; color:{c_adj_top_pairs};'><strong>{i18n.t('adj_top_pairs')}</strong></p>", unsafe_allow_html=True)
             
             lbl_5 = "Top 5"
             lbl_10 = "Top 10"
@@ -1261,7 +1497,12 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                 
             df_top_pairs = top_pairs[['Pair', 'Compartilhamentos']].rename(columns={'Pair': i18n.t('adj_tbl_pair'), 'Compartilhamentos': i18n.t('adj_tbl_shared')})
             df_top_pairs.insert(0, '#', range(1, len(df_top_pairs) + 1))
-            st.dataframe(df_top_pairs, use_container_width=True, hide_index=True)
+            
+            if st.session_state.get('light_mode'):
+                html_table = df_top_pairs.to_html(index=False, classes="light-table", border=0)
+                st.markdown(html_table, unsafe_allow_html=True)
+            else:
+                st.dataframe(df_top_pairs, use_container_width=True, hide_index=True)
             
         # 3. Gráfico Barras Full Width
         df_bar = degrees.reset_index()
@@ -1270,18 +1511,20 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             df_bar['Cargo'] = df_bar['Cargo'].map(lambda c: i18n.traduzir_cargo(c))
             
         import plotly.express as px
+        font_color = "#1E2329" if st.session_state.get("light_mode") else "white"
+        title_color = "#1E2329" if st.session_state.get("light_mode") else "#ccc"
         fig_bar = px.bar(
             df_bar,
             x='Soma', 
             y='Cargo', 
             orientation='h',
             labels={'Soma': i18n.t('adj_tbl_shared'), 'Cargo': ''},
-            title=f"<span style='font-size:0.95rem; color:#ccc'>{i18n.t('adj_bar_title')}</span>"
+            title=f"<span style='font-size:0.95rem; color:{title_color}'>{i18n.t('adj_bar_title')}</span>"
         )
         fig_bar.update_layout(
             plot_bgcolor='rgba(0,0,0,0)', 
             paper_bgcolor='rgba(0,0,0,0)', 
-            font=dict(color='white'),
+            font=dict(color=font_color),
             margin=dict(l=0, r=0, t=40, b=0),
             height=300,
             yaxis={'categoryorder': 'total ascending'}
@@ -1398,7 +1641,11 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                         return ['background-color: rgba(255, 152, 0, 0.2); color: #ffb74d; font-weight: bold;'] * len(row)
                     return [''] * len(row)
                     
-                st.dataframe(df_stats.style.apply(highlight_stats, axis=1), use_container_width=True)
+                styled_stats = df_stats.style.apply(highlight_stats, axis=1)
+                if st.session_state.get("light_mode"):
+                    st.markdown(styled_stats.to_html(classes="light-table", border=0), unsafe_allow_html=True)
+                else:
+                    st.dataframe(styled_stats, use_container_width=True)
                 st.markdown(i18n.t("cross_table"))
                 
                 for c in filtro_cargos_explorador:
@@ -1417,7 +1664,11 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                             styles.append('')
                     return styles
     
-                st.dataframe(df_resultado.style.apply(highlight_cruzamento, axis=1), use_container_width=True)
+                styled_resultado = df_resultado.style.apply(highlight_cruzamento, axis=1)
+                if st.session_state.get("light_mode"):
+                    st.markdown(styled_resultado.to_html(classes="light-table", border=0), unsafe_allow_html=True)
+                else:
+                    st.dataframe(styled_resultado, use_container_width=True)
                 
         with aba2:
             st.markdown(i18n.t("select_assignments_desc"))
@@ -1437,7 +1688,11 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                         return ['background-color: rgba(255, 152, 0, 0.25); color: #ffb74d; font-weight: bold;' if v == '✔️' else 'background-color: rgba(255, 152, 0, 0.05);' for v in row]
                     return [''] * len(row)
     
-                st.dataframe(df_filtro_atrib.style.apply(highlight_aba2, axis=1), use_container_width=True)
+                styled_aba2 = df_filtro_atrib.style.apply(highlight_aba2, axis=1)
+                if st.session_state.get("light_mode"):
+                    st.markdown(styled_aba2.to_html(classes="light-table", border=0), unsafe_allow_html=True)
+                else:
+                    st.dataframe(styled_aba2, use_container_width=True)
     
         if st.session_state.get('show_explanations', False):
             tone_key = st.session_state.get('explanation_tone', 'tecnico')
