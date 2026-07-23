@@ -158,16 +158,27 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             labels=dict(color="Δ Gower"),
             aspect="auto"
         )
-        fig.update_traces(xgap=1, ygap=1)
+        fig.update_traces(xgap=2, ygap=2)
         
-        # Invert y axis so the diagonal goes from top-left to bottom-right
+        is_light = st.session_state.get("light_mode", False) if hasattr(st, "session_state") else False
+        font_color = '#1E2329' if is_light else 'white'
+        grid_color = 'rgba(0,0,0,0.1)' if is_light else 'rgba(255,255,255,0.1)'
+        bg_color = '#D1D5DB' if is_light else '#111827'
+
+        shapes = []
+        for idx in range(len(delta_matrix_vis.index) + 1):
+            shapes.append(dict(type="line", x0=-0.5, y0=idx-0.5, x1=len(delta_matrix_vis.columns)-0.5, y1=idx-0.5, line=dict(color=grid_color, width=1)))
+        for idx in range(len(delta_matrix_vis.columns) + 1):
+            shapes.append(dict(type="line", x0=idx-0.5, y0=-0.5, x1=idx-0.5, y1=len(delta_matrix_vis.index)-0.5, line=dict(color=grid_color, width=1)))
+
         fig.update_layout(
-            plot_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor=bg_color,
             paper_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='white'),
+            shapes=shapes,
+            font=dict(color=font_color),
             margin=dict(l=0, r=0, t=30, b=0),
-            xaxis=dict(tickangle=-45, title="Cargos"),
-            yaxis=dict(autorange="reversed", title="Cargos"),
+            xaxis=dict(tickangle=-45, title="Cargos", showgrid=True, gridcolor=grid_color),
+            yaxis=dict(autorange="reversed", title="Cargos", showgrid=True, gridcolor=grid_color),
             height=700
         )
         # Adiciona Highlight na linha e coluna do cargo selecionado
@@ -271,7 +282,13 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                     else:
                         return ['color: #9e9e9e;'] * len(row)
                 
-                st.dataframe(df_mostrar_22.style.apply(highlight_status_22, axis=1), use_container_width=True, height=(len(df_mostrar_22) + 1) * 35 + 3)
+                import data_processing
+                if st.session_state.get("light_mode"):
+                    html_22 = data_processing.df_to_inline_html(df_mostrar_22, highlight_status_22)
+                    st.markdown(f'<div class="light-table-container">{html_22}</div>', unsafe_allow_html=True)
+                else:
+                    styled_22 = df_mostrar_22.style.apply(highlight_status_22, axis=1)
+                    st.dataframe(styled_22, use_container_width=True)
             else:
                 st.write(i18n.t("flow_no_attr_warning"))
         else:
@@ -435,33 +452,31 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             
             def highlight_24(row):
                 c_disp = row[i18n.t("col_related_career")]
-                # We map it back to original name for color logic, or color map just doesn't match...
-                # The color_map keys are original names.
-                # Let's find the original name.
                 orig_c = next((k for k in color_map.keys() if i18n.traduzir_cargo(k) == c_disp or k == c_disp), None)
-                if orig_c and orig_c in color_map:
-                    return [f'background-color: {color_map[orig_c]}; color: {text_map[orig_c]}; font-weight: bold;'] * len(row)
+                if orig_c and orig_c in destaques_completos:
+                    import data_processing
+                    c_hex = data_processing.get_cargo_color_hex(orig_c, destaques_completos)
+                    if c_hex:
+                        return [f'background-color: {c_hex}33; color: {c_hex}; font-weight: bold;'] * len(row)
                 return [''] * len(row)
                 
-            st.dataframe(
-                df_mostrar_24.style.apply(highlight_24, axis=1),
-                use_container_width=True,
-                column_config={
-                    f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})": st.column_config.NumberColumn(
-                        f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})",
-                        format="%.1f%%"
-                    ),
-                    f"{i18n.t('col_new_affinity')} ({i18n.t(cenario_b)})": st.column_config.NumberColumn(
-                        f"{i18n.t('col_new_affinity')} ({i18n.t(cenario_b)})",
-                        format="%.1f%%"
-                    ),
-                    i18n.t("col_delta_var"): st.column_config.NumberColumn(
-                        i18n.t("col_delta_var"),
-                        format="%+.1f%%"
-                    )
-                },
-                height=(len(df_mostrar_24) + 1) * 35 + 3
-            )
+            import data_processing
+            if st.session_state.get("light_mode"):
+                for col in [f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})", f"{i18n.t('col_new_affinity')} ({i18n.t(cenario_b)})", i18n.t("col_delta_var")]:
+                    if col in df_mostrar_24.columns:
+                        if i18n.t("col_delta_var") in col:
+                            df_mostrar_24[col] = df_mostrar_24[col].apply(lambda x: f"{x:+.1f}%")
+                        else:
+                            df_mostrar_24[col] = df_mostrar_24[col].apply(lambda x: f"{x:.1f}%")
+                html_24 = data_processing.df_to_inline_html(df_mostrar_24, highlight_24)
+                st.markdown(f'<div class="light-table-container">{html_24}</div>', unsafe_allow_html=True)
+            else:
+                styled_24 = df_mostrar_24.style.format({
+                    f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})": "{:.1f}%",
+                    f"{i18n.t('col_new_affinity')} ({i18n.t(cenario_b)})": "{:.1f}%",
+                    i18n.t("col_delta_var"): "{:+.1f}%"
+                }).apply(highlight_24, axis=1)
+                st.dataframe(styled_24, use_container_width=True)
             if st.session_state.get('show_explanations', False):
                 st.info(explanations.get_explanation("m2_radar", st.session_state.get('explanation_tone', 'tecnico'), st.session_state.get('language', 'PT-BR')))
     
@@ -552,21 +567,24 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         def highlight_25(row):
             c_disp = row[i18n.t("hover_career")]
             orig_c = next((k for k in color_map.keys() if i18n.traduzir_cargo(k) == c_disp or k == c_disp), None)
-            if orig_c and orig_c in color_map:
-                return [f'background-color: {color_map[orig_c]}; color: {text_map[orig_c]}; font-weight: bold;'] * len(row)
+            if orig_c and orig_c in destaques_completos:
+                import data_processing
+                c_hex = data_processing.get_cargo_color_hex(orig_c, destaques_completos)
+                if c_hex:
+                    return [f'background-color: {c_hex}33; color: {c_hex}; font-weight: bold;'] * len(row)
             return [''] * len(row)
             
-        st.dataframe(
-            df_mostrar_25.style.apply(highlight_25, axis=1),
-            use_container_width=True,
-            column_config={
-                i18n.t("col_conn_var"): st.column_config.NumberColumn(
-                    i18n.t("col_conn_var"),
-                    format="%+d"
-                )
-            },
-            height=(len(df_mostrar_25) + 1) * 35 + 3
-        )
+        import data_processing
+        if st.session_state.get("light_mode"):
+            if i18n.t("col_conn_var") in df_mostrar_25.columns:
+                df_mostrar_25[i18n.t("col_conn_var")] = df_mostrar_25[i18n.t("col_conn_var")].apply(lambda x: f"{x:+d}")
+            html_25 = data_processing.df_to_inline_html(df_mostrar_25, highlight_25)
+            st.markdown(f'<div class="light-table-container">{html_25}</div>', unsafe_allow_html=True)
+        else:
+            styled_25 = df_mostrar_25.style.format({
+                i18n.t("col_conn_var"): "{:+d}"
+            }).apply(highlight_25, axis=1)
+            st.dataframe(styled_25, use_container_width=True)
         if st.session_state.get('show_explanations', False):
             st.info(explanations.get_explanation("m2_grafo", st.session_state.get('explanation_tone', 'tecnico'), st.session_state.get('language', 'PT-BR')))
     
@@ -687,25 +705,26 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 def highlight_26(row):
                     c_disp = row[i18n.t("hover_career")]
                     orig_c = next((k for k in color_map.keys() if i18n.traduzir_cargo(k) == c_disp or k == c_disp), None)
-                    if orig_c and orig_c in color_map:
-                        return [f'background-color: {color_map[orig_c]}; color: {text_map[orig_c]}; font-weight: bold;'] * len(row)
+                    if orig_c and orig_c in destaques_completos:
+                        import data_processing
+                        c_hex = data_processing.get_cargo_color_hex(orig_c, destaques_completos)
+                        if c_hex:
+                            return [f'background-color: {c_hex}33; color: {c_hex}; font-weight: bold;'] * len(row)
                     return [''] * len(row)
                     
-                st.dataframe(
-                    df_mostrar_26.style.apply(highlight_26, axis=1),
-                    use_container_width=True,
-                    column_config={
-                        f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})": st.column_config.NumberColumn(
-                            f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})",
-                            format="%.3f"
-                        ),
-                        f"{i18n.t('col_distance')} ({i18n.t(cenario_b)})": st.column_config.NumberColumn(
-                            f"{i18n.t('col_distance')} ({i18n.t(cenario_b)})",
-                            format="%.3f"
-                        )
-                    },
-                    height=(len(df_mostrar_26) + 1) * 35 + 3
-                )
+                import data_processing
+                if st.session_state.get("light_mode"):
+                    for col in [f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})", f"{i18n.t('col_distance')} ({i18n.t(cenario_b)})"]:
+                        if col in df_mostrar_26.columns:
+                            df_mostrar_26[col] = df_mostrar_26[col].apply(lambda x: f"{x:.3f}")
+                    html_26 = data_processing.df_to_inline_html(df_mostrar_26, highlight_26)
+                    st.markdown(f'<div class="light-table-container">{html_26}</div>', unsafe_allow_html=True)
+                else:
+                    styled_26 = df_mostrar_26.style.format({
+                        f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})": "{:.3f}",
+                        f"{i18n.t('col_distance')} ({i18n.t(cenario_b)})": "{:.3f}"
+                    }).apply(highlight_26, axis=1)
+                    st.dataframe(styled_26, use_container_width=True)
                 
         else:
             st.warning(i18n.t("tree_warning"))
@@ -722,9 +741,11 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             df_coph_b = get_cophenetic_comparison_table(df_b)
             
             def color_coph(val):
-                if isinstance(val, str) and " (" in val:
+                if isinstance(val, str):
+                    if " (" in val:
+                        val = val.split(" ")[0]
                     try:
-                        val = float(val.split(" ")[0])
+                        val = float(val)
                     except ValueError:
                         pass
                 if isinstance(val, (int, float)):
@@ -755,13 +776,27 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                     return f'background-color: rgb({r},{g},{b}); color: black;'
                 return ''
                 
+            import data_processing
+            
+            if not df_coph_a.empty and "Métrica" in df_coph_a.columns:
+                df_coph_a = df_coph_a.set_index("Métrica")
+            if not df_coph_b.empty and "Métrica" in df_coph_b.columns:
+                df_coph_b = df_coph_b.set_index("Métrica")
+                
             coph_col_a, coph_col_b = st.columns(2)
+            
             with coph_col_a:
                 st.markdown(f"**{i18n.t(cenario_a)}**")
-                st.dataframe(df_coph_a.style.map(color_coph), use_container_width=True)
+                if st.session_state.get("light_mode"):
+                    st.markdown(data_processing.df_to_inline_html(df_coph_a, col_style_func=color_coph), unsafe_allow_html=True)
+                else:
+                    st.dataframe(df_coph_a.style.map(color_coph), use_container_width=True)
             with coph_col_b:
                 st.markdown(f"**{i18n.t(cenario_b)}**")
-                st.dataframe(df_coph_b.style.map(color_coph), use_container_width=True)
+                if st.session_state.get("light_mode"):
+                    st.markdown(data_processing.df_to_inline_html(df_coph_b, col_style_func=color_coph), unsafe_allow_html=True)
+                else:
+                    st.dataframe(df_coph_b.style.map(color_coph), use_container_width=True)
     
         st.markdown("<div style='height: 150px;'></div>", unsafe_allow_html=True)
     

@@ -115,8 +115,8 @@ if st.session_state.get("light_mode"):
         }
         
         /* Abas (Tabs) */
-        button[data-baseweb="tab"] p { color: #5C6C7B !important; }
-        button[data-baseweb="tab"][aria-selected="true"] p { color: #0072B2 !important; font-weight: 600; }
+        button[data-baseweb="tab"] p { color: #5C6C7B !important; font-weight: 600 !important; }
+        button[data-baseweb="tab"][aria-selected="true"] p { color: #0072B2 !important; font-weight: 800 !important; }
         
         /* Tooltips e Balões de Ajuda */
         [data-baseweb="tooltip"] > div, div[data-testid="stTooltipContent"], [data-baseweb="popover"] > div {
@@ -125,14 +125,13 @@ if st.session_state.get("light_mode"):
             border: 1px solid #CED4DA !important;
         }
         [data-testid="stTooltipHoverTarget"] {
-            color: #0072B2 !important;
+            color: #1E2329 !important;
         }
         [data-testid="stTooltipHoverTarget"] svg {
-            fill: #5C6C7B !important;
-            stroke: #5C6C7B !important;
-            color: #5C6C7B !important;
+            stroke: #1E2329 !important;
+            color: #1E2329 !important;
+            opacity: 1 !important;
         }
-        
         /* Botões */
         button[kind="secondary"] { background-color: #FFFFFF !important; color: #1E2329 !important; border-color: #CED4DA !important; }
         
@@ -151,16 +150,16 @@ if st.session_state.get("light_mode"):
         .status-badge strong { color: #0072B2 !important; }
         
         /* Tabela Light (HTML customizada) */
-        .light-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; font-family: sans-serif; }
-        .light-table th { background-color: #F0F2F6 !important; color: #1E2329 !important; padding: 10px; text-align: left; border: 1px solid #CED4DA !important; }
-        .light-table td { padding: 10px; border: 1px solid #CED4DA !important; color: #1E2329; }
-        .light-table tr:hover { background-color: #F8F9FA !important; }
+        .light-table-container table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; font-family: sans-serif; background-color: #FFFFFF !important; }
+        .light-table-container th { background-color: #F0F2F6 !important; color: #1E2329 !important; padding: 10px; text-align: left; border: 1px solid #CED4DA !important; }
+        .light-table-container td { padding: 10px; border: 1px solid #CED4DA !important; color: #1E2329 !important; background-color: #FFFFFF !important; }
+        .light-table-container tr:hover td { background-color: #F8F9FA !important; }
         
         /* Expander (Modos de Visão e Explicações) e Configurações Analíticas */
         [data-testid="stExpander"], .stExpander, div[data-testid="stExpander"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
         [data-testid="stExpander"] summary, .stExpander summary { color: #1E2329 !important; background-color: #FFFFFF !important; }
         [data-testid="stExpander"] summary:hover, .stExpander summary:hover { background-color: #F0F2F6 !important; }
-        [data-testid="stExpander"] summary p, .stExpander summary p { color: #1E2329 !important; font-weight: 600 !important; }
+        [data-testid="stExpander"] summary p, [data-testid="stExpander"] summary span, .stExpander summary p, .stExpander summary span { color: #1E2329 !important; font-weight: 700 !important; }
         [data-testid="stExpanderDetails"], .stExpanderDetails, div[data-testid="stExpanderDetails"] { background-color: #FFFFFF !important; color: #1E2329 !important; }
         [data-testid="stExpanderDetails"] p, [data-testid="stExpanderDetails"] h4, [data-testid="stExpanderDetails"] span, [data-testid="stExpanderDetails"] *, .stExpanderDetails p, .stExpanderDetails h4, .stExpanderDetails span, .stExpanderDetails * { color: #1E2329 !important; }
         
@@ -871,10 +870,15 @@ with st.container():
         analytics.log_event("change_language", {"language": st.session_state.language})
 
     with col_btn:
-        c1, c2, c3 = st.columns([5, 3, 2], vertical_alignment="center")
+        c1, c2, c3_font, c4 = st.columns([3.5, 1.5, 2.0, 2], vertical_alignment="center")
+        
+        if "base_font_size" not in st.session_state:
+            st.session_state.base_font_size = 16
+        st.markdown(f"<style>html {{ font-size: {st.session_state.base_font_size}px !important; }}</style>", unsafe_allow_html=True)
+        
         with c1:
             st.markdown(
-                "<div style='text-align: right; font-size: 0.95rem; font-weight:600; color: #aaa; margin-top: -13px;'>Idioma / Language 🌐 <span title='Clique para alternar o idioma do painel / Click to switch dashboard language' style='cursor: help; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; border: 1px solid #aaa; font-size: 0.7rem; margin-left: 2px;'>?</span></div>", 
+                "<div style='text-align: right; font-size: 0.95rem; margin-top: -13px;'><strong style='font-weight: 800;'>Idioma / Language 🌐</strong> <span title='Clique para alternar o idioma do painel / Click to switch dashboard language' style='cursor: help; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; border: 1px solid currentColor; font-size: 0.7rem; margin-left: 2px;'>?</span></div>", 
                 unsafe_allow_html=True
             )
         with c2:
@@ -887,7 +891,15 @@ with st.container():
                 horizontal=True, 
                 label_visibility="collapsed"
             )
-        with c3:
+        with c3_font:
+            st.markdown("<div title='Tamanho da Fonte / Font Size' style='margin-top: -15px;'>", unsafe_allow_html=True)
+            new_size = st.number_input("Fonte", min_value=10, max_value=24, value=st.session_state.base_font_size, step=1, key="num_font_size", label_visibility="collapsed")
+            if new_size != st.session_state.base_font_size:
+                st.session_state.base_font_size = new_size
+                st.rerun()
+            st.markdown("</div>", unsafe_allow_html=True)
+            
+        with c4:
             def _sync_theme():
                 st.session_state.light_mode = st.session_state.light_mode_toggle
                 if st.session_state.light_mode:
@@ -1636,15 +1648,25 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                 
                 df_stats = pd.DataFrame(stats).set_index(i18n.t("col_roles"))
                 
+                import plotly.express as px
+                node_colors = px.colors.qualitative.Bold
+                
+                def get_c_hex(cargo_name):
+                    import data_processing
+                    return data_processing.get_cargo_color_hex(cargo_name, filtro_cargos_explorador)
+
                 def highlight_stats(row):
-                    if cargos_destaque_ui and row.name in cargos_destaque_ui:
-                        return ['background-color: rgba(255, 152, 0, 0.2); color: #ffb74d; font-weight: bold;'] * len(row)
+                    c_hex = get_c_hex(row.name)
+                    if c_hex:
+                        return [f'background-color: {c_hex}33; color: {c_hex}; font-weight: bold;'] * len(row)
                     return [''] * len(row)
                     
-                styled_stats = df_stats.style.apply(highlight_stats, axis=1)
+                import data_processing
                 if st.session_state.get("light_mode"):
-                    st.markdown(styled_stats.to_html(classes="light-table", border=0), unsafe_allow_html=True)
+                    html_stats = data_processing.df_to_inline_html(df_stats, highlight_stats)
+                    st.markdown(f'<div class="light-table-container">{html_stats}</div>', unsafe_allow_html=True)
                 else:
+                    styled_stats = df_stats.style.apply(highlight_stats, axis=1)
                     st.dataframe(styled_stats, use_container_width=True)
                 st.markdown(i18n.t("cross_table"))
                 
@@ -1655,19 +1677,21 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                 def highlight_cruzamento(row):
                     styles = []
                     for col in df_resultado.columns:
-                        if cargos_destaque_ui and col in cargos_destaque_ui:
+                        c_hex = get_c_hex(col)
+                        if c_hex:
                             if row[col] == '✔️':
-                                styles.append('background-color: rgba(255, 152, 0, 0.25); color: #ffb74d; font-weight: bold;')
+                                styles.append(f'background-color: {c_hex}40; color: {c_hex}; font-weight: bold;')
                             else:
-                                styles.append('background-color: rgba(255, 152, 0, 0.05);')
+                                styles.append(f'background-color: {c_hex}10;')
                         else:
                             styles.append('')
                     return styles
     
-                styled_resultado = df_resultado.style.apply(highlight_cruzamento, axis=1)
                 if st.session_state.get("light_mode"):
-                    st.markdown(styled_resultado.to_html(classes="light-table", border=0), unsafe_allow_html=True)
+                    html_resultado = data_processing.df_to_inline_html(df_resultado, highlight_cruzamento)
+                    st.markdown(f'<div class="light-table-container">{html_resultado}</div>', unsafe_allow_html=True)
                 else:
+                    styled_resultado = df_resultado.style.apply(highlight_cruzamento, axis=1)
                     st.dataframe(styled_resultado, use_container_width=True)
                 
         with aba2:
@@ -1690,7 +1714,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     
                 styled_aba2 = df_filtro_atrib.style.apply(highlight_aba2, axis=1)
                 if st.session_state.get("light_mode"):
-                    st.markdown(styled_aba2.to_html(classes="light-table", border=0), unsafe_allow_html=True)
+                    st.markdown(f'<div class="light-table-container">{styled_aba2.to_html()}</div>', unsafe_allow_html=True)
                 else:
                     st.dataframe(styled_aba2, use_container_width=True)
     
@@ -1729,13 +1753,14 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             key="metric_selectbox_15"
         )
             
-        df_gower_15 = data_processing.calcular_distancias(df_para_gower, metric=selected_metric_key_15)
+        df_gower_15 = data_processing.calcular_distancias(df_para_gower, metric=selected_metric_key_15).fillna(1.0)
         
         if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
             df_gower_15.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_15.index]
             df_gower_15.columns = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_15.columns]
         
-        fig_gower_heat = visualizations.plot_gower_heatmap(df_gower_15, f"{i18n.t('title_gower_prefix')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
+        gower_bg = "#CED4DA" if st.session_state.get("light_mode") else "rgba(0,0,0,0)"
+        fig_gower_heat = visualizations.plot_gower_heatmap(df_gower_15, f"{i18n.t('title_gower_prefix')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui, plot_bgcolor=gower_bg)
         st.plotly_chart(fig_gower_heat, use_container_width=True)
         
         # Histograma de Distribuição (Sugestão Visual 1)
@@ -1747,7 +1772,11 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         
         st.markdown("💡 **Dica:** Abra o painel abaixo para ver como cada métrica calcula as distâncias.")
         with st.expander("📖 ABRIR TABELA COMPARATIVA DE MÉTRICAS"):
-            st.dataframe(explanations.get_metrics_comparison_df(), use_container_width=True)
+            df_comp = explanations.get_metrics_comparison_df()
+            if st.session_state.get("light_mode"):
+                st.markdown(f'<div class="light-table-container">{df_comp.to_html(index=False, escape=False)}</div>', unsafe_allow_html=True)
+            else:
+                st.dataframe(df_comp, use_container_width=True)
             
         if st.session_state.get('show_explanations', False):
             tone_key = st.session_state.get('explanation_tone', 'tecnico')
@@ -1793,7 +1822,11 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         
         st.markdown("💡 **Dica:** Abra o painel abaixo para ver como cada métrica calcula as distâncias.")
         with st.expander("📖 ABRIR TABELA COMPARATIVA DE MÉTRICAS"):
-            st.dataframe(explanations.get_metrics_comparison_df(), use_container_width=True)
+            df_comp_16 = explanations.get_metrics_comparison_df()
+            if st.session_state.get("light_mode"):
+                st.markdown(f'<div class="light-table-container">{df_comp_16.to_html(index=False, escape=False)}</div>', unsafe_allow_html=True)
+            else:
+                st.dataframe(df_comp_16, use_container_width=True)
             
         if st.session_state.get('show_explanations', False):
             tone_key = st.session_state.get('explanation_tone', 'tecnico')
@@ -1841,20 +1874,30 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             st.markdown("💡 **Dica:** Abra o painel abaixo para comparar as métricas e os métodos de agrupamento recomendados para o cenário atual.")
             with st.expander("📖 ABRIR COMPARAÇÕES E ÍNDICES COFENÉTICOS"):
                 st.markdown("#### Métricas de Distância")
-                st.dataframe(explanations.get_metrics_comparison_df(), use_container_width=True)
+                df_comp_17 = explanations.get_metrics_comparison_df()
+                if st.session_state.get("light_mode"):
+                    st.markdown(f'<div class="light-table-container">{df_comp_17.to_html(index=False, escape=False)}</div>', unsafe_allow_html=True)
+                else:
+                    st.dataframe(df_comp_17, use_container_width=True)
                 
                 st.markdown("#### Métodos de Agrupamento (Linkage)")
                 st.markdown(i18n.t("coph_corr_help", default="Mede o quanto o dendrograma preserva as distâncias originais. Valores próximos a 1 indicam que a árvore representa fielmente as distâncias."))
-                st.dataframe(explanations.get_linkages_comparison_df(), use_container_width=True)
+                df_comp_link = explanations.get_linkages_comparison_df()
+                if st.session_state.get("light_mode"):
+                    st.markdown(f'<div class="light-table-container">{df_comp_link.to_html(index=False, escape=False)}</div>', unsafe_allow_html=True)
+                else:
+                    st.dataframe(df_comp_link, use_container_width=True)
                 
                 st.markdown("#### Índices Cofenéticos (Cenário Atual)")
                 st.markdown("<span style='color:#00cc00; font-weight:bold;'>Verde (≥0.90)</span> | <span style='color:#ffcc00; font-weight:bold;'>Amarelo (≥0.75)</span> | <span style='color:#ff9900; font-weight:bold;'>Laranja (≥0.50)</span> | <span style='color:#ff3333; font-weight:bold;'>Vermelho (<0.50)</span>", unsafe_allow_html=True)
                 df_coph = data_processing.get_cophenetic_comparison_table(df_para_gower)
                 
                 def color_coph(val):
-                    if isinstance(val, str) and " (" in val:
+                    if isinstance(val, str):
+                        if " (" in val:
+                            val = val.split(" ")[0]
                         try:
-                            val = float(val.split(" ")[0])
+                            val = float(val)
                         except ValueError:
                             pass
                             
@@ -1886,7 +1929,14 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                         return f'background-color: rgb({r},{g},{b}); color: black;'
                     return ''
                     
-                st.dataframe(df_coph.style.map(color_coph), use_container_width=True)
+                if not df_coph.empty and "Métrica" in df_coph.columns:
+                    df_coph = df_coph.set_index("Métrica")
+                    
+                if st.session_state.get("light_mode"):
+                    html = data_processing.df_to_inline_html(df_coph, col_style_func=color_coph)
+                    st.markdown(html, unsafe_allow_html=True)
+                else:
+                    st.dataframe(df_coph.style.map(color_coph), use_container_width=True)
         else:
             st.warning(i18n.t("dendro_warning"))
     

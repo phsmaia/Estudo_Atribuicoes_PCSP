@@ -84,6 +84,9 @@ def plot_network_graph(nodes_data: list, edges_data: list, title: str, cargos_de
     """
     Renderiza um grafo interativo usando as coordenadas previamente calculadas pelo NetworkX.
     """
+    import streamlit as st
+    is_light = st.session_state.get("light_mode", False) if hasattr(st, "session_state") else False
+    
     # Arestas
     edge_traces = []
     for edge in edges_data:
@@ -95,13 +98,13 @@ def plot_network_graph(nodes_data: list, edges_data: list, title: str, cargos_de
         import math
         largura = max(0.5, 0.5 + math.sqrt(peso)) if peso > 0 else 0.5
         
-        line_color = '#888'
+        line_color = '#999' if is_light else '#666'
         if cargos_destaque:
             if edge["source"] in cargos_destaque or edge["target"] in cargos_destaque:
-                line_color = '#ccc'
+                line_color = '#333' if is_light else '#ccc'
                 largura = largura * 1.5
             else:
-                line_color = 'rgba(50,50,50,0.1)'
+                line_color = 'rgba(50,50,50,0.1)' if not is_light else 'rgba(200,200,200,0.4)'
         
         # O hovertext será mostrado no centro da aresta
         mid_x = (x0 + x1) / 2
@@ -135,20 +138,22 @@ def plot_network_graph(nodes_data: list, edges_data: list, title: str, cargos_de
     cores_nos = []
     tamanhos_nos = []
     text_colors = []
+    text_c = "#1E2329" if is_light else "white"
+    
     for i, n in enumerate(nodes_data):
         if cargos_destaque and n["id"] in cargos_destaque:
             idx_color = cargos_destaque.index(n["id"]) % len(node_colors)
             cores_nos.append(node_colors[idx_color])
             tamanhos_nos.append(35)
-            text_colors.append("white")
+            text_colors.append(text_c)
         elif cargos_destaque:
             cores_nos.append("rgba(100,100,100,0.5)") # Faded se não for destaque
             tamanhos_nos.append(10)
-            text_colors.append("rgba(100,100,100,0.5)")
+            text_colors.append("#777777" if is_light else "#999999")
         else:
             cores_nos.append(node_colors[i % len(node_colors)])
             tamanhos_nos.append(20)
-            text_colors.append("white")
+            text_colors.append(text_c)
 
     node_trace = go.Scatter(
         x=node_x, y=node_y,
@@ -227,7 +232,7 @@ def plot_adjacency_heatmap(adj_matrix: pd.DataFrame, title: str, text_matrix: pd
     
     return fig
 
-def plot_gower_heatmap(df_gower: pd.DataFrame, title: str, cargos_destaque: list = None) -> go.Figure:
+def plot_gower_heatmap(df_gower: pd.DataFrame, title: str, cargos_destaque: list = None, plot_bgcolor: str = "rgba(0,0,0,0)") -> go.Figure:
     """
     Gera um mapa de calor da Matriz de Gower. Valores próximos a 0 significam
     maior similaridade, enquanto valores próximos a 1 significam maior distância.
@@ -247,7 +252,8 @@ def plot_gower_heatmap(df_gower: pd.DataFrame, title: str, cargos_destaque: list
     fig.update_layout(
         title=title,
         title_font_size=20,
-        margin=dict(l=100, r=20, t=50, b=100)
+        margin=dict(l=100, r=20, t=50, b=100),
+        plot_bgcolor=plot_bgcolor
     )
     # Reverte o eixo y para bater com as outras matrizes (Delegado no topo)
     fig.update_yaxes(autorange="reversed")
@@ -295,11 +301,11 @@ def plot_distance_histogram(df_dist: pd.DataFrame, title: str, full_scale: bool 
     fig = go.Figure()
     
     # Adicionar zonas de similaridade (mesmo padrão da Régua Gower)
-    fig.add_vrect(x0=-0.05, x1=0.15, fillcolor="rgba(0, 255, 0, 0.1)", line_width=0, layer="below", annotation_text=i18n.t("zone_very_high", default="Muito Alta"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#00cc00")
-    fig.add_vrect(x0=0.15, x1=0.35, fillcolor="rgba(144, 238, 144, 0.1)", line_width=0, layer="below", annotation_text=i18n.t("zone_high", default="Alta"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#90ee90")
-    fig.add_vrect(x0=0.35, x1=0.50, fillcolor="rgba(255, 255, 0, 0.1)", line_width=0, layer="below", annotation_text=i18n.t("zone_moderate", default="Moderada"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#cccc00")
-    fig.add_vrect(x0=0.50, x1=0.65, fillcolor="rgba(255, 165, 0, 0.1)", line_width=0, layer="below", annotation_text=i18n.t("zone_low", default="Baixa"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff9900")
-    fig.add_vrect(x0=0.65, x1=1.05, fillcolor="rgba(255, 0, 0, 0.1)", line_width=0, layer="below", annotation_text=i18n.t("zone_very_low", default="Muito Baixa"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff4444")
+    fig.add_vrect(x0=-0.05, x1=0.15, fillcolor="rgba(0, 255, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_very_high", default="Muito Alta"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#00cc00")
+    fig.add_vrect(x0=0.15, x1=0.35, fillcolor="rgba(144, 238, 144, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_high", default="Alta"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#90ee90")
+    fig.add_vrect(x0=0.35, x1=0.50, fillcolor="rgba(255, 255, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_moderate", default="Moderada"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#cccc00")
+    fig.add_vrect(x0=0.50, x1=0.65, fillcolor="rgba(255, 165, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_low", default="Baixa"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff9900")
+    fig.add_vrect(x0=0.65, x1=1.05, fillcolor="rgba(255, 0, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_very_low", default="Muito Baixa"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff4444")
     
     # Adicionar as bolinhas com escala de cor
     fig.add_trace(go.Scatter(
@@ -320,8 +326,8 @@ def plot_distance_histogram(df_dist: pd.DataFrame, title: str, full_scale: bool 
     ))
     
     # Linhas de média e mediana
-    mean_dist = np.mean(distances)
-    median_dist = np.median(distances)
+    mean_dist = np.nanmean(distances) if len(distances) > 0 else 0
+    median_dist = np.nanmedian(distances) if len(distances) > 0 else 0
     
     fig.add_vline(x=mean_dist, line_width=2, line_dash="dash", line_color="red", 
                   annotation_text=f"{i18n.t('lbl_average', default='Média')}: {mean_dist:.2f}", annotation_position="bottom right",
@@ -403,7 +409,9 @@ def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado d
     for c in dist_serie.index:
         if cargos_destaque and c in cargos_destaque:
             tamanhos.append(20)
-            cores.append("gold")
+            import data_processing
+            c_hex = data_processing.get_cargo_color_hex(c, cargos_destaque)
+            cores.append(c_hex if c_hex else "gold")
         elif cargos_destaque:
             tamanhos.append(8)
             cores.append("rgba(100,100,100,0.5)")
@@ -465,7 +473,10 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
     labels = []
     for lbl in df_gower.index:
         if cargos_destaque and lbl in cargos_destaque:
-            labels.append(f"<b><span style='color:gold'>{lbl}</span></b>")
+            import data_processing
+            c_hex = data_processing.get_cargo_color_hex(lbl, cargos_destaque)
+            color_str = c_hex if c_hex else "gold"
+            labels.append(f"<b><span style='color:{color_str}'>{lbl}</span></b>")
         else:
             labels.append(lbl)
     
@@ -490,7 +501,6 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
         coph_color = "#ff3333" # Vermelho
         
     c_label = i18n.t('coph_corr_label', 'Correlação Cofenética:')
-    coph_text = f"<span style='color:{coph_color}'><b>{c_label} {c:.3f}</b></span>"
     
     # Plotly figure factory aceita a matriz condensada ou dados crus.
     # Como já temos distâncias, a forma mais segura no Plotly é via scipy -> plotly dendrogram manual,
@@ -504,11 +514,27 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
     )
     
     fig.update_layout(
-        title=f"{title}<br><sup>{coph_text}</sup>",
+        title=title,
         title_font_size=18,
+        title_x=0.5,
+        title_xref="paper",
         height=600,
-        margin=dict(l=250, r=50, t=50, b=50),
+        margin=dict(l=250, r=50, t=110, b=50),
         autosize=True
+    )
+    
+    fig.add_annotation(
+        text=f"<b>{c_label} {c:.3f}</b>",
+        xref="paper", yref="paper",
+        x=0.5, y=0.98,
+        xanchor="center", yanchor="top",
+        showarrow=False,
+        font=dict(color=coph_color, size=13),
+        bgcolor="#1E2329",
+        bordercolor=coph_color,
+        borderwidth=1,
+        borderpad=4,
+        opacity=0.9
     )
     
     # Injetando as alturas nos ramos (Dendograma Plotly gera Scatters em formato de U)

@@ -294,3 +294,52 @@ def get_cophenetic_comparison_table(df: pd.DataFrame, _cache_buster: int = 2) ->
         df_results[col] = formatted_col
         
     return df_results
+def get_cargo_color_hex(cargo_name, cargos_destaque_list):
+    """Retorna a cor associada ao cargo com base na paleta do grafo."""
+    if cargos_destaque_list and cargo_name in cargos_destaque_list:
+        import plotly.express as px
+        palette = px.colors.qualitative.Bold
+        return palette[cargos_destaque_list.index(cargo_name) % len(palette)]
+    return None
+
+def df_to_inline_html(df, row_style_func=None, col_style_func=None):
+    """
+    Gera uma tabela HTML com estilos INLINE, burlando a limpeza do DOMPurify.
+    row_style_func(row) -> list of style strings for each cell
+    col_style_func(val) -> style string for a single cell (used if row_style_func is None)
+    """
+    html = '<table class="light-table-container" style="width:100%; border-collapse: collapse; text-align:left; font-size: 14px; background-color: #FFFFFF;">'
+    html += '<thead style="background-color: #F0F2F6; color: #1E2329;"><tr style="border-bottom: 1px solid #CED4DA;">'
+    
+    if df.index.name:
+        html += f'<th style="padding: 8px; border: 1px solid #CED4DA;">{df.index.name}</th>'
+    else:
+        html += '<th style="padding: 8px; border: 1px solid #CED4DA;"></th>'
+        
+    for c in df.columns:
+        html += f'<th style="padding: 8px; border: 1px solid #CED4DA;">{c}</th>'
+    html += '</tr></thead><tbody>'
+    
+    for idx, row in df.iterrows():
+        styles = []
+        if row_style_func:
+            styles = row_style_func(row)
+        else:
+            styles = [col_style_func(row[c]) if col_style_func else '' for c in df.columns]
+            
+        html += '<tr style="border-bottom: 1px solid #EEE; color: #1E2329;">'
+        html += f'<td style="padding: 8px; border: 1px solid #CED4DA; background-color: #FFFFFF;"><b>{idx}</b></td>'
+        
+        for i, col in enumerate(df.columns):
+            val = row[col]
+            style_str = styles[i] if i < len(styles) else ''
+            
+            # Garante background branco se não houver estilo de cor
+            if "background-color" not in style_str:
+                style_str += " background-color: #FFFFFF;"
+                
+            html += f'<td style="padding: 8px; border: 1px solid #CED4DA; {style_str}">{val}</td>'
+        html += '</tr>'
+        
+    html += '</tbody></table>'
+    return html
