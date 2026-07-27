@@ -86,8 +86,8 @@ if st.session_state.get("light_mode"):
         /* Preservar as luzes azul e vermelha no fundo invertendo o modo de mesclagem */
         .stApp::before, .stApp::after { mix-blend-mode: multiply !important; opacity: 0.25 !important; }
         
-        /* Textos Gerais */
-        .stMarkdown, .stText, p, span, h1, h2, h3, h4, h5, h6, label { color: #1E2329 !important; }
+        /* Força textos para escuro, preservando spans para cores inline */
+        .stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6, label { color: #1E2329 !important; }
         
         /* Menus (Selectboxes, Dropdowns) */
         div[data-baseweb="select"] > div { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
@@ -152,8 +152,9 @@ if st.session_state.get("light_mode"):
         /* Tabela Light (HTML customizada) */
         .light-table-container table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; font-family: sans-serif; background-color: #FFFFFF !important; }
         .light-table-container th { background-color: #F0F2F6 !important; color: #1E2329 !important; padding: 10px; text-align: left; border: 1px solid #CED4DA !important; }
-        .light-table-container td { padding: 10px; border: 1px solid #CED4DA !important; color: #1E2329 !important; background-color: #FFFFFF !important; }
-        .light-table-container tr:hover td { background-color: #F8F9FA !important; }
+        .light-table-container td { padding: 10px; border: 1px solid #CED4DA !important; color: #1E2329; }
+        /* Efeitos visuais suaves nas tabelas claras */
+        .light-table-container tr:hover td { filter: brightness(0.92); }
         
         /* Expander (Modos de Visão e Explicações) e Configurações Analíticas */
         [data-testid="stExpander"], .stExpander, div[data-testid="stExpander"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
@@ -161,7 +162,7 @@ if st.session_state.get("light_mode"):
         [data-testid="stExpander"] summary:hover, .stExpander summary:hover { background-color: #F0F2F6 !important; }
         [data-testid="stExpander"] summary p, [data-testid="stExpander"] summary span, .stExpander summary p, .stExpander summary span { color: #1E2329 !important; font-weight: 700 !important; }
         [data-testid="stExpanderDetails"], .stExpanderDetails, div[data-testid="stExpanderDetails"] { background-color: #FFFFFF !important; color: #1E2329 !important; }
-        [data-testid="stExpanderDetails"] p, [data-testid="stExpanderDetails"] h4, [data-testid="stExpanderDetails"] span, [data-testid="stExpanderDetails"] *, .stExpanderDetails p, .stExpanderDetails h4, .stExpanderDetails span, .stExpanderDetails * { color: #1E2329 !important; }
+        [data-testid="stExpanderDetails"] p, [data-testid="stExpanderDetails"] h4, .stExpanderDetails p, .stExpanderDetails h4 { color: #1E2329 !important; }
         
         /* Toasts (Mensagens flutuantes) */
         [data-testid="stToast"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
@@ -169,11 +170,11 @@ if st.session_state.get("light_mode"):
         
         /* Popovers (Modos de Visão / Configurações) */
         [data-testid="stPopoverBody"], div[data-testid="stPopoverBody"], .stPopoverBody, div[data-baseweb="popover"] > div, div[data-baseweb="popover"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; color: #1E2329 !important; }
-        [data-testid="stPopoverBody"] p, [data-testid="stPopoverBody"] h4, [data-testid="stPopoverBody"] span, [data-testid="stPopoverBody"] label, [data-testid="stPopoverBody"] *, div[data-baseweb="popover"] * { color: #1E2329 !important; }
+        [data-testid="stPopoverBody"] p, [data-testid="stPopoverBody"] h4, [data-testid="stPopoverBody"] label, div[data-baseweb="popover"] p, div[data-baseweb="popover"] label { color: #1E2329 !important; }
         
         /* Caixas de Alerta (st.info) */
         [data-testid="stAlert"] { background-color: #E8F4F8 !important; border: 1px solid #B6D4E3 !important; color: #1E2329 !important; }
-        [data-testid="stAlert"] p, [data-testid="stAlert"] * { color: #1E2329 !important; }
+        [data-testid="stAlert"] p { color: #1E2329 !important; }
         
         /* Custom Metric Boxes */
         .custom-metric-box { background: #FFFFFF !important; border-color: #CED4DA !important; color: #1E2329 !important; }
@@ -663,6 +664,9 @@ if "first_load_done" not in st.session_state:
         const btnBorderHover = isLight ? 'rgba(0, 114, 178, 0.6)' : 'rgba(77, 166, 255, 0.4)';
         const strokeColor = isLight ? '#0072B2' : '#4da6ff';
         const progressBg = isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+        const scanColor = isLight ? '#008060' : '#00ffcc';
+        const scanShadow = isLight ? 'rgba(0, 128, 96, 0.5)' : 'rgba(0, 255, 204, 0.6)';
+        const splashTitleColor = isLight ? '#1E2329' : '#E0E0E0';
 
         splash.innerHTML = `
             <style>
@@ -708,12 +712,12 @@ if "first_load_done" not in st.session_state:
                 border-color: ${{strokeColor}}; box-shadow: 0 0 20px ${{btnBorderHover}};
             }}
             .fingerprint-btn.scanning {{
-                border-color: #00ffcc; box-shadow: 0 0 30px rgba(0, 255, 204, 0.6);
+                border-color: ${{scanColor}}; box-shadow: 0 0 30px ${{scanShadow}};
             }}
-            .fingerprint-btn.scanning svg {{ stroke: #00ffcc; }}
+            .fingerprint-btn.scanning svg {{ stroke: ${{scanColor}}; }}
             .scan-line {{
                 position: absolute; top: 10%; left: 15%; width: 70%; height: 3px;
-                background: #00ffcc; box-shadow: 0 0 12px #00ffcc;
+                background: ${{scanColor}}; box-shadow: 0 0 12px ${{scanShadow}};
                 animation: scanAnim 1.5s infinite ease-in-out;
                 display: none; border-radius: 2px;
             }}
@@ -725,14 +729,14 @@ if "first_load_done" not in st.session_state:
                 border-radius: 3px; margin: 25px 0; overflow: hidden; position: relative;
             }}
             .progress-bar-fill {{
-                position: absolute; top: 0; left: 0; height: 100%; background: #4da6ff;
+                position: absolute; top: 0; left: 0; height: 100%; background: ${{strokeColor}};
                 width: 30%; animation: loadIndeterminate 1.5s infinite ease-in-out;
                 border-radius: 3px;
                 transition: background 0.3s ease, box-shadow 0.3s ease;
             }}
             .progress-bar-fill.scanning {{
-                background: #00ffcc;
-                box-shadow: 0 0 10px rgba(0, 255, 204, 0.6);
+                background: ${{scanColor}};
+                box-shadow: 0 0 10px ${{scanShadow}};
             }}
             @keyframes loadIndeterminate {{ 0% {{ left: -30%; }} 100% {{ left: 100%; }} }}
             </style>
@@ -747,33 +751,95 @@ if "first_load_done" not in st.session_state:
                 <div class="scan-line"></div>
             </div>
             
-            <h2 style="margin-bottom: 10px; color: #E0E0E0; text-align: center; text-transform: uppercase; letter-spacing: 2px;">{title_str}</h2>
+            <h2 style="margin-bottom: 10px; color: ${{splashTitleColor}}; text-align: center; text-transform: uppercase; letter-spacing: 2px;">{title_str}</h2>
             <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
-            <div id="splash-msg" style="color: #4da6ff; font-weight: bold; font-size: 1.1rem; height: 30px;">Carregando...</div>
+            <div id="splash-msg" style="color: ${{strokeColor}}; font-weight: bold; font-size: 1.1rem; height: 30px;">Carregando...</div>
         `;
         window.parent.document.body.appendChild(splash);
         
-        // Interatividade divertida do botão
+        // Interatividade divertida do botão e Easter Eggs
         const badge = window.parent.document.getElementById('interactive-badge');
         const msgEl = window.parent.document.getElementById('splash-msg');
         const pbFill = window.parent.document.querySelector('.progress-bar-fill');
         
-        badge.addEventListener('mousedown', () => {{
-            badge.classList.add('scanning');
-            if(pbFill) pbFill.classList.add('scanning');
-            msgEl.innerText = "🕵️‍♂️ Analisando biometria...";
-            msgEl.style.color = "#00ffcc";
-        }});
-        badge.addEventListener('mouseup', () => {{
-            badge.classList.remove('scanning');
-            if(pbFill) pbFill.classList.remove('scanning');
-            msgEl.style.color = "#4da6ff";
-        }});
-        badge.addEventListener('mouseleave', () => {{
-            badge.classList.remove('scanning');
-            if(pbFill) pbFill.classList.remove('scanning');
-            msgEl.style.color = "#4da6ff";
-        }});
+        if (badge) {{
+            let easterEggTimer;
+            let eggTriggered = false;
+            
+            function triggerEasterEgg() {{
+                eggTriggered = true;
+                const eggs = [
+                    () => {{
+                        // 1. Acesso Confidencial
+                        splash.style.background = isLight ? '#fff0f0' : '#2b0000';
+                        const lights = window.parent.document.querySelector('.police-lights');
+                        if(lights) lights.style.animation = 'strobe 0.5s infinite';
+                        badge.style.borderColor = '#ffd700';
+                        badge.querySelector('svg').style.stroke = '#ffd700';
+                        if(pbFill) pbFill.style.background = '#ffd700';
+                        msgEl.style.color = '#ffd700';
+                        msgEl.innerText = "🚨 Acesso Nível 5 Confirmado! 🚨";
+                    }},
+                    () => {{
+                        // 2. Modo CSI
+                        splash.style.background = '#0a001a';
+                        const titleEl = splash.querySelector('h2');
+                        if(titleEl) titleEl.style.color = '#e0b3ff';
+                        const lights = window.parent.document.querySelector('.police-lights');
+                        if(lights) lights.style.display = 'none';
+                        badge.style.borderColor = '#b84dff';
+                        badge.style.boxShadow = '0 0 40px #b84dff';
+                        badge.querySelector('svg').style.stroke = '#b84dff';
+                        if(pbFill) pbFill.style.background = '#b84dff';
+                        msgEl.style.color = '#b84dff';
+                        msgEl.innerText = "🔦 Modo CSI de análise profunda ativado! 🕵️‍♂️";
+                    }},
+                    () => {{
+                        // 3. Investigador Honorário
+                        msgEl.style.color = '#ff9900';
+                        msgEl.innerText = "🎖️ Código 10-4! Você foi promovido a Investigador Honorário!";
+                        // Chuva de distintivos
+                        for(let i=0; i<30; i++) {{
+                            const conf = window.parent.document.createElement('div');
+                            conf.innerText = Math.random() > 0.5 ? '🚔' : '🎖️';
+                            conf.style.position = 'absolute';
+                            conf.style.left = Math.random() * 100 + 'vw';
+                            conf.style.top = '-50px';
+                            conf.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                            conf.style.transition = 'top ' + (Math.random() * 2 + 1.5) + 's cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                            conf.style.zIndex = '999999';
+                            splash.appendChild(conf);
+                            setTimeout(() => {{ conf.style.top = '120vh'; }}, 50);
+                        }}
+                    }}
+                ];
+                const randomEgg = eggs[Math.floor(Math.random() * eggs.length)];
+                randomEgg();
+            }}
+
+            badge.addEventListener('mousedown', () => {{
+                eggTriggered = false;
+                badge.classList.add('scanning');
+                if(pbFill) pbFill.classList.add('scanning');
+                msgEl.innerText = "🕵️‍♂️ Analisando biometria...";
+                msgEl.style.color = scanColor;
+                
+                // Inicia o timer do Easter Egg
+                easterEggTimer = setTimeout(triggerEasterEgg, 5000);
+            }});
+            
+            function resetScanner() {{
+                clearTimeout(easterEggTimer);
+                if(eggTriggered) return; // Se o easter egg rodou, mantém na tela
+                
+                badge.classList.remove('scanning');
+                if(pbFill) pbFill.classList.remove('scanning');
+                msgEl.style.color = strokeColor;
+            }}
+            
+            badge.addEventListener('mouseup', resetScanner);
+            badge.addEventListener('mouseleave', resetScanner);
+        }}
         
         const msgs = {msgs_json};
         msgEl.innerText = msgs[0];
@@ -861,29 +927,30 @@ st.markdown("""
 with st.container():
     st.markdown("<div id='sticky-header-anchor'></div>", unsafe_allow_html=True)
     
-    col_title, col_btn = st.columns([70, 30], vertical_alignment="center")
+    # Dar mais espaço para o bloco de botões para que os componentes do Streamlit não encolham demais (causando quebra de linha ou sumiço de botões)
+    col_title, col_btn = st.columns([35, 65], vertical_alignment="center")
     with col_title:
-        st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0; white-space: nowrap;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
     def _muda_idioma():
         val = st.session_state.lang_radio
         st.session_state.language = 'PT-BR' if 'PT-BR' in val else 'EN'
         analytics.log_event("change_language", {"language": st.session_state.language})
 
     with col_btn:
-        c1, c2, c3_font, c4 = st.columns([3.5, 1.5, 2.0, 2], vertical_alignment="center")
+        # Layout totalmente horizontal usando colunas internas
+        # Aumentamos os pesos relativos das colunas de input (c2, c4) para que o Streamlit não os colapse
+        c1, c2, c3, c4, c5 = st.columns([1.7, 1.5, 0.9, 1.2, 1.0], vertical_alignment="center")
         
         if "base_font_size" not in st.session_state:
             st.session_state.base_font_size = 16
         st.markdown(f"<style>html {{ font-size: {st.session_state.base_font_size}px !important; }}</style>", unsafe_allow_html=True)
         
         with c1:
-            st.markdown(
-                "<div style='text-align: right; font-size: 0.95rem; margin-top: -13px;'><strong style='font-weight: 800;'>Idioma / Language 🌐</strong> <span title='Clique para alternar o idioma do painel / Click to switch dashboard language' style='cursor: help; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; border: 1px solid currentColor; font-size: 0.7rem; margin-left: 2px;'>?</span></div>", 
-                unsafe_allow_html=True
-            )
+            st.markdown("<div style='text-align: right; padding-top: 8px; font-size: 0.9rem; white-space: nowrap;'>🌐 Idioma/Language:</div>", unsafe_allow_html=True)
+            
         with c2:
             st.radio(
-                "lang_label", 
+                "Lang", 
                 options=["PT-BR", "EN"], 
                 index=0 if st.session_state.get('language', 'PT-BR') == 'PT-BR' else 1,
                 key="lang_radio",
@@ -891,15 +958,16 @@ with st.container():
                 horizontal=True, 
                 label_visibility="collapsed"
             )
-        with c3_font:
-            st.markdown("<div title='Tamanho da Fonte / Font Size' style='margin-top: -15px;'>", unsafe_allow_html=True)
-            new_size = st.number_input("Fonte", min_value=10, max_value=24, value=st.session_state.base_font_size, step=1, key="num_font_size", label_visibility="collapsed")
-            if new_size != st.session_state.base_font_size:
-                st.session_state.base_font_size = new_size
-                st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
+        
+        with c3:
+            st.markdown("<div style='text-align: right; padding-top: 8px; font-size: 0.9rem; white-space: nowrap;'>🔎 Fonte:</div>", unsafe_allow_html=True)
             
         with c4:
+            def _change_font():
+                st.session_state.base_font_size = st.session_state.font_input
+            st.number_input("Font", min_value=10, max_value=24, value=st.session_state.base_font_size, key="font_input", on_change=_change_font, label_visibility="collapsed")
+        
+        with c5:
             def _sync_theme():
                 st.session_state.light_mode = st.session_state.light_mode_toggle
                 if st.session_state.light_mode:
@@ -907,7 +975,10 @@ with st.container():
                 else:
                     if "theme" in st.query_params:
                         del st.query_params["theme"]
-            st.toggle("☀️ Light", value=st.session_state.get("light_mode", False), key="light_mode_toggle", on_change=_sync_theme)
+            
+            is_light = st.session_state.get("light_mode", False)
+            toggle_label = "☀️ Light" if is_light else "🌙 Dark"
+            st.toggle(toggle_label, value=is_light, key="light_mode_toggle", on_change=_sync_theme)
 
     status_bar_placeholder = st.empty()
     # Removemos o HTML do layout inicial porque o render final dos badges ocorre lá embaixo
@@ -934,37 +1005,44 @@ with st.container():
         st.session_state["modo_visao_radio"] = st.session_state.last_modo_visao
 
     current_mode_for_layout = st.session_state.last_modo_visao
+    
+    # Criamos o expander para reduzir o espaço da interface
+    menu_label = "🛠️ Menu Principal (Configurações e Navegação)" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🛠️ Main Menu (Settings and Navigation)"
+    menu_expander = st.expander(menu_label, expanded=False)
         
-    if current_mode_for_layout == "mode_3":
-        col_menu_global = st.container()
-        col_menu_especifico = st.container()
-    else:
-        col_menu_global, col_menu_especifico = st.columns(2)
-        
-    with col_menu_global.popover(i18n.t('modes_and_explanations'), use_container_width=True):
-        st.markdown(f"<h4 style='margin:0; margin-bottom:10px; font-size:1.1rem; color:#ccc;'>{i18n.t('view_modes')}</h4>", unsafe_allow_html=True)
-        opcoes_modos_keys = ["mode_1", "mode_2", "mode_3", "mode_4"]
-
-                    
-        modo_visao_key = st.radio(
-            i18n.t("nav_analytic"),
-            opcoes_modos_keys,
-            format_func=lambda x: i18n.t(x),
-            key="modo_visao_radio",
-            horizontal=False,
-            label_visibility="collapsed"
-        )
-        modo_visao = i18n.t(modo_visao_key)
-        
-        if st.session_state.last_modo_visao != modo_visao_key:
-            analytics.log_event("change_mode", {"mode": modo_visao_key})
-            st.session_state.last_modo_visao = modo_visao_key
+    with menu_expander:
+        if current_mode_for_layout == "mode_3":
+            col_menu_global = st.container()
+            col_menu_especifico = st.container()
+        else:
+            col_menu_global, col_menu_especifico = st.columns(2)
             
-        st.divider()
+        with col_menu_global.popover(i18n.t('modes_and_explanations'), use_container_width=True):
+            # Usar <div> em vez de <h4> remove a âncora padrão e o espaçamento gigante do Streamlit
+            st.markdown(f"<div style='margin-bottom:-15px; margin-top: -10px; font-size:1.1rem; font-weight:bold;'>{i18n.t('view_modes')}</div>", unsafe_allow_html=True)
+            opcoes_modos_keys = ["mode_1", "mode_2", "mode_3", "mode_4"]
+            
+            modo_visao_key = st.radio(
+                i18n.t("nav_analytic"),
+                opcoes_modos_keys,
+                format_func=lambda x: i18n.t(x),
+                key="modo_visao_radio",
+                horizontal=False,
+                label_visibility="collapsed"
+            )
+            modo_visao = i18n.t(modo_visao_key)
+            
+            if st.session_state.last_modo_visao != modo_visao_key:
+                analytics.log_event("change_mode", {"mode": modo_visao_key})
+                st.session_state.last_modo_visao = modo_visao_key
+                
+            # Divisor mais compacto que o st.divider()
+            st.markdown("<hr style='margin: 0px 0 15px 0; border: none; border-top: 1px solid rgba(150,150,150,0.3);'>", unsafe_allow_html=True)
+            
+            show_exp = st.toggle(i18n.t("explanation_mode"), key="show_explanations")
+            if 'last_show_exp' not in st.session_state:
+                st.session_state.last_show_exp = show_exp
         
-        show_exp = st.toggle(i18n.t("explanation_mode"), key="show_explanations")
-        if 'last_show_exp' not in st.session_state:
-            st.session_state.last_show_exp = show_exp
         if st.session_state.last_show_exp != show_exp:
             analytics.log_event("toggle_explanations", {"enabled": show_exp})
             st.session_state.last_show_exp = show_exp
@@ -1205,7 +1283,7 @@ with st.container():
     else:
         nav_options = ["m4_sub_volume_title", "m4_sub_exclusive_title", "m4_sub_shared_title", "m4_sub_adj_title", "m4_sub_gower_title", "m4_sub_neighbor_title"]
         
-    current_section = st.radio(
+    current_section = menu_expander.radio(
         "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
         options=nav_options, 
         format_func=lambda x: i18n.t(x),
@@ -1655,10 +1733,27 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                     import data_processing
                     return data_processing.get_cargo_color_hex(cargo_name, filtro_cargos_explorador)
 
+                def hex_to_rgba(hex_str, alpha):
+                    if not hex_str: return hex_str
+                    # Se já for RGB ou RGBA do Plotly
+                    if hex_str.startswith('rgb'):
+                        import re
+                        match = re.search(r'rgba?\((\d+),\s*(\d+),\s*(\d+)', hex_str)
+                        if match:
+                            return f"rgba({match.group(1)}, {match.group(2)}, {match.group(3)}, {alpha})"
+                        return hex_str
+                    
+                    hex_str_clean = hex_str.lstrip('#')
+                    if len(hex_str_clean) == 6:
+                        r, g, b = tuple(int(hex_str_clean[i:i+2], 16) for i in (0, 2, 4))
+                        return f"rgba({r}, {g}, {b}, {alpha})"
+                    return hex_str
+
                 def highlight_stats(row):
                     c_hex = get_c_hex(row.name)
                     if c_hex:
-                        return [f'background-color: {c_hex}33; color: {c_hex}; font-weight: bold;'] * len(row)
+                        bg_color = hex_to_rgba(c_hex, 0.2)
+                        return [f'background-color: {bg_color}; color: {c_hex}; font-weight: bold;'] * len(row)
                     return [''] * len(row)
                     
                 import data_processing
@@ -1680,9 +1775,11 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                         c_hex = get_c_hex(col)
                         if c_hex:
                             if row[col] == '✔️':
-                                styles.append(f'background-color: {c_hex}40; color: {c_hex}; font-weight: bold;')
+                                bg_color = hex_to_rgba(c_hex, 0.25)
+                                styles.append(f'background-color: {bg_color}; color: {c_hex}; font-weight: bold;')
                             else:
-                                styles.append(f'background-color: {c_hex}10;')
+                                bg_color_light = hex_to_rgba(c_hex, 0.06)
+                                styles.append(f'background-color: {bg_color_light};')
                         else:
                             styles.append('')
                     return styles
@@ -1926,7 +2023,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                             r = int(255 + f * (255 - 255))
                             g = int(50 + f * (150 - 50))
                             b = int(50 + f * (0 - 50))
-                        return f'background-color: rgb({r},{g},{b}); color: black;'
+                        return f'background-color: #{r:02x}{g:02x}{b:02x}; color: black;'
                     return ''
                     
                 if not df_coph.empty and "Métrica" in df_coph.columns:

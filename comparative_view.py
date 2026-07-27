@@ -207,15 +207,21 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             i18n.t("sub_dist_title", default="Distribuição de Distâncias"),
             help="Mostra como as distâncias estão distribuídas dentro de cada cenário."
         )
-        dist_col_a, dist_col_b = st.columns(2)
-        with dist_col_a:
-            st.markdown(f"**{i18n.t(cenario_a)}**")
-            fig_dist_a = visualizations.plot_distance_histogram(gower_a, "")
-            st.plotly_chart(fig_dist_a, use_container_width=True)
-        with dist_col_b:
-            st.markdown(f"**{i18n.t(cenario_b)}**")
-            fig_dist_b = visualizations.plot_distance_histogram(gower_b, "")
-            st.plotly_chart(fig_dist_b, use_container_width=True)
+        sync_zoom = st.toggle("Sincronizar Seleção de Eixos (Zoom Conjunto)", value=False, key="sync_zoom_22")
+        
+        if sync_zoom:
+            fig_dist = visualizations.plot_distance_histogram_comparative(gower_a, gower_b, i18n.t(cenario_a), i18n.t(cenario_b))
+            st.plotly_chart(fig_dist, use_container_width=True)
+        else:
+            dist_col_a, dist_col_b = st.columns(2)
+            with dist_col_a:
+                st.markdown(f"**{i18n.t(cenario_a)}**")
+                fig_dist_a = visualizations.plot_distance_histogram(gower_a, "")
+                st.plotly_chart(fig_dist_a, use_container_width=True)
+            with dist_col_b:
+                st.markdown(f"**{i18n.t(cenario_b)}**")
+                fig_dist_b = visualizations.plot_distance_histogram(gower_b, "")
+                st.plotly_chart(fig_dist_b, use_container_width=True)
     
         st.markdown("---")
 
@@ -273,14 +279,20 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                     key="filtro_status_22"
                 )
                 df_mostrar_22 = df_comparativo_attrs[df_comparativo_attrs["Status"].isin([i18n.t(k) for k in filtro_status_22])]
+                is_light = st.session_state.get("light_mode")
                 def highlight_status_22(row):
                     status = row["Status"]
                     if status == i18n.t("status_gained"):
-                        return ['background-color: rgba(76, 175, 80, 0.15); color: #81c784;'] * len(row)
+                        bg = "#d4edda" if is_light else "rgba(76, 175, 80, 0.15)"
+                        color = "#155724" if is_light else "#81c784"
+                        return [f'background-color: {bg}; color: {color};'] * len(row)
                     elif status == i18n.t("status_lost"):
-                        return ['background-color: rgba(244, 67, 54, 0.15); color: #e57373;'] * len(row)
+                        bg = "#f8d7da" if is_light else "rgba(244, 67, 54, 0.15)"
+                        color = "#721c24" if is_light else "#e57373"
+                        return [f'background-color: {bg}; color: {color};'] * len(row)
                     else:
-                        return ['color: #9e9e9e;'] * len(row)
+                        color = "#6c757d" if is_light else "#9e9e9e"
+                        return [f'color: {color};'] * len(row)
                 
                 import data_processing
                 if st.session_state.get("light_mode"):
@@ -773,7 +785,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                         r = int(255 + f * (255 - 255))
                         g = int(50 + f * (150 - 50))
                         b = int(50 + f * (0 - 50))
-                    return f'background-color: rgb({r},{g},{b}); color: black;'
+                    return f'background-color: #{r:02x}{g:02x}{b:02x}; color: black;'
                 return ''
                 
             import data_processing

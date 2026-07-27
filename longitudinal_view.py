@@ -36,17 +36,24 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             *(Note: 'Odontolegista' is not listed separately here because it's functionally merged within Medical Examiner and Forensic Expert duties in this dataset).*
             """)
             
-    # CSS para as tabelas HTML
-    st.markdown("""
+    is_light = st.session_state.get("light_mode")
+    
+    text_color = "#1E2329" if is_light else "#e0e0e0"
+    th_bg = "#F0F2F6" if is_light else "#2D2D2D"
+    th_border = "#0072B2" if is_light else "#4CAF50"
+    td_border = "#CED4DA" if is_light else "#444"
+    tr_hover = "#F8F9FA" if is_light else "#333"
+    
+    st.markdown(f"""
     <style>
-    .html-table { width: 100%; border-collapse: collapse; color: #e0e0e0; font-size: 0.95rem; margin-bottom: 20px;}
-    .html-table th { background-color: #2D2D2D; padding: 12px 10px; text-align: left; border-bottom: 2px solid #4CAF50;}
-    .html-table td { padding: 10px 10px; border-bottom: 1px solid #444; }
-    .html-table tr:hover { background-color: #333 !important; opacity: 1.0 !important; }
-    .up-arrow { color: #4CAF50; font-weight: bold; }
-    .down-arrow { color: #F44336; font-weight: bold; }
-    .flat-arrow { color: #9E9E9E; }
-    .jump-arrow { color: #FFC107; font-weight: bold; }
+    .html-table {{ width: 100%; border-collapse: collapse; color: {text_color}; font-size: 0.95rem; margin-bottom: 20px;}}
+    .html-table th {{ background-color: {th_bg}; padding: 12px 10px; text-align: left; border-bottom: 2px solid {th_border};}}
+    .html-table td {{ padding: 10px 10px; border-bottom: 1px solid {td_border}; }}
+    .html-table tr:hover {{ background-color: {tr_hover} !important; opacity: 1.0 !important; }}
+    .up-arrow {{ color: {'#388E3C' if is_light else '#4CAF50'}; font-weight: bold; }}
+    .down-arrow {{ color: {'#D32F2F' if is_light else '#F44336'}; font-weight: bold; }}
+    .flat-arrow {{ color: {'#6c757d' if is_light else '#9E9E9E'}; }}
+    .jump-arrow {{ color: {'#F57F17' if is_light else '#FFC107'}; font-weight: bold; }}
     </style>
     """, unsafe_allow_html=True)
     
@@ -72,7 +79,6 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
         st.warning(i18n.t("m4_warning_no_career"))
         return
         
-    # Mapeamento de cores fixas para as carreiras
     cores_padrao = px.colors.qualitative.Plotly + px.colors.qualitative.Dark24
     mapa_cores = {c: cores_padrao[i % len(cores_padrao)] for i, c in enumerate(cargos_base)}
         
@@ -182,7 +188,23 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             html += f"<tr style='background-color: {bg_color}; opacity: {opacity}; transition: opacity 0.3s;'>"
             cor_linha = mapa_cores.get(c, '#fff')
             c_label = i18n.dic_traducao_cargos.get(c, c) if lang == 'EN' and traduzir else c
-            html += f"<td><span style='color: {cor_linha}; font-weight:bold;'>{c_label}</span></td>"
+            
+            label_bg = "transparent"
+            if is_light:
+                import re
+                hex_str = cor_linha.lstrip('#')
+                if len(hex_str) == 6:
+                    try:
+                        r, g, b = tuple(int(hex_str[i:i+2], 16) for i in (0, 2, 4))
+                        label_bg = f"rgba({r}, {g}, {b}, 0.15)"
+                    except: pass
+                elif cor_linha.startswith('rgb'):
+                    match = re.search(r'rgba?\((\d+),\s*(\d+),\s*(\d+)', cor_linha)
+                    if match:
+                        label_bg = f"rgba({match.group(1)}, {match.group(2)}, {match.group(3)}, 0.15)"
+                        
+            style_str = f"color: {cor_linha}; font-weight:bold; background-color: {label_bg}; padding: 4px 8px; border-radius: 6px; display: inline-block;"
+            html += f"<td><span style='{style_str}'>{c_label}</span></td>"
             
             control_val = hist_dict[c].get("Atual Sem Correção", None)
             

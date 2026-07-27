@@ -277,6 +277,83 @@ def plot_gower_heatmap(df_gower: pd.DataFrame, title: str, cargos_destaque: list
                 
     return fig
 
+def plot_distance_histogram_comparative(df_a: pd.DataFrame, df_b: pd.DataFrame, title_a: str, title_b: str, full_scale: bool = True):
+    from plotly.subplots import make_subplots
+    import numpy as np
+    
+    fig = make_subplots(rows=1, cols=2, shared_xaxes=True, shared_yaxes=True, subplot_titles=(title_a, title_b))
+    
+    for i, df_dist in enumerate([df_a, df_b]):
+        col = i + 1
+        arr = df_dist.values
+        mask = np.triu(np.ones_like(arr, dtype=bool), k=1)
+        rows, cols = np.where(mask)
+        distances = arr[rows, cols]
+        
+        cargos = df_dist.index.tolist()
+        pairs = [f"{cargos[r]} ↔ {cargos[c]}" for r, c in zip(rows, cols)]
+        jitter_y = np.random.uniform(-0.5, 0.5, size=len(distances))
+        
+        # Adicionar zonas de similaridade (mesmo padrão da Régua Gower)
+        fig.add_vrect(x0=-0.05, x1=0.15, fillcolor="rgba(0, 255, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_very_high", default="Muito Alta") if i==0 else "", annotation_position="top left", annotation_font_size=10, annotation_font_color="#00cc00", row=1, col=col)
+        fig.add_vrect(x0=0.15, x1=0.35, fillcolor="rgba(144, 238, 144, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_high", default="Alta") if i==0 else "", annotation_position="top left", annotation_font_size=10, annotation_font_color="#90ee90", row=1, col=col)
+        fig.add_vrect(x0=0.35, x1=0.50, fillcolor="rgba(255, 255, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_moderate", default="Moderada") if i==0 else "", annotation_position="top left", annotation_font_size=10, annotation_font_color="#cccc00", row=1, col=col)
+        fig.add_vrect(x0=0.50, x1=0.65, fillcolor="rgba(255, 165, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_low", default="Baixa") if i==0 else "", annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff9900", row=1, col=col)
+        fig.add_vrect(x0=0.65, x1=1.05, fillcolor="rgba(255, 0, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_very_low", default="Muito Baixa") if i==0 else "", annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff4444", row=1, col=col)
+        
+        # Adicionar as bolinhas com escala de cor
+        fig.add_trace(go.Scatter(
+            x=distances,
+            y=jitter_y,
+            mode='markers',
+            text=pairs,
+            marker=dict(
+                color=distances,
+                colorscale='RdYlGn_r',
+                cmin=0.0,
+                cmax=1.0,
+                size=10,
+                opacity=0.8,
+                line=dict(width=1, color='rgba(255, 255, 255, 0.8)')
+            ),
+            hovertemplate="<b>Par:</b> %{text}<br><b>" + i18n.t('dist_value', default='Distância') + ":</b> %{x:.3f}<extra></extra>",
+            showlegend=False
+        ), row=1, col=col)
+        
+        # Linhas de mediana e média
+        if len(distances) > 0:
+            median = float(np.median(distances))
+            mean = float(np.mean(distances))
+            
+            fig.add_vline(x=median, line_dash="dash", line_color="red", layer="below", row=1, col=col)
+            fig.add_vline(x=mean, line_dash="dot", line_color="orange", layer="below", row=1, col=col)
+            
+            fig.add_annotation(
+                x=mean, y=-0.55,
+                text=f"{i18n.t('lbl_median', default='Mediana')}: {median:.2f}<br>{i18n.t('lbl_mean', default='Média')}: {mean:.2f}",
+                showarrow=False,
+                font=dict(color="darkorange", size=10),
+                align="right",
+                xanchor="right",
+                yanchor="top",
+                row=1, col=col
+            )
+            
+    fig.update_layout(
+        height=350,
+        margin=dict(l=20, r=20, t=40, b=40),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        hovermode="closest"
+    )
+    
+    if full_scale:
+        fig.update_xaxes(range=[-0.05, 1.05])
+    
+    fig.update_yaxes(showticklabels=False, showgrid=False, zeroline=False, range=[-0.6, 0.6])
+    
+    return fig
+
 def plot_distance_histogram(df_dist: pd.DataFrame, title: str, full_scale: bool = True) -> go.Figure:
     """
     Gera um gráfico de bolinhas (Dot Plot / Jitter Scatter) da distribuição das distâncias
@@ -526,8 +603,8 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
     fig.add_annotation(
         text=f"<b>{c_label} {c:.3f}</b>",
         xref="paper", yref="paper",
-        x=0.5, y=0.98,
-        xanchor="center", yanchor="top",
+        x=0.5, y=1.02,
+        xanchor="center", yanchor="bottom",
         showarrow=False,
         font=dict(color=coph_color, size=13),
         bgcolor="#1E2329",

@@ -57,6 +57,7 @@ Estas regras governam a segurança local, auditoria de dependências e proteçã
 ## Criatividade e Visual
 ### [Design Frontend](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/frontend-design.md)
 ### [Acessibilidade UI/UX](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/ui-ux-accessibility.md)
+### [Sincronização de Modos Dark/Light](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP/.agents/creativity_and_visuals/dark-light-mode-sync.md)
 ### [Design Mobile](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/mobile-design.md)
 ### [Edição de Textos](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/copy-editing.md)
 ### [Escrita Técnica](file:///c:/Users/maiap/OneDrive/Desktop/Desenvolvimento/Estudo_Atribuicoes_PCSP_2024/.agents/creativity_and_visuals/technical-writing.md)
