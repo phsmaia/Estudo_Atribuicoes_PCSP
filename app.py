@@ -54,6 +54,44 @@ logger.init_db()
 # Configuração Básica da Página
 st.set_page_config(page_title="Estudo de Atribuições PCSP", layout="wide")
 
+# --- SESSÃO DE SEGURANÇA: WATERMARK INVISÍVEL ---
+# Captura o usuário passado pelo Nginx (se houver) e estampa na tela a 2% de opacidade
+try:
+    remote_user = st.context.headers.get("X-Remote-User", "")
+    if remote_user:
+        watermark_html = f"""
+        <style>
+        .leak-tracer {{
+            position: fixed;
+            top: -50%; left: -50%; width: 200vw; height: 200vh;
+            pointer-events: none;
+            z-index: 9999999;
+            opacity: 0.02;
+            color: #000;
+            font-size: 24px;
+            font-family: monospace;
+            font-weight: bold;
+            display: flex;
+            flex-wrap: wrap;
+            overflow: hidden;
+            transform: rotate(-30deg);
+            align-content: center;
+            justify-content: center;
+        }}
+        .leak-tracer span {{
+            padding: 30px 50px;
+        }}
+        </style>
+        <div class="leak-tracer">
+        """
+        # Repete o nome do usuário para preencher a tela (diagonal tracking)
+        spans = "".join([f"<span>{remote_user}</span>" for _ in range(400)])
+        watermark_html += spans + "</div>"
+        st.markdown(watermark_html, unsafe_allow_html=True)
+except Exception as e:
+    pass
+# ------------------------------------------------
+
 # Sincroniza o modo de tema com a URL (para sobreviver a reloads)
 if "light_mode" not in st.session_state:
     st.session_state.light_mode = st.query_params.get("theme") == "light"

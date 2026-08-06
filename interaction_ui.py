@@ -292,36 +292,9 @@ def render_floating_comments(global_topic: str):
             // Evita duplos cliques travando o botão temporariamente
             if (this.style.opacity === '0.8') return;
             
-            // Cria um popup visual logo acima do botão
-            const statusPopup = window.parent.document.createElement('div');
-            statusPopup.id = 'hud-loading-popup';
-            statusPopup.innerHTML = '<span style="display: inline-block; animation: spin 1s linear infinite;">🚨</span> {{HUD_LOADING}}';
-            statusPopup.style.cssText = 'position: fixed; bottom: 85px; left: 25px; background: #cc0000; color: white; padding: 8px 15px; border-radius: 8px; font-weight: bold; z-index: 999999; box-shadow: 0 4px 15px rgba(204, 0, 0, 0.6); animation: slideUp 0.3s ease-out; font-family: sans-serif; font-size: 0.95rem;';
-            
-            // Remove popup antigo se houver (para evitar sujeira)
-            const oldPopup = window.parent.document.getElementById('hud-loading-popup');
-            if(oldPopup) oldPopup.remove();
-            
-            window.parent.document.body.appendChild(statusPopup);
-
             this.style.opacity = '0.8';
             this.style.cursor = 'wait';
             
-            // Injeta a keyframe animation no documento pai se não existir
-            if (!window.parent.document.getElementById('hud-anim-css')) {
-                const styleElement = window.parent.document.createElement('style');
-                styleElement.id = 'hud-anim-css';
-                styleElement.innerHTML = `
-                    @keyframes spin { 
-                        0% { transform: rotate(0deg) scale(1); opacity: 1; } 
-                        50% { transform: rotate(180deg) scale(1.3); opacity: 0.7; }
-                        100% { transform: rotate(360deg) scale(1); opacity: 1; } 
-                    }
-                    @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-                `;
-                window.parent.document.head.appendChild(styleElement);
-            }
-
             // Busca os botões do DOM e clica naquele que é o nosso fantasma
             const buttons = window.parent.document.querySelectorAll('button p');
             for(let b of buttons) {
@@ -335,8 +308,6 @@ def render_floating_comments(global_topic: str):
             setTimeout(() => {
                 this.style.opacity = '1';
                 this.style.cursor = 'pointer';
-                const p = window.parent.document.getElementById('hud-loading-popup');
-                if(p) p.remove();
             }, 4000);
         };
         
