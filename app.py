@@ -21,6 +21,8 @@ importlib.reload(visualizations)
 import floating_toc
 importlib.reload(floating_toc)
 from floating_toc import render_toc
+from datetime import datetime
+import pytz
 
 
 # Roteamento do painel de administração oculto
@@ -55,10 +57,23 @@ logger.init_db()
 st.set_page_config(page_title="Estudo de Atribuições PCSP", layout="wide")
 
 # --- SESSÃO DE SEGURANÇA: WATERMARK INVISÍVEL ---
-# Captura o usuário passado pelo Nginx (se houver) e estampa na tela a 2% de opacidade
+import uuid
+
+# Cria um ID único (Hash) para esta sessão (não muda ao recarregar filtros na mesma aba)
+if "forensic_id" not in st.session_state:
+    st.session_state.forensic_id = uuid.uuid4().hex[:6].upper()
+
+# Captura o usuário passado pelo Nginx (se houver) e estampa na tela
 try:
     remote_user = st.context.headers.get("X-Remote-User", "")
     if remote_user:
+        # Pega a data e hora atual no fuso de Brasília
+        fuso_br = pytz.timezone('America/Sao_Paulo')
+        agora = datetime.now(fuso_br).strftime('%d/%m/%Y %H:%M')
+        
+        # A marca d'água agora inclui o Hash da sessão
+        marca_texto = f"{remote_user} ({agora}) [{st.session_state.forensic_id}]"
+        
         watermark_html = f"""
         <style>
         .leak-tracer {{
@@ -66,8 +81,10 @@ try:
             top: -50%; left: -50%; width: 200vw; height: 200vh;
             pointer-events: none;
             z-index: 9999999;
+            /* Cor branca com blend difference garante contraste sutil em fundos claros e escuros */
+            color: #FFF;
             opacity: 0.02;
-            color: #000;
+            mix-blend-mode: difference;
             font-size: 24px;
             font-family: monospace;
             font-weight: bold;
@@ -85,7 +102,7 @@ try:
         <div class="leak-tracer">
         """
         # Repete o nome do usuário para preencher a tela (diagonal tracking)
-        spans = "".join([f"<span>{remote_user}</span>" for _ in range(400)])
+        spans = "".join([f"<span>{marca_texto}</span>" for _ in range(400)])
         watermark_html += spans + "</div>"
         st.markdown(watermark_html, unsafe_allow_html=True)
 except Exception as e:
