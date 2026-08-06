@@ -83,7 +83,14 @@ def render_like_button(section_name: str, key_suffix: str = ""):
                 new_like = Interaction(section_name=section_name, user_hash=user_hash, ip_address=ip)
                 db.add(new_like)
                 db.commit()
-                analytics.log_event("like", {"section": section_name})
+                current_config = {
+                    "section": section_name,
+                    "is_mobile": st.session_state.get("is_mobile", False),
+                    "light_mode": st.session_state.get("light_mode", False),
+                    "language": st.session_state.get("language", "PT-BR"),
+                    "font_size": st.session_state.get("font_size", 16)
+                }
+                analytics.log_event("like", current_config)
                 st.rerun()
                 
     db.close()

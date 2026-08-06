@@ -3,6 +3,7 @@ import pandas as pd
 import json
 import plotly.express as px
 import plotly.graph_objects as go
+import numpy as np
 from data_processing import calcular_distancias
 import explanations
 import i18n
@@ -16,6 +17,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
 
     lang = st.session_state.get('language', 'PT-BR')
     traduzir = lang == 'EN'
+    is_mobile = st.session_state.get("is_mobile", False)
 
     if lang == 'EN':
         with st.expander("📚 Brazilian Police Roles Glossary"):
@@ -150,54 +152,108 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         if lang == 'EN' and traduzir:
             delta_matrix_vis.index = [i18n.dic_traducao_cargos.get(c, c) for c in delta_matrix_vis.index]
             delta_matrix_vis.columns = [i18n.dic_traducao_cargos.get(c, c) for c in delta_matrix_vis.columns]
+
+        if is_mobile:
+            st.info("📱 **Modo Simplificado (Mobile)**. Acesse em um Computador para visualizar o mapa de calor completo.", icon="ℹ️")
+            opcoes_cargos_mobile = list(delta_matrix_vis.index)
+            cargos_mobile_default = [destaques_completos[0]] if destaques_completos and destaques_completos[0] in opcoes_cargos_mobile else []
+            if not cargos_mobile_default and len(opcoes_cargos_mobile) > 0:
+                cargos_mobile_default = [opcoes_cargos_mobile[0]]
+                
+            cargos_mobile = st.multiselect(
+                "🔍 Selecione carreiras para ver as discrepâncias:" if lang == 'PT-BR' else "🔍 Select careers to view discrepancies:", 
+                opcoes_cargos_mobile, 
+                default=cargos_mobile_default,
+                key="mobile_delta_matrix_select"
+            )
+            
+            if not cargos_mobile:
+                st.warning("Selecione pelo menos uma carreira." if lang == 'PT-BR' else "Select at least one career.", icon="⚠️")
+            else:
+                df_mobile = delta_matrix_vis[cargos_mobile].copy()
+                
+                # Remove carreiras que não tem diferença alguma (todas as colunas são 0)
+                df_mobile = df_mobile.loc[(df_mobile != 0).any(axis=1)]
+                
+                if df_mobile.empty:
+                    st.success("Nenhuma discrepância (Δ = 0) para as carreiras selecionadas!" if lang == 'PT-BR' else "No discrepancies (Δ = 0) for selected careers!")
+                else:
+                    st.markdown("##### " + ("Impacto de Discrepância" if lang == 'PT-BR' else "Discrepancy Impact"))
+                    df_plot = df_mobile.reset_index().melt(id_vars='index', var_name='Carreira Referência', value_name='Δ Gower')
+                    df_plot.rename(columns={'index': 'Carreira Comparada'}, inplace=True)
+                    
+                    txt_color = "black" if st.session_state.get("light_mode") else "white"
+                    fig_bar = px.bar(df_plot, x='Carreira Comparada', y='Δ Gower', color='Carreira Referência', barmode='group', text='Δ Gower')
+                    fig_bar.update_traces(texttemplate='%{text:.3f}', textposition='outside')
+                    fig_bar.update_layout(
+                        plot_bgcolor='rgba(0,0,0,0)', 
+                        paper_bgcolor='rgba(0,0,0,0)', 
+                        font=dict(color=txt_color), 
+                        margin=dict(l=0, r=0, t=10, b=0),
+                        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+                    )
+                    st.plotly_chart(fig_bar, use_container_width=True)
+                    
+                    # Tabela de Valores Exatos
+                    st.markdown("##### " + ("Detalhamento das Discrepâncias (Δ Gower)" if lang == 'PT-BR' else "Discrepancies Breakdown (Δ Gower)"))
+                    
+                    if st.session_state.get("light_mode"):
+                        import data_processing
+                        html_21 = data_processing.df_to_inline_html(df_mobile.round(3))
+                        st.markdown(f'<div class="light-table-container">{html_21}</div>', unsafe_allow_html=True)
+                    else:
+                        st.dataframe(
+                            df_mobile.style.format("{:.3f}"),
+                            use_container_width=True
+                        )
+        else:
+            fig = px.imshow(
+                delta_matrix_vis,
+                color_continuous_scale='RdBu_r', 
+                zmin=-limit, zmax=limit,
+                labels=dict(color="Δ Gower"),
+                aspect="auto"
+            )
+            fig.update_traces(xgap=2, ygap=2)
+            
+            is_light = st.session_state.get("light_mode", False) if hasattr(st, "session_state") else False
+            font_color = '#1E2329' if is_light else 'white'
+            grid_color = 'rgba(0,0,0,0.1)' if is_light else 'rgba(255,255,255,0.1)'
+            bg_color = '#D1D5DB' if is_light else '#111827'
     
-        fig = px.imshow(
-            delta_matrix_vis,
-            color_continuous_scale='RdBu_r', 
-            zmin=-limit, zmax=limit,
-            labels=dict(color="Δ Gower"),
-            aspect="auto"
-        )
-        fig.update_traces(xgap=2, ygap=2)
+            shapes = []
+            for idx in range(len(delta_matrix_vis.index) + 1):
+                shapes.append(dict(type="line", x0=-0.5, y0=idx-0.5, x1=len(delta_matrix_vis.columns)-0.5, y1=idx-0.5, line=dict(color=grid_color, width=1)))
+            for idx in range(len(delta_matrix_vis.columns) + 1):
+                shapes.append(dict(type="line", x0=idx-0.5, y0=-0.5, x1=idx-0.5, y1=len(delta_matrix_vis.index)-0.5, line=dict(color=grid_color, width=1)))
+    
+            fig.update_layout(
+                plot_bgcolor=bg_color,
+                paper_bgcolor='rgba(0,0,0,0)',
+                shapes=shapes,
+                font=dict(color=font_color),
+                margin=dict(l=0, r=0, t=30, b=0),
+                xaxis=dict(tickangle=-45, title="Cargos", showgrid=True, gridcolor=grid_color),
+                yaxis=dict(autorange="reversed", title="Cargos", showgrid=True, gridcolor=grid_color),
+                height=700
+            )
+            # Adiciona Highlight na linha e coluna do cargo selecionado
+            for dest in destaques_completos:
+                if dest in cargos_a:
+                    idx = cargos_a.index(dest)
+                    border_color = text_map.get(dest, "rgba(255,152,0,0.8)")
+                    # Highlight Row
+                    fig.add_shape(type="rect",
+                        x0=-0.5, y0=idx-0.5, x1=len(cargos_a)-0.5, y1=idx+0.5,
+                        line=dict(color=border_color, width=2), fillcolor="rgba(0,0,0,0)"
+                    )
+                    # Highlight Col
+                    fig.add_shape(type="rect",
+                        x0=idx-0.5, y0=-0.5, x1=idx+0.5, y1=len(cargos_a)-0.5,
+                        line=dict(color=border_color, width=2), fillcolor="rgba(0,0,0,0)"
+                    )
         
-        is_light = st.session_state.get("light_mode", False) if hasattr(st, "session_state") else False
-        font_color = '#1E2329' if is_light else 'white'
-        grid_color = 'rgba(0,0,0,0.1)' if is_light else 'rgba(255,255,255,0.1)'
-        bg_color = '#D1D5DB' if is_light else '#111827'
-
-        shapes = []
-        for idx in range(len(delta_matrix_vis.index) + 1):
-            shapes.append(dict(type="line", x0=-0.5, y0=idx-0.5, x1=len(delta_matrix_vis.columns)-0.5, y1=idx-0.5, line=dict(color=grid_color, width=1)))
-        for idx in range(len(delta_matrix_vis.columns) + 1):
-            shapes.append(dict(type="line", x0=idx-0.5, y0=-0.5, x1=idx-0.5, y1=len(delta_matrix_vis.index)-0.5, line=dict(color=grid_color, width=1)))
-
-        fig.update_layout(
-            plot_bgcolor=bg_color,
-            paper_bgcolor='rgba(0,0,0,0)',
-            shapes=shapes,
-            font=dict(color=font_color),
-            margin=dict(l=0, r=0, t=30, b=0),
-            xaxis=dict(tickangle=-45, title="Cargos", showgrid=True, gridcolor=grid_color),
-            yaxis=dict(autorange="reversed", title="Cargos", showgrid=True, gridcolor=grid_color),
-            height=700
-        )
-        # Adiciona Highlight na linha e coluna do cargo selecionado
-        for dest in destaques_completos:
-            if dest in cargos_a:
-                idx = cargos_a.index(dest)
-                border_color = text_map.get(dest, "rgba(255,152,0,0.8)")
-                # Highlight Row
-                fig.add_shape(type="rect",
-                    x0=-0.5, y0=idx-0.5, x1=len(cargos_a)-0.5, y1=idx+0.5,
-                    line=dict(color=border_color, width=2), fillcolor="rgba(0,0,0,0)"
-                )
-                # Highlight Col
-                fig.add_shape(type="rect",
-                    x0=idx-0.5, y0=-0.5, x1=idx+0.5, y1=len(cargos_a)-0.5,
-                    line=dict(color=border_color, width=2), fillcolor="rgba(0,0,0,0)"
-                )
-    
-        st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True)
         if st.session_state.get('show_explanations', False):
             st.info(explanations.get_explanation("m2_delta", st.session_state.get('explanation_tone', 'tecnico'), st.session_state.get('language', 'PT-BR')))
     
@@ -207,21 +263,87 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             i18n.t("sub_dist_title", default="Distribuição de Distâncias"),
             help="Mostra como as distâncias estão distribuídas dentro de cada cenário."
         )
-        sync_zoom = st.toggle("Sincronizar Seleção de Eixos (Zoom Conjunto)", value=False, key="sync_zoom_22")
         
-        if sync_zoom:
-            fig_dist = visualizations.plot_distance_histogram_comparative(gower_a, gower_b, i18n.t(cenario_a), i18n.t(cenario_b))
-            st.plotly_chart(fig_dist, use_container_width=True)
+        if is_mobile:
+            st.info("📱 **Modo Simplificado (Mobile)**. Resumo da distribuição e top afinidades.", icon="ℹ️")
+            
+            def get_dist_summary(df_gower):
+                import numpy as np
+                import plotly.express as px
+                arr = df_gower.values
+                mask = np.triu(np.ones_like(arr, dtype=bool), k=1)
+                rows, cols = np.where(mask)
+                dists = arr[rows, cols]
+                cargos = df_gower.index.tolist()
+                
+                # Zonas
+                bins = [-np.inf, 0.15, 0.35, 0.50, 0.65, np.inf]
+                labels = [
+                    i18n.t("zone_very_high", default="Muito Alta (0-0.15)"),
+                    i18n.t("zone_high", default="Alta (0.15-0.35)"),
+                    i18n.t("zone_moderate", default="Moderada (0.35-0.50)"),
+                    i18n.t("zone_low", default="Baixa (0.50-0.65)"),
+                    i18n.t("zone_very_low", default="Muito Baixa (>0.65)")
+                ]
+                categorized = pd.cut(dists, bins=bins, labels=labels)
+                counts = categorized.value_counts().reindex(labels).fillna(0).astype(int)
+                
+                # Top 5 pares
+                pairs_data = []
+                for r, c, d in zip(rows, cols, dists):
+                    pairs_data.append({"Cargo 1": cargos[r], "Cargo 2": cargos[c], "Distância": d})
+                df_pairs = pd.DataFrame(pairs_data).sort_values("Distância").head(5)
+                return counts, df_pairs
+                
+            counts_a, top_a = get_dist_summary(gower_a)
+            counts_b, top_b = get_dist_summary(gower_b)
+            
+            df_bar = pd.DataFrame({
+                'Zona': counts_a.index,
+                i18n.t(cenario_a): counts_a.values,
+                i18n.t(cenario_b): counts_b.values
+            }).melt(id_vars='Zona', var_name='Cenário', value_name='Quantidade')
+            
+            txt_color = "black" if st.session_state.get("light_mode") else "white"
+            fig_bar = px.bar(df_bar, x='Zona', y='Quantidade', color='Cenário', barmode='group', text='Quantidade')
+            fig_bar.update_traces(texttemplate='%{text}', textposition='outside')
+            fig_bar.update_layout(
+                plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color=txt_color),
+                margin=dict(l=0, r=0, t=10, b=0), legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+            )
+            st.plotly_chart(fig_bar, use_container_width=True)
+            
+            st.markdown(f"**Top 5 Pares Mais Similares ({i18n.t(cenario_a)})**")
+            if st.session_state.get("light_mode"):
+                import data_processing
+                html_top_a = data_processing.df_to_inline_html(top_a.set_index("Cargo 1").round(3))
+                st.markdown(f'<div class="light-table-container" style="overflow-x:auto;">{html_top_a}</div>', unsafe_allow_html=True)
+            else:
+                st.dataframe(top_a.style.format({"Distância": "{:.3f}"}), use_container_width=True, hide_index=True)
+            
+            st.markdown(f"**Top 5 Pares Mais Similares ({i18n.t(cenario_b)})**")
+            if st.session_state.get("light_mode"):
+                import data_processing
+                html_top_b = data_processing.df_to_inline_html(top_b.set_index("Cargo 1").round(3))
+                st.markdown(f'<div class="light-table-container" style="overflow-x:auto;">{html_top_b}</div>', unsafe_allow_html=True)
+            else:
+                st.dataframe(top_b.style.format({"Distância": "{:.3f}"}), use_container_width=True, hide_index=True)
         else:
-            dist_col_a, dist_col_b = st.columns(2)
-            with dist_col_a:
-                st.markdown(f"**{i18n.t(cenario_a)}**")
-                fig_dist_a = visualizations.plot_distance_histogram(gower_a, "")
-                st.plotly_chart(fig_dist_a, use_container_width=True)
-            with dist_col_b:
-                st.markdown(f"**{i18n.t(cenario_b)}**")
-                fig_dist_b = visualizations.plot_distance_histogram(gower_b, "")
-                st.plotly_chart(fig_dist_b, use_container_width=True)
+            sync_zoom = st.toggle("Sincronizar Seleção de Eixos (Zoom Conjunto)", value=False, key="sync_zoom_22")
+            
+            if sync_zoom:
+                fig_dist = visualizations.plot_distance_histogram_comparative(gower_a, gower_b, i18n.t(cenario_a), i18n.t(cenario_b))
+                st.plotly_chart(fig_dist, use_container_width=True)
+            else:
+                dist_col_a, dist_col_b = st.columns(2)
+                with dist_col_a:
+                    st.markdown(f"**{i18n.t(cenario_a)}**")
+                    fig_dist_a = visualizations.plot_distance_histogram(gower_a, "")
+                    st.plotly_chart(fig_dist_a, use_container_width=True)
+                with dist_col_b:
+                    st.markdown(f"**{i18n.t(cenario_b)}**")
+                    fig_dist_b = visualizations.plot_distance_histogram(gower_b, "")
+                    st.plotly_chart(fig_dist_b, use_container_width=True)
     
         st.markdown("---")
 
@@ -232,6 +354,9 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             help=i18n.t("sub_flow_help")
         )
         interaction_ui.render_like_button("2.1 Comparativo Direito (Base)", "2_1")
+        
+        if is_mobile:
+            st.info("📱 **Modo Simplificado (Mobile)**. Visualize na horizontal (deitar o celular) se a tabela cortar colunas.", icon="ℹ️")
         
         # Extração de Atribuições Ganhos/Perdas
         if not cargo_foco_a:
@@ -279,6 +404,30 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                     key="filtro_status_22"
                 )
                 df_mostrar_22 = df_comparativo_attrs[df_comparativo_attrs["Status"].isin([i18n.t(k) for k in filtro_status_22])]
+                
+                if is_mobile and not df_mostrar_22.empty:
+                    # Gráfico de Resumo
+                    st.markdown("##### " + ("Balanço de Atribuições" if lang == 'PT-BR' else "Assignments Balance"))
+                    resumo = df_mostrar_22['Status'].value_counts().reset_index()
+                    resumo.columns = ['Status', 'Quantidade']
+                    
+                    color_discrete_map = {
+                        i18n.t("status_gained"): "#4caf50",
+                        i18n.t("status_lost"): "#f44336",
+                        i18n.t("status_maintained"): "#9e9e9e"
+                    }
+                    txt_color_23 = "black" if st.session_state.get("light_mode") else "white"
+                    fig_resumo = px.bar(resumo, x='Status', y='Quantidade', color='Status', text='Quantidade', color_discrete_map=color_discrete_map)
+                    fig_resumo.update_traces(textposition='outside', textfont=dict(color=txt_color_23))
+                    fig_resumo.update_layout(
+                        plot_bgcolor='rgba(0,0,0,0)', 
+                        paper_bgcolor='rgba(0,0,0,0)', 
+                        font=dict(color=txt_color_23), 
+                        margin=dict(l=0, r=0, t=10, b=0),
+                        showlegend=False
+                    )
+                    st.plotly_chart(fig_resumo, use_container_width=True)
+                    st.markdown("##### " + ("Detalhamento das Atribuições" if lang == 'PT-BR' else "Assignments Breakdown"))
                 is_light = st.session_state.get("light_mode")
                 def highlight_status_22(row):
                     status = row["Status"]
@@ -321,6 +470,9 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         if not cargo_foco_a:
             st.info(i18n.t("radar_no_career_warning"))
         elif cargo_foco_a in df_a['Carreira'].values and cargo_foco_b in df_b['Carreira'].values:
+            if is_mobile:
+                st.info("📱 **Modo Simplificado (Mobile)**. O Radar exibe apenas os 5 cargos mais similares ao cargo em foco para evitar poluição visual.", icon="ℹ️")
+                
             # Pega TODAS as carreiras do cenário (exceto ela mesma)
             todas_carreiras = [c for c in gower_a.index if c != cargo_foco_a]
                 
@@ -373,6 +525,14 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             for c in todas_carreiras:
                 cb = mapping_a_to_b.get(c)
                 vals_b.append(calc_similarity(df_b, cargo_foco_b, cb, selected_radar_metric))
+                
+            if is_mobile and len(todas_carreiras) > 5:
+                # Filtrar Top 5 pelo vals_a
+                indices_top5 = sorted(range(len(vals_a)), key=lambda i: vals_a[i], reverse=True)[:5]
+                todas_carreiras = [todas_carreiras[i] for i in indices_top5]
+                vals_a = [vals_a[i] for i in indices_top5]
+                vals_b = [vals_b[i] for i in indices_top5]
+                
             todas_carreiras_display = [i18n.traduzir_cargo(c) if traduzir else c for c in todas_carreiras]
                     
             fig_radar.add_trace(go.Scatterpolar(
@@ -418,8 +578,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 showlegend=True,
                 paper_bgcolor='rgba(0,0,0,0)',
                 font=dict(color='white'),
-                height=750,
-                margin=dict(l=100, r=100, t=60, b=60)
+                height=450 if is_mobile else 750,
+                margin=dict(l=20 if is_mobile else 100, r=20 if is_mobile else 100, t=30 if is_mobile else 60, b=30 if is_mobile else 60)
             )
             
             st.plotly_chart(fig_radar, use_container_width=True)
@@ -500,13 +660,31 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             i18n.t("sub_network_comp_title"),
             help=i18n.t("sub_network_comp_help")
         )
-        
-        threshold_adj_comp = st.slider(i18n.t("network_comp_slider"), min_value=1, max_value=20, value=1, step=1, key="slider_grafo_comp")
+        if is_mobile:
+            st.info("📱 **Modo Simplificado (Mobile)**. O limite inicial (threshold) do grafo foi ajustado dinamicamente para evitar nodos isolados e limpar a visualização.", icon="ℹ️")
         
         import data_processing
         
         adj_a = data_processing.gerar_matriz_adjacencia(df_a)
         adj_b = data_processing.gerar_matriz_adjacencia(df_b)
+        
+        # Dynamic threshold for mobile based on both matrices
+        import numpy as np
+        adj_array_a = adj_a.to_numpy(dtype=float, copy=True)
+        np.fill_diagonal(adj_array_a, 0)
+        max_edges_a = adj_array_a.max(axis=1)
+        
+        adj_array_b = adj_b.to_numpy(dtype=float, copy=True)
+        np.fill_diagonal(adj_array_b, 0)
+        max_edges_b = adj_array_b.max(axis=1)
+        
+        optimal_mobile_thresh = min(int(max_edges_a.min()), int(max_edges_b.min()))
+        if optimal_mobile_thresh < 1:
+            optimal_mobile_thresh = 1
+            
+        default_thresh = optimal_mobile_thresh if is_mobile else 1
+        
+        threshold_adj_comp = st.slider(i18n.t("network_comp_slider"), min_value=1, max_value=20, value=default_thresh, step=1, key="slider_grafo_comp")
         
         nodes_a, edges_a, pos_a = data_processing.gerar_dados_grafo(adj_a, threshold=threshold_adj_comp)
         nodes_b, edges_b, pos_b = data_processing.gerar_dados_grafo(adj_b, threshold=threshold_adj_comp)
@@ -533,6 +711,69 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             st.plotly_chart(fig_grafo_a, use_container_width=True)
         with col_grafo2:
             st.plotly_chart(fig_grafo_b, use_container_width=True)
+            
+        with st.expander(i18n.t("graph_edges_table", default="Ver Lista de Conexões em Comum")):
+            show_all_edges_comp = st.radio(
+                i18n.t("graph_edges_toggle", default="Filtro de Conexões:"),
+                [i18n.t("graph_edges_active", default="Mostrar apenas conexões ativas no gráfico"), 
+                 i18n.t("graph_edges_all", default="Mostrar todas as conexões")],
+                index=0,
+                key="graph_edges_radio_comp"
+            ) == i18n.t("graph_edges_all", default="Mostrar todas as conexões")
+            
+            # Gerar matrizes de texto para extrair atribuições em comum
+            dic_siglas_a = data_processing.gerar_dicionario_siglas(df_a.columns)
+            dic_siglas_b = data_processing.gerar_dicionario_siglas(df_b.columns)
+            text_matrix_a = data_processing.obter_atribuicoes_comuns_textuais(df_a, dic_siglas_a, expandir_textos=True)
+            text_matrix_b = data_processing.obter_atribuicoes_comuns_textuais(df_b, dic_siglas_b, expandir_textos=True)
+            
+            def render_edges_table(adj, text_mat, scenario_name, key_suffix):
+                edges_list = []
+                cargos = list(adj.columns)
+                for i in range(len(cargos)):
+                    for j in range(i + 1, len(cargos)):
+                        weight = adj.iloc[i, j]
+                        if weight > 0:
+                            is_active = weight >= threshold_adj_comp
+                            if not show_all_edges_comp and not is_active:
+                                continue
+                            c1 = cargos[i]
+                            c2 = cargos[j]
+                            attrs = text_mat.iloc[i, j] if text_mat is not None else ""
+                            attrs_list = ", ".join([a.strip() for a in str(attrs).split("<br>") if a.strip()])
+                            edges_list.append({
+                                "Cargo 1": i18n.traduzir_cargo(c1) if traduzir else c1,
+                                "Cargo 2": i18n.traduzir_cargo(c2) if traduzir else c2,
+                                "Conexões": weight,
+                                "Atribuições": attrs_list,
+                                "Ativa": is_active
+                            })
+                if edges_list:
+                    df_edges = pd.DataFrame(edges_list).sort_values(by="Conexões", ascending=False)
+                    def highlight_inactive_edge(row_display, row_edges):
+                        if not row_edges["Ativa"]:
+                            bg_c = "rgba(0,0,0,0.03)" if st.session_state.get('light_mode') else "rgba(255,255,255,0.05)"
+                            color_c = "#a0a0a0" if st.session_state.get('light_mode') else "#666666"
+                            return [f'color: {color_c}; background-color: {bg_c};'] * len(row_display)
+                        return [''] * len(row_display)
+                    
+                    df_display = df_edges.drop(columns=["Ativa"])
+                    styled_edges = df_display.style.apply(lambda row: highlight_inactive_edge(row, df_edges.loc[row.name]), axis=1)
+                    
+                    st.markdown(f"**{scenario_name}**")
+                    if st.session_state.get('light_mode'):
+                        html_table = df_display.to_html(index=False, classes="table table-striped", border=0)
+                        st.markdown(f'<div class="light-table-container">{html_table}</div><br>', unsafe_allow_html=True)
+                    else:
+                        st.dataframe(styled_edges, use_container_width=True, hide_index=True)
+                else:
+                    st.write(f"**{scenario_name}**: " + i18n.t("graph_edges_empty", default="Nenhuma conexão encontrada com o filtro atual."))
+
+            col_table_a, col_table_b = st.columns(2)
+            with col_table_a:
+                render_edges_table(adj_a, text_matrix_a, i18n.t(cenario_a), "A")
+            with col_table_b:
+                render_edges_table(adj_b, text_matrix_b, i18n.t(cenario_b), "B")
     
         st.markdown(i18n.t("network_details_title"))
         st.caption(i18n.t("network_details_caption").format(threshold=threshold_adj_comp))
@@ -609,6 +850,9 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             help=i18n.t("sub_tree_comp_help")
         )
         
+        if is_mobile:
+            st.info("📱 **Modo Simplificado (Mobile)**.", icon="ℹ️")
+        
         # O Dendrograma precisa do gower_a e gower_b
         # Apenas se houver mais de um cargo para poder clusterizar
         if len(gower_a.columns) > 1 and len(gower_b.columns) > 1:
@@ -657,8 +901,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 destaques_a_disp = [c for c in destaques_completos if c in gower_a_dendro.columns] or None
                 destaques_b_disp = [c for c in destaques_b if c in gower_b_dendro.columns] or None
                 
-            fig_dendro_a = visualizations.plot_dendrogram(gower_a_disp, f"{i18n.t('tree_graph_base')} ({cenario_a})", cargos_destaque=destaques_a_disp, linkage_method=selected_linkage_dendro)
-            fig_dendro_b = visualizations.plot_dendrogram(gower_b_disp, f"{i18n.t('tree_graph_target')} ({cenario_b})", cargos_destaque=destaques_b_disp, linkage_method=selected_linkage_dendro)
+            fig_dendro_a = visualizations.plot_dendrogram(gower_a_disp, f"{i18n.t('tree_graph_base')} ({cenario_a})", cargos_destaque=destaques_a_disp, linkage_method=selected_linkage_dendro, is_mobile=is_mobile)
+            fig_dendro_b = visualizations.plot_dendrogram(gower_b_disp, f"{i18n.t('tree_graph_target')} ({cenario_b})", cargos_destaque=destaques_b_disp, linkage_method=selected_linkage_dendro, is_mobile=is_mobile)
             
             col_dendro1, col_dendro2 = st.columns(2)
             with col_dendro1:

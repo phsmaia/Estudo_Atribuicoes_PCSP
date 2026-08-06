@@ -4,7 +4,30 @@ Todas as modificações notáveis neste projeto serão documentadas neste arquiv
 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [Unreleased] - 2026-08-06
+
+### Added
+- **Skill de UX Responsiva**: Criação de `mobile-desktop-thinking` orientando a análise e codificação obrigatória de fallback responsivo para todas as novas visualizações, tabelas e heatmaps da aplicação.
+- **Otimização Global Mobile**: Injeção da variável `is_mobile` controlada por toggle em todos os modos, com banners flutuantes dinâmicos. Em celulares, gráficos pesados (heatmaps) sofrem bypass automático para tabelas com arraste horizontal (`overflow-x: auto`) ou listas enxutas.
+- **Anotações Inteligentes em Gráficos de Linha (Modos 3 e 4)**: Implementação de leitura automática sem hover nos Scatter e Line charts para usuários Mobile, exibindo textos flutuantes ancorados via `add_annotation`. Poluição visual mitigada restringindo anotações às linhas "destacadas" pelo usuário, caso existam.
+- **Multiselect em Tabelas Longitudinais (Modo 4)**: A tabela comparativa longitudinal agora permite que o usuário filtre os cenários projetados em eixo horizontal. No celular, o número padrão é restrito a 2 para não quebrar a responsividade; no PC, exibe o panorama completo.
+- **Tabelas de Arestas Explicativas (1.4 e 2.5)**: Expansão do Grafo Interativo com tabelas de detalhamento abaixo, informando o usuário em formato legível exatamente quais são as atribuições/arestas que unem os cargos nos limiares apresentados.
+
+### Changed
+- **Substituição do Heatmap no Mobile (2.3 e 1.1)**: Gráficos de Adjacência e Discrepâncias em formato de Heatmap que estouram a tela de celular foram substituídos por combinações modulares de `st.multiselect`, `px.bar` (Impacto Total) e Dataframes estilizados com `background_gradient`.
+- **Fallback Mobile para Jitter Scatter (2.2)**: A visualização de Distribuição de Distâncias Funcionais em celulares abandonou os gráficos de dispersão complexos. Adotou-se o uso de gráficos de Barras Agrupadas por zonas de afinidade em conjunto com tabelas resumidas revelando cirurgicamente o "Top 5" cargos similares, abolindo totalmente o uso de hover.
+- **Leitura Direta no Jitter Scatter (Desktop)**: Modificação da propriedade `mode` do Plotly para `markers+text` na visão 2.2, exibindo explicitamente os valores das distâncias exatas pairando acima de cada bolinha de dispersão, poupando o usuário de vasculhar os gráficos com o mouse.
+- **Sincronização de Textos Expandidos**: Tabelas agora utilizam matrizes de dados independentes (`expandir_textos=True`) para garantir a leitura textual completa de "A_05" etc, mesmo quando as siglas de tela originais estiverem desligadas por estética.
+
+### Fixed
+- **Contraste Quebrado em Tabelas no Light Mode**: Implementado bypass arquitetural nativo com `data_processing.df_to_inline_html` nas tabelas Mobile (Seções 2.1 e 2.2) para contornar uma falha de CSS do Streamlit que injetava temas escuros persistentes sobre tabelas na interface de luz (`light_mode=True`).
+- **Sombreamento Dinâmico (Variable Shadowing) em Python**: Resolução de sucessivos `UnboundLocalError` e `NameError` oriundos do carregamento condicional de módulos pesados (`numpy`, `plotly`) dentro de instâncias globais do Streamlit.
+- **Erro de Dimensionalidade em Gráficos Modulares (`ValueError` pandas style)**: Correção do uso de `lambda` functions em `.style.apply` que gerava `axis=1` incompatível em matrizes truncadas, resolvendo o colapso nas Seções 1.4 e 2.5.
+- **Vazamento do Módulo Explanations**: A função `gerar_dicionario_siglas` foi completamente centralizada em `data_processing`, reparando AttributeError herdados pelo `comparative_view.py`.
+- **Bugs Ocultos do Plotly (texttemplate)**: Substituição de `mode='markers+text'` defeituoso por `add_annotation` explícito para garantir a exibição forçada das labels sobre pontos de dispersão, mesmo com a colisão algorítmica do Plotly ativa.
+
 ## [Unreleased] - 2026-07-20
+
 
 ### Changed
 - **Navegação Rápida Uniformizada**: Implementação da navegação rápida (`st.radio` superior) nos Modos 3 (Linha do Tempo) e 4 (Evolução Longitudinal), padronizando a filtragem de componentes em todos os modos e reduzindo o carregamento simultâneo excessivo.

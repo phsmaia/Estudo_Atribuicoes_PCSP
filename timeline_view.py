@@ -12,6 +12,9 @@ import interaction_ui
 
 def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
     st.markdown(i18n.t("m3_intro"))
+    is_mobile = st.session_state.get("is_mobile", False)
+    if is_mobile:
+        st.info("📱 **Modo Simplificado (Mobile)**. Os gráficos foram ajustados para telas menores.", icon="ℹ️")
     
     # --- CARREGAMENTO DO DICIONÁRIO DE MAPA GERAL ---
     mapa_dict = {}
@@ -140,7 +143,11 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
     if current_section is None or current_section == "m3_sub_gower_title":
         fig1 = px.scatter(df_metrics, x=i18n.t("m3_col_scenario"), y=i18n.t("m3_col_gower"), text=i18n.t("m3_col_gower"),
                        color=i18n.t("m3_col_gower"), color_continuous_scale="Teal")
-        fig1.update_traces(texttemplate='%{text:.3f}', textposition='top center', marker=dict(size=25))
+        txt_color = "black" if st.session_state.get('light_mode') else "white"
+        fig1.update_traces(mode='markers', marker=dict(size=15 if is_mobile else 25))
+        if is_mobile:
+            for i, row in df_metrics.iterrows():
+                fig1.add_annotation(x=row[i18n.t("m3_col_scenario")], y=row[i18n.t("m3_col_gower")], text=f'{row[i18n.t("m3_col_gower")]:.3f}', showarrow=False, yshift=15, font=dict(color=txt_color, size=11))
         fig1.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
         
         st.markdown("<div id='toc-gower'></div>", unsafe_allow_html=True)
@@ -156,7 +163,11 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
         fig2 = px.scatter(df_metrics, x=i18n.t("m3_col_scenario"), y=i18n.t("m3_col_total_unique"), text=i18n.t("m3_col_total_unique"),
                       color=i18n.t("m3_col_total_unique"), color_continuous_scale="Viridis")
         fig2.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
-        fig2.update_traces(textposition='top center', marker=dict(size=25))
+        txt_color = "black" if st.session_state.get('light_mode') else "white"
+        fig2.update_traces(mode='markers', marker=dict(size=15 if is_mobile else 25))
+        if is_mobile:
+            for i, row in df_metrics.iterrows():
+                fig2.add_annotation(x=row[i18n.t("m3_col_scenario")], y=row[i18n.t("m3_col_total_unique")], text=f'{row[i18n.t("m3_col_total_unique")]}', showarrow=False, yshift=15, font=dict(color=txt_color, size=11))
         
         st.markdown("<div id='toc-vol'></div>", unsafe_allow_html=True)
         st.subheader(i18n.t("m3_sub_vol_title"), help=i18n.t("m3_sub_vol_help"))
@@ -170,7 +181,11 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
     if current_section is None or current_section == "m3_sub_share_title":
         fig3 = px.scatter(df_metrics, x=i18n.t("m3_col_scenario"), y=i18n.t("m3_col_sharing_level"), text=i18n.t("m3_col_sharing_level"),
                        color=i18n.t("m3_col_sharing_level"), color_continuous_scale="Oranges")
-        fig3.update_traces(texttemplate='%{text:.2f}', textposition='top center', marker=dict(size=25))
+        txt_color = "black" if st.session_state.get('light_mode') else "white"
+        fig3.update_traces(mode='markers', marker=dict(size=15 if is_mobile else 25))
+        if is_mobile:
+            for i, row in df_metrics.iterrows():
+                fig3.add_annotation(x=row[i18n.t("m3_col_scenario")], y=row[i18n.t("m3_col_sharing_level")], text=f'{row[i18n.t("m3_col_sharing_level")]:.2f}', showarrow=False, yshift=15, font=dict(color=txt_color, size=11))
         fig3.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
         
         st.markdown("<div id='toc-share'></div>", unsafe_allow_html=True)
@@ -185,7 +200,12 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
     if current_section is None or current_section == "m3_sub_coph_title":
         fig4 = px.scatter(df_metrics, x=i18n.t("m3_col_scenario"), y=i18n.t("m3_sub_coph_title").split(". ")[-1] if ". " in i18n.t("m3_sub_coph_title") else i18n.t("m3_sub_coph_title"), text=i18n.t("m3_sub_coph_title").split(". ")[-1] if ". " in i18n.t("m3_sub_coph_title") else i18n.t("m3_sub_coph_title"),
                        color=i18n.t("m3_sub_coph_title").split(". ")[-1] if ". " in i18n.t("m3_sub_coph_title") else i18n.t("m3_sub_coph_title"), color_continuous_scale="RdYlGn")
-        fig4.update_traces(texttemplate='%{text:.3f}', textposition='top center', marker=dict(size=25))
+        txt_color = "black" if st.session_state.get('light_mode') else "white"
+        fig4.update_traces(mode='markers', marker=dict(size=15 if is_mobile else 25))
+        col_coph = i18n.t("m3_sub_coph_title").split(". ")[-1] if ". " in i18n.t("m3_sub_coph_title") else i18n.t("m3_sub_coph_title")
+        if is_mobile:
+            for i, row in df_metrics.iterrows():
+                fig4.add_annotation(x=row[i18n.t("m3_col_scenario")], y=row[col_coph], text=f'{row[col_coph]:.3f}', showarrow=False, yshift=15, font=dict(color=txt_color, size=11))
         fig4.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
         
         st.markdown("<div id='toc-coph'></div>", unsafe_allow_html=True)

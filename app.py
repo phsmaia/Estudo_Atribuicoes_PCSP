@@ -58,6 +58,28 @@ st.set_page_config(page_title="Estudo de Atribuições PCSP", layout="wide")
 if "light_mode" not in st.session_state:
     st.session_state.light_mode = st.query_params.get("theme") == "light"
 
+# --- Detecção Mobile (Auto) ---
+is_mobile_qs = st.query_params.get("is_mobile", None)
+if is_mobile_qs is None:
+    is_mobile_default = False
+    if "mobile_auto_checked" not in st.session_state:
+        st.session_state.mobile_auto_checked = True
+        components.html("""
+        <script>
+        const isMobile = window.innerWidth <= 768;
+        const urlParams = new URLSearchParams(window.parent.location.search);
+        if (!urlParams.has('is_mobile')) {
+            urlParams.set('is_mobile', isMobile);
+            window.parent.location.search = '?' + urlParams.toString();
+        }
+        </script>
+        """, height=0, width=0)
+else:
+    is_mobile_default = (is_mobile_qs.lower() == "true")
+
+if "is_mobile" not in st.session_state:
+    st.session_state.is_mobile = is_mobile_default
+
 # --- MONKEY PATCH PARA SUPORTE A LIGHT MODE EM PLOTLY ---
 _original_plotly_chart = st.plotly_chart
 def _custom_plotly_chart(figure_or_data, **kwargs):
@@ -118,6 +140,15 @@ if st.session_state.get("light_mode"):
         button[data-baseweb="tab"] p { color: #5C6C7B !important; font-weight: 600 !important; }
         button[data-baseweb="tab"][aria-selected="true"] p { color: #0072B2 !important; font-weight: 800 !important; }
         
+        /* Multiselect Tags (Carreiras) */
+        span[data-baseweb="tag"] {
+            background-color: #E8ECEF !important;
+            color: #1E2329 !important;
+            border: 1px solid #CED4DA !important;
+        }
+        span[data-baseweb="tag"] span { color: #1E2329 !important; }
+        span[data-baseweb="tag"] svg { fill: #1E2329 !important; }
+        
         /* Tooltips e Balões de Ajuda */
         [data-baseweb="tooltip"] > div, div[data-testid="stTooltipContent"], [data-baseweb="popover"] > div {
             background-color: #FFFFFF !important;
@@ -150,6 +181,7 @@ if st.session_state.get("light_mode"):
         .status-badge strong { color: #0072B2 !important; }
         
         /* Tabela Light (HTML customizada) */
+        .light-table-container { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
         .light-table-container table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; font-family: sans-serif; background-color: #FFFFFF !important; }
         .light-table-container th { background-color: #F0F2F6 !important; color: #1E2329 !important; padding: 10px; text-align: left; border: 1px solid #CED4DA !important; }
         .light-table-container td { padding: 10px; border: 1px solid #CED4DA !important; color: #1E2329; }
@@ -313,6 +345,38 @@ footer_html = """
             font-size: 1rem;
             border-bottom: 1px solid #333;
             padding-bottom: 5px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            #hud-floating-footer {
+                width: 44px;
+                height: 44px;
+                border-radius: 22px;
+                bottom: 10px;
+                right: 10px;
+                padding: 0;
+                justify-content: center;
+                border: none;
+            }
+            .hud-icon {
+                font-size: 1.3rem;
+            }
+            .hud-icon span {
+                display: none;
+            }
+            #hud-floating-footer:hover {
+                width: 240px;
+                height: max-content;
+                border-radius: 12px;
+                padding: 12px;
+                bottom: 10px;
+                right: 10px;
+                border: 1px solid __BORDER_COLOR__;
+            }
+            .hud-content a {
+                padding: 12px;
+                font-size: 1rem;
+            }
         }
         </style>
         
@@ -584,6 +648,27 @@ div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor):has(div[data-te
     backdrop-filter: blur(10px);
 }}
 
+@media (max-width: 768px) {{
+    div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor) div[data-testid="stHorizontalBlock"] {{
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+    }}
+    div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor) div[data-testid="column"] {{
+        min-width: fit-content !important;
+        flex: 0 0 auto !important;
+        padding-right: 1rem;
+    }}
+}}
+
+@media (min-width: 769px) {{
+    /* Hide plotly text labels on desktop to preserve hover-only clean look */
+    .js-plotly-plot .textpoint {{
+        display: none !important;
+    }}
+}}
+
 /* Remover espaço em branco superior do Streamlit */
 </style>
 """, unsafe_allow_html=True)
@@ -817,7 +902,8 @@ if "first_load_done" not in st.session_state:
                 randomEgg();
             }}
 
-            badge.addEventListener('mousedown', () => {{
+            function startScanner(e) {{
+                if(e && e.type === 'touchstart') e.preventDefault();
                 eggTriggered = false;
                 badge.classList.add('scanning');
                 if(pbFill) pbFill.classList.add('scanning');
@@ -826,9 +912,13 @@ if "first_load_done" not in st.session_state:
                 
                 // Inicia o timer do Easter Egg
                 easterEggTimer = setTimeout(triggerEasterEgg, 5000);
-            }});
+            }}
+
+            badge.addEventListener('mousedown', startScanner);
+            badge.addEventListener('touchstart', startScanner, {{passive: false}});
             
-            function resetScanner() {{
+            function resetScanner(e) {{
+                if(e && e.type === 'touchend') e.preventDefault();
                 clearTimeout(easterEggTimer);
                 if(eggTriggered) return; // Se o easter egg rodou, mantém na tela
                 
@@ -839,6 +929,8 @@ if "first_load_done" not in st.session_state:
             
             badge.addEventListener('mouseup', resetScanner);
             badge.addEventListener('mouseleave', resetScanner);
+            badge.addEventListener('touchend', resetScanner);
+            badge.addEventListener('touchcancel', resetScanner);
         }}
         
         const msgs = {msgs_json};
@@ -928,57 +1020,66 @@ with st.container():
     st.markdown("<div id='sticky-header-anchor'></div>", unsafe_allow_html=True)
     
     # Dar mais espaço para o bloco de botões para que os componentes do Streamlit não encolham demais (causando quebra de linha ou sumiço de botões)
-    col_title, col_btn = st.columns([35, 65], vertical_alignment="center")
+    col_title, col_btn = st.columns([80, 20], vertical_alignment="center")
     with col_title:
         st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0; white-space: nowrap;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
+    
     def _muda_idioma():
         val = st.session_state.lang_radio
         st.session_state.language = 'PT-BR' if 'PT-BR' in val else 'EN'
         analytics.log_event("change_language", {"language": st.session_state.language})
+        
+    def _change_font():
+        st.session_state.base_font_size = st.session_state.font_input
+
+    def _sync_theme():
+        st.session_state.light_mode = st.session_state.light_mode_toggle
+        if st.session_state.light_mode:
+            st.query_params["theme"] = "light"
+        else:
+            if "theme" in st.query_params:
+                del st.query_params["theme"]
+                
+    def _sync_mobile():
+        st.session_state.is_mobile = st.session_state.mobile_mode_toggle
+        st.query_params["is_mobile"] = str(st.session_state.mobile_mode_toggle).lower()
 
     with col_btn:
-        # Layout totalmente horizontal usando colunas internas
-        # Aumentamos os pesos relativos das colunas de input (c2, c4) para que o Streamlit não os colapse
-        c1, c2, c3, c4, c5 = st.columns([1.7, 1.5, 0.9, 1.2, 1.0], vertical_alignment="center")
-        
         if "base_font_size" not in st.session_state:
             st.session_state.base_font_size = 16
         st.markdown(f"<style>html {{ font-size: {st.session_state.base_font_size}px !important; }}</style>", unsafe_allow_html=True)
         
-        with c1:
-            st.markdown("<div style='text-align: right; padding-top: 8px; font-size: 0.9rem; white-space: nowrap;'>🌐 Idioma/Language:</div>", unsafe_allow_html=True)
-            
-        with c2:
+        # Popover minimalista para configurações
+        with st.popover("⚙️ Configs", use_container_width=False):
             st.radio(
-                "Lang", 
+                "🌐 Idioma / Language", 
                 options=["PT-BR", "EN"], 
                 index=0 if st.session_state.get('language', 'PT-BR') == 'PT-BR' else 1,
                 key="lang_radio",
                 on_change=_muda_idioma,
-                horizontal=True, 
-                label_visibility="collapsed"
+                horizontal=True
             )
-        
-        with c3:
-            st.markdown("<div style='text-align: right; padding-top: 8px; font-size: 0.9rem; white-space: nowrap;'>🔎 Fonte:</div>", unsafe_allow_html=True)
             
-        with c4:
-            def _change_font():
-                st.session_state.base_font_size = st.session_state.font_input
-            st.number_input("Font", min_value=10, max_value=24, value=st.session_state.base_font_size, key="font_input", on_change=_change_font, label_visibility="collapsed")
-        
-        with c5:
-            def _sync_theme():
-                st.session_state.light_mode = st.session_state.light_mode_toggle
-                if st.session_state.light_mode:
-                    st.query_params["theme"] = "light"
-                else:
-                    if "theme" in st.query_params:
-                        del st.query_params["theme"]
+            st.number_input(
+                "🔎 Fonte / Font Size", 
+                min_value=10, 
+                max_value=24, 
+                value=st.session_state.base_font_size, 
+                key="font_input", 
+                on_change=_change_font
+            )
             
             is_light = st.session_state.get("light_mode", False)
-            toggle_label = "☀️ Light" if is_light else "🌙 Dark"
+            toggle_label = "☀️ Modo Claro" if is_light else "🌙 Modo Escuro"
             st.toggle(toggle_label, value=is_light, key="light_mode_toggle", on_change=_sync_theme)
+            
+            st.toggle("📱 Modo Mobile", value=st.session_state.get("is_mobile", False), key="mobile_mode_toggle", on_change=_sync_mobile)
+            
+        mobile_str = "📱 Mobile" if st.session_state.is_mobile else "🖥️ Desktop"
+        lang_str = st.session_state.get("language", "PT-BR")
+        font_str = f"A {st.session_state.base_font_size}px"
+        theme_str = "☀️ Light" if st.session_state.get("light_mode", False) else "🌙 Dark"
+        st.markdown(f"<div style='font-size: 0.75rem; color: #888; text-align: right; margin-top: 4px;'>{mobile_str} | {lang_str} | {font_str} | {theme_str}</div>", unsafe_allow_html=True)
 
     status_bar_placeholder = st.empty()
     # Removemos o HTML do layout inicial porque o render final dos badges ocorre lá embaixo
@@ -1060,38 +1161,18 @@ with st.container():
     # --- CONTROLES SUPERIORES (APENAS EXPLORADOR INDIVIDUAL) ---
     if modo_visao == i18n.t("mode_1"):
         with col_menu_especifico.popover(i18n.t("config_analytic"), use_container_width=True):
-            col1, col2, col3 = st.columns([1, 1, 1.5])
+            is_mobile = st.session_state.get("is_mobile", False)
+            traduzir_cargos = st.session_state.get('language', 'PT-BR') == 'EN'
             
-            with col1:
+            if is_mobile:
+                # Layout de coluna única empilhado para mobile
                 cenario_sel = st.selectbox(i18n.t("select_scenario"), opcoes_cenarios, format_func=lambda x: i18n.t(x), key="cenario_sel")
                 df_cenario = mapa_cenarios.get(cenario_sel)
                 cargos_disponiveis = df_cenario['Carreira'].tolist() if df_cenario is not None and 'Carreira' in df_cenario.columns else (df_cenario.index.tolist() if df_cenario is not None else [])
                 
-                cientifica_keywords = ["Perito", "Médico", "Fotógrafo", "Desenhista", "Necropsia", "Necrópsia", "Atendente"]
-                cargos_cientifica = [c for c in cargos_disponiveis if any(k in c for k in cientifica_keywords)]
-                cargos_pc = [c for c in cargos_disponiveis if c not in cargos_cientifica]
-                
-            with col2:
-                opcoes_grupos = ["filter_all", "filter_no_cientifica", "filter_only_cientifica", "filter_custom"]
-                grupo_sel = st.selectbox(
-                    i18n.t("fast_filter"),
-                    opcoes_grupos,
-                    format_func=lambda x: i18n.t(x),
-                    key="grupo_sel"
-                )
-                
-                if grupo_sel == "filter_all":
-                    default_cargos = cargos_disponiveis
-                elif grupo_sel == "filter_no_cientifica":
-                    default_cargos = cargos_pc
-                elif grupo_sel == "filter_only_cientifica":
-                    default_cargos = cargos_cientifica
-                else:
-                    default_cargos = []
-                    
+                st.markdown("<div style='margin-top: 10px; margin-bottom: 5px;'></div>", unsafe_allow_html=True)
                 incluir_comuns = st.checkbox(i18n.t("include_generic"), value=False)
                 
-            with col1:
                 opcoes_matriz = ["condensed", "original"]
                 tipo_matriz_raw = st.selectbox(
                     i18n.t("matrix_format"), 
@@ -1102,57 +1183,104 @@ with st.container():
                 )
                 tipo_matriz = "Original" if "original" in tipo_matriz_raw or incluir_comuns else "Condensada"
                 
-            with col2:
-                expandir_textos = st.checkbox(i18n.t("expand_texts"), value=True)
+                # Valores padrão (opções ocultas no mobile)
+                grupo_sel = "filter_all"
+                default_cargos = cargos_disponiveis
+                filtro_cargos = default_cargos
+                cargos_destaque = []
+                expandir_textos = False
                 
-                traduzir_cargos = st.session_state.get('language', 'PT-BR') == 'EN'
+            else:
+                # Layout de 2 colunas para desktop (melhor distribuição)
+                col1, col2 = st.columns([1, 1.2])
                 
-            with col3:
-                if 'last_cenario_sel' not in st.session_state:
-                    st.session_state.last_cenario_sel = cenario_sel
-                if 'last_grupo_sel' not in st.session_state:
-                    st.session_state.last_grupo_sel = grupo_sel
-                
-                if st.session_state.last_cenario_sel != cenario_sel or st.session_state.last_grupo_sel != grupo_sel:
-                    st.session_state.filtro_cargos = default_cargos
-                    st.session_state.last_cenario_sel = cenario_sel
-                    st.session_state.last_grupo_sel = grupo_sel
-
-                filtro_cargos = st.multiselect(
-                    i18n.t("roles_analyze"), 
-                    cargos_disponiveis,
-                    default=default_cargos,
-                    format_func=lambda x: i18n.traduzir_cargo(x) if st.session_state.get('language', 'PT-BR') == 'EN' else x,
-                    key="filtro_cargos"
-                )
-                
-                if 'last_filtro_cargos' not in st.session_state:
-                    st.session_state.last_filtro_cargos = filtro_cargos
-                if st.session_state.last_filtro_cargos != filtro_cargos:
-                    analytics.log_event("filter_change", {"filter": "cargos", "values": filtro_cargos})
-                    st.session_state.last_filtro_cargos = filtro_cargos
-
-                cargos_destaque = st.multiselect(
-                    i18n.t("visual_highlight"),
-                    filtro_cargos if filtro_cargos else cargos_disponiveis,
-                    format_func=lambda x: i18n.traduzir_cargo(x) if st.session_state.get('language', 'PT-BR') == 'EN' else x,
-                    key="cargos_destaque"
-                )
-                
-                if cargos_destaque:
-                    css_tags = ""
-                    for cargo in cargos_destaque:
-                        css_tags += f'''
-                        span[data-baseweb="tag"][aria-label^="{cargo}"] {{
-                            background-color: rgba(255, 152, 0, 0.3) !important;
-                            border: 1px solid #ff9800 !important;
-                        }}
-                        span[data-baseweb="tag"][aria-label^="{cargo}"] span {{
-                            color: #ffb74d !important;
-                        }}
-                        '''
-                    st.markdown(f"<style>{css_tags}</style>", unsafe_allow_html=True)
+                with col1:
+                    cenario_sel = st.selectbox(i18n.t("select_scenario"), opcoes_cenarios, format_func=lambda x: i18n.t(x), key="cenario_sel")
+                    df_cenario = mapa_cenarios.get(cenario_sel)
+                    cargos_disponiveis = df_cenario['Carreira'].tolist() if df_cenario is not None and 'Carreira' in df_cenario.columns else (df_cenario.index.tolist() if df_cenario is not None else [])
                     
+                    cientifica_keywords = ["Perito", "Médico", "Fotógrafo", "Desenhista", "Necropsia", "Necrópsia", "Atendente"]
+                    cargos_cientifica = [c for c in cargos_disponiveis if any(k in c for k in cientifica_keywords)]
+                    cargos_pc = [c for c in cargos_disponiveis if c not in cargos_cientifica]
+                    
+                    st.markdown("<div style='margin-top: 5px; margin-bottom: 5px;'></div>", unsafe_allow_html=True)
+                    incluir_comuns = st.checkbox(i18n.t("include_generic"), value=False)
+                    
+                    opcoes_matriz = ["condensed", "original"]
+                    tipo_matriz_raw = st.selectbox(
+                        i18n.t("matrix_format"), 
+                        opcoes_matriz, 
+                        format_func=lambda x: i18n.t(x),
+                        disabled=incluir_comuns,
+                        key="tipo_matriz_raw"
+                    )
+                    tipo_matriz = "Original" if "original" in tipo_matriz_raw or incluir_comuns else "Condensada"
+                    
+                    opcoes_grupos = ["filter_all", "filter_no_cientifica", "filter_only_cientifica", "filter_custom"]
+                    grupo_sel = st.selectbox(
+                        i18n.t("fast_filter"),
+                        opcoes_grupos,
+                        format_func=lambda x: i18n.t(x),
+                        key="grupo_sel"
+                    )
+                    
+                    if grupo_sel == "filter_all":
+                        default_cargos = cargos_disponiveis
+                    elif grupo_sel == "filter_no_cientifica":
+                        default_cargos = cargos_pc
+                    elif grupo_sel == "filter_only_cientifica":
+                        default_cargos = cargos_cientifica
+                    else:
+                        default_cargos = []
+                        
+                    expandir_textos = st.checkbox(i18n.t("expand_texts"), value=True)
+                    
+                with col2:
+                    if 'last_cenario_sel' not in st.session_state:
+                        st.session_state.last_cenario_sel = cenario_sel
+                    if 'last_grupo_sel' not in st.session_state:
+                        st.session_state.last_grupo_sel = grupo_sel
+                    
+                    if st.session_state.last_cenario_sel != cenario_sel or st.session_state.last_grupo_sel != grupo_sel:
+                        st.session_state.filtro_cargos = default_cargos
+                        st.session_state.last_cenario_sel = cenario_sel
+                        st.session_state.last_grupo_sel = grupo_sel
+
+                    filtro_cargos = st.multiselect(
+                        i18n.t("roles_analyze"), 
+                        cargos_disponiveis,
+                        default=default_cargos,
+                        format_func=lambda x: i18n.traduzir_cargo(x) if traduzir_cargos else x,
+                        key="filtro_cargos"
+                    )
+                    
+                    if 'last_filtro_cargos' not in st.session_state:
+                        st.session_state.last_filtro_cargos = filtro_cargos
+                    if st.session_state.last_filtro_cargos != filtro_cargos:
+                        analytics.log_event("filter_change", {"filter": "cargos", "values": filtro_cargos})
+                        st.session_state.last_filtro_cargos = filtro_cargos
+
+                    cargos_destaque = st.multiselect(
+                        i18n.t("visual_highlight"),
+                        filtro_cargos if filtro_cargos else cargos_disponiveis,
+                        format_func=lambda x: i18n.traduzir_cargo(x) if traduzir_cargos else x,
+                        key="cargos_destaque"
+                    )
+                    
+                    if cargos_destaque:
+                        css_tags = ""
+                        for cargo in cargos_destaque:
+                            css_tags += f'''
+                            span[data-baseweb="tag"][aria-label^="{cargo}"] {{
+                                background-color: rgba(255, 152, 0, 0.3) !important;
+                                border: 1px solid #ff9800 !important;
+                            }}
+                            span[data-baseweb="tag"][aria-label^="{cargo}"] span {{
+                                color: #ffb74d !important;
+                            }}
+                            '''
+                        st.markdown(f"<style>{css_tags}</style>", unsafe_allow_html=True)
+                        
             if 'filtro_cargos' in locals() and 'cargos_disponiveis' in locals():
                 if filtro_cargos and len(filtro_cargos) < len(cargos_disponiveis):
                     is_sample_biased_global = True
@@ -1192,7 +1320,9 @@ with st.container():
             # translate for tracking badge if needed
             c_sel_trans = i18n.traduzir_cargo(carreira_sel_comparativo) if traduzir_cargos else carreira_sel_comparativo
             c_foco_trans = i18n.traduzir_cargo(cargo_foco_b) if traduzir_cargos else cargo_foco_b
-            rastreio_html = f"<div title='{i18n.t('tracking_title')}' style='cursor: help; background: rgba(0, 114, 178, 0.2); border: 1px solid #0072B2; padding: 6px 15px; border-radius: 8px; font-size: 0.85rem; color: #E0E0E0; width: 100%; margin-top: 5px;'>{i18n.t('tracking_main')} <strong style='color: #4da6ff;'>{c_sel_trans}</strong> ({i18n.t(cenario_a)}) ➔ <strong style='color: #4da6ff;'>{c_foco_trans}</strong> ({i18n.t(cenario_b)}) <span style='float:right'>ℹ️</span></div>"
+            tracker_text_color = "#333" if st.session_state.get('light_mode') else "#E0E0E0"
+            tracker_bg = "rgba(0, 114, 178, 0.1)" if st.session_state.get('light_mode') else "rgba(0, 114, 178, 0.2)"
+            rastreio_html = f"<div title='{i18n.t('tracking_title')}' style='cursor: help; background: {tracker_bg}; border: 1px solid #0072B2; padding: 6px 15px; border-radius: 8px; font-size: 0.85rem; color: {tracker_text_color}; width: 100%; margin-top: 5px;'>{i18n.t('tracking_main')} <strong style='color: #4da6ff;'>{c_sel_trans}</strong> ({i18n.t(cenario_a)}) ➔ <strong style='color: #4da6ff;'>{c_foco_trans}</strong> ({i18n.t(cenario_b)}) <span style='float:right'>ℹ️</span></div>"
         else:
             rastreio_html = ""
             
@@ -1287,7 +1417,7 @@ with st.container():
         "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
         options=nav_options, 
         format_func=lambda x: i18n.t(x),
-        key=f"nav_section_radio_{modo_visao}",
+        key=f"nav_section_radio_{modo_visao_key}",
         horizontal=True,
         help="Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
     )
@@ -1378,6 +1508,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
 
     df_to_use_siglas = data_processing.aplicar_siglas_dataframe(df_to_use, dic_siglas)
     text_matrix = data_processing.obter_atribuicoes_comuns_textuais(df_to_use, dic_siglas, expandir_textos)
+    text_matrix_full = data_processing.obter_atribuicoes_comuns_textuais(df_to_use, dic_siglas, expandir_textos=True)
     adj_matrix = data_processing.gerar_matriz_adjacencia(df_to_use)
     
     df_para_gower = df_to_use.copy()
@@ -1492,11 +1623,79 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
         st.markdown("<div id='toc-matrix'></div>", unsafe_allow_html=True)
         st.subheader(f"{i18n.t('sub_matrix')} ({i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')})", help=i18n.t('sub_matrix_help'))
-        st.markdown(f"<p style='font-size: 0.85rem; color: #9E9E9E; margin-top: -15px; margin-bottom: 10px;'>{i18n.t('tip_hover')}</p>", unsafe_allow_html=True)
+        if st.session_state.get('language', 'PT-BR') == 'PT-BR':
+            st.markdown(f"<p style='font-size: 0.85rem; color: #9E9E9E; margin-top: -15px; margin-bottom: 10px;'>{i18n.t('tip_hover')}</p>", unsafe_allow_html=True)
         lbl_matriz_translated = i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')
         c_scale = [[0, "#B0B5BA"], [1, "#0055A4"]] if st.session_state.get('light_mode') else "Teal"
-        fig_bin = visualizations.plot_binary_heatmap(df_to_use_siglas, f"{i18n.t('title_matrix_prefix')} {lbl_matriz_translated} - {i18n.t(cenario_sel)}", colorscale=c_scale, dic_reverso=dic_reverso, cargos_destaque=cargos_destaque_ui)
-        st.plotly_chart(fig_bin, use_container_width=True)
+        
+        is_mobile = st.session_state.get("is_mobile", False)
+        if is_mobile:
+            st.info("📱 **Modo Simplificado (Mobile)**. Acesse em um Computador para visualizar o mapa de calor completo.", icon="ℹ️")
+            
+            # Corrige a extração dos nomes (podem estar na coluna 'Carreira' ou no index)
+            opcoes_cargos_mobile = df_to_use_siglas['Carreira'].tolist() if 'Carreira' in df_to_use_siglas.columns else df_to_use_siglas.index.tolist()
+            
+            cargos_mobile_default = ["Perito Criminal", "Papiloscopista Policial", "Investigador de Polícia (+ Apoio)", "Investigador de Polícia"]
+            cargos_mobile_default = [c for c in cargos_mobile_default if c in opcoes_cargos_mobile]
+            if not cargos_mobile_default and len(opcoes_cargos_mobile) > 0:
+                cargos_mobile_default = [opcoes_cargos_mobile[0]]
+                
+            cargos_mobile = st.multiselect(
+                "🔍 Selecione carreiras para ver o total de atribuições:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🔍 Select careers to view the total of assignments:", 
+                opcoes_cargos_mobile, 
+                default=cargos_mobile_default,
+                key="mobile_matrix_select"
+            )
+            
+            if not cargos_mobile:
+                st.warning("Selecione pelo menos uma carreira." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Select at least one career.")
+            else:
+                if 'Carreira' in df_to_use_siglas.columns:
+                    df_mobile = df_to_use_siglas[df_to_use_siglas['Carreira'].isin(cargos_mobile)]
+                else:
+                    df_mobile = df_to_use_siglas.loc[cargos_mobile]
+                    
+                fig_bin = visualizations.plot_mobile_binary_bars(df_mobile, cargos_destaque_ui, dic_reverso)
+                st.plotly_chart(fig_bin, use_container_width=True)
+                
+                # Tabela listando as atribuições
+                st.markdown("---")
+                st.markdown("#### 📋 " + ("Lista de Atribuições" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Assignments List"))
+                
+                df_temp = df_mobile.copy()
+                if 'Carreira' in df_temp.columns:
+                    df_temp = df_temp.set_index('Carreira')
+                df_temp = df_temp.apply(pd.to_numeric, errors='coerce').fillna(0)
+                df_long = df_temp.reset_index()
+                df_long.rename(columns={df_long.columns[0]: 'Cargo'}, inplace=True)
+                df_long = df_long.melt(id_vars='Cargo', var_name='Atribuição', value_name='Possui')
+                df_long = df_long[df_long['Possui'] > 0][['Cargo', 'Atribuição']]
+                if dic_reverso:
+                    df_long['Atribuição'] = df_long['Atribuição'].map(lambda x: dic_reverso.get(x, x))
+                
+                # Renderizar como HTML para herdar o CSS global (Light/Dark mode)
+                html_table = df_long.to_html(index=False, border=0, classes=["table", "table-striped"])
+                # Adiciona um container com scroll e estilo básico
+                st.markdown(f"""
+                <div style="max-height: 400px; overflow-y: auto; font-size: 0.85rem;">
+                    {html_table}
+                </div>
+                <style>
+                    .table {{ width: 100%; border-collapse: collapse; }}
+                    .table th, .table td {{ padding: 8px; text-align: left; border-bottom: 1px solid rgba(128,128,128,0.2); }}
+                    .table th {{ font-weight: bold; }}
+                </style>
+                """, unsafe_allow_html=True)
+                
+                # Explicação Mobile
+                if st.session_state.get('language', 'PT-BR') == 'PT-BR':
+                    st.caption("⚠️ **Diferença entre Original e Condensada:** A versão Condensada aglutina a quantidade de atribuições dos cargos (agrupando redundâncias/sobreposições), enquanto a Original lista todas separadamente. As atribuições genéricas não necessariamente estão inclusas nas aglutinadas ou totais.")
+                else:
+                    st.caption("⚠️ **Original vs Condensed:** The Condensed version agglutinates the quantity of assignments of the roles (grouping redundancies/overlaps), while the Original lists them all separately. Generic assignments are not necessarily included in the agglutinated or total counts.")
+        else:
+            fig_bin = visualizations.plot_binary_heatmap(df_to_use_siglas, f"{i18n.t('title_matrix_prefix')} {lbl_matriz_translated} - {i18n.t(cenario_sel)}", colorscale=c_scale, dic_reverso=dic_reverso, cargos_destaque=cargos_destaque_ui)
+            st.plotly_chart(fig_bin, use_container_width=True)
+            
         if st.session_state.get('show_explanations', False):
             tone_key = st.session_state.get('explanation_tone', 'tecnico')
             st.info(explanations.get_explanation("matriz", tone_key, language=st.session_state.get('language', 'PT-BR')))
@@ -1554,21 +1753,52 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         </div>
         """, unsafe_allow_html=True)
             
-        # 2. Columns for Heatmap and Table
-        col_adj_1, col_adj_2 = st.columns([6, 4])
+        # 2. Render Heatmap (Somente Desktop) e Tabela
+        is_mobile = st.session_state.get("is_mobile", False)
         
-        with col_adj_1:
-            c_scale_adj = [[0.0, "#B0B5BA"], [0.001, "#deebf7"], [1.0, "#08519c"]] if st.session_state.get("light_mode") else "YlGnBu"
-            fig_adj = visualizations.plot_adjacency_heatmap(adj_matrix, f"{i18n.t('title_adj_prefix')} - {i18n.t(cenario_sel)}", text_matrix=text_matrix, cargos_destaque=cargos_destaque_ui, colorscale=c_scale_adj)
-            st.plotly_chart(fig_adj, use_container_width=True)
-            if st.session_state.get('show_explanations', False):
-                tone_key = st.session_state.get('explanation_tone', 'tecnico')
-                st.info(explanations.get_explanation("adjacencia", tone_key, language=st.session_state.get('language', 'PT-BR')))
+        if not is_mobile:
+            col_adj_1, col_adj_2 = st.columns([6, 4])
             
-        with col_adj_2:
-            # Tabela Top Pares
+            with col_adj_1:
+                c_scale_adj = [[0.0, "#B0B5BA"], [0.001, "#deebf7"], [1.0, "#08519c"]] if st.session_state.get("light_mode") else "YlGnBu"
+                fig_adj = visualizations.plot_adjacency_heatmap(adj_matrix, f"{i18n.t('title_adj_prefix')} - {i18n.t(cenario_sel)}", text_matrix=text_matrix, cargos_destaque=cargos_destaque_ui, colorscale=c_scale_adj)
+                st.plotly_chart(fig_adj, use_container_width=True)
+                if st.session_state.get('show_explanations', False):
+                    tone_key = st.session_state.get('explanation_tone', 'tecnico')
+                    st.info(explanations.get_explanation("adjacencia", tone_key, language=st.session_state.get('language', 'PT-BR')))
+                    
+            with col_adj_2:
+                c_adj_top_pairs = "#1E2329" if st.session_state.get("light_mode") else "#ddd"
+                st.markdown(f"<p style='font-size: 0.9rem; margin-bottom: 5px; color:{c_adj_top_pairs};'><strong>{i18n.t('adj_top_pairs')}</strong></p>", unsafe_allow_html=True)
+                
+                lbl_5 = "Top 5"
+                lbl_10 = "Top 10"
+                lbl_all = i18n.t("lbl_all", default="Todos")
+                qtd_pares = st.selectbox("Quantidade:", [lbl_5, lbl_10, lbl_all], index=0, label_visibility="collapsed")
+                
+                limit_pairs = 5
+                if qtd_pares == lbl_10:
+                    limit_pairs = 10
+                elif qtd_pares == lbl_all:
+                    limit_pairs = len(pairs)
+                    
+                top_pairs = pairs.sort_values(by='Compartilhamentos', ascending=False).head(limit_pairs)
+                if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
+                    top_pairs['Pair'] = top_pairs['Pair'].map(lambda x: " - ".join([i18n.traduzir_cargo(p) for p in x.split(" - ")]))
+                    
+                df_top_pairs = top_pairs[['Pair', 'Compartilhamentos']].rename(columns={'Pair': i18n.t('adj_tbl_pair'), 'Compartilhamentos': i18n.t('adj_tbl_shared')})
+                df_top_pairs.insert(0, '#', range(1, len(df_top_pairs) + 1))
+                
+                if st.session_state.get('light_mode'):
+                    html_table = df_top_pairs.to_html(index=False, classes="light-table", border=0)
+                    st.markdown(f'<div style="overflow-x: auto;">{html_table}</div>', unsafe_allow_html=True)
+                else:
+                    st.dataframe(df_top_pairs, use_container_width=True, hide_index=True)
+        else:
+            # Layout Mobile (Apenas Tabela)
+            st.info("📱 **Modo Simplificado (Mobile)**. Acesse em um Computador para visualizar o mapa de calor completo.", icon="ℹ️")
             c_adj_top_pairs = "#1E2329" if st.session_state.get("light_mode") else "#ddd"
-            st.markdown(f"<p style='font-size: 0.9rem; margin-bottom: 5px; color:{c_adj_top_pairs};'><strong>{i18n.t('adj_top_pairs')}</strong></p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='font-size: 0.9rem; margin-bottom: 5px; margin-top: 15px; color:{c_adj_top_pairs};'><strong>{i18n.t('adj_top_pairs')}</strong></p>", unsafe_allow_html=True)
             
             lbl_5 = "Top 5"
             lbl_10 = "Top 10"
@@ -1589,10 +1819,23 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             df_top_pairs.insert(0, '#', range(1, len(df_top_pairs) + 1))
             
             if st.session_state.get('light_mode'):
-                html_table = df_top_pairs.to_html(index=False, classes="light-table", border=0)
-                st.markdown(html_table, unsafe_allow_html=True)
+                html_table = df_top_pairs.to_html(index=False, classes="table table-striped", border=0)
+                st.markdown(f"""
+                <div style="overflow-x: auto; font-size: 0.85rem;">
+                    {html_table}
+                </div>
+                <style>
+                    .table {{ width: 100%; border-collapse: collapse; }}
+                    .table th, .table td {{ padding: 8px; text-align: left; border-bottom: 1px solid rgba(128,128,128,0.2); }}
+                    .table th {{ font-weight: bold; }}
+                </style>
+                """, unsafe_allow_html=True)
             else:
                 st.dataframe(df_top_pairs, use_container_width=True, hide_index=True)
+                
+            if st.session_state.get('show_explanations', False):
+                tone_key = st.session_state.get('explanation_tone', 'tecnico')
+                st.info(explanations.get_explanation("adjacencia", tone_key, language=st.session_state.get('language', 'PT-BR')))
             
         # 3. Gráfico Barras Full Width
         df_bar = degrees.reset_index()
@@ -1825,9 +2068,26 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
     elif current_section == 'sub_graph':
         if is_sample_biased:
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
+        is_mobile = st.session_state.get("is_mobile", False)
+        if is_mobile:
+            st.info("📱 **Modo Simplificado (Mobile)**. O limite inicial (threshold) do grafo foi ajustado dinamicamente para evitar nodos isolados e limpar a visualização.", icon="ℹ️")
+            
         st.markdown("<div id='toc-graph'></div>", unsafe_allow_html=True)
         st.subheader(i18n.t("sub_graph"), help=i18n.t("sub_graph_help"))
-        threshold_adj = st.slider(i18n.t("threshold_adj"), min_value=1, max_value=15, value=1, step=1)
+        
+        # Calculate optimal threshold dynamically for mobile:
+        # Maximize threshold while keeping at least one connection for every node.
+        import numpy as np
+        adj_array = adj_matrix.to_numpy(dtype=float, copy=True)
+        np.fill_diagonal(adj_array, 0)
+        max_edges_per_node = adj_array.max(axis=1)
+        optimal_mobile_thresh = int(max_edges_per_node.min())
+        if optimal_mobile_thresh < 1:
+            optimal_mobile_thresh = 1
+            
+        default_thresh = optimal_mobile_thresh if is_mobile else 1
+        
+        threshold_adj = st.slider(i18n.t("threshold_adj"), min_value=1, max_value=15, value=default_thresh, step=1)
         nodes_data, edges_data, pos = data_processing.gerar_dados_grafo(adj_matrix, threshold=threshold_adj, text_matrix=text_matrix)
         fig_grafo = visualizations.plot_network_graph(nodes_data, edges_data, i18n.t("title_network").format(threshold=threshold_adj) + f" - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui)
         st.plotly_chart(fig_grafo, use_container_width=True)
@@ -1835,6 +2095,59 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             tone_key = st.session_state.get('explanation_tone', 'tecnico')
             st.info(explanations.get_explanation("grafo", tone_key, language=st.session_state.get('language', 'PT-BR')))
         if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.4 Grafo de Similaridade", "1_4")
+        
+        with st.expander(i18n.t("graph_edges_table", default="Ver Lista de Conexões em Comum")):
+            show_all_edges = st.radio(
+                i18n.t("graph_edges_toggle", default="Filtro de Conexões:"),
+                [i18n.t("graph_edges_active", default="Mostrar apenas conexões ativas no gráfico"), 
+                 i18n.t("graph_edges_all", default="Mostrar todas as conexões")],
+                index=0,
+                key="graph_edges_radio"
+            ) == i18n.t("graph_edges_all", default="Mostrar todas as conexões")
+            
+            edges_list = []
+            cargos = list(adj_matrix.columns)
+            for i in range(len(cargos)):
+                for j in range(i + 1, len(cargos)):
+                    weight = adj_matrix.iloc[i, j]
+                    if weight > 0:
+                        is_active = weight >= threshold_adj
+                        if not show_all_edges and not is_active:
+                            continue
+                        c1 = cargos[i]
+                        c2 = cargos[j]
+                        attrs = text_matrix_full.iloc[i, j] if text_matrix_full is not None else ""
+                        attrs_list = ", ".join([a.strip() for a in str(attrs).split("<br>") if a.strip()])
+                        edges_list.append({
+                            "Cargo 1": i18n.traduzir_cargo(c1) if st.session_state.get('language', 'PT-BR') == 'EN' else c1,
+                            "Cargo 2": i18n.traduzir_cargo(c2) if st.session_state.get('language', 'PT-BR') == 'EN' else c2,
+                            "Conexões em Comum": weight,
+                            "Atribuições": attrs_list,
+                            "Ativa": is_active
+                        })
+                        
+            if edges_list:
+                df_edges = pd.DataFrame(edges_list).sort_values(by="Conexões em Comum", ascending=False)
+                
+                def highlight_inactive_edge(row_display, row_edges):
+                    if not row_edges["Ativa"]:
+                        # If light mode, use a slightly darker grey to be visible
+                        bg_c = "rgba(0,0,0,0.03)" if st.session_state.get('light_mode') else "rgba(255,255,255,0.05)"
+                        color_c = "#a0a0a0" if st.session_state.get('light_mode') else "#666666"
+                        return [f'color: {color_c}; background-color: {bg_c};'] * len(row_display)
+                    return [''] * len(row_display)
+                
+                df_display = df_edges.drop(columns=["Ativa"])
+                styled_edges = df_display.style.apply(lambda row: highlight_inactive_edge(row, df_edges.loc[row.name]), axis=1)
+                
+                if st.session_state.get('light_mode'):
+                    # Custom light HTML table
+                    html_table = df_display.to_html(index=False, classes="table table-striped", border=0)
+                    st.markdown(f'<div class="light-table-container">{html_table}</div>', unsafe_allow_html=True)
+                else:
+                    st.dataframe(styled_edges, use_container_width=True, hide_index=True)
+            else:
+                st.write(i18n.t("graph_edges_empty", default="Nenhuma conexão encontrada com o filtro atual."))
     
     # 1.5. Mapa de Calor Gower
     elif current_section == 'sub_gower':
@@ -1856,9 +2169,58 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             df_gower_15.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_15.index]
             df_gower_15.columns = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_15.columns]
         
-        gower_bg = "#CED4DA" if st.session_state.get("light_mode") else "rgba(0,0,0,0)"
-        fig_gower_heat = visualizations.plot_gower_heatmap(df_gower_15, f"{i18n.t('title_gower_prefix')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui, plot_bgcolor=gower_bg)
-        st.plotly_chart(fig_gower_heat, use_container_width=True)
+        is_mobile = st.session_state.get("is_mobile", False)
+        
+        if not is_mobile:
+            gower_bg = "#CED4DA" if st.session_state.get("light_mode") else "rgba(0,0,0,0)"
+            fig_gower_heat = visualizations.plot_gower_heatmap(df_gower_15, f"{i18n.t('title_gower_prefix')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui, plot_bgcolor=gower_bg)
+            st.plotly_chart(fig_gower_heat, use_container_width=True)
+        else:
+            # Layout Mobile (Apenas Tabela com menores distâncias)
+            st.info("📱 **Modo Simplificado (Mobile)**. Acesse em um Computador para visualizar o mapa de calor completo.", icon="ℹ️")
+            c_gower_top = "#1E2329" if st.session_state.get("light_mode") else "#ddd"
+            st.markdown(f"<p style='font-size: 0.9rem; margin-bottom: 5px; margin-top: 15px; color:{c_gower_top};'><strong>{i18n.t('gower_top_pairs', default='Maiores Similaridades (Menores Distâncias)')}</strong></p>", unsafe_allow_html=True)
+            
+            df_g = df_gower_15.copy()
+            df_g.index.name = 'Cargo 1'
+            df_g.columns.name = 'Cargo 2'
+            pairs_g = df_g.stack().reset_index()
+            pairs_g.columns = ['Cargo 1', 'Cargo 2', 'Distância']
+            pairs_g = pairs_g[pairs_g['Cargo 1'] != pairs_g['Cargo 2']]
+            pairs_g['Pair'] = pairs_g.apply(lambda row: " - ".join(sorted([row['Cargo 1'], row['Cargo 2']])), axis=1)
+            pairs_g = pairs_g.drop_duplicates(subset=['Pair'])
+            
+            lbl_5 = "Top 5"
+            lbl_10 = "Top 10"
+            lbl_all = i18n.t("lbl_all", default="Todos")
+            qtd_pares_g = st.selectbox("Quantidade:", [lbl_5, lbl_10, lbl_all], index=0, label_visibility="collapsed", key="gower_qtd")
+            
+            limit_pairs_g = 5
+            if qtd_pares_g == lbl_10:
+                limit_pairs_g = 10
+            elif qtd_pares_g == lbl_all:
+                limit_pairs_g = len(pairs_g)
+                
+            top_pairs_g = pairs_g.sort_values(by='Distância', ascending=True).head(limit_pairs_g)
+            top_pairs_g['Distância'] = top_pairs_g['Distância'].map(lambda x: f"{x:.3f}")
+            
+            df_top_g = top_pairs_g[['Pair', 'Distância']].rename(columns={'Pair': i18n.t('adj_tbl_pair'), 'Distância': 'Distância'})
+            df_top_g.insert(0, '#', range(1, len(df_top_g) + 1))
+            
+            if st.session_state.get('light_mode'):
+                html_table_g = df_top_g.to_html(index=False, classes="table table-striped", border=0)
+                st.markdown(f"""
+                <div style="overflow-x: auto; font-size: 0.85rem;">
+                    {html_table_g}
+                </div>
+                <style>
+                    .table {{ width: 100%; border-collapse: collapse; }}
+                    .table th, .table td {{ padding: 8px; text-align: left; border-bottom: 1px solid rgba(128,128,128,0.2); }}
+                    .table th {{ font-weight: bold; }}
+                </style>
+                """, unsafe_allow_html=True)
+            else:
+                st.dataframe(df_top_g, use_container_width=True, hide_index=True)
         
         # Histograma de Distribuição (Sugestão Visual 1)
         auto_zoom_15 = st.checkbox(i18n.t("ruler_zoom_toggle", default="🔍 Habilitar Zoom Automático (Ajustar gráfico à dispersão)"), value=True, key="ruler_zoom_15")
@@ -1886,6 +2248,10 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
         st.markdown("<div id='toc-ruler'></div>", unsafe_allow_html=True)
         st.subheader(i18n.t("sub_ruler"), help=i18n.t("sub_ruler_help"))
+        
+        is_mobile = st.session_state.get("is_mobile", False)
+        if is_mobile:
+            st.info("📱 **Modo Simplificado (Mobile)**. A régua foi rotacionada para a vertical garantindo o scroll (role para baixo para ver a assimetria).", icon="ℹ️")
     
         ref_cargo_opcoes = list(df_para_gower['Carreira']) if 'Carreira' in df_para_gower.columns else [str(x) for x in df_para_gower.index]
         
@@ -1936,6 +2302,10 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
         st.markdown("<div id='toc-dendro'></div>", unsafe_allow_html=True)
         st.subheader(i18n.t("sub_dendro"), help=i18n.t("sub_dendro_help"))
+        
+        is_mobile = st.session_state.get("is_mobile", False)
+        if is_mobile:
+            st.info("📱 **Modo Simplificado (Mobile)**. A árvore hierárquica foi disposta lateralmente para evitar encavalamento de textos.", icon="ℹ️")
     
         col_metric_17, col_linkage_17 = st.columns(2)
         with col_metric_17:
@@ -2050,6 +2420,10 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         st.markdown("<div id='toc-upset'></div>", unsafe_allow_html=True)
         st.subheader(i18n.t("sub_upset"), help=i18n.t("sub_upset_help"))
         
+        is_mobile = st.session_state.get("is_mobile", False)
+        if is_mobile:
+            st.info("📱 **Modo Simplificado (Mobile)**. O gráfico foi reduzido ao Top 10 para não esmagar as barras na tela. Acesse em um Computador para visualizar o Top 30 completo.", icon="ℹ️")
+        
         df_upset = df_original_limpo.set_index('Carreira') if 'Carreira' in df_original_limpo.columns else df_original_limpo.copy()
         if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
             df_upset.index = [i18n.traduzir_cargo(c) for c in df_upset.index]
@@ -2057,7 +2431,8 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         fig_upset = visualizations.plot_upset_bar_chart(
             df_upset, 
             f"{i18n.t('upset_title')} - {i18n.t(cenario_sel)}", 
-            cargos_destaque=cargos_destaque_ui
+            cargos_destaque=cargos_destaque_ui,
+            limit_top_n=10 if is_mobile else 30
         )
         st.plotly_chart(fig_upset, use_container_width=True)
         

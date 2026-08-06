@@ -60,6 +60,55 @@ def plot_binary_heatmap(df: pd.DataFrame, title: str, colorscale: str = "Teal", 
     
     return fig
 
+def plot_mobile_binary_bars(df: pd.DataFrame, cargos_destaque: list = None, dic_reverso: dict = None) -> go.Figure:
+    """
+    Renderiza um gráfico de barras otimizado para celular no lugar do mapa de calor.
+    Exibe a contagem de atribuições ativas para os cargos selecionados.
+    """
+    import streamlit as st
+    df_temp = df.copy()
+    if 'Carreira' in df_temp.columns:
+        df_temp = df_temp.set_index('Carreira')
+    df_temp = df_temp.apply(pd.to_numeric, errors='coerce').fillna(0)
+    
+    # Criar DataFrame longo para plotly express
+    df_long = df_temp.reset_index()
+    # A primeira coluna é garantidamente o index resetado
+    first_col = df_long.columns[0]
+    df_long.rename(columns={first_col: 'Cargo'}, inplace=True)
+    df_long = df_long.melt(id_vars='Cargo', var_name='Atribuição', value_name='Possui')
+    
+    df_long = df_long[df_long['Possui'] > 0]
+    
+    # Restaura nomes longos
+    if dic_reverso:
+        df_long['Atribuição'] = df_long['Atribuição'].map(lambda x: dic_reverso.get(x, x))
+    
+    # Agrupar por Cargo para contar total
+    df_counts = df_long.groupby('Cargo').size().reset_index(name='Total Atribuições')
+    df_counts = df_counts.sort_values(by='Total Atribuições', ascending=True)
+    
+    fig = px.bar(
+        df_counts, 
+        x='Total Atribuições', 
+        y='Cargo', 
+        orientation='h',
+        text='Total Atribuições',
+        color='Cargo',
+        color_discrete_sequence=px.colors.qualitative.Prism
+    )
+    
+    fig.update_layout(
+        showlegend=False,
+        margin=dict(l=10, r=20, t=30, b=10),
+        xaxis_title=i18n.t("col_qtd"),
+        yaxis_title="",
+        title=i18n.t("title_matrix_prefix")
+    )
+    fig.update_traces(textposition='outside')
+    
+    return fig
+
 def plot_correlation_heatmap(matriz_corr: pd.DataFrame, title: str) -> go.Figure:
     """
     Gera um mapa de calor de correlação estatística entre carreiras.
@@ -157,11 +206,9 @@ def plot_network_graph(nodes_data: list, edges_data: list, title: str, cargos_de
 
     node_trace = go.Scatter(
         x=node_x, y=node_y,
-        mode='markers+text',
-        textposition="top center",
+        mode='markers',
         hoverinfo='text',
         text=node_text,
-        textfont=dict(color=text_colors, size=12),
         marker=dict(
             showscale=False,
             color=cores_nos,
@@ -179,6 +226,20 @@ def plot_network_graph(nodes_data: list, edges_data: list, title: str, cargos_de
                 xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
                 )
+                
+    # Adiciona os textos dos nós como anotações para evitar que o Plotly os esconda no mobile
+    for n, t_color in zip(nodes_data, text_colors):
+        fig.add_annotation(
+            x=n["x"],
+            y=n["y"],
+            text=f"<b>{n['id']}</b>",
+            showarrow=False,
+            yshift=15 if cargos_destaque and n["id"] in cargos_destaque else 10,
+            font=dict(color=t_color, size=11, family="Arial"),
+            xanchor="center",
+            yanchor="bottom"
+        )
+        
     return fig
 
 def plot_adjacency_heatmap(adj_matrix: pd.DataFrame, title: str, text_matrix: pd.DataFrame = None, cargos_destaque: list = None, colorscale="YlGnBu") -> go.Figure:
@@ -301,12 +362,15 @@ def plot_distance_histogram_comparative(df_a: pd.DataFrame, df_b: pd.DataFrame, 
         fig.add_vrect(x0=0.50, x1=0.65, fillcolor="rgba(255, 165, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_low", default="Baixa") if i==0 else "", annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff9900", row=1, col=col)
         fig.add_vrect(x0=0.65, x1=1.05, fillcolor="rgba(255, 0, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_very_low", default="Muito Baixa") if i==0 else "", annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff4444", row=1, col=col)
         
-        # Adicionar as bolinhas com escala de cor
+        # Adicionar as bolinhas com escala de cor e valores
         fig.add_trace(go.Scatter(
             x=distances,
             y=jitter_y,
-            mode='markers',
-            text=pairs,
+            mode='markers+text',
+            customdata=pairs,
+            text=[f"{d:.2f}" for d in distances],
+            textposition="top center",
+            textfont=dict(size=9),
             marker=dict(
                 color=distances,
                 colorscale='RdYlGn_r',
@@ -316,7 +380,7 @@ def plot_distance_histogram_comparative(df_a: pd.DataFrame, df_b: pd.DataFrame, 
                 opacity=0.8,
                 line=dict(width=1, color='rgba(255, 255, 255, 0.8)')
             ),
-            hovertemplate="<b>Par:</b> %{text}<br><b>" + i18n.t('dist_value', default='Distância') + ":</b> %{x:.3f}<extra></extra>",
+            hovertemplate="<b>Par:</b> %{customdata}<br><b>" + i18n.t('dist_value', default='Distância') + ":</b> %{x:.3f}<extra></extra>",
             showlegend=False
         ), row=1, col=col)
         
@@ -384,12 +448,15 @@ def plot_distance_histogram(df_dist: pd.DataFrame, title: str, full_scale: bool 
     fig.add_vrect(x0=0.50, x1=0.65, fillcolor="rgba(255, 165, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_low", default="Baixa"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff9900")
     fig.add_vrect(x0=0.65, x1=1.05, fillcolor="rgba(255, 0, 0, 0.2)", line_width=0, layer="below", annotation_text=i18n.t("zone_very_low", default="Muito Baixa"), annotation_position="top left", annotation_font_size=10, annotation_font_color="#ff4444")
     
-    # Adicionar as bolinhas com escala de cor
+    # Adicionar as bolinhas com escala de cor e valores
     fig.add_trace(go.Scatter(
         x=distances,
         y=jitter_y,
-        mode='markers',
-        text=pairs,
+        mode='markers+text',
+        customdata=pairs,
+        text=[f"{d:.2f}" for d in distances],
+        textposition="top center",
+        textfont=dict(size=9),
         marker=dict(
             color=distances,
             colorscale='RdYlGn_r', # Verde para distâncias baixas, Vermelho para altas
@@ -399,7 +466,7 @@ def plot_distance_histogram(df_dist: pd.DataFrame, title: str, full_scale: bool 
             opacity=0.8,
             line=dict(width=1, color='rgba(255, 255, 255, 0.8)')
         ),
-        hovertemplate="<b>Par:</b> %{text}<br><b>" + i18n.t('dist_value', default='Distância') + ":</b> %{x:.3f}<extra></extra>"
+        hovertemplate="<b>Par:</b> %{customdata}<br><b>" + i18n.t('dist_value', default='Distância') + ":</b> %{x:.3f}<extra></extra>"
     ))
     
     # Linhas de média e mediana
@@ -516,7 +583,7 @@ def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado d
         title_font_size=18,
         xaxis_title=i18n.t('hover_gower_dist'),
         yaxis_title=None,
-        yaxis=dict(showgrid=True, gridcolor='rgba(0, 0, 0, 0.25)', gridwidth=1),
+        yaxis=dict(showgrid=True, gridcolor='rgba(0, 0, 0, 0.25)', gridwidth=1, autorange="reversed"),
         margin=dict(l=150, r=50, t=50, b=50),
         height=500,
         autosize=True
@@ -537,7 +604,7 @@ def plot_gower_ruler(df_gower: pd.DataFrame, reference_career: str = "Delegado d
 import plotly.figure_factory as ff
 from scipy.spatial.distance import squareform
 
-def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = None, linkage_method: str = 'single') -> go.Figure:
+def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = None, linkage_method: str = 'single', is_mobile: bool = False) -> go.Figure:
     """
     Gera um dendograma a partir da matriz de distâncias de Gower.
     """
@@ -590,13 +657,19 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
         linkagefun=lambda x: linkage(squareform(x) if x.ndim == 2 else x, method=linkage_method)
     )
     
+    # Layout configurations
+    dendro_height = 600
+    if is_mobile:
+        # Dynamic height to avoid squishing
+        dendro_height = max(500, len(labels) * 45)
+        
     fig.update_layout(
         title=title,
         title_font_size=18,
         title_x=0.5,
         title_xref="paper",
-        height=600,
-        margin=dict(l=250, r=50, t=110, b=50),
+        height=dendro_height,
+        margin=dict(l=250 if not is_mobile else 180, r=50, t=110, b=50),
         autosize=True
     )
     
@@ -644,7 +717,7 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
     
     return fig
 
-def plot_upset_bar_chart(df: pd.DataFrame, title: str, dic_reverso: dict = None, cargos_destaque: list = None) -> go.Figure:
+def plot_upset_bar_chart(df: pd.DataFrame, title: str, dic_reverso: dict = None, cargos_destaque: list = None, limit_top_n: int = 30) -> go.Figure:
     """
     Simula a essência de um UpSet Plot usando um Bar Chart horizontal interativo no Plotly.
     Calcula as interseções reais entre os conjuntos de cargos.
@@ -724,10 +797,10 @@ def plot_upset_bar_chart(df: pd.DataFrame, title: str, dic_reverso: dict = None,
     # Ordenar pela contagem
     combination_counts = combination_counts.sort_values(by='count', ascending=True)
     
-    # Limitar top 30
-    if len(combination_counts) > 30:
-        combination_counts = combination_counts.tail(30)
-        title += " (Top 30 Interseções)"
+    # Limitar top N
+    if len(combination_counts) > limit_top_n:
+        combination_counts = combination_counts.tail(limit_top_n)
+        title += f" (Top {limit_top_n} Interseções)"
         
     marker_colors = []
     if cargos_destaque:
@@ -757,6 +830,8 @@ def plot_upset_bar_chart(df: pd.DataFrame, title: str, dic_reverso: dict = None,
             f"<b>{i18n.t('hover_shared_assignments')}:</b>%{{customdata[1]}}"
             "<extra></extra>"
         ),
+        text=combination_counts['count'],
+        textposition='auto',
         marker=dict(
             color=marker_colors,
             colorscale='Blues' if not cargos_destaque else None,

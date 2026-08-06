@@ -37,6 +37,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             """)
             
     is_light = st.session_state.get("light_mode")
+    is_mobile = st.session_state.get("is_mobile", False)
     
     text_color = "#1E2329" if is_light else "#e0e0e0"
     th_bg = "#F0F2F6" if is_light else "#2D2D2D"
@@ -170,13 +171,12 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
         else:
             return f"{val} <span class='jump-arrow'>{i18n.t('m4_jumped')}</span>"
 
-    def render_html_table(hist_dict, is_float=False):
+    def render_html_table(hist_dict, cenarios_secundarios, is_float=False):
         header_origem = i18n.t("m4_header_origin")
         header_controle = i18n.t("m4_header_control")
-        html = "<table class='html-table'><thead><tr>"
+        html = "<div style='overflow-x: auto;'><table class='html-table'><thead><tr>"
         html += f"<th>{header_origem}</th><th>{header_controle}</th>"
         
-        cenarios_secundarios = [c for c in opcoes_cenarios if c != "Atual Sem Correção"]
         for cen in cenarios_secundarios:
             html += f"<th>{i18n.t(cen) if i18n.t(cen) != cen else cen}</th>"
         html += "</tr></thead><tbody>"
@@ -222,7 +222,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             
             html += "</tr>"
             
-        html += "</tbody></table>"
+        html += "</tbody></table></div>"
         st.markdown(html, unsafe_allow_html=True)
         
     def render_dashboard_aba(titulo, descricao, hist_dict, explanation_key=None, is_float=False, is_string=False, help_text=None, anchor_id=None):
@@ -240,13 +240,33 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
         if is_sample_biased:
             st.warning(explanations.get_short_bias_warning(language=lang), icon="🚨")
             
+        if is_mobile:
+            st.info("📱 **Modo Simplificado (Mobile)**. Os gráficos foram ajustados para telas menores.", icon="ℹ️")
+            
         st.caption(descricao)
+        
+        todos_secundarios = [c for c in opcoes_cenarios if c != "Atual Sem Correção"]
+        default_selection = todos_secundarios[:2] if is_mobile and len(todos_secundarios) > 2 else todos_secundarios
+        
+        cenarios_secundarios = st.multiselect(
+            i18n.t("m4_table_filter", default="Filtrar Cenários Secundários:"),
+            todos_secundarios,
+            default=default_selection,
+            format_func=lambda x: i18n.t(x) if i18n.t(x) != x else x,
+            key=f"ms_chart_{explanation_key}"
+        )
+        
+        if not cenarios_secundarios:
+            st.info(i18n.t("m4_table_filter_empty", default="Selecione ao menos um cenário secundário para exibição."))
+            return
+            
+        cenarios_filtrados = ["Atual Sem Correção"] + cenarios_secundarios
         
         # Renderizar gráfico de linha (exceto se for texto)
         if not is_string:
             dados_linhas = []
             for c in filtro_cargos:
-                for cen in opcoes_cenarios:
+                for cen in cenarios_filtrados:
                     val = hist_dict[c].get(cen)
                     if val is not None and val != i18n.t("m4_extinct") and val != i18n.t("m4_isolated"):
                         try:
@@ -277,12 +297,27 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
                         else:
                             trace.line.width = 4
                             trace.marker.size = 10
+                            if is_mobile and hasattr(trace, 'x') and hasattr(trace, 'y') and trace.x is not None and trace.y is not None:
+                                txt_color = "black" if is_light else "white"
+                                for x_val, y_val in zip(trace.x, trace.y):
+                                    if pd.notna(y_val):
+                                        y_str = f"{y_val:.3f}" if is_float else f"{int(y_val)}"
+                                        fig_line.add_annotation(x=x_val, y=y_val, text=y_str, showarrow=False, yshift=15, font=dict(color=txt_color, size=11))
+                else:
+                    if is_mobile:
+                        for trace in fig_line.data:
+                            if hasattr(trace, 'x') and hasattr(trace, 'y') and trace.x is not None and trace.y is not None:
+                                txt_color = "black" if is_light else "white"
+                                for x_val, y_val in zip(trace.x, trace.y):
+                                    if pd.notna(y_val):
+                                        y_str = f"{y_val:.3f}" if is_float else f"{int(y_val)}"
+                                        fig_line.add_annotation(x=x_val, y=y_val, text=y_str, showarrow=False, yshift=15, font=dict(color=txt_color, size=11))
                             
                 fig_line.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=10, b=0))
                 st.plotly_chart(fig_line, use_container_width=True)
                 
         # Renderizar Tabela
-        render_html_table(hist_dict, is_float)
+        render_html_table(hist_dict, cenarios_secundarios, is_float)
         
         if explanation_key and st.session_state.get('show_explanations', False):
             st.info(explanations.get_explanation(explanation_key, tone=st.session_state.get('explanation_tone', 'tecnico'), language=lang))
