@@ -4,6 +4,20 @@ Todas as modificações notáveis neste projeto serão documentadas neste arquiv
 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [Unreleased] - 2026-08-09
+
+### Added
+- **Histórico do Akinator**: Adição de um contador real de perguntas e a listagem de atribuições testadas no menu expandível "Ver status dos cargos" do Modo 5.
+- **Novos Mascotes (Assets)**: Geração e substituição das imagens placeholders pelas versões definitivas (Cão, Capivara e Coruja), incluindo estados dinâmicos (Near, Won e Confused) gerados por IA.
+
+### Changed
+- **Organização de Assets**: Limpeza do diretório de assets, isolando as versões antigas ou não utilizadas.
+- **Navegação de UI Protegida**: Inclusão de `safe_key` na navegação do menu, prevenindo o reset indesejado para a subseção 1.1 ao alterar idiomas ou temas (unmount tracking).
+
+### Fixed
+- **Tradução no Akinator (i18n)**: Reparo no bloqueio da função que injetava textos em inglês incondicionalmente durante a exibição de cargos no jogo.
+- **Dicionário i18n**: Correção do título do Modo Criativo que exibia chaves vazadas em inglês no dicionário base PT-BR.
+
 ## [Unreleased] - 2026-08-06
 
 ### Added

@@ -22,7 +22,8 @@ import floating_toc
 importlib.reload(floating_toc)
 from floating_toc import render_toc
 from datetime import datetime
-import pytz
+import creative_view
+importlib.reload(creative_view)
 
 
 # Roteamento do painel de administração oculto
@@ -81,9 +82,9 @@ try:
             top: -50%; left: -50%; width: 200vw; height: 200vh;
             pointer-events: none;
             z-index: 9999999;
-            /* Cor branca com blend difference garante contraste sutil em fundos claros e escuros */
+            /* Reduzido para 0.5% (0.005) para ficar totalmente invisível a olho nu */
             color: #FFF;
-            opacity: 0.02;
+            opacity: 0.005;
             mix-blend-mode: difference;
             font-size: 24px;
             font-family: monospace;
@@ -1176,7 +1177,7 @@ with st.container():
         with col_menu_global.popover(i18n.t('modes_and_explanations'), use_container_width=True):
             # Usar <div> em vez de <h4> remove a âncora padrão e o espaçamento gigante do Streamlit
             st.markdown(f"<div style='margin-bottom:-15px; margin-top: -10px; font-size:1.1rem; font-weight:bold;'>{i18n.t('view_modes')}</div>", unsafe_allow_html=True)
-            opcoes_modos_keys = ["mode_1", "mode_2", "mode_3", "mode_4"]
+            opcoes_modos_keys = ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5"]
             
             modo_visao_key = st.radio(
                 i18n.t("nav_analytic"),
@@ -1455,6 +1456,11 @@ with st.container():
             </div>
         </div>
         """, unsafe_allow_html=True)
+        
+    # --- CONTROLES MODO 5 ---
+    elif modo_visao == i18n.t("mode_5"):
+        with col_menu_especifico.popover("⚙️ Cenário / Scenario", use_container_width=True):
+            cenario_sel = st.selectbox(i18n.t("select_scenario"), opcoes_cenarios, format_func=lambda x: i18n.t(x), key="creative_cenario_sel_top")
 
     # Navegação Interna Condicional (Substitui as bolinhas flutuantes)
     st.markdown("<div style='margin-top: 5px;'></div>", unsafe_allow_html=True)
@@ -1465,17 +1471,33 @@ with st.container():
         nav_options = ["sub_delta_title", "sub_dist_title", "sub_flow_title", "sub_radar_title", "sub_network_comp_title", "sub_tree_comp_title"]
     elif modo_visao == i18n.t("mode_3"):
         nav_options = ["m3_sub_gower_title", "m3_sub_vol_title", "m3_sub_share_title", "m3_sub_coph_title"]
-    else:
+    elif modo_visao == i18n.t("mode_4"):
         nav_options = ["m4_sub_volume_title", "m4_sub_exclusive_title", "m4_sub_shared_title", "m4_sub_adj_title", "m4_sub_gower_title", "m4_sub_neighbor_title"]
+    else:
+        nav_options = ["m5_sub_tree_title", "m5_sub_akinator_title"]
+        
+    radio_key = f"nav_section_radio_{modo_visao_key}"
+    safe_key = f"safe_{radio_key}"
+    
+    if safe_key in st.session_state and st.session_state[safe_key] in nav_options:
+        if radio_key not in st.session_state:
+            st.session_state[radio_key] = st.session_state[safe_key]
+            
+    def _update_section():
+        st.session_state[safe_key] = st.session_state[radio_key]
         
     current_section = menu_expander.radio(
         "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
         options=nav_options, 
         format_func=lambda x: i18n.t(x),
-        key=f"nav_section_radio_{modo_visao_key}",
+        key=radio_key,
         horizontal=True,
+        on_change=_update_section,
         help="Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
     )
+    
+    if safe_key not in st.session_state:
+        st.session_state[safe_key] = current_section
 
 if is_sample_biased_global:
     st.warning(explanations.get_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="⚠️")
@@ -2499,6 +2521,9 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
 
 elif modo_visao == i18n.t("mode_1"):
     st.error("Cenário indisponível.")
+
+elif modo_visao == i18n.t("mode_5"):
+    creative_view.render_creative_view(mapa_cenarios, cenario_sel, current_section)
 
 # Renderizar Botão Flutuante de Comentários (Geral para a Visão Atual)
 try:

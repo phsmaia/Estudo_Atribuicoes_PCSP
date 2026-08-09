@@ -56,7 +56,9 @@ def get_explanation(section, tone="tecnico", language="PT-BR"):
                 "m4_micro_43": "**📖 Scientific Comprehension: Adjacency Density**\n\nSum of raw intersections with all other careers (Σ adjacencies).\n- **Interpretation:** Indicates how 'mixed' the career is. Peaks signal a sudden increase in common functions with other roles.",
                 "m4_micro_44": "**📖 Scientific Comprehension: Degree Centrality**\n\nThe number of incident edges to the role's node in the connectivity mesh (threshold > 1).\n- **Interpretation:** Measures connection power (hub). Growth suggests the career interacts with more distinct careers than before.",
                 "m4_micro_45": "**📖 Scientific Comprehension: Gower Distancing (Isolation)**\n\nArithmetic mean of Gower distances relative to the other nodes.\n- **Interpretation:** A decreasing vector means the role is becoming statistically more generic/similar to the rest of the corporation.",
-                "m4_micro_46": "**📖 Scientific Comprehension: Neighborhood Rupture**\n\nTracks changes in the identity of the closest Euclidean neighbor (lowest Gower distance).\n- **Interpretation:** Changing neighbors represents a phylogenetic jump (Clade), signaling a radical change in the career's functional DNA."
+                "m4_micro_46": "**📖 Scientific Comprehension: Neighborhood Rupture**\n\nTracks changes in the identity of the closest Euclidean neighbor (lowest Gower distance).\n- **Interpretation:** Changing neighbors represents a phylogenetic jump (Clade), signaling a radical change in the career's functional DNA.",
+                "taxonomic_tree": "**📖 Scientific Comprehension: Taxonomic Tree**\n\nThe taxonomic tree applies biological cladistics concepts to administrative roles.\n- **Interpretation:** Roles with highly shared (basal) assignments form the root of the tree, representing the primitive core of the Police. The higher the branch, the more specialized (derived) the role is, holding assignments unique to its clade.",
+                "akinator": "**📖 Scientific Comprehension: Predictive Classification (Akinator)**\n\nA sequential binary decision tree algorithm applied to a sparse dataset.\n- **Algorithm:** The system dynamically calculates the Shannon Entropy of the remaining roles based on the presence/absence of assignments, choosing the question that optimally splits the remaining dataset in half."
             },
             "leigo": {
                 "matriz": "**💡 Simplified Explanation: The Check-list Matrix**\n\nImagine we grabbed all the laws and made a huge check-list. If the role's law says it does a task, we mark '1' (Colored Box). If not, '0' (Empty). To avoid duplicate tasks confusing the system, we grouped identical tasks together.",
@@ -84,7 +86,9 @@ def get_explanation(section, tone="tecnico", language="PT-BR"):
                 "m4_micro_43": "**💡 Simplified Explanation: Degree of Mixture**\n\nMeasures how many tasks in total the role shares with the corporation.\n- **How to read:** Growth indicates that the career is increasingly juxtaposed and mixed with others' work.",
                 "m4_micro_44": "**💡 Simplified Explanation: Connection Bridges**\n\nOut of 14 roles, with how many does your role have functions in common?\n- **How to read:** If before it shared tasks with 2 roles and now shares with 8, it became a 'wildcard' that acts throughout the precinct.",
                 "m4_micro_45": "**💡 Simplified Explanation: Profession Isolation**\n\nHow 'unique' is your role compared to all others?\n- **How to read:** Line going up (near 1.0) means the career is distancing itself from everyone and becoming an island (isolated). Line going down means it is becoming a generic 'do-it-all'.",
-                "m4_micro_46": "**💡 Simplified Explanation: Swap of 'Twin Brother'**\n\nWho is the role most similar to yours?\n- **How to read:** If the neighbor changes from one decade to another, the changes in the law were so heavy that you literally changed professional family."
+                "m4_micro_46": "**💡 Simplified Explanation: Swap of 'Twin Brother'**\n\nWho is the role most similar to yours?\n- **How to read:** If the neighbor changes from one decade to another, the changes in the law were so heavy that you literally changed professional family.",
+                "taxonomic_tree": "**💡 Simplified Explanation: The Tree of Evolution**\n\nJust like in biology where humans and monkeys share an ancestor, police roles also evolved from a common root. The roles at the bottom are the 'grandparents' (they do the most basic and common tasks). As you climb the branches, you find the 'specialized descendants' who do very unique things.",
+                "akinator": "**💡 Simplified Explanation: The Oracle Game**\n\nIt's a game of 'Guess Who'! The system looks at all the laws and figures out the smartest question to ask you. Each time you answer, it eliminates half of the careers until only the one you are thinking of remains. If it can't guess, someone wrote the law poorly!"
             }
         }
         return explanations_en.get(tone, explanations_en["tecnico"]).get(section, "")
@@ -231,7 +235,17 @@ Média aritmética das distâncias de Gower em relação aos demais nós.
             "m4_micro_46": """**📖 Compreensão Científica: Ruptura de Vizinhança**
             
 Rastreia alterações na identidade do vizinho euclidiano mais próximo (menor distância Gower).
-- **Interpretação:** Troca de vizinho representa um salto filogenético (Clado), sinalizando mudança radical no DNA funcional da carreira."""
+- **Interpretação:** Troca de vizinho representa um salto filogenético (Clado), sinalizando mudança radical no DNA funcional da carreira.""",
+
+            "taxonomic_tree": """**📖 Compreensão Científica: Árvore Taxonômica (Cladística)**
+
+Aplica conceitos da biologia evolutiva (cladística) às atribuições administrativas.
+- **Interpretação:** Cargos com um volume massivo de atribuições genéricas compartilhadas (basais) formam a raiz da árvore, representando a espinha dorsal ou o ancestral comum da corporação. Quanto mais alto e bifurcado o ramo, mais especializado e derivado é o cargo.""",
+
+            "akinator": """**📖 Compreensão Científica: Classificador Preditivo (Akinator)**
+
+Um algoritmo de árvore de decisão binária aplicado sobre matrizes esparsas.
+- **Algoritmo (Modo Perguntas):** A aplicação calcula dinamicamente a Entropia de Shannon (teoria da informação) do dataset remanescente a cada rodada. O sistema varre todas as colunas de atribuições ativas e seleciona aquela capaz de dividir a amostra restante o mais próximo possível de 50/50, garantindo o caminho mais curto para a classificação."""
         },
         "leigo": {
             "matriz": """**🗣️ Entendendo de forma simples: A Tabela de Presença**
@@ -364,7 +378,17 @@ O quão "único" é o seu cargo comparado a todos os outros?
             "m4_micro_46": """**🗣️ Entendendo de forma simples: Troca de "Irmão Gêmeo"**
 
 Quem é o cargo mais parecido com o seu?
-- **Como ler:** Se o vizinho muda de uma década para outra, as alterações na lei foram tão pesadas que você literalmente mudou de família profissional."""
+- **Como ler:** Se o vizinho muda de uma década para outra, as alterações na lei foram tão pesadas que você literalmente mudou de família profissional.""",
+
+            "taxonomic_tree": """**🗣️ Entendendo de forma simples: A Árvore da Evolução**
+
+Igual na biologia onde os animais evoluem, os cargos da polícia também têm uma raiz!
+- **Como ler:** Os cargos que ficam lá embaixo na raiz são os "avôs" generalistas, que fazem as tarefas mais comuns de delegacia. Conforme você sobe pelos galhos, encontra os cargos mais "evoluídos" e especializados, que fazem coisas únicas que ninguém mais faz.""",
+
+            "akinator": """**🗣️ Entendendo de forma simples: O Jogo do Oráculo**
+
+É o famoso jogo do "Cara a Cara" aplicado à legislação policial!
+- **Como funciona:** O sistema lê todas as leis e calcula matematicamente qual é a pergunta mais inteligente a se fazer para eliminar o maior número de cargos de uma vez só. Ele vai fatiando a polícia pela metade até sobrar apenas o cargo que você pensou. Se ele errar, é porque o edital do seu cargo não faz sentido na vida real!"""
         }
     }
     

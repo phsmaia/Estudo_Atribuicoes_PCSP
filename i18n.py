@@ -124,6 +124,8 @@ def _traduzir_cargo_simples(cargo):
     return cargo
 
 def traduzir_cargo(cargo_pt):
+    if st.session_state.get('language', 'PT-BR') == 'PT-BR':
+        return cargo_pt
     if pd.isna(cargo_pt):
         return cargo_pt
     cargo_pt_str = str(cargo_pt).strip()
@@ -177,6 +179,8 @@ def _traduzir_atribuicao_simples(atrib):
     return atrib
 
 def traduzir_atribuicao(atrib_pt):
+    if st.session_state.get('language', 'PT-BR') == 'PT-BR':
+        return atrib_pt
     if pd.isna(atrib_pt):
         return atrib_pt
     
@@ -200,6 +204,10 @@ TRANSLATIONS = {
         "mode_2": "2. Análise de Cenários (Comparativo A x B)",
         "mode_3": "3. Comparação Global (Macro)",
         "mode_4": "4. Rastreamento Longitudinal (Micro)",
+        "mode_5": "5. Modo Criativo / Interativo",
+        "m5_sub_tree_title": "5.1 Árvore Taxonômica",
+        "m5_sub_akinator_title": "5.2 Adivinhador de Cargos (Akinator)",
+        
         "explanation_mode": "📖 Modo de Explicações Detalhadas",
         "reading_tone": "Tom de Leitura:",
         "tone_academic": "👨‍🔬 Acadêmico / Técnico",
@@ -532,7 +540,43 @@ TRANSLATIONS = {
         "linkage_desc_complete": "Junta pelo vizinho mais distante. Forma grupos esféricos e compactos.",
 "linkage_desc_average": "Usa a média de todas as distâncias. Um meio-termo equilibrado (UPGMA).",
         "coph_corr_label": "Correlação Cofenética:",
-        "coph_corr_help": "Mede (de 0 a 1) o quanto o dendrograma preserva as distâncias originais. Valores próximos a 1 indicam que a árvore representa fielmente as distâncias."
+        "coph_corr_help": "Mede (de 0 a 1) o quanto o dendrograma preserva as distâncias originais. Valores próximos a 1 indicam que a árvore representa fielmente as distâncias.",
+        # --- MODO 5: CRIATIVO / INTERATIVO ---
+        "m5_intro_title": "🎨 5. Modo Criativo / Interativo",
+        "m5_intro_desc": "Bem-vindo ao laboratório criativo! Aqui exploramos os dados de formas menos convencionais e mais divertidas.",
+        "akinator_title": "🔮 O Oráculo da PCSP (Adivinhador de Cargos)",
+        "akinator_desc": "Pense em um cargo da Polícia Civil. Eu vou tentar adivinhar qual é através das atribuições dele!",
+        "akinator_how_to_play": "Como quer jogar?",
+        "akinator_mode_q": "Perguntas (Modo Divertido)",
+        "akinator_mode_m": "Seleção Rápida (Multiselect)",
+        "akinator_choose_mascot": "Escolha seu Mascote:",
+        "akinator_select_attr": "Selecione as atribuições que seu cargo faz:",
+        "akinator_no_match": "Nenhum cargo faz essa combinação exata!",
+        "akinator_is": "🎉 É o **{cargo}**!",
+        "akinator_could_be": "🤔 Pode ser: {cargos}",
+        "akinator_cheat_title": "📖 Cola do Oráculo: Consulte as atribuições para saber o que responder",
+        "akinator_cheat_desc": "Se você não conhece os cargos a fundo, escolha um cargo abaixo para ver a lista exata de atribuições ativas dele. Você pode usar isso como 'cola' para responder às perguntas do oráculo sem errar!",
+        "akinator_cheat_select": "Selecione um cargo para inspecionar:",
+        "akinator_cheat_success": "O cargo **{cargo}** possui **{count}** atribuições ativas neste cenário:",
+        "akinator_thinking": "está pensando...",
+        "akinator_near": "está quase lá...",
+        "akinator_won": "desvendou o mistério!",
+        "akinator_lost": "está em pane...",
+        "akinator_remaining": "Cargos possíveis restantes: {n}",
+        "akinator_lost_desc": "Fui derrotado! Você pensou em uma combinação que não existe (ou que a lei esqueceu).",
+        "akinator_play_again": "Jogar Novamente",
+        "akinator_won_desc": "Eu sei! Você pensou em: **{cargo}**!",
+        "akinator_tie": "Não consigo desempatar! Pode ser qualquer um destes:",
+        "akinator_your_role": "Seu cargo {attr}?",
+        "akinator_btn_yes": "Sim",
+        "akinator_btn_no": "Não",
+        "akinator_btn_skip": "Pular / Não sei",
+        "akinator_show_possibilities": "🕵️ Ver status dos cargos (Eliminados vs Possíveis)",
+        "akinator_possible": "Ainda Possíveis",
+        "akinator_eliminated": "Eliminados",
+        "akinator_questions_count": "Perguntas Realizadas",
+        "m5_tree_title": "🌳 Árvore Taxonômica das Carreiras",
+        "m5_tree_desc": "Aqui visualizamos as carreiras da PCSP como se fossem espécies biológicas. Cargos na base da árvore compartilham as atribuições mais fundamentais e universais da polícia, sendo considerados mais 'basais' (primitivos). Conforme a árvore se ramifica, encontramos as funções mais especializadas e exclusivas, que formam os ramos mais 'derivados' e complexos."
     },
     "EN": {
         "title": "Interactive Dashboard: PCSP Roles Study",
@@ -543,6 +587,9 @@ TRANSLATIONS = {
         "mode_2": "2. Scenario Analysis (A x B Comparative)",
         "mode_3": "3. Global Comparison (Macro)",
         "mode_4": "4. Longitudinal Tracking (Micro)",
+        "mode_5": "5. Creative / Interactive Mode",
+        "m5_sub_tree_title": "5.1 Taxonomic Tree",
+        "m5_sub_akinator_title": "5.2 Role Guesser (Akinator)",
         "explanation_mode": "📖 Detailed Explanations Mode",
         "reading_tone": "Explanation Tone:",
         "tone_academic": "🔬 Academic / Scientific",
@@ -870,7 +917,49 @@ TRANSLATIONS = {
         "linkage_desc_complete": "Joins by the furthest neighbor. Forms spherical and compact clusters.",
         "linkage_desc_average": "Uses the average of all distances. A balanced middle ground (UPGMA).",
         "coph_corr_label": "Cophenetic Correlation:",
-        "coph_corr_help": "Measures (from 0 to 1) how well the dendrogram preserves original distances. Values close to 1 indicate the tree faithfully represents the distances."
+        "coph_corr_help": "Measures (from 0 to 1) how well the dendrogram preserves original distances. Values close to 1 indicate the tree faithfully represents the distances.",
+        # --- MODO 5: CRIATIVO / INTERATIVO ---
+        "m5_intro_title": "🎨 5. Creative / Interactive Mode",
+        "m5_intro_desc": "Welcome to the creative laboratory! Here we explore the data in less conventional and more fun ways.",
+        "akinator_title": "🔮 The PCSP Oracle (Role Guesser)",
+        "akinator_desc": "Think of a Civil Police role. I will try to guess which one it is through its assignments!",
+        "akinator_how_to_play": "How do you want to play?",
+        "akinator_mode_q": "Questions (Fun Mode)",
+        "akinator_mode_m": "Quick Selection (Multiselect)",
+        "akinator_choose_mascot": "Choose your Mascot:",
+        "akinator_select_attr": "Select the assignments your role does:",
+        "akinator_no_match": "No role makes that exact combination!",
+        "akinator_is": "🎉 It's the **{cargo}**!",
+        "akinator_could_be": "🤔 It could be: {cargos}",
+        "akinator_cheat_title": "📖 Oracle's Cheat Sheet: Check assignments to know what to answer",
+        "akinator_cheat_desc": "If you don't know the roles in depth, choose a role below to see its exact list of active assignments. You can use this as a 'cheat sheet' to answer the oracle's questions without failing!",
+        "akinator_cheat_select": "Select a role to inspect:",
+        "akinator_cheat_success": "The role **{cargo}** has **{count}** active assignments in this scenario:",
+        "akinator_thinking": "is thinking...",
+        "akinator_near": "is almost there...",
+        "akinator_won": "solved the mystery!",
+        "akinator_lost": "is in a panic...",
+        "akinator_remaining": "Possible remaining roles: {n}",
+        "akinator_lost_desc": "I was defeated! You thought of a combination that doesn't exist (or that the law forgot).",
+        "akinator_play_again": "Play Again",
+        "akinator_won_desc": "I know! You thought of: **{cargo}**!",
+        "akinator_tie": "I can't break the tie! It could be any of these:",
+        "akinator_your_role": "Does your role {attr}?",
+        "akinator_btn_yes": "Yes",
+        "akinator_btn_no": "No",
+        "akinator_btn_skip": "Skip / I don't know",
+        "akinator_show_possibilities": "🕵️ View roles status (Eliminated vs Possible)",
+        "akinator_possible": "Still Possible",
+        "akinator_eliminated": "Eliminated",
+        "akinator_questions_count": "Questions Asked",
+        "m5_tree_title": "🌳 Taxonomic Tree of Careers",
+        "m5_tree_desc": "Here we visualize the PCSP careers as if they were biological species. Roles at the base of the tree share the most fundamental and universal police assignments, being considered more 'basal' (primitive). As the tree branches out, we find the most specialized and exclusive functions, which form the more 'derived' and complex branches.",
+        "m5_tree_format": "Tree Format:",
+        "m5_tree_format_v": "Angular Cladogram (V-shape)",
+        "m5_tree_format_c": "Classic Dendrogram",
+        "🐶 Inspetor Cão": "🐶 Inspector Dog",
+        "🦫 Investigadora Capi": "🦫 Investigator Capi",
+        "🦉 Oráculo (Coruja)": "🦉 Oracle (Owl)"
     }
 }
 

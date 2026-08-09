@@ -174,6 +174,8 @@ def modal_comentarios(global_topic: str):
             opcoes_secao += ["3.1 Distribuição", "3.2 Linha do tempo", "3.3 Mudanças"]
         elif "4" in global_topic:
             opcoes_secao += ["4.1 Rastreamento", "4.2 Evolução Específica"]
+        elif "5" in global_topic:
+            opcoes_secao += ["5.1 Árvore Taxonômica", "5.2 Adivinhador de Cargos"]
             
         st.info(i18n.t("modal_current_mode").replace("{global_topic}", global_topic))
         section_to_comment = st.selectbox(i18n.t("modal_select_topic"), opcoes_secao, key="comment_sec_modal")

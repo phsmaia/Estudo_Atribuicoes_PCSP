@@ -609,9 +609,10 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
     Gera um dendograma a partir da matriz de distâncias de Gower.
     """
     # Certificar-se que a matriz é simétrica (a gower as vezes tem floats com infimas diferenças)
-    dist_array = (df_gower.values + df_gower.values.T) / 2
-    # Preencher a diagonal com exatos 0s
     import numpy as np
+    dist_array = (df_gower.values + df_gower.values.T) / 2
+    dist_array = np.clip(dist_array, 0, 1) # Assegura valores entre 0 e 1, retirando flutuações negativas
+    # Preencher a diagonal com exatos 0s
     np.fill_diagonal(dist_array, 0)
     
     labels = []
@@ -624,8 +625,9 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
         else:
             labels.append(lbl)
     
-    # Squareform requer distância sem a diagonal
-    condensed_dist = squareform(dist_array)
+    # Squareform requer distância sem a diagonal. 
+    # Usamos checks=False para contornar o ValueError de simetria do Scipy (por imprecisão de float64)
+    condensed_dist = squareform(dist_array, checks=False)
     
     # Para usar o Plotly, precisamos criar um linkage
     from scipy.cluster.hierarchy import linkage, cophenet
