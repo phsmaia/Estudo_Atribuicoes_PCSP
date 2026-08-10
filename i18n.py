@@ -196,6 +196,21 @@ def traduzir_atribuicao(atrib_pt):
 
 TRANSLATIONS = {
     "PT-BR": {
+        "tutorial_popover": "💡 Ajuda / Tutorial",
+        
+        "welcome_p1": "Este é um <b>projeto de Ciência de Dados</b>, focado em <b>mineração, limpeza, processamento e visualização de dados</b>. Ele abrange a criação de diversos cenários analíticos contendo árvores hierárquicas, réguas de distância, matrizes, tabelas e visualizações interativas, combinados a métodos de comparação visual (Visão Computacional) e análise textual (Processamento de Linguagem Natural - PLN).",
+        "welcome_p2": "Trata-se de um projeto estritamente <b>educativo e de portfólio</b> criado para a área de tecnologia e dados. A sua base principal é o diálogo interdisciplinar e a construção de conhecimento unindo computação, matemática/estatística e as ciências policiais. O objetivo não é criar barreiras, disputas ou animosidades entre cargos e pessoas, mas sim trazer análises funcionais muito mais completas e científicas do que as convencionalmente realizadas limitadas apenas à ótica de uma única ciência (jurídica, social, política, etc).",
+        "welcome_p3": "🛡️ <b>Não Caracterização como Rede Social e Isenção:</b><br>Para fins legais e regulamentares institucionais: <b>Esta aplicação Web NÃO constitui e não opera como uma Rede Social</b>. Os recursos de interação aqui contidos (como curtir ou comentar) são ferramentas de usabilidade adotadas estritamente para métricas e captação de feedback estrutural, não violando vedações institucionais sobre o uso de redes sociais por policiais. Além disso, a mera divulgação ou o compartilhamento do link desta aplicação em redes sociais tradicionais não a transforma em uma rede social — assim como compartilhar uma lei ou o link de um site de notícias não os torna redes sociais.<br><br><b>Importante frisar:</b> Eventuais curtidas e comentários efetuados por visitantes não refletem a opinião do autor do projeto, sendo de responsabilidade exclusiva de quem os expressou.",
+        "welcome_p4": "⚠️ <b>Uso, Compartilhamento e Direitos Autorais:</b><br>A utilização e o compartilhamento desta aplicação são livres para o diálogo e debate acadêmico, bem como para o uso em palestras, desde que a devida referência ao autor seja feita. <b>É estritamente vedada a sua utilização para outros fins comerciais ou publicação como autoria própria sem autorização.</b> Qualquer utilização sem permissão poderá ser alvo de ações por plágio e infração de propriedade intelectual. Além disso, o uso alheio e contrário à construção de conhecimento, de forma abusiva e/ou desviante, também está sujeito a ser processado mediante ação legal posterior.",
+        "welcome_p5": "📊 <b>Dados e Engenharia:</b><br>Todos os dados utilizados provêm de fontes públicas, regras institucionais, textos legais, documentos acadêmicos ou costumes documentados da atividade policial (listados na seção detalhada de dados do sistema). A aplicação foi inteiramente construída em <b>Python</b> (utilizando <b>Streamlit</b> para o front-end). A arquitetura conta também com Banco de Dados focado em segurança de sistemas, versionamento Git, e contou com a orquestração avançada do Google Antigravity, integração de Harness, Agentes autônomos / Skills e MCP Servers para celeridade e escalabilidade da produção.",
+        "welcome_p6": "Este projeto representa o marco principal da minha <b>entrada efetiva na área de dados e computação</b>. Espero que a ferramenta proporcione excelentes análises e reflexões!",
+        "welcome_btn": "Concordo com os Termos de Uso",
+
+        # Section Popovers (Placeholders)
+        "tut_sec_matrix": "A Matriz de Distância (Gower) mede matematicamente o quão diferentes são os cargos. Valores mais próximos de 0 indicam perfis idênticos, enquanto valores próximos a 1 indicam total discrepância funcional.",
+        "tut_sec_graph": "O Grafo de Similaridade mostra os cargos como 'nós'. A linha que os conecta indica que eles compartilham um grande volume de atribuições idênticas.",
+        "tut_sec_upset": "O Gráfico UpSet ajuda a visualizar interseções exclusivas. Mostra exatamente quantas e quais atribuições são compartilhadas apenas por aquele grupo específico de carreiras.",
+        
         "title": "Painel Interativo: Estudo de Atribuições da PCSP",
         "modes_and_explanations": "⚙️ Modos de Visão e Explicações",
         "view_modes": "Modos de Visão:",
@@ -349,6 +364,11 @@ TRANSLATIONS = {
         "col_related_career": "Carreira Relacionada",
         "col_base_affinity": "Afinidade Base",
         "col_new_affinity": "Nova Afinidade",
+        "mascot_cao": "🐶 Cão Investigador",
+        "mascot_capivara": "🦦 Capivara Perita",
+        "mascot_coruja": "🦉 Coruja Analista",
+        "mascot_lobo": "🐺 Lobo-Guará Secreto",
+        "mascot_aleatorio": "🎲 Aleatório",
         "col_delta_var": "Δ Variação",
         "col_trend": "Tendência",
         "affinity_filter_label": "Filtrar Tendência de Afinidade:",
@@ -366,7 +386,7 @@ TRANSLATIONS = {
         "col_conn_var": "Variação (Nº de Arestas)",
         "col_net_impact": "Impacto na Rede",
         "network_filter_label": "Filtrar Impacto na Rede:",
-        "sub_tree_comp_title": "2.6. Árvore Hierárquica Comparativa (Dendrograma)",
+        "sub_tree_comp_title": "2.6. Árvore Hierárquica Comparativa (Dendograma)",
         "sub_tree_comp_help": "**O que é isso?**\nExibe as estruturas hierárquicas de classificação lado a lado. Você pode avaliar como as carreiras mudaram de 'galhos' na árvore evolutiva entre o Cenário Base e o Cenário Alvo.",
         "tree_graph_base": "Árvore Cenário Base",
         "tree_graph_target": "Árvore Cenário Alvo",
@@ -412,7 +432,7 @@ TRANSLATIONS = {
         "linkage_complete": "Complete Linkage",
         "linkage_average": "Average Linkage (UPGMA)",
         
-        "footer_title": "Referências e Contato",
+        "footer_title": "Referências, Contato e Compartilhamento",
         "footer_ref_title": "Referências do Estudo",
         "footer_ref_desc": "Material para consulta, teste e checagem",
         "footer_repo": "💻 Repositório GitHub",
@@ -421,6 +441,8 @@ TRANSLATIONS = {
         "footer_contact_title": "Fale com o Autor",
         "footer_contact_desc": "Críticas, sugestões, elogios ou outros",
         "footer_linkedin": "🔗 LinkedIn (Pedro Maia)",
+        "footer_share": "🔗 Compartilhar Aplicação",
+        "footer_share_copied": "✅ Link Copiado!",
         
         "title_matrix_prefix": "Matriz",
         "title_adj_prefix": "Adjacência",
@@ -544,6 +566,11 @@ TRANSLATIONS = {
         # --- MODO 5: CRIATIVO / INTERATIVO ---
         "m5_intro_title": "🎨 5. Modo Criativo / Interativo",
         "m5_intro_desc": "Bem-vindo ao laboratório criativo! Aqui exploramos os dados de formas menos convencionais e mais divertidas.",
+        "m5_show_attr": "👁️ Mostrar Atribuições na Árvore",
+        "m5_split_evol": "🧬 Separar evolução (Atribuições Exclusivas vs Herdadas)",
+        "m5_branch_node": "Divisão Evolutiva",
+        "m5_attr_list": "Atribuições:",
+        "m5_common_ancestor": "Policial Civil",
         "akinator_title": "🔮 O Oráculo da PCSP (Adivinhador de Cargos)",
         "akinator_desc": "Pense em um cargo da Polícia Civil. Eu vou tentar adivinhar qual é através das atribuições dele!",
         "akinator_how_to_play": "Como quer jogar?",
@@ -567,7 +594,7 @@ TRANSLATIONS = {
         "akinator_play_again": "Jogar Novamente",
         "akinator_won_desc": "Eu sei! Você pensou em: **{cargo}**!",
         "akinator_tie": "Não consigo desempatar! Pode ser qualquer um destes:",
-        "akinator_your_role": "Seu cargo {attr}?",
+        "akinator_your_role": "Seu cargo possui a atribuição '{attr}'?",
         "akinator_btn_yes": "Sim",
         "akinator_btn_no": "Não",
         "akinator_btn_skip": "Pular / Não sei",
@@ -579,6 +606,25 @@ TRANSLATIONS = {
         "m5_tree_desc": "Aqui visualizamos as carreiras da PCSP como se fossem espécies biológicas. Cargos na base da árvore compartilham as atribuições mais fundamentais e universais da polícia, sendo considerados mais 'basais' (primitivos). Conforme a árvore se ramifica, encontramos as funções mais especializadas e exclusivas, que formam os ramos mais 'derivados' e complexos."
     },
     "EN": {
+        "welcome_p1": "This is a <b>Data Science project</b>, focused on <b>data mining, cleaning, processing, and visualization</b>. It encompasses the creation of various analytical scenarios containing hierarchical trees, distance rulers, matrices, tables, and interactive visualizations, combined with visual comparison methods (Computer Vision) and textual analysis (Natural Language Processing - NLP).",
+        "welcome_p2": "It is strictly an <b>educational and portfolio project</b> created for the technology and data field. Its main foundation is interdisciplinary dialogue and the construction of knowledge uniting computing, mathematics/statistics, and police sciences. The goal is not to create barriers, disputes, or animosities between roles and people, but rather to bring much more complete and scientific functional analyses than those conventionally performed limited only to the perspective of a single science (legal, social, political, etc).",
+        "welcome_p3": "🛡️ <b>Not a Social Network & Disclaimer:</b><br>For legal and institutional regulatory purposes: <b>This Web application DOES NOT constitute and does not operate as a Social Network</b>. The interaction features contained herein (such as liking or commenting) are usability tools adopted strictly for metrics and structural feedback collection, not violating institutional prohibitions regarding the use of social networks by police officers. Furthermore, the mere dissemination or sharing of this application's link on traditional social networks does not transform it into a social network — just as sharing a law or a news website link does not make them social networks.<br><br><b>Important to note:</b> Any likes and comments made by visitors do not reflect the opinion of the project's author, remaining the exclusive responsibility of those who expressed them.",
+        "welcome_p4": "⚠️ <b>Use, Sharing, and Copyrights:</b><br>The use and sharing of this application are free for academic dialogue and debate, as well as for use in lectures, provided proper reference to the author is made. <b>Its use for other commercial purposes or publication as one's own authorship without authorization is strictly prohibited.</b> Any unauthorized use may be subject to actions for plagiarism and intellectual property infringement. Furthermore, use by third parties contrary to the construction of knowledge, in an abusive and/or deviant manner, is also subject to subsequent legal action.",
+        "welcome_p5": "📊 <b>Data and Engineering:</b><br>All data used comes from public sources, institutional rules, legal texts, academic documents, or documented customs of police activity (listed in the detailed system data section). The application was entirely built in <b>Python</b> (using <b>Streamlit</b> for the front-end). The architecture also features a Database focused on system security, Git versioning, and had the advanced orchestration of Google Antigravity, Harness integration, Autonomous Agents / Skills, and MCP Servers for speed and scalability of production.",
+        "welcome_p6": "This project represents the main milestone of my <b>effective entry into the data and computing field</b>. I hope the tool provides excellent analysis and reflections!",
+        "welcome_btn": "I Agree to the Terms of Use",
+
+        "tour_m_step4_desc": "Analyze how assignments have changed over the years, from old edicts to restructuring scenarios.",
+        "tour_m_step5_title": "Mode 5: Creative Views",
+        "tour_m_step5_desc": "Explore evolutionary taxonomic trees and interactive tools like the 'Role Guesser'.",
+        "tour_m_step6_title": "Detailed Explanations Mode",
+        "tour_m_step6_desc": "In this toggle, you can activate the explanatory texts. When activated, a new option will appear allowing you to choose between two reading tones: 'Technical' (ideal for in-depth queries with legal jargon) and 'Layman' (simplified explanations for the general public).",
+        
+        # Section Popovers (Placeholders)
+        "tut_sec_matrix": "The Distance Matrix (Gower) mathematically measures how different the roles are. Values closer to 0 indicate identical profiles, while values near 1 indicate total functional discrepancy.",
+        "tut_sec_graph": "The Similarity Graph shows roles as 'nodes'. A line connecting them indicates they share a large volume of identical assignments.",
+        "tut_sec_upset": "The UpSet plot helps visualize exclusive intersections. It shows exactly how many and which assignments are shared only by that specific group of careers.",
+        
         "title": "Interactive Dashboard: PCSP Roles Study",
         "modes_and_explanations": "⚙️ View Modes and Explanations",
         "view_modes": "View Modes:",
@@ -590,6 +636,11 @@ TRANSLATIONS = {
         "mode_5": "5. Creative / Interactive Mode",
         "m5_sub_tree_title": "5.1 Taxonomic Tree",
         "m5_sub_akinator_title": "5.2 Role Guesser (Akinator)",
+        "m5_show_attr": "👁️ Show Attributes in Tree",
+        "m5_split_evol": "🧬 Split evolution (Exclusive vs Inherited Attributes)",
+        "m5_branch_node": "Evolutionary Branch",
+        "m5_attr_list": "Attributes:",
+        "m5_common_ancestor": "Police Officer (Common Ancestor)",
         "explanation_mode": "📖 Detailed Explanations Mode",
         "reading_tone": "Explanation Tone:",
         "tone_academic": "🔬 Academic / Scientific",
@@ -789,7 +840,7 @@ TRANSLATIONS = {
         "linkage_complete": "Complete Linkage",
         "linkage_average": "Average Linkage (UPGMA)",
         
-        "footer_title": "References & Contact",
+        "footer_title": "References, Contact & Sharing",
         "footer_ref_title": "Study References",
         "footer_ref_desc": "Material for reference, testing and validation",
         "footer_repo": "💻 GitHub Repository",
@@ -798,6 +849,8 @@ TRANSLATIONS = {
         "footer_contact_title": "Contact the Author",
         "footer_contact_desc": "Feedback, suggestions, or questions",
         "footer_linkedin": "🔗 LinkedIn (Pedro Maia)",
+        "footer_share": "🔗 Share Application",
+        "footer_share_copied": "✅ Link Copied!",
         
         "title_matrix_prefix": "Matrix",
         "title_adj_prefix": "Adjacency",
@@ -944,7 +997,7 @@ TRANSLATIONS = {
         "akinator_play_again": "Play Again",
         "akinator_won_desc": "I know! You thought of: **{cargo}**!",
         "akinator_tie": "I can't break the tie! It could be any of these:",
-        "akinator_your_role": "Does your role {attr}?",
+        "akinator_your_role": "Does your role have the assignment '{attr}'?",
         "akinator_btn_yes": "Yes",
         "akinator_btn_no": "No",
         "akinator_btn_skip": "Skip / I don't know",
@@ -957,9 +1010,11 @@ TRANSLATIONS = {
         "m5_tree_format": "Tree Format:",
         "m5_tree_format_v": "Angular Cladogram (V-shape)",
         "m5_tree_format_c": "Classic Dendrogram",
-        "🐶 Inspetor Cão": "🐶 Inspector Dog",
-        "🦫 Investigadora Capi": "🦫 Investigator Capi",
-        "🦉 Oráculo (Coruja)": "🦉 Oracle (Owl)"
+        "mascot_cao": "🐶 Detective Dog",
+        "mascot_capivara": "🦦 Expert Capybara",
+        "mascot_coruja": "🦉 Analyst Owl",
+        "mascot_lobo": "🐺 Secret Maned Wolf",
+        "mascot_aleatorio": "🎲 Random"
     }
 }
 

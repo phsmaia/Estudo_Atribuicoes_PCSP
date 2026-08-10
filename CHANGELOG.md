@@ -7,14 +7,24 @@ O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 ## [Unreleased] - 2026-08-09
 
 ### Added
+- **Splash Screen Nativa e Otimizada**: Substituição completa da tela de carregamento Python por uma estrutura HMTL/CSS nativa embutida via Javascript. Isso liberou a Thread principal do navegador, permitindo um carregamento pesado de dados no background enquanto o usuário lê informações prévias.
+- **Termos de Uso Acoplados**: Integração de Termos de Uso (incluindo Disclaimer de Rede Social e Restrição de Uso) com obrigatoriedade de Aceite diretamente na Splash Screen, atuando como primeira barreira protetora da aplicação.
+- **Painel Flutuante de Configurações**: Inclusão de controles diretos de URL na Splash Screen (Idioma, Tema Claro/Escuro, Modo Mobile) operando como links `<a href>` nativos para prevenção de bloqueios de iframe no escopo Javascript.
+- **Easter Egg Biométrico**: Inclusão do scanner biométrico animado que reage a toques (mobile/desktop) com easter eggs interativos (Modo CSI, Investigador Honorário, Acesso Nível 5) ao reter clique por 3 segundos.
+- **Evolução de Atribuições (Apomorfias vs Autapomorfias)**: Implementação de um novo toggle no Cladograma da Seção 5.1 que permite ao usuário separar as atribuições de forma evolutiva. Nós de divisão exibem as sinapomorfias (traços novos herdados por todos os descendentes), enquanto os nós folha (cargos) exibem apenas suas autapomorfias (traços exclusivos).
+- **Ancestral Comum**: O nó raiz do Cladograma agora é exibido como "Policial Civil (Ancestral Comum)" listando cirurgicamente apenas as atribuições universais a todas as carreiras.
+- **Ajuda Visual do Akinator (Multiselect)**: Adicionada uma lógica dinâmica usando Emojis (já que selects padrão não suportam CSS no texto) para indicar se a atribuição é 🔴 Incompatível, 🟡 Possível (reduz o grupo) ou 🟢 Única/Definitiva para desvendar o cargo.
+- **Dinâmica de Mascotes do Akinator**: O mascote companheiro agora é randomizado sempre que se inicia a seção ou ao clicar em "Jogar Novamente", trazendo variedade ao assistente. O estado "Confuso/Derrotado" também foi ativado para o modo Multiselect quando as respostas levam a nenhum cargo.
 - **Histórico do Akinator**: Adição de um contador real de perguntas e a listagem de atribuições testadas no menu expandível "Ver status dos cargos" do Modo 5.
-- **Novos Mascotes (Assets)**: Geração e substituição das imagens placeholders pelas versões definitivas (Cão, Capivara e Coruja), incluindo estados dinâmicos (Near, Won e Confused) gerados por IA.
 
 ### Changed
+- **Driver.js Tours**: Refatoração na injeção dos Tours (Geral e Modos de Visão) diretamente no DOM do Parent em formato `<script>`, evitando a quebra de contexto do iframe do Streamlit após rerenderizações pesadas da UI.
+- **Textos de Isenção**: Melhorias rigorosas no Português e Inglês para explicitar de forma inquestionável que "compartilhar o projeto não o transforma em uma rede social", reforçando a tese jurídica de defesa de uso livre por policiais.
 - **Organização de Assets**: Limpeza do diretório de assets, isolando as versões antigas ou não utilizadas.
 - **Navegação de UI Protegida**: Inclusão de `safe_key` na navegação do menu, prevenindo o reset indesejado para a subseção 1.1 ao alterar idiomas ou temas (unmount tracking).
 
 ### Fixed
+- **Estabilidade do Botão de Biometria**: Adicionado `pointer-events: none` aos elementos internos do SVG e timeout ajustado para resiliência na captação do clique contínuo (mouseup/mouseleave) na interface.
 - **Tradução no Akinator (i18n)**: Reparo no bloqueio da função que injetava textos em inglês incondicionalmente durante a exibição de cargos no jogo.
 - **Dicionário i18n**: Correção do título do Modo Criativo que exibia chaves vazadas em inglês no dicionário base PT-BR.
 

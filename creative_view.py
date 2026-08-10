@@ -41,6 +41,13 @@ MASCOTS = {
         "file_won": "mascote_coruja_won2.png", "src_won": "mascot_owl_won2_1786300542801.png",
         "file_confused": "mascote_coruja_confused.png", "src_confused": "mascot_coruja_confused_1786301137184.png",
         "emojis": ["🦉❓", "🦉💭", "🦉😎", "🦉🎉", "🦉😵"]
+    },
+    "🐺 Lobo-Guará Secreto": {
+        "file": "mascote_lobo.png", "src": "mascot_wolf_1786318952220.png",
+        "file_near": "mascote_lobo_near.png", "src_near": "mascot_wolf_near_v2_1786319184109.png",
+        "file_won": "mascote_lobo_won.png", "src_won": "mascot_wolf_won_v3_1786319261646.png",
+        "file_confused": "mascote_lobo_confused.png", "src_confused": "mascot_wolf_confused_v2_1786319193276.png",
+        "emojis": ["🐺❓", "🐺💭", "🐺😎", "🐺🎉", "🐺😵"]
     }
 }
 
@@ -98,13 +105,74 @@ def render_taxonomic_tree(df_cenario):
     sorted_cargos = sorted(cargo_scores.keys(), key=lambda x: cargo_scores[x], reverse=True)
     
     tipo_arvore = st.radio(i18n.t("m5_tree_format", default="Formato da Árvore:"), [i18n.t("m5_tree_format_v", default="Cladograma Angular (V-shape)"), i18n.t("m5_tree_format_c", default="Dendrograma Clássico")], horizontal=True)
+    mostrar_atribuicoes = st.toggle(i18n.t("m5_show_attr", default="👁️ Mostrar Atribuições na Árvore"), value=False)
+    
+    if mostrar_atribuicoes and tipo_arvore == i18n.t("m5_tree_format_v", default="Cladograma Angular (V-shape)"):
+        separar_evolucao = st.checkbox(i18n.t("m5_split_evol", default="🧬 Separar evolução (Atribuições Exclusivas vs Herdadas)"), value=False)
+    else:
+        separar_evolucao = False
+    
+    is_mobile = st.session_state.get("is_mobile", False)
     
     if tipo_arvore == i18n.t("m5_tree_format_v", default="Cladograma Angular (V-shape)"):
-        fig = _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib)
+        fig = _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mostrar_atribuicoes, separar_evolucao)
     else:
-        fig = _plot_classical_dendrogram(sorted_cargos, cargo_scores, df_bin)
+        fig = _plot_classical_dendrogram(sorted_cargos, cargo_scores, df_bin, mostrar_atribuicoes)
         
     st.plotly_chart(fig, use_container_width=True)
+    
+    # Em mobile, o hover é ruim. Exibimos na tela via lista.
+    if is_mobile and mostrar_atribuicoes:
+        st.markdown(f"#### {i18n.t('m5_attr_list', default='Atribuições:')}")
+        
+        root_name = i18n.t("m5_common_ancestor", default="Policial Civil")
+        comuns = df_bin.columns[df_bin.sum(axis=0) == len(df_bin)].tolist()
+        if len(comuns) > 0:
+            with st.expander(f"🧬 {root_name}"):
+                st.markdown("**Atribuições Comuns a todos os cargos:**" if separar_evolucao else f"**{i18n.t('m5_attr_list')}**")
+                for a in comuns:
+                    st.markdown(f"- {i18n.traduzir_atribuicao(a)}")
+                    
+        # Rastrear o que já foi herdado para exibir no mobile também
+        branch_attrs = {}
+        if separar_evolucao:
+            for i in range(len(sorted_cargos)):
+                cargos_sub = sorted_cargos[i:]
+                if len(cargos_sub) > 0:
+                    sub_df = df_bin.loc[cargos_sub]
+                    b_attr = set(sub_df.columns[sub_df.sum(axis=0) == len(cargos_sub)])
+                else:
+                    b_attr = set()
+                branch_attrs[f"b_{i}"] = b_attr
+                
+                # Renderizar Divisão se houver novas atribuições
+                idx = i
+                total_here = branch_attrs[f"b_{i}"]
+                total_parent = set(comuns) if idx == 0 else branch_attrs[f"b_{idx-1}"]
+                new_attrs = total_here - total_parent
+                if len(new_attrs) > 0:
+                    title_div = f"{i18n.t('m5_branch_node', default='Divisão Evolutiva')} {idx+1}"
+                    with st.expander(f"🌿 {title_div}"):
+                        st.markdown(f"### {title_div}")
+                        st.markdown("**Sinapomorfias (Novas atribuições na divisão):**")
+                        for a in new_attrs:
+                            st.markdown(f"- {i18n.traduzir_atribuicao(a)}")
+
+        for i, cargo in enumerate(sorted_cargos):
+            if separar_evolucao:
+                total_inherited = branch_attrs.get(f"b_{i}", set())
+                all_cargo_attrs = set(df_bin.columns[df_bin.loc[cargo] > 0])
+                atribs = list(all_cargo_attrs - total_inherited)
+            else:
+                atribs = df_bin.columns[df_bin.loc[cargo] > 0]
+                
+            if len(atribs) > 0:
+                cargo_trad = i18n.traduzir_cargo(cargo)
+                with st.expander(f"💼 {cargo_trad}"):
+                    st.markdown(f"### {cargo_trad}")
+                    st.markdown("**Autapomorfias (Exclusivas):**" if separar_evolucao else f"**{i18n.t('m5_attr_list')}**")
+                    for a in atribs:
+                        st.markdown(f"- {i18n.traduzir_atribuicao(a)}")
     
     if st.session_state.get('show_explanations', False):
         import explanations
@@ -113,13 +181,13 @@ def render_taxonomic_tree(df_cenario):
         
     if 'interaction_ui' in globals(): interaction_ui.render_like_button("5.1 Arvore Taxonomica", "5_1")
 
-def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib):
+def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mostrar_atribuicoes, separar_evolucao):
     # Cria uma árvore ramificada em V (diagonal)
     import networkx as nx
     G = nx.DiGraph()
     
     # Adicionando um nó raiz implícito em (0.5, 0)
-    root = "Origem"
+    root = i18n.t("m5_common_ancestor", default="Policial Civil")
     G.add_node(root, pos=(0.5, 0))
     
     max_score = max(cargo_scores.values()) if cargo_scores else 1
@@ -175,19 +243,73 @@ def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib):
     import plotly.express as px
     palette = px.colors.qualitative.Pastel
     
+    comuns = set(df_bin.columns[df_bin.sum(axis=0) == len(df_bin)])
+    branch_attrs = {}
+    if separar_evolucao:
+        for i in range(len(sorted_cargos)):
+            cargos_sub = sorted_cargos[i:]
+            if len(cargos_sub) > 0:
+                sub_df = df_bin.loc[cargos_sub]
+                b_attr = set(sub_df.columns[sub_df.sum(axis=0) == len(cargos_sub)])
+            else:
+                b_attr = set()
+            branch_attrs[f"b_{i}"] = b_attr
+            
     for i, node in enumerate(G.nodes()):
-        if node.startswith("b_") or node == root:
-            continue # hide branch nodes
+        is_branch = node.startswith("b_")
+        if is_branch and not separar_evolucao:
+            continue # hide branch nodes if not splitting
+            
+        if is_branch:
+            idx = int(node.split("_")[1])
+            total_here = branch_attrs[node]
+            total_parent = comuns if idx == 0 else branch_attrs[f"b_{idx-1}"]
+            atribs = total_here - total_parent
+            if len(atribs) == 0:
+                continue # hide empty branches
+            score = 0
+            node_trad = f"{i18n.t('m5_branch_node', default='Divisão Evolutiva')} {idx+1}"
+        elif node == root:
+            score = max_score
+            node_trad = root
+            atribs = comuns
+        else:
+            score = cargo_scores.get(node, 0)
+            node_trad = i18n.traduzir_cargo(node)
+            all_attr = set(df_bin.columns[df_bin.loc[node] > 0]) if node in df_bin.index else set()
+            if separar_evolucao:
+                idx = sorted_cargos.index(node)
+                atribs = all_attr - branch_attrs[f"b_{idx}"]
+            else:
+                atribs = all_attr
+                
         x, y = pos[node]
         node_x.append(x)
         node_y.append(y)
         
-        score = cargo_scores.get(node, 0)
-        node_trad = i18n.traduzir_cargo(node)
-        text.append(f"<b>{node_trad}</b><br>Score Basal: {score:.2f}")
+        if is_branch:
+            hover_text = f"<b>{node_trad}</b>"
+        else:
+            hover_text = f"<b>{node_trad}</b><br>Score Basal: {score:.2f}"
+            
+        if mostrar_atribuicoes and len(atribs) > 0:
+            atribs_trad = [i18n.traduzir_atribuicao(a) for a in atribs]
+            # Linha a linha com limite de chars ou quebra
+            atribs_str = "<br>".join([f"- {a}" for a in atribs_trad])
+            
+            if separar_evolucao:
+                title_attr = "Sinapomorfias (Novas):" if is_branch else "Autapomorfias (Exclusivas):" if node != root else "Atribuições Comuns:"
+            else:
+                title_attr = i18n.t('m5_attr_list', default='Atribuições:')
+                
+            hover_text += f"<br><br><b>{title_attr}</b><br>{atribs_str}"
         
-        # Color based on score groups (arbitrary grouping for coloring)
-        if score > 0.8 * max_score:
+        text.append(hover_text)
+        
+        if is_branch:
+            colors.append(palette[4])
+            labels.append("Divisão (Sinapomorfia)")
+        elif score > 0.8 * max_score:
             colors.append(palette[2])
             labels.append("Muito Basal")
         elif score > 0.5 * max_score:
@@ -198,7 +320,13 @@ def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib):
             labels.append("Especializado (Derivado)")
             
     # Draw Legend groups
-    for group, color in zip(["Muito Basal", "Intermediário", "Especializado (Derivado)"], [palette[2], palette[1], palette[0]]):
+    groups_to_draw = ["Muito Basal", "Intermediário", "Especializado (Derivado)"]
+    color_to_draw = [palette[2], palette[1], palette[0]]
+    if separar_evolucao:
+        groups_to_draw.append("Divisão (Sinapomorfia)")
+        color_to_draw.append(palette[4])
+        
+    for group, color in zip(groups_to_draw, color_to_draw):
         fig.add_trace(go.Scatter(
             x=[None], y=[None], mode='markers',
             marker=dict(size=12, color=color),
@@ -207,7 +335,7 @@ def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib):
             
     fig.add_trace(go.Scatter(
         x=node_x, y=node_y, mode='markers+text',
-        text=[i18n.traduzir_cargo(n).split(' ')[0] for n in G.nodes() if not n.startswith("b_") and n != root],
+        text=[n if n == root or n.startswith("b_") else i18n.traduzir_cargo(n).split(' ')[0] for n in G.nodes() if not (n.startswith("b_") and (not separar_evolucao or len(branch_attrs[n] - (comuns if int(n.split('_')[1])==0 else branch_attrs[f"b_{int(n.split('_')[1])-1}"]))==0))],
         textposition="top center",
         hovertext=text,
         hoverinfo="text",
@@ -227,13 +355,45 @@ def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib):
     )
     return fig
 
-def _plot_classical_dendrogram(sorted_cargos, cargo_scores, df_bin):
+def _plot_classical_dendrogram(sorted_cargos, cargo_scores, df_bin, mostrar_atribuicoes):
     import plotly.figure_factory as ff
     from scipy.spatial.distance import pdist
     
     dist_matrix = pdist(df_bin.values, metric='jaccard')
     labels_trad = [i18n.traduzir_cargo(c) for c in df_bin.index.tolist()]
     fig = ff.create_dendrogram(df_bin.values, orientation='left', labels=labels_trad)
+    
+    # Se mostrar_atribuicoes estiver ativo, vamos injetar o hovertext na árvore
+    if mostrar_atribuicoes:
+        import plotly.graph_objects as go
+        # No FF dendrogram left, the leaves are at x=0
+        # The y coordinates match the tickvals
+        ticktext = fig.layout.yaxis.ticktext
+        tickvals = fig.layout.yaxis.tickvals
+        
+        # Create an invisible scatter trace over the labels just to hold the hovertext
+        hover_texts = []
+        for label_trad in ticktext:
+            # Encontrar o cargo original baseado na label traduzida
+            original_cargo = next((c for c in df_bin.index if i18n.traduzir_cargo(c) == label_trad), None)
+            if original_cargo:
+                atribs = df_bin.columns[df_bin.loc[original_cargo] > 0]
+                atribs_trad = [i18n.traduzir_atribuicao(a) for a in atribs]
+                atribs_str = "<br>".join([f"- {a}" for a in atribs_trad])
+                hover_texts.append(f"<b>{label_trad}</b><br><br><b>{i18n.t('m5_attr_list', default='Atribuições:')}</b><br>{atribs_str}")
+            else:
+                hover_texts.append(label_trad)
+                
+        fig.add_trace(go.Scatter(
+            x=[0] * len(tickvals),
+            y=tickvals,
+            mode='markers',
+            marker=dict(size=10, color='rgba(0,0,0,0)'),
+            hovertext=hover_texts,
+            hoverinfo='text',
+            showlegend=False
+        ))
+        
     fig.update_layout(height=700, title="Dendrograma de Similaridade (Clássico)", xaxis_title="Distância de Ligação")
     return fig
 
@@ -273,6 +433,13 @@ def reset_game():
     st.session_state.akinator_state = "playing"
     st.session_state.akinator_remaining = None
     st.session_state.akinator_questions = []
+    st.session_state.akinator_multi_sel = []
+    
+    if st.session_state.get("mascote_sel_key") == "mascot_aleatorio" or "mascote_sel_key" not in st.session_state:
+        import random
+        choices = ["🐶 Inspetor Cão", "🦫 Investigadora Capi", "🦉 Oráculo (Coruja)", "🐺 Lobo-Guará Secreto"]
+        weights = [30, 30, 30, 10]
+        st.session_state.akinator_internal_mascot = random.choices(choices, weights=weights)[0]
 
 def render_akinator_game(df_cenario):
     with st.expander(i18n.t("akinator_cheat_title", default="📖 Cola do Oráculo: Consulte as atribuições para saber o que responder"), expanded=False):
@@ -296,14 +463,38 @@ def render_akinator_game(df_cenario):
     st.markdown(i18n.t("akinator_desc", default="Pense em um cargo da Polícia Civil. Eu vou tentar adivinhar qual é através das atribuições dele!"))
     
     if 'akinator_state' not in st.session_state:
+        st.session_state.mascote_sel_key = "mascot_aleatorio"
         reset_game()
         
     col_config1, col_config2 = st.columns(2)
     with col_config1:
         tipo_jogo = st.radio(i18n.t("akinator_how_to_play", default="Como quer jogar?"), [i18n.t("akinator_mode_q", default="Perguntas (Modo Divertido)"), i18n.t("akinator_mode_m", default="Seleção Rápida (Multiselect)")], horizontal=True, on_change=reset_game)
     with col_config2:
-        # Mascote options should remain original keys but format in UI
-        mascote_sel = st.radio(i18n.t("akinator_choose_mascot", default="Escolha seu Mascote:"), list(MASCOTS.keys()), format_func=lambda x: i18n.t_lang(x, st.session_state.get('language', 'PT-BR')), horizontal=True)
+        visible_mascots = ["🐶 Inspetor Cão", "🦫 Investigadora Capi", "🦉 Oráculo (Coruja)"]
+        radio_options = ["mascot_aleatorio"] + visible_mascots
+        
+        def format_mascot_option(x):
+            if x == "mascot_aleatorio":
+                return i18n.t_lang("mascot_aleatorio", st.session_state.get('language', 'PT-BR'))
+            key_map = {
+                "🐶 Inspetor Cão": "mascot_cao",
+                "🦫 Investigadora Capi": "mascot_capivara",
+                "🦉 Oráculo (Coruja)": "mascot_coruja"
+            }
+            return i18n.t_lang(key_map.get(x, x), st.session_state.get('language', 'PT-BR'))
+            
+        mascote_sel = st.radio(
+            i18n.t("akinator_choose_mascot", default="Escolha seu Mascote:"), 
+            radio_options, 
+            format_func=format_mascot_option, 
+            horizontal=True, 
+            key="mascote_sel_key"
+        )
+        
+    if mascote_sel == "mascot_aleatorio":
+        mascote_real = st.session_state.get("akinator_internal_mascot", "🐶 Inspetor Cão")
+    else:
+        mascote_real = mascote_sel
     
     df_clean = df_cenario.copy()
     if 'Carreira' in df_clean.columns:
@@ -314,28 +505,92 @@ def render_akinator_game(df_cenario):
         st.session_state.akinator_remaining = df_bin.copy()
     
     # Exibe a imagem do Mascote no canto
-    mascot_img_path = os.path.join(ASSETS_DIR, MASCOTS[mascote_sel]["file"])
+    mascot_img_path = os.path.join(ASSETS_DIR, MASCOTS[mascote_real]["file"])
     
     st.markdown("---")
     
     if tipo_jogo == i18n.t("akinator_mode_m", default="Seleção Rápida (Multiselect)"):
+        todas_atrib = df_bin.columns.tolist()
+        
+        # Função para limpar sujeira do Streamlit multiselect (quando ele retorna a label formatada antiga)
+        def get_original_attr(val):
+            if val in todas_atrib:
+                return val
+            for attr in todas_atrib:
+                trad = i18n.traduzir_atribuicao(attr)
+                if trad in val:
+                    return attr
+            return val
+            
+        if "akinator_multi_sel" not in st.session_state:
+            st.session_state.akinator_multi_sel = []
+            
+        # Limpa o state caso o Streamlit tenha salvo a label formatada com emojis
+        selecionadas_atuais = [get_original_attr(s) for s in st.session_state.akinator_multi_sel]
+        st.session_state.akinator_multi_sel = selecionadas_atuais
+        
+        cargos_restantes = df_bin.index.tolist()
+        if selecionadas_atuais:
+            df_match = df_bin.copy()
+            for s in selecionadas_atuais:
+                df_match = df_match[df_match[s] == 1]
+            cargos_restantes = df_match.index.tolist()
+            
+        def format_attr_colored(attr):
+            trad = i18n.traduzir_atribuicao(attr)
+            if attr in selecionadas_atuais:
+                return f"✅ {trad}"
+                
+            if len(cargos_restantes) == 0:
+                return f"🔴 {trad} (Incompatível)"
+                
+            cargos_with_attr = [c for c in cargos_restantes if df_bin.loc[c, attr] == 1]
+            n = len(cargos_with_attr)
+            
+            if n == 0:
+                return f"🔴 {trad} (Incompatível)"
+            elif n == 1:
+                return f"🟢 {trad} (Define: {i18n.traduzir_cargo(cargos_with_attr[0]).split(' ')[0]})"
+            else:
+                return f"🟡 {trad} (Grupo: {n} cargos)"
+                
+        # Define a imagem dinâmica do mascote baseada no resultado atual
+        mascot_file_key = "file"
+        if selecionadas_atuais:
+            if len(cargos_restantes) == 0:
+                mascot_file_key = "file_confused"
+            elif len(cargos_restantes) == 1:
+                mascot_file_key = "file_won"
+            elif len(cargos_restantes) <= 3:
+                mascot_file_key = "file_near"
+                
+        mascot_img_path_dynamic = os.path.join(ASSETS_DIR, MASCOTS[mascote_real].get(mascot_file_key, MASCOTS[mascote_real]["file"]))
+        
         col_img, col_ui = st.columns([1, 4])
         with col_img:
-            if os.path.exists(mascot_img_path):
-                st.image(Image.open(mascot_img_path), use_container_width=True)
+            if os.path.exists(mascot_img_path_dynamic):
+                st.image(Image.open(mascot_img_path_dynamic), use_container_width=True)
+                
         with col_ui:
-            todas_atrib = df_bin.columns.tolist()
-            selecionadas = st.multiselect(i18n.t("akinator_select_attr", default="Selecione as atribuições que seu cargo faz:"), todas_atrib, format_func=i18n.traduzir_atribuicao)
+            # Renderiza o select
+            selecionadas = st.multiselect(
+                i18n.t("akinator_select_attr", default="Selecione as atribuições que seu cargo faz:"), 
+                todas_atrib, 
+                format_func=format_attr_colored,
+                key="akinator_multi_sel"
+            )
+            
             if selecionadas:
-                df_match = df_bin.copy()
-                for s in selecionadas:
-                    df_match = df_match[df_match[s] == 1]
-                    
-                cargos_restantes = df_match.index.tolist()
                 if len(cargos_restantes) == 0:
                     st.error(i18n.t("akinator_no_match", default="Nenhum cargo faz essa combinação exata!"))
+                    if st.button(i18n.t("akinator_play_again", default="Jogar Novamente"), key="play_again_multi_loss"):
+                        reset_game()
+                        st.rerun()
                 elif len(cargos_restantes) == 1:
                     st.success(i18n.t("akinator_is", default="🎉 É o **{cargo}**!").format(cargo=i18n.traduzir_cargo(cargos_restantes[0])))
+                    if st.button(i18n.t("akinator_play_again", default="Jogar Novamente"), key="play_again_multi_win"):
+                        reset_game()
+                        st.rerun()
                 else:
                     cargos_trad = [i18n.traduzir_cargo(c) for c in cargos_restantes]
                     st.warning(i18n.t("akinator_could_be", default="🤔 Pode ser: {cargos}").format(cargos=', '.join(cargos_trad)))
@@ -348,7 +603,7 @@ def render_akinator_game(df_cenario):
         pct_restante = n_restantes / n_total if n_total > 0 else 1
         
         # Emojis baseados no mascote escolhido [confuso, pensativo, confiante, ganhou, derrotado]
-        emojis_mascote = MASCOTS[mascote_sel]["emojis"]
+        emojis_mascote = MASCOTS[mascote_real]["emojis"]
         mascote_emoji = emojis_mascote[0] # Confuso
         mascot_file_key = "file"
         
@@ -365,7 +620,7 @@ def render_akinator_game(df_cenario):
             mascote_emoji = emojis_mascote[1] # Pensativo
             mascot_file_key = "file"
             
-        mascot_img_path_dynamic = os.path.join(ASSETS_DIR, MASCOTS[mascote_sel][mascot_file_key])
+        mascot_img_path_dynamic = os.path.join(ASSETS_DIR, MASCOTS[mascote_real][mascot_file_key])
             
         col_img, col_ui = st.columns([1, 4])
         with col_img:
@@ -373,8 +628,17 @@ def render_akinator_game(df_cenario):
                 st.image(Image.open(mascot_img_path_dynamic), use_container_width=True)
                 
         with col_ui:
-            mascote_sel_trad = i18n.t_lang(mascote_sel, st.session_state.get('language', 'PT-BR'))
-            nome_personagem = mascote_sel_trad.split(' ', 1)[1] if ' ' in mascote_sel_trad else mascote_sel_trad
+            if mascote_real == "🐺 Lobo-Guará Secreto":
+                nome_personagem = i18n.t_lang("mascot_lobo", st.session_state.get('language', 'PT-BR'))
+            else:
+                key_map = {
+                    "🐶 Inspetor Cão": "mascot_cao",
+                    "🦫 Investigadora Capi": "mascot_capivara",
+                    "🦉 Oráculo (Coruja)": "mascot_coruja"
+                }
+                mascote_sel_trad = i18n.t_lang(key_map.get(mascote_real, mascote_real), st.session_state.get('language', 'PT-BR'))
+                nome_personagem = mascote_sel_trad.split(' ', 1)[1] if ' ' in mascote_sel_trad else mascote_sel_trad
+
             if n_restantes == 0:
                 st.markdown(f"### {mascote_emoji} **{nome_personagem} " + i18n.t("akinator_lost", default="está em pane...") + "**")
             elif n_restantes == 1:
@@ -426,7 +690,8 @@ def render_akinator_game(df_cenario):
                         reset_game()
                         st.rerun()
                 else:
-                    st.markdown(f"#### " + i18n.t("akinator_your_role", default="Seu cargo faz isso: **'{attr}'**?").format(attr=i18n.traduzir_atribuicao(best_q)))
+                    # Question UI
+                    st.markdown(f"#### " + i18n.t("akinator_your_role", default="Seu cargo possui a atribuição **'{attr}'**?").format(attr=i18n.traduzir_atribuicao(best_q)))
                     
                     col_s, col_n, col_p = st.columns([1,1,1])
                     with col_s:

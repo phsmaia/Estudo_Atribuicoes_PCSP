@@ -42,6 +42,17 @@ if "language" not in st.session_state:
     else:
         st.session_state.language = "PT-BR"
 
+# Sincroniza modo e seção a partir da URL (para links compartilhados)
+if "last_modo_visao" not in st.session_state and "mode" in st.query_params:
+    _valid_modes = ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5"]
+    _qs_mode = st.query_params.get("mode", "mode_1")
+    if _qs_mode in _valid_modes:
+        st.session_state.last_modo_visao = _qs_mode
+        st.session_state["modo_visao_radio"] = _qs_mode
+
+if "shared_section" not in st.session_state and "section" in st.query_params:
+    st.session_state.shared_section = st.query_params.get("section", "")
+
 try:
     df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', sep=';', encoding='iso-8859-1')
     df_conv.to_json('csv_dump.json', orient='records', force_ascii=False)
@@ -113,6 +124,11 @@ except Exception as e:
 # Sincroniza o modo de tema com a URL (para sobreviver a reloads)
 if "light_mode" not in st.session_state:
     st.session_state.light_mode = st.query_params.get("theme") == "light"
+
+# Sincroniza o idioma com a URL (para sobreviver a reloads)
+if "language" not in st.session_state:
+    qs_lang = st.query_params.get("lang")
+    st.session_state.language = qs_lang if qs_lang else "PT-BR"
 
 # --- Detecção Mobile (Auto) ---
 is_mobile_qs = st.query_params.get("is_mobile", None)
@@ -449,6 +465,28 @@ footer_html = """
             <span style="font-size: 0.75rem; color: __SUBTEXT_COLOR__; display: block; margin: -5px 0 8px 0; font-style: italic;">__CONTACT_DESC__</span>
             <a href="mailto:maia.phs@gmail.com">📧 maia.phs@gmail.com</a>
             <a href="https://www.linkedin.com/in/pedromaiapapilodata/" target="_blank">__LINKEDIN__</a>
+            <hr style="margin: 12px 0; border: none; border-top: 1px solid rgba(128,128,128,0.25);">
+            <a href="#" id="hud-share-btn" data-label-share="__SHARE__" data-label-copied="__SHARE_COPIED__"
+               style="justify-content: center; font-weight: bold; background: rgba(0, 114, 178, 0.15); border: 1px solid rgba(0, 114, 178, 0.35); border-radius: 8px;"
+               onclick="
+                 event.preventDefault();
+                 var btn = this;
+                 var url = window.parent.location.href;
+                 if (navigator.clipboard && navigator.clipboard.writeText) {
+                   navigator.clipboard.writeText(url).then(function() {
+                     btn.innerText = btn.getAttribute('data-label-copied');
+                     setTimeout(function() { btn.innerText = btn.getAttribute('data-label-share'); }, 2000);
+                   });
+                 } else {
+                   var el = window.parent.document.createElement('textarea');
+                   el.value = url; el.style.position='fixed'; el.style.opacity='0';
+                   window.parent.document.body.appendChild(el); el.select();
+                   window.parent.document.execCommand('copy');
+                   window.parent.document.body.removeChild(el);
+                   btn.innerText = btn.getAttribute('data-label-copied');
+                   setTimeout(function() { btn.innerText = btn.getAttribute('data-label-share'); }, 2000);
+                 }
+               ">__SHARE__</a>
         </div>
     `;
     window.parent.document.body.appendChild(footer);
@@ -463,7 +501,9 @@ for placeholder, key in [
     ('__DATA__', 'footer_data'),
     ('__CONTACT_TITLE__', 'footer_contact_title'),
     ('__CONTACT_DESC__', 'footer_contact_desc'),
-    ('__LINKEDIN__', 'footer_linkedin')
+    ('__LINKEDIN__', 'footer_linkedin'),
+    ('__SHARE__', 'footer_share'),
+    ('__SHARE_COPIED__', 'footer_share_copied'),
 ]:
     footer_html = footer_html.replace(placeholder, i18n.t(key))
 
@@ -787,6 +827,38 @@ if "first_load_done" not in st.session_state:
     msgs_json = json.dumps(i18n.t("loading_msgs"))
     title_str = i18n.t("title")
     
+    p1 = i18n.t("welcome_p1")
+    p2 = i18n.t("welcome_p2")
+    p3 = i18n.t("welcome_p3")
+    p4 = i18n.t("welcome_p4")
+    p5 = i18n.t("welcome_p5")
+    p6 = i18n.t("welcome_p6")
+    btn_text = i18n.t("welcome_btn")
+    
+    # Computa as URLs para os botões de configurações a partir dos query params atuais
+    _qp = dict(st.query_params)
+    _is_light = _qp.get("theme") == "light"
+    _is_mobile = _qp.get("is_mobile") == "true"
+    _lang = _qp.get("lang", "PT-BR")
+    
+    def _make_url(overrides):
+        """Monta uma URL com os query params atuais + overrides fornecidos."""
+        merged = {**_qp, **overrides}
+        # Remove chaves com None
+        merged = {k: v for k, v in merged.items() if v is not None}
+        return "?" + "&".join(f"{k}={v}" for k, v in merged.items())
+    
+    url_lang_pt = _make_url({"lang": "PT-BR"})
+    url_lang_en = _make_url({"lang": "EN"})
+    url_theme = _make_url({"theme": None}) if _is_light else _make_url({"theme": "light"})
+    url_mobile = _make_url({"is_mobile": "false"}) if _is_mobile else _make_url({"is_mobile": "true"})
+    
+    lbl_lang_pt_active = " active" if _lang == "PT-BR" else ""
+    lbl_lang_en_active = " active" if _lang == "EN" else ""
+    lbl_theme = "🌙 Dark" if _is_light else "☀️ Light"
+    lbl_mobile = "🖥️ Desktop" if _is_mobile else "📱 Mobile"
+    lbl_mobile_active = " active" if _is_mobile else ""
+    
     splash_html = f"""
     <script>
     if (!window.parent.document.getElementById('custom-splash-screen')) {{
@@ -848,6 +920,7 @@ if "first_load_done" not in st.session_state:
             }}
             .fingerprint-btn svg {{
                 width: 45px; height: 45px; stroke: ${{strokeColor}}; fill: none; transition: all 0.3s ease;
+                pointer-events: none;
             }}
             .fingerprint-btn:hover {{
                 border-color: ${{strokeColor}}; box-shadow: 0 0 20px ${{btnBorderHover}};
@@ -861,13 +934,14 @@ if "first_load_done" not in st.session_state:
                 background: ${{scanColor}}; box-shadow: 0 0 12px ${{scanShadow}};
                 animation: scanAnim 1.5s infinite ease-in-out;
                 display: none; border-radius: 2px;
+                pointer-events: none;
             }}
             .fingerprint-btn.scanning .scan-line {{ display: block; }}
             @keyframes scanAnim {{ 0% {{ top: 15%; }} 50% {{ top: 85%; }} 100% {{ top: 15%; }} }}
             
             .progress-bar-container {{
                 width: 300px; height: 6px; background: ${{progressBg}};
-                border-radius: 3px; margin: 25px 0; overflow: hidden; position: relative;
+                border-radius: 3px; margin: 15px 0; overflow: hidden; position: relative;
             }}
             .progress-bar-fill {{
                 position: absolute; top: 0; left: 0; height: 100%; background: ${{strokeColor}};
@@ -880,11 +954,61 @@ if "first_load_done" not in st.session_state:
                 box-shadow: 0 0 10px ${{scanShadow}};
             }}
             @keyframes loadIndeterminate {{ 0% {{ left: -30%; }} 100% {{ left: 100%; }} }}
+            
+            /* --- Painel de Configurações da Splash --- */
+            .splash-settings {{
+                position: absolute; top: 12px; right: 15px; z-index: 20;
+                display: flex; align-items: center; gap: 8px;
+                background: ${{btnBg}}; border: 1px solid ${{btnBorder}};
+                border-radius: 20px; padding: 6px 12px;
+                backdrop-filter: blur(8px);
+                font-size: 0.8rem; color: ${{textColor}};
+            }}
+            .splash-settings label {{
+                font-size: 0.75rem; opacity: 0.7; margin-right: 2px;
+            }}
+            .splash-s-btn {{
+                display: inline-block; text-decoration: none;
+                background: none; border: 1px solid ${{btnBorder}}; border-radius: 12px;
+                color: ${{textColor}}; cursor: pointer; padding: 3px 9px; font-size: 0.78rem;
+                transition: all 0.2s ease;
+            }}
+            .splash-s-btn:hover, .splash-s-btn.active {{
+                background: ${{strokeColor}}; border-color: ${{strokeColor}}; color: #fff;
+            }}
+            .splash-s-sep {{ opacity: 0.3; user-select: none; }}
             </style>
             
             <div class="police-lights"></div>
             
-            <div class="fingerprint-btn" id="interactive-badge" title="Pressione para escaneamento biométrico (Interativo)">
+            <!-- Painel de Configurações Flutuante -->
+            <div class="splash-settings" id="splash-settings-bar">
+                <label>🌐</label>
+                <a class="splash-s-btn{lbl_lang_pt_active}" href="{url_lang_pt}" target="_parent">PT-BR</a>
+                <a class="splash-s-btn{lbl_lang_en_active}" href="{url_lang_en}" target="_parent">EN</a>
+                <span class="splash-s-sep">|</span>
+                <a class="splash-s-btn" href="{url_theme}" target="_parent">{lbl_theme}</a>
+                <span class="splash-s-sep">|</span>
+                <a class="splash-s-btn{lbl_mobile_active}" href="{url_mobile}" target="_parent">{lbl_mobile}</a>
+            </div>
+            
+            <h2 style="margin-bottom: 15px; color: ${{splashTitleColor}}; text-align: center; text-transform: uppercase; letter-spacing: 2px; z-index: 10; font-size: 1.5rem;">{title_str}</h2>
+            
+            <div class="terms-container" style="max-width: 800px; max-height: 40vh; overflow-y: auto; background: ${{btnBg}}; padding: 20px 25px; border-radius: 10px; margin-bottom: 25px; border: 1px solid ${{btnBorder}}; font-size: 0.95rem; line-height: 1.6; backdrop-filter: blur(10px); z-index: 10; text-align: justify; scrollbar-width: thin; scrollbar-color: ${{strokeColor}} transparent; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <p>{p1}</p>
+                <p>{p2}</p>
+                <p>{p3}</p>
+                <p>{p4}</p>
+                <p>{p5}</p>
+                <p>{p6}</p>
+                <div style="text-align: center; margin-top: 25px; margin-bottom: 5px;">
+                    <button id="accept-terms-btn" style="padding: 12px 25px; font-size: 1.1rem; font-weight: bold; background: ${{strokeColor}}; color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px ${{scanShadow}};">
+                        {btn_text}
+                    </button>
+                </div>
+            </div>
+
+            <div class="fingerprint-btn" id="interactive-badge" title="Pressione para escaneamento biométrico (Interativo)" style="z-index: 10;">
                 <!-- Ícone SVG de Impressão Digital / Distintivo -->
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
                     <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"/><path d="M12 11v2a14 14 0 0 0 2.5 8M8 15a18 18 0 0 0 1.8 6m-4.9-2a22 22 0 0 1-.9-7v-1a8 8 0 0 1 12-6.95"/>
@@ -892,17 +1016,42 @@ if "first_load_done" not in st.session_state:
                 <div class="scan-line"></div>
             </div>
             
-            <h2 style="margin-bottom: 10px; color: ${{splashTitleColor}}; text-align: center; text-transform: uppercase; letter-spacing: 2px;">{title_str}</h2>
-            <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
-            <div id="splash-msg" style="color: ${{strokeColor}}; font-weight: bold; font-size: 1.1rem; height: 30px;">Carregando...</div>
+            <div class="progress-bar-container" style="z-index: 10;"><div class="progress-bar-fill"></div></div>
+            <div id="splash-msg" style="color: ${{strokeColor}}; font-weight: bold; font-size: 1.1rem; height: 30px; z-index: 10;">Carregando...</div>
         `;
         window.parent.document.body.appendChild(splash);
+        
+        // --- Sem necessidade de JS para os botões de configuração: são links HTML nativos ---
         
         // Interatividade divertida do botão e Easter Eggs
         const badge = window.parent.document.getElementById('interactive-badge');
         const msgEl = window.parent.document.getElementById('splash-msg');
         const pbFill = window.parent.document.querySelector('.progress-bar-fill');
+        const acceptBtn = window.parent.document.getElementById('accept-terms-btn');
         
+        if (acceptBtn) {{
+            acceptBtn.addEventListener('click', () => {{
+                acceptBtn.innerText = "Autorizado! Carregando a plataforma...";
+                acceptBtn.style.opacity = '0.7';
+                acceptBtn.style.cursor = 'wait';
+                
+                const btns = window.parent.document.querySelectorAll('.stButton button p');
+                for (let b of btns) {{
+                    if (b.innerText === 'continue_load') {{
+                        b.parentElement.click();
+                        break;
+                    }}
+                }}
+            }});
+            
+            acceptBtn.addEventListener('mouseover', () => {{
+                acceptBtn.style.transform = 'scale(1.05)';
+            }});
+            acceptBtn.addEventListener('mouseout', () => {{
+                acceptBtn.style.transform = 'scale(1)';
+            }});
+        }}
+
         if (badge) {{
             let easterEggTimer;
             let eggTriggered = false;
@@ -967,7 +1116,7 @@ if "first_load_done" not in st.session_state:
                 msgEl.style.color = scanColor;
                 
                 // Inicia o timer do Easter Egg
-                easterEggTimer = setTimeout(triggerEasterEgg, 5000);
+                easterEggTimer = setTimeout(triggerEasterEgg, 3000);
             }}
 
             badge.addEventListener('mousedown', startScanner);
@@ -997,16 +1146,6 @@ if "first_load_done" not in st.session_state:
                 msgEl.innerText = msgs[Math.floor(Math.random() * msgs.length)];
             }}
         }}, 2000);
-        
-        setTimeout(() => {{
-            const btns = window.parent.document.querySelectorAll('.stButton button p');
-            for (let b of btns) {{
-                if (b.innerText === 'continue_load') {{
-                    b.parentElement.click();
-                    break;
-                }}
-            }}
-        }}, 200);
     }}
     </script>
     """
@@ -1019,7 +1158,6 @@ if "first_load_done" not in st.session_state:
     if btn:
         st.session_state.first_load_done = True
         st.rerun()
-    st.stop()
 else:
     remove_splash_js = """
     <script>
@@ -1075,14 +1213,22 @@ st.markdown("""
 with st.container():
     st.markdown("<div id='sticky-header-anchor'></div>", unsafe_allow_html=True)
     
-    # Dar mais espaço para o bloco de botões para que os componentes do Streamlit não encolham demais (causando quebra de linha ou sumiço de botões)
-    col_title, col_btn = st.columns([80, 20], vertical_alignment="center")
+    # Mover a declaração de estilo para fora das colunas para não criar gaps invisíveis
+    if "base_font_size" not in st.session_state:
+        st.session_state.base_font_size = 16
+    st.markdown(f"<style>html {{ font-size: {st.session_state.base_font_size}px !important; }}</style>", unsafe_allow_html=True)
+    
+
+    # Dar mais espaço para o bloco de botões para que os componentes do Streamlit não encolham demais
+    col_title, col_btn = st.columns([85, 15], vertical_alignment="top")
     with col_title:
-        st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0; white-space: nowrap;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0; white-space: nowrap; margin-top: 5px;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
     
     def _muda_idioma():
         val = st.session_state.lang_radio
-        st.session_state.language = 'PT-BR' if 'PT-BR' in val else 'EN'
+        novo_idioma = 'PT-BR' if 'PT-BR' in val else 'EN'
+        st.session_state.language = novo_idioma
+        st.query_params["lang"] = novo_idioma
         analytics.log_event("change_language", {"language": st.session_state.language})
         
     def _change_font():
@@ -1101,12 +1247,8 @@ with st.container():
         st.query_params["is_mobile"] = str(st.session_state.mobile_mode_toggle).lower()
 
     with col_btn:
-        if "base_font_size" not in st.session_state:
-            st.session_state.base_font_size = 16
-        st.markdown(f"<style>html {{ font-size: {st.session_state.base_font_size}px !important; }}</style>", unsafe_allow_html=True)
-        
         # Popover minimalista para configurações
-        with st.popover("⚙️ Configs", use_container_width=False):
+        with st.popover("⚙️ Configs", use_container_width=True):
             st.radio(
                 "🌐 Idioma / Language", 
                 options=["PT-BR", "EN"], 
@@ -1174,9 +1316,11 @@ with st.container():
         else:
             col_menu_global, col_menu_especifico = st.columns(2)
             
+        # Âncora invisível para o tour geral referenciar este elemento (mantido por precaução estrutural)
+        st.markdown("<div id='tour-anchor-modes'></div>", unsafe_allow_html=True)
         with col_menu_global.popover(i18n.t('modes_and_explanations'), use_container_width=True):
-            # Usar <div> em vez de <h4> remove a âncora padrão e o espaçamento gigante do Streamlit
-            st.markdown(f"<div style='margin-bottom:-15px; margin-top: -10px; font-size:1.1rem; font-weight:bold;'>{i18n.t('view_modes')}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='margin-bottom:5px; font-size:1.1rem; font-weight:bold;'>{i18n.t('view_modes')}</div>", unsafe_allow_html=True)
+
             opcoes_modos_keys = ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5"]
             
             modo_visao_key = st.radio(
@@ -1216,6 +1360,7 @@ with st.container():
     
     # --- CONTROLES SUPERIORES (APENAS EXPLORADOR INDIVIDUAL) ---
     if modo_visao == i18n.t("mode_1"):
+        st.markdown("<div id='tour-anchor-config'></div>", unsafe_allow_html=True)
         with col_menu_especifico.popover(i18n.t("config_analytic"), use_container_width=True):
             is_mobile = st.session_state.get("is_mobile", False)
             traduzir_cargos = st.session_state.get('language', 'PT-BR') == 'EN'
@@ -1485,7 +1630,16 @@ with st.container():
             
     def _update_section():
         st.session_state[safe_key] = st.session_state[radio_key]
+        # Sincroniza seção na URL para que o link seja compartilhável
+        st.query_params["section"] = st.session_state[radio_key]
         
+    # Restaura seção a partir de link compartilhado (roda uma única vez)
+    if "shared_section" in st.session_state:
+        _shared_sec = st.session_state.pop("shared_section")
+        if _shared_sec and _shared_sec in nav_options:
+            st.session_state[safe_key] = _shared_sec
+            st.session_state[radio_key] = _shared_sec
+
     current_section = menu_expander.radio(
         "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
         options=nav_options, 
@@ -1498,6 +1652,11 @@ with st.container():
     
     if safe_key not in st.session_state:
         st.session_state[safe_key] = current_section
+
+    # Sincroniza modo e seção atuais na URL (atualização passiva - não causa rerun)
+    st.query_params["mode"] = modo_visao_key
+    if safe_key in st.session_state:
+        st.query_params["section"] = st.session_state[safe_key]
 
 if is_sample_biased_global:
     st.warning(explanations.get_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="⚠️")
@@ -2150,7 +2309,12 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             st.info("📱 **Modo Simplificado (Mobile)**. O limite inicial (threshold) do grafo foi ajustado dinamicamente para evitar nodos isolados e limpar a visualização.", icon="ℹ️")
             
         st.markdown("<div id='toc-graph'></div>", unsafe_allow_html=True)
-        st.subheader(i18n.t("sub_graph"), help=i18n.t("sub_graph_help"))
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t("sub_graph"), help=i18n.t("sub_graph_help"))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_graph"))
         
         # Calculate optimal threshold dynamically for mobile:
         # Maximize threshold while keeping at least one connection for every node.
@@ -2495,7 +2659,12 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         if is_sample_biased:
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
         st.markdown("<div id='toc-upset'></div>", unsafe_allow_html=True)
-        st.subheader(i18n.t("sub_upset"), help=i18n.t("sub_upset_help"))
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t("sub_upset"), help=i18n.t("sub_upset_help"))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_upset"))
         
         is_mobile = st.session_state.get("is_mobile", False)
         if is_mobile:

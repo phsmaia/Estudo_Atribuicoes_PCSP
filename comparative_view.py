@@ -137,10 +137,15 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
     if current_section is None or current_section == "sub_delta_title":
         st.markdown("---")
         st.markdown("<div id='toc-delta'></div>", unsafe_allow_html=True)
-        st.subheader(
-            i18n.t("sub_delta_title").format(cenario_a=i18n.t(cenario_a), cenario_b=i18n.t(cenario_b)),
-            help=i18n.t("sub_delta_help")
-        )
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(
+                i18n.t("sub_delta_title").format(cenario_a=i18n.t(cenario_a), cenario_b=i18n.t(cenario_b)),
+                help=i18n.t("sub_delta_help")
+            )
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_matrix"))
         interaction_ui.render_like_button("2.3 Discrepancias", "2_3")
         st.markdown(f"<p style='color:#ccc; font-size:0.9rem;'>{i18n.t('delta_subtitle')}</p>", unsafe_allow_html=True)
         
