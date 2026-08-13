@@ -27,7 +27,8 @@ def render_like_button(section_name: str, key_suffix: str = ""):
     
     with col2:
         # Mostra o total de curtidas logo acima do botão para ficar alinhado
-        st.markdown(f"<div style='font-size: 0.85rem; color: var(--text-color); opacity: 0.8; margin-bottom: 5px;'>Total de Curtidas: <b style='color: #4da6ff; font-size: 1rem;'>{likes_count}</b></div>", unsafe_allow_html=True)
+        lbl_likes = i18n.t("total_likes", default="Total de Curtidas")
+        st.markdown(f"<div style='font-size: 0.85rem; color: var(--text-color); opacity: 0.8; margin-bottom: 5px;'>{lbl_likes}: <b style='color: #4da6ff; font-size: 1rem;'>{likes_count}</b></div>", unsafe_allow_html=True)
         
         if has_liked:
             # Estado já curtido: ícone de tiro/explosão e texto
@@ -268,8 +269,8 @@ def render_floating_comments(global_topic: str):
                 z-index: 999999;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.3);
                 transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-                width: 170px;
-                height: 50px;
+                width: auto;
+                height: 40px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -277,7 +278,7 @@ def render_floating_comments(global_topic: str):
                 font-family: sans-serif;
                 color: var(--text-color, #E0E0E0);
                 font-weight: bold;
-                font-size: 0.95rem;
+                font-size: 0.85rem;
                 gap: 8px;
             }
             #hud-floating-comments:hover {
@@ -286,8 +287,24 @@ def render_floating_comments(global_topic: str):
                 transform: translateY(-2px);
                 box-shadow: 0 8px 25px rgba(0,0,0,0.6);
             }
+            @media (max-width: 768px) {
+                #hud-floating-comments {
+                    width: 45px;
+                    height: 45px;
+                    padding: 0;
+                    border-radius: 50%;
+                    left: 15px;
+                    bottom: 15px;
+                }
+                #hud-floating-comments .hud-text {
+                    display: none;
+                }
+                #hud-floating-comments span {
+                    margin-left: 0;
+                }
+            }
             </style>
-            <span style="font-size: 1.2rem;">💬</span> {{BTN_COMMENTS}}
+            <span style="font-size: 1.2rem; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">💬<span class="hud-text" style="margin-left: 8px;">{{BTN_COMMENTS}}</span></span>
         `;
         
         btnHUD.onclick = function() {

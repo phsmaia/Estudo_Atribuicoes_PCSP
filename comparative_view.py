@@ -159,7 +159,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             delta_matrix_vis.columns = [i18n.dic_traducao_cargos.get(c, c) for c in delta_matrix_vis.columns]
 
         if is_mobile:
-            st.info("📱 **Modo Simplificado (Mobile)**. Acesse em um Computador para visualizar o mapa de calor completo.", icon="ℹ️")
+            st.info(i18n.t("mobile_heatmap"), icon="ℹ️")
             opcoes_cargos_mobile = list(delta_matrix_vis.index)
             cargos_mobile_default = [destaques_completos[0]] if destaques_completos and destaques_completos[0] in opcoes_cargos_mobile else []
             if not cargos_mobile_default and len(opcoes_cargos_mobile) > 0:
@@ -270,7 +270,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         )
         
         if is_mobile:
-            st.info("📱 **Modo Simplificado (Mobile)**. Resumo da distribuição e top afinidades.", icon="ℹ️")
+            st.info(i18n.t("mobile_dist"), icon="ℹ️")
             
             def get_dist_summary(df_gower):
                 import numpy as np
@@ -361,7 +361,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         interaction_ui.render_like_button("2.1 Comparativo Direito (Base)", "2_1")
         
         if is_mobile:
-            st.info("📱 **Modo Simplificado (Mobile)**. Visualize na horizontal (deitar o celular) se a tabela cortar colunas.", icon="ℹ️")
+            st.info(i18n.t("mobile_rotate"), icon="ℹ️")
         
         # Extração de Atribuições Ganhos/Perdas
         if not cargo_foco_a:
@@ -476,7 +476,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             st.info(i18n.t("radar_no_career_warning"))
         elif cargo_foco_a in df_a['Carreira'].values and cargo_foco_b in df_b['Carreira'].values:
             if is_mobile:
-                st.info("📱 **Modo Simplificado (Mobile)**. O Radar exibe apenas os 5 cargos mais similares ao cargo em foco para evitar poluição visual.", icon="ℹ️")
+                st.info(i18n.t("mobile_radar"), icon="ℹ️")
                 
             # Pega TODAS as carreiras do cenário (exceto ela mesma)
             todas_carreiras = [c for c in gower_a.index if c != cargo_foco_a]
@@ -666,7 +666,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             help=i18n.t("sub_network_comp_help")
         )
         if is_mobile:
-            st.info("📱 **Modo Simplificado (Mobile)**. O limite inicial (threshold) do grafo foi ajustado dinamicamente para evitar nodos isolados e limpar a visualização.", icon="ℹ️")
+            st.info(i18n.t("mobile_network"), icon="ℹ️")
         
         import data_processing
         
@@ -856,7 +856,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         )
         
         if is_mobile:
-            st.info("📱 **Modo Simplificado (Mobile)**.", icon="ℹ️")
+            st.info(i18n.t("mobile_basic"), icon="ℹ️")
         
         # O Dendrograma precisa do gower_a e gower_b
         # Apenas se houver mais de um cargo para poder clusterizar

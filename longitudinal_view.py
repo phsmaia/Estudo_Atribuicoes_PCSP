@@ -241,7 +241,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             st.warning(explanations.get_short_bias_warning(language=lang), icon="🚨")
             
         if is_mobile:
-            st.info("📱 **Modo Simplificado (Mobile)**. Os gráficos foram ajustados para telas menores.", icon="ℹ️")
+            st.info(i18n.t("mobile_charts"), icon="ℹ️")
             
         st.caption(descricao)
         

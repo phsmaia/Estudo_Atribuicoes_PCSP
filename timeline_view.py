@@ -14,7 +14,7 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
     st.markdown(i18n.t("m3_intro"))
     is_mobile = st.session_state.get("is_mobile", False)
     if is_mobile:
-        st.info("📱 **Modo Simplificado (Mobile)**. Os gráficos foram ajustados para telas menores.", icon="ℹ️")
+        st.info(i18n.t("mobile_charts"), icon="ℹ️")
     
     # --- CARREGAMENTO DO DICIONÁRIO DE MAPA GERAL ---
     mapa_dict = {}

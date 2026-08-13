@@ -45,21 +45,25 @@ MASCOTS = {
     "🐺 Lobo-Guará Secreto": {
         "file": "mascote_lobo.png", "src": "mascot_wolf_1786318952220.png",
         "file_near": "mascote_lobo_near.png", "src_near": "mascot_wolf_near_v2_1786319184109.png",
-        "file_won": "mascote_lobo_won.png", "src_won": "mascot_wolf_won_v3_1786319261646.png",
+        "file_won": "mascote_lobo_won.png", "src_won": "mascot_wolf_won_v5_1786409325010.png",
         "file_confused": "mascote_lobo_confused.png", "src_confused": "mascot_wolf_confused_v2_1786319193276.png",
         "emojis": ["🐺❓", "🐺💭", "🐺😎", "🐺🎉", "🐺😵"]
     }
 }
 
-# Auto-copia os assets gerados pela IA para a pasta pública
-for mascot_data in MASCOTS.values():
-    for f_key, s_key in [("file", "src"), ("file_near", "src_near"), ("file_won", "src_won"), ("file_confused", "src_confused")]:
-        src_path = os.path.join(ARTIFACTS_DIR, mascot_data[s_key])
-        dest_path = os.path.join(ASSETS_DIR, mascot_data[f_key])
-        if os.path.exists(src_path):
-            shutil.copy2(src_path, dest_path)
+def ensure_assets_copied():
+    # Auto-copia os assets gerados pela IA para a pasta pública
+    for mascot_data in MASCOTS.values():
+        for f_key, s_key in [("file", "src"), ("file_near", "src_near"), ("file_won", "src_won"), ("file_confused", "src_confused")]:
+            src_path = os.path.join(ARTIFACTS_DIR, mascot_data[s_key])
+            dest_path = os.path.join(ASSETS_DIR, mascot_data[f_key])
+            if os.path.exists(src_path):
+                # Copy only if file doesn't exist or is older
+                if not os.path.exists(dest_path) or os.path.getmtime(src_path) > os.path.getmtime(dest_path):
+                    shutil.copy2(src_path, dest_path)
 
 def render_creative_view(mapa_cenarios, cenario_sel, current_section):
+    ensure_assets_copied()
     st.markdown("<div id='toc-creative-mode'></div>", unsafe_allow_html=True)
     st.markdown("## " + i18n.t("m5_intro_title", default="🎨 5. Creative / Interactive Mode"))
     st.markdown(i18n.t("m5_intro_desc", default="Bem-vindo ao laboratório criativo! Aqui exploramos os dados de formas menos convencionais e mais divertidas."))
@@ -104,20 +108,17 @@ def render_taxonomic_tree(df_cenario):
         
     sorted_cargos = sorted(cargo_scores.keys(), key=lambda x: cargo_scores[x], reverse=True)
     
-    tipo_arvore = st.radio(i18n.t("m5_tree_format", default="Formato da Árvore:"), [i18n.t("m5_tree_format_v", default="Cladograma Angular (V-shape)"), i18n.t("m5_tree_format_c", default="Dendrograma Clássico")], horizontal=True)
     mostrar_atribuicoes = st.toggle(i18n.t("m5_show_attr", default="👁️ Mostrar Atribuições na Árvore"), value=False)
+    estilo_cladograma = st.radio(i18n.t("m5_clade_style", default="Estilo Visual:"), [i18n.t("m5_clade_elegant", default="🌿 Elegante (Clássico)"), i18n.t("m5_clade_fish", default="🐟 Espinha de Peixe (Angular)")], horizontal=True)
     
-    if mostrar_atribuicoes and tipo_arvore == i18n.t("m5_tree_format_v", default="Cladograma Angular (V-shape)"):
+    if mostrar_atribuicoes:
         separar_evolucao = st.checkbox(i18n.t("m5_split_evol", default="🧬 Separar evolução (Atribuições Exclusivas vs Herdadas)"), value=False)
     else:
         separar_evolucao = False
     
     is_mobile = st.session_state.get("is_mobile", False)
     
-    if tipo_arvore == i18n.t("m5_tree_format_v", default="Cladograma Angular (V-shape)"):
-        fig = _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mostrar_atribuicoes, separar_evolucao)
-    else:
-        fig = _plot_classical_dendrogram(sorted_cargos, cargo_scores, df_bin, mostrar_atribuicoes)
+    fig = _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mostrar_atribuicoes, separar_evolucao, estilo_cladograma)
         
     st.plotly_chart(fig, use_container_width=True)
     
@@ -154,7 +155,7 @@ def render_taxonomic_tree(df_cenario):
                     title_div = f"{i18n.t('m5_branch_node', default='Divisão Evolutiva')} {idx+1}"
                     with st.expander(f"🌿 {title_div}"):
                         st.markdown(f"### {title_div}")
-                        st.markdown("**Sinapomorfias (Novas atribuições na divisão):**")
+                        st.markdown(f"**{i18n.t('m5_attr_syn_long', default='Sinapomorfias (Novas atribuições na divisão):')}**")
                         for a in new_attrs:
                             st.markdown(f"- {i18n.traduzir_atribuicao(a)}")
 
@@ -170,7 +171,7 @@ def render_taxonomic_tree(df_cenario):
                 cargo_trad = i18n.traduzir_cargo(cargo)
                 with st.expander(f"💼 {cargo_trad}"):
                     st.markdown(f"### {cargo_trad}")
-                    st.markdown("**Autapomorfias (Exclusivas):**" if separar_evolucao else f"**{i18n.t('m5_attr_list')}**")
+                    st.markdown(f"**{i18n.t('m5_attr_aut_long', default='Autapomorfias (Exclusivas):')}**" if separar_evolucao else f"**{i18n.t('m5_attr_list')}**")
                     for a in atribs:
                         st.markdown(f"- {i18n.traduzir_atribuicao(a)}")
     
@@ -181,8 +182,7 @@ def render_taxonomic_tree(df_cenario):
         
     if 'interaction_ui' in globals(): interaction_ui.render_like_button("5.1 Arvore Taxonomica", "5_1")
 
-def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mostrar_atribuicoes, separar_evolucao):
-    # Cria uma árvore ramificada em V (diagonal)
+def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mostrar_atribuicoes, separar_evolucao, estilo_cladograma):
     import networkx as nx
     G = nx.DiGraph()
     
@@ -193,7 +193,17 @@ def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mo
     max_score = max(cargo_scores.values()) if cargo_scores else 1
     min_score = min(cargo_scores.values()) if cargo_scores else 0
     
-    nodes_x = np.linspace(0.1, 0.9, len(sorted_cargos))
+    is_elegant = estilo_cladograma == i18n.t("m5_clade_elegant", default="🌿 Elegante (Clássico)")
+    
+    if is_elegant:
+        nodes_x = np.linspace(0.1, 0.9, len(sorted_cargos))
+    else:
+        nodes_x = []
+        for i in range(len(sorted_cargos)):
+            if i % 2 == 0:
+                nodes_x.append(0.15)
+            else:
+                nodes_x.append(0.85)
     
     # Criamos a espinha dorsal principal conectando nós em zigue-zague
     last_node = root
@@ -208,7 +218,11 @@ def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mo
         
         # Branch node point
         branch_y = (last_y + y) / 2
-        branch_x = (last_x + nodes_x[i]) / 2
+        if is_elegant:
+            branch_x = (last_x + nodes_x[i]) / 2
+        else:
+            branch_x = (last_x * 0.85) + (nodes_x[i] * 0.15) 
+        
         branch_name = f"b_{i}"
         
         G.add_node(branch_name, pos=(branch_x, branch_y))
@@ -222,17 +236,24 @@ def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mo
 
     pos = nx.get_node_attributes(G, 'pos')
     
-    edge_x = []
-    edge_y = []
-    for edge in G.edges():
-        x0, y0 = pos[edge[0]]
-        x1, y1 = pos[edge[1]]
-        # Linhas diretas (diagonal)
-        edge_x.extend([x0, x1, None])
-        edge_y.extend([y0, y1, None])
+    spine_x = [pos[root][0]]
+    spine_y = [pos[root][1]]
+    branch_edges_x = []
+    branch_edges_y = []
+    
+    for i, cargo in enumerate(sorted_cargos):
+        b_name = f"b_{i}"
+        spine_x.append(pos[b_name][0])
+        spine_y.append(pos[b_name][1])
+        
+        branch_edges_x.extend([pos[b_name][0], pos[cargo][0], None])
+        branch_edges_y.extend([pos[b_name][1], pos[cargo][1], None])
         
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=edge_x, y=edge_y, line=dict(width=2, color='#555'), mode='lines', hoverinfo='none'))
+    # Espinha Dorsal (Curva suave e contínua)
+    fig.add_trace(go.Scatter(x=spine_x, y=spine_y, line=dict(width=2, color='#555', shape='spline', smoothing=1.3), mode='lines', hoverinfo='none', showlegend=False))
+    # Ramos (Linhas retas menores saindo da espinha)
+    fig.add_trace(go.Scatter(x=branch_edges_x, y=branch_edges_y, line=dict(width=1.5, color='#777'), mode='lines', hoverinfo='none', showlegend=False))
     
     node_x = []
     node_y = []
@@ -298,7 +319,7 @@ def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mo
             atribs_str = "<br>".join([f"- {a}" for a in atribs_trad])
             
             if separar_evolucao:
-                title_attr = "Sinapomorfias (Novas):" if is_branch else "Autapomorfias (Exclusivas):" if node != root else "Atribuições Comuns:"
+                title_attr = i18n.t('m5_attr_syn', default="Sinapomorfias (Novas):") if is_branch else i18n.t('m5_attr_aut', default="Autapomorfias (Exclusivas):") if node != root else i18n.t('m5_attr_com', default="Atribuições Comuns:")
             else:
                 title_attr = i18n.t('m5_attr_list', default='Atribuições:')
                 
@@ -308,22 +329,22 @@ def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mo
         
         if is_branch:
             colors.append(palette[4])
-            labels.append("Divisão (Sinapomorfia)")
+            labels.append(i18n.t('m5_leg_divisao', default="Divisão (Sinapomorfia)"))
         elif score > 0.8 * max_score:
             colors.append(palette[2])
-            labels.append("Muito Basal")
+            labels.append(i18n.t('m5_leg_basal', default="Muito Basal"))
         elif score > 0.5 * max_score:
             colors.append(palette[1])
-            labels.append("Intermediário")
+            labels.append(i18n.t('m5_leg_inter', default="Intermediário"))
         else:
             colors.append(palette[0])
-            labels.append("Especializado (Derivado)")
+            labels.append(i18n.t('m5_leg_deriv', default="Especializado (Derivado)"))
             
     # Draw Legend groups
-    groups_to_draw = ["Muito Basal", "Intermediário", "Especializado (Derivado)"]
+    groups_to_draw = [i18n.t('m5_leg_basal', default="Muito Basal"), i18n.t('m5_leg_inter', default="Intermediário"), i18n.t('m5_leg_deriv', default="Especializado (Derivado)")]
     color_to_draw = [palette[2], palette[1], palette[0]]
     if separar_evolucao:
-        groups_to_draw.append("Divisão (Sinapomorfia)")
+        groups_to_draw.append(i18n.t('m5_leg_divisao', default="Divisão (Sinapomorfia)"))
         color_to_draw.append(palette[4])
         
     for group, color in zip(groups_to_draw, color_to_draw):
@@ -355,47 +376,6 @@ def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mo
     )
     return fig
 
-def _plot_classical_dendrogram(sorted_cargos, cargo_scores, df_bin, mostrar_atribuicoes):
-    import plotly.figure_factory as ff
-    from scipy.spatial.distance import pdist
-    
-    dist_matrix = pdist(df_bin.values, metric='jaccard')
-    labels_trad = [i18n.traduzir_cargo(c) for c in df_bin.index.tolist()]
-    fig = ff.create_dendrogram(df_bin.values, orientation='left', labels=labels_trad)
-    
-    # Se mostrar_atribuicoes estiver ativo, vamos injetar o hovertext na árvore
-    if mostrar_atribuicoes:
-        import plotly.graph_objects as go
-        # No FF dendrogram left, the leaves are at x=0
-        # The y coordinates match the tickvals
-        ticktext = fig.layout.yaxis.ticktext
-        tickvals = fig.layout.yaxis.tickvals
-        
-        # Create an invisible scatter trace over the labels just to hold the hovertext
-        hover_texts = []
-        for label_trad in ticktext:
-            # Encontrar o cargo original baseado na label traduzida
-            original_cargo = next((c for c in df_bin.index if i18n.traduzir_cargo(c) == label_trad), None)
-            if original_cargo:
-                atribs = df_bin.columns[df_bin.loc[original_cargo] > 0]
-                atribs_trad = [i18n.traduzir_atribuicao(a) for a in atribs]
-                atribs_str = "<br>".join([f"- {a}" for a in atribs_trad])
-                hover_texts.append(f"<b>{label_trad}</b><br><br><b>{i18n.t('m5_attr_list', default='Atribuições:')}</b><br>{atribs_str}")
-            else:
-                hover_texts.append(label_trad)
-                
-        fig.add_trace(go.Scatter(
-            x=[0] * len(tickvals),
-            y=tickvals,
-            mode='markers',
-            marker=dict(size=10, color='rgba(0,0,0,0)'),
-            hovertext=hover_texts,
-            hoverinfo='text',
-            showlegend=False
-        ))
-        
-    fig.update_layout(height=700, title="Dendrograma de Similaridade (Clássico)", xaxis_title="Distância de Ligação")
-    return fig
 
 # --- LÓGICA DO AKINATOR ---
 
@@ -462,6 +442,19 @@ def render_akinator_game(df_cenario):
     st.subheader(i18n.t("akinator_title", default="🔮 O Oráculo da PCSP (Adivinhador de Cargos)"))
     st.markdown(i18n.t("akinator_desc", default="Pense em um cargo da Polícia Civil. Eu vou tentar adivinhar qual é através das atribuições dele!"))
     
+    st.markdown("""
+    <style>
+    @media (max-width: 768px) {
+        [data-testid="stImage"] img {
+            max-height: 25vh !important;
+            object-fit: contain !important;
+            margin: 0 auto !important;
+            display: block !important;
+        }
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     if 'akinator_state' not in st.session_state:
         st.session_state.mascote_sel_key = "mascot_aleatorio"
         reset_game()
@@ -469,6 +462,13 @@ def render_akinator_game(df_cenario):
     col_config1, col_config2 = st.columns(2)
     with col_config1:
         tipo_jogo = st.radio(i18n.t("akinator_how_to_play", default="Como quer jogar?"), [i18n.t("akinator_mode_q", default="Perguntas (Modo Divertido)"), i18n.t("akinator_mode_m", default="Seleção Rápida (Multiselect)")], horizontal=True, on_change=reset_game)
+        dificuldade = st.radio(
+            i18n.t("akinator_difficulty", default="Dificuldade (Nível de Detalhe):"), 
+            ["akinator_diff_easy", "akinator_diff_hard"], 
+            format_func=lambda x: i18n.t(x, default="🟢 Fácil (Atribuições Aglutinadas)" if "easy" in x else "🔴 Difícil (Matriz Completa/Granular)"),
+            horizontal=True, 
+            on_change=reset_game
+        )
     with col_config2:
         visible_mascots = ["🐶 Inspetor Cão", "🦫 Investigadora Capi", "🦉 Oráculo (Coruja)"]
         radio_options = ["mascot_aleatorio"] + visible_mascots
@@ -496,7 +496,14 @@ def render_akinator_game(df_cenario):
     else:
         mascote_real = mascote_sel
     
-    df_clean = df_cenario.copy()
+    if dificuldade == "akinator_diff_easy":
+        try:
+            df_clean = data_processing.condensar_atribuicoes(df_cenario, similarity_threshold=0.7)
+        except Exception:
+            df_clean = df_cenario.copy()
+    else:
+        df_clean = df_cenario.copy()
+        
     if 'Carreira' in df_clean.columns:
         df_clean = df_clean.set_index('Carreira')
     df_bin = (df_clean > 0).astype(int)
@@ -692,6 +699,12 @@ def render_akinator_game(df_cenario):
                 else:
                     # Question UI
                     st.markdown(f"#### " + i18n.t("akinator_your_role", default="Seu cargo possui a atribuição **'{attr}'**?").format(attr=i18n.traduzir_atribuicao(best_q)))
+                    
+                    with st.expander("💡 " + i18n.t("akinator_hint", default="Ver Dica do Oráculo (Quem faz isso?)")):
+                        faz = [c for c in df_rem.index if df_rem.loc[c, best_q] == 1]
+                        nao_faz = [c for c in df_rem.index if df_rem.loc[c, best_q] == 0]
+                        st.markdown(f"**🟢 Realizam:** {', '.join([i18n.traduzir_cargo(c) for c in faz])}")
+                        st.markdown(f"**🔴 NÃO Realizam:** {', '.join([i18n.traduzir_cargo(c) for c in nao_faz])}")
                     
                     col_s, col_n, col_p = st.columns([1,1,1])
                     with col_s:

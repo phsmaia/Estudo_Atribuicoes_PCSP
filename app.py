@@ -281,8 +281,7 @@ if st.session_state.get("light_mode"):
         [data-testid="stAlert"] p { color: #1E2329 !important; }
         
         /* Custom Metric Boxes */
-        .custom-metric-box { background: #FFFFFF !important; border-color: #CED4DA !important; color: #1E2329 !important; }
-        .custom-metric-box * { color: #1E2329 !important; }
+        .custom-metric-box { background: #FFFFFF !important; border: 1px solid #CED4DA !important; padding: 15px; border-radius: 10px; color: #1E2329 !important; }
         
         /* Tooltips e labels */
         [data-testid="stWidgetLabel"] { color: #1E2329 !important; }
@@ -306,6 +305,13 @@ else:
         .custom-metric-box { background: #1E1E1E !important; border: 1px solid #333 !important; padding: 15px; border-radius: 10px; }
         </style>
     """, unsafe_allow_html=True)
+
+# --- ESTILOS GLOBAIS COMUNS ---
+st.markdown("""
+    <style>
+    /* Reservado para futuros estilos globais */
+    </style>
+""", unsafe_allow_html=True)
 
 # --- MODO TESTE DE PERSONA (UI) ---
 persona_placeholder = None
@@ -352,8 +358,9 @@ footer_html = """
             z-index: 999999;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            width: 240px;
-            height: 50px;
+            width: auto;
+            min-width: 150px;
+            height: 40px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -373,12 +380,12 @@ footer_html = """
             align-items: center;
             justify-content: center;
             width: 100%;
-            height: 50px;
+            height: 40px;
             cursor: pointer;
             flex-shrink: 0;
             color: __TEXT_COLOR__;
             font-weight: bold;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             gap: 8px;
         }
         #hud-floating-footer:hover .hud-icon {
@@ -421,11 +428,12 @@ footer_html = """
         }
         @media (max-width: 768px) {
             #hud-floating-footer {
-                width: 44px;
-                height: 44px;
-                border-radius: 22px;
-                bottom: 10px;
-                right: 10px;
+                width: 45px;
+                min-width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                bottom: 15px;
+                right: 15px;
                 padding: 0;
                 justify-content: center;
                 border: none;
@@ -433,16 +441,16 @@ footer_html = """
             .hud-icon {
                 font-size: 1.3rem;
             }
-            .hud-icon span {
+            .hud-icon .hud-text {
                 display: none;
             }
             #hud-floating-footer:hover {
-                width: 240px;
+                width: 320px;
                 height: max-content;
-                border-radius: 12px;
-                padding: 12px;
-                bottom: 10px;
-                right: 10px;
+                border-radius: 15px;
+                padding: 20px;
+                bottom: 15px;
+                right: 15px;
                 border: 1px solid __BORDER_COLOR__;
             }
             .hud-content a {
@@ -453,9 +461,10 @@ footer_html = """
         </style>
         
         <div class="hud-icon">
-            <span style="font-size: 1.2rem;">📚</span> __FOOTER_TITLE__
+            <span style="font-size: 1.2rem;">📚</span><span class="hud-text" style="margin-left: 5px;">__FOOTER_TITLE__</span>
         </div>
         <div class="hud-content">
+            <div onclick="const hud = this.closest('#hud-floating-footer'); hud.style.pointerEvents='none'; setTimeout(()=>hud.style.pointerEvents='auto', 500);" style="position: absolute; top: 10px; right: 15px; font-size: 1.5rem; color: #888; cursor: pointer; line-height: 1;">&times;</div>
             <h4>__REF_TITLE__</h4>
             <span style="font-size: 0.75rem; color: __SUBTEXT_COLOR__; display: block; margin: -5px 0 8px 0; font-style: italic;">__REF_DESC__</span>
             <a href="https://github.com/phsmaia/Estudo_Atribuicoes_PCSP" target="_blank">__REPO__</a>
@@ -841,6 +850,8 @@ if "first_load_done" not in st.session_state:
     _is_mobile = _qp.get("is_mobile") == "true"
     _lang = _qp.get("lang", "PT-BR")
     
+    warn_msg = "📱 <b>Aviso de Experiência:</b> Notamos que você está acessando via celular. Devido à densidade de dados e gráficos complexos, recomendamos usar o aparelho na horizontal (paisagem) ou acessar por um computador." if _lang == "PT-BR" else "📱 <b>Experience Notice:</b> We noticed you are on a mobile device. Due to data density and complex charts, we recommend using your device in landscape mode or accessing via a computer."
+    
     def _make_url(overrides):
         """Monta uma URL com os query params atuais + overrides fornecidos."""
         merged = {**_qp, **overrides}
@@ -865,8 +876,17 @@ if "first_load_done" not in st.session_state:
         const splash = window.parent.document.createElement('div');
         splash.id = 'custom-splash-screen';
         
-        // Verifica URL Params para manter Light Mode durante Splash Screen
+        // --- AUTO DETECT LANGUAGE ---
         const urlParams = new URLSearchParams(window.parent.location.search);
+        if (!urlParams.has('lang')) {{
+            const userLang = navigator.language || navigator.userLanguage;
+            if (userLang && !userLang.toLowerCase().includes('pt')) {{
+                urlParams.set('lang', 'EN');
+                window.parent.location.search = urlParams.toString();
+            }}
+        }}
+        
+        // Verifica URL Params para manter Light Mode durante Splash Screen
         const isLight = urlParams.get('theme') === 'light';
         const bgColor = isLight ? '#E9ECEF' : '#0b0f19';
         const textColor = isLight ? '#1E2329' : 'white';
@@ -957,20 +977,21 @@ if "first_load_done" not in st.session_state:
             
             /* --- Painel de Configurações da Splash --- */
             .splash-settings {{
-                position: absolute; top: 12px; right: 15px; z-index: 20;
-                display: flex; align-items: center; gap: 8px;
+                position: relative; z-index: 20; margin-bottom: 20px; margin-top: 15px;
+                display: flex; align-items: center; gap: 12px; justify-content: center; flex-wrap: wrap;
                 background: ${{btnBg}}; border: 1px solid ${{btnBorder}};
-                border-radius: 20px; padding: 6px 12px;
+                border-radius: 30px; padding: 10px 20px;
                 backdrop-filter: blur(8px);
-                font-size: 0.8rem; color: ${{textColor}};
+                font-size: 0.9rem; color: ${{textColor}};
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             }}
             .splash-settings label {{
-                font-size: 0.75rem; opacity: 0.7; margin-right: 2px;
+                font-size: 1.2rem; opacity: 0.9; margin-right: 5px;
             }}
             .splash-s-btn {{
-                display: inline-block; text-decoration: none;
-                background: none; border: 1px solid ${{btnBorder}}; border-radius: 12px;
-                color: ${{textColor}}; cursor: pointer; padding: 3px 9px; font-size: 0.78rem;
+                display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+                background: none; border: 1px solid ${{btnBorder}}; border-radius: 20px;
+                color: ${{textColor}}; cursor: pointer; padding: 6px 14px; font-size: 0.9rem; font-weight: bold;
                 transition: all 0.2s ease;
             }}
             .splash-s-btn:hover, .splash-s-btn.active {{
@@ -993,6 +1014,10 @@ if "first_load_done" not in st.session_state:
             </div>
             
             <h2 style="margin-bottom: 15px; color: ${{splashTitleColor}}; text-align: center; text-transform: uppercase; letter-spacing: 2px; z-index: 10; font-size: 1.5rem;">{title_str}</h2>
+            
+            <div id="splash-mobile-warning" style="display: none; max-width: 800px; width: 90%; background-color: rgba(255, 170, 0, 0.2); border: 1px solid rgba(255, 170, 0, 0.5); padding: 10px 15px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-size: 0.9rem; z-index: 10;">
+                {warn_msg}
+            </div>
             
             <div class="terms-container" style="max-width: 800px; max-height: 40vh; overflow-y: auto; background: ${{btnBg}}; padding: 20px 25px; border-radius: 10px; margin-bottom: 25px; border: 1px solid ${{btnBorder}}; font-size: 0.95rem; line-height: 1.6; backdrop-filter: blur(10px); z-index: 10; text-align: justify; scrollbar-width: thin; scrollbar-color: ${{strokeColor}} transparent; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
                 <p>{p1}</p>
@@ -1020,6 +1045,11 @@ if "first_load_done" not in st.session_state:
             <div id="splash-msg" style="color: ${{strokeColor}}; font-weight: bold; font-size: 1.1rem; height: 30px; z-index: 10;">Carregando...</div>
         `;
         window.parent.document.body.appendChild(splash);
+        
+        if (window.innerWidth <= 768 || navigator.maxTouchPoints > 0) {{
+            const mobileWarning = window.parent.document.getElementById('splash-mobile-warning');
+            if (mobileWarning) mobileWarning.style.display = 'block';
+        }}
         
         // --- Sem necessidade de JS para os botões de configuração: são links HTML nativos ---
         
@@ -1192,9 +1222,15 @@ mapa_cenarios = {
 st.markdown("""
     <style>
     .block-container {
-        padding-top: 0rem !important; 
-        margin-top: 0rem !important;
+        padding-top: 1rem !important; 
+        margin-top: -3.5rem !important;
         padding-bottom: 1rem !important;
+    }
+    
+    @media (max-width: 768px) {
+        .block-container {
+            margin-top: -4.5rem !important;
+        }
     }
     
     header[data-testid="stHeader"] {
@@ -1219,11 +1255,6 @@ with st.container():
     st.markdown(f"<style>html {{ font-size: {st.session_state.base_font_size}px !important; }}</style>", unsafe_allow_html=True)
     
 
-    # Dar mais espaço para o bloco de botões para que os componentes do Streamlit não encolham demais
-    col_title, col_btn = st.columns([85, 15], vertical_alignment="top")
-    with col_title:
-        st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0; white-space: nowrap; margin-top: 5px;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
-    
     def _muda_idioma():
         val = st.session_state.lang_radio
         novo_idioma = 'PT-BR' if 'PT-BR' in val else 'EN'
@@ -1246,8 +1277,10 @@ with st.container():
         st.session_state.is_mobile = st.session_state.mobile_mode_toggle
         st.query_params["is_mobile"] = str(st.session_state.mobile_mode_toggle).lower()
 
-    with col_btn:
-        # Popover minimalista para configurações
+    def _sync_compact():
+        st.session_state.compact_mode = st.session_state.compact_mode_toggle
+
+    def _render_configs():
         with st.popover("⚙️ Configs", use_container_width=True):
             st.radio(
                 "🌐 Idioma / Language", 
@@ -1273,15 +1306,26 @@ with st.container():
             
             st.toggle("📱 Modo Mobile", value=st.session_state.get("is_mobile", False), key="mobile_mode_toggle", on_change=_sync_mobile)
             
-        mobile_str = "📱 Mobile" if st.session_state.is_mobile else "🖥️ Desktop"
+            if not st.session_state.get("is_mobile", False):
+                st.toggle("📦 Menu Compacto (Desktop)", value=st.session_state.get("compact_mode", False), key="compact_mode_toggle", on_change=_sync_compact)
+            
+        mobile_str = "📱 Mobile" if st.session_state.get("is_mobile", False) else "🖥️ Desktop"
         lang_str = st.session_state.get("language", "PT-BR")
         font_str = f"A {st.session_state.base_font_size}px"
         theme_str = "☀️ Light" if st.session_state.get("light_mode", False) else "🌙 Dark"
-        st.markdown(f"<div style='font-size: 0.75rem; color: #888; text-align: right; margin-top: 4px;'>{mobile_str} | {lang_str} | {font_str} | {theme_str}</div>", unsafe_allow_html=True)
+        align = "center" if st.session_state.get("is_mobile", False) else "right"
+        st.markdown(f"<div style='font-size: 0.75rem; color: #888; text-align: {align}; margin-top: 4px;'>{mobile_str} | {lang_str} | {font_str} | {theme_str}</div>", unsafe_allow_html=True)
 
-    status_bar_placeholder = st.empty()
-    # Removemos o HTML do layout inicial porque o render final dos badges ocorre lá embaixo
-    status_bar_placeholder.markdown("<div style='border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;'></div>", unsafe_allow_html=True)
+    is_mobile = st.session_state.get("is_mobile", False)
+    use_compact_header = is_mobile or st.session_state.get("compact_mode", False)
+    
+    if not use_compact_header:
+        # Dar mais espaço para o bloco de botões para que os componentes do Streamlit não encolham demais
+        col_title, col_btn = st.columns([85, 15], vertical_alignment="top")
+        with col_title:
+            st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0; white-space: nowrap; margin-top: 5px;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
+        with col_btn:
+            _render_configs()
 
     # Recupera ou inicializa a fonte da verdade para o modo atual
     if 'last_modo_visao' not in st.session_state:
@@ -1304,13 +1348,32 @@ with st.container():
         st.session_state["modo_visao_radio"] = st.session_state.last_modo_visao
 
     current_mode_for_layout = st.session_state.last_modo_visao
+    is_mobile = st.session_state.get("is_mobile", False)
+    c_title = "#1E2329" if st.session_state.get("light_mode") else "#E0E0E0"
+    
+    if is_mobile and use_compact_header:
+        st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.2rem; color: {c_title}; text-align: center; margin-bottom: 15px; white-space: normal;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
     
     # Criamos o expander para reduzir o espaço da interface
-    menu_label = "🛠️ Menu Principal (Configurações e Navegação)" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🛠️ Main Menu (Settings and Navigation)"
+    if use_compact_header:
+        menu_label = "📊 Menu e Configurações" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📊 Menu & Settings"
+    else:
+        menu_label = "🛠️ Menu Principal (Configurações e Navegação)" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🛠️ Main Menu (Settings and Navigation)"
+        
     menu_expander = st.expander(menu_label, expanded=False)
         
     with menu_expander:
-        if current_mode_for_layout == "mode_3":
+        if use_compact_header:
+            if not is_mobile:
+                st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.2rem; color: {c_title}; text-align: center; margin-bottom: 15px; white-space: normal;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
+            _render_configs()
+            st.markdown("<hr style='margin: 15px 0; border: none; border-top: 1px solid rgba(150,150,150,0.3);'>", unsafe_allow_html=True)
+            
+        status_bar_placeholder = st.empty()
+        if not use_compact_header:
+            status_bar_placeholder.markdown("<div style='border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;'></div>", unsafe_allow_html=True)
+            
+        if current_mode_for_layout == "mode_3" or is_mobile:
             col_menu_global = st.container()
             col_menu_especifico = st.container()
         else:
@@ -1640,15 +1703,25 @@ with st.container():
             st.session_state[safe_key] = _shared_sec
             st.session_state[radio_key] = _shared_sec
 
-    current_section = menu_expander.radio(
-        "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
-        options=nav_options, 
-        format_func=lambda x: i18n.t(x),
-        key=radio_key,
-        horizontal=True,
-        on_change=_update_section,
-        help="Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
-    )
+    if is_mobile:
+        current_section = menu_expander.selectbox(
+            "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
+            options=nav_options, 
+            format_func=lambda x: i18n.t(x),
+            key=radio_key,
+            on_change=_update_section,
+            help="Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
+        )
+    else:
+        current_section = menu_expander.radio(
+            "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
+            options=nav_options, 
+            format_func=lambda x: i18n.t(x),
+            key=radio_key,
+            horizontal=True,
+            on_change=_update_section,
+            help="Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
+        )
     
     if safe_key not in st.session_state:
         st.session_state[safe_key] = current_section
@@ -1781,6 +1854,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         badge_destaque = f" <div class='status-badge' style='background: rgba(255, 152, 0, 0.2); border: 1px solid rgba(255, 152, 0, 0.5); color: #ffb74d;'>🎨 Destaques: <strong>{str_dest}</strong></div>"
 
     badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('warning_bias')}</div>" if is_sample_biased_global else ""
+
     header_html = f"""
 <div style='display: flex; gap: 5px; flex-wrap: wrap; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);'>
 {badge_vies_html}
@@ -1821,38 +1895,38 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
 </div>
 """
 
+    if st.session_state.get('language', 'PT-BR') == 'EN':
+        with st.expander("📚 Brazilian Police Roles Glossary"):
+            st.markdown("""
+            **Roles Translation (Approximations):**
+            - **Delegado de Polícia**: Police Chief / Police Delegate
+            - **Investigador de Polícia**: Police Investigator / Detective
+            - **Escrivão de Polícia**: Police Clerk / Desk Officer
+            - **Agente Policial**: Police Agent / Operative
+            - **Carcereiro Policial**: Police Jailer
+            - **Agente de Telecomunicações Policial**: Police Telecommunications Agent / Dispatcher
+            - **Papiloscopista Policial**: Fingerprint Examiner / Dactyloscopist
+            - **Auxiliar de Papiloscopista Policial**: Fingerprint Examiner Assistant
+            - **Perito Criminal**: Forensic Expert / Criminalist
+            - **Médico Legista**: Medical Examiner / Forensic Pathologist
+            - **Fotógrafo Técnico-Pericial**: Forensic Photographer
+            - **Desenhista Técnico-Pericial**: Forensic Sketch Artist
+            - **Atendente de Necrotério Policial**: Morgue Attendant
+            - **Auxiliar de Necropsia**: Autopsy Assistant
+            
+            *(Note: 'Odontolegista' is not listed separately here because it's functionally merged within Medical Examiner and Forensic Expert duties in this dataset).*
+            """)
+        
+        with st.expander("📖 Assignments Translation Table"):
+            st.markdown("Below are the available translations for the assignments in the active dataset.")
+            df_translations = pd.DataFrame(list(i18n.dic_traducao_atribuicoes.items()), columns=["Portuguese (PT-BR)", "English (US-EN)"])
+            st.dataframe(df_translations, use_container_width=True, hide_index=True)
+
     # 1.1. Matriz de Atribuições
     if current_section == 'sub_matrix':
         with st.expander(i18n.t('expander_math')):
             st.markdown(i18n.t('expander_math_text'))
             
-        if st.session_state.get('language', 'PT-BR') == 'EN':
-            with st.expander("📚 Brazilian Police Roles Glossary"):
-                st.markdown("""
-                **Roles Translation (Approximations):**
-                - **Delegado de Polícia**: Police Chief / Police Delegate
-                - **Investigador de Polícia**: Police Investigator / Detective
-                - **Escrivão de Polícia**: Police Clerk / Desk Officer
-                - **Agente Policial**: Police Agent / Operative
-                - **Carcereiro Policial**: Police Jailer
-                - **Agente de Telecomunicações Policial**: Police Telecommunications Agent / Dispatcher
-                - **Papiloscopista Policial**: Fingerprint Examiner / Dactyloscopist
-                - **Auxiliar de Papiloscopista Policial**: Fingerprint Examiner Assistant
-                - **Perito Criminal**: Forensic Expert / Criminalist
-                - **Médico Legista**: Medical Examiner / Forensic Pathologist
-                - **Fotógrafo Técnico-Pericial**: Forensic Photographer
-                - **Desenhista Técnico-Pericial**: Forensic Sketch Artist
-                - **Atendente de Necrotério Policial**: Morgue Attendant
-                - **Auxiliar de Necropsia**: Autopsy Assistant
-                
-                *(Note: 'Odontolegista' is not listed separately here because it's functionally merged within Medical Examiner and Forensic Expert duties in this dataset).*
-                """)
-            
-            with st.expander("📖 Assignments Translation Table"):
-                st.markdown("Below are the available translations for the assignments in the active dataset.")
-                df_translations = pd.DataFrame(list(i18n.dic_traducao_atribuicoes.items()), columns=["Portuguese (PT-BR)", "English (US-EN)"])
-                st.dataframe(df_translations, use_container_width=True, hide_index=True)
-    
         st.markdown(html_kpis, unsafe_allow_html=True)
     
         if is_sample_biased:
@@ -1866,7 +1940,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         
         is_mobile = st.session_state.get("is_mobile", False)
         if is_mobile:
-            st.info("📱 **Modo Simplificado (Mobile)**. Acesse em um Computador para visualizar o mapa de calor completo.", icon="ℹ️")
+            st.info(i18n.t("mobile_heatmap"), icon="ℹ️")
             
             # Corrige a extração dos nomes (podem estar na coluna 'Carreira' ou no index)
             opcoes_cargos_mobile = df_to_use_siglas['Carreira'].tolist() if 'Carreira' in df_to_use_siglas.columns else df_to_use_siglas.index.tolist()
@@ -2032,7 +2106,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                     st.dataframe(df_top_pairs, use_container_width=True, hide_index=True)
         else:
             # Layout Mobile (Apenas Tabela)
-            st.info("📱 **Modo Simplificado (Mobile)**. Acesse em um Computador para visualizar o mapa de calor completo.", icon="ℹ️")
+            st.info(i18n.t("mobile_heatmap"), icon="ℹ️")
             c_adj_top_pairs = "#1E2329" if st.session_state.get("light_mode") else "#ddd"
             st.markdown(f"<p style='font-size: 0.9rem; margin-bottom: 5px; margin-top: 15px; color:{c_adj_top_pairs};'><strong>{i18n.t('adj_top_pairs')}</strong></p>", unsafe_allow_html=True)
             
@@ -2306,7 +2380,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
         is_mobile = st.session_state.get("is_mobile", False)
         if is_mobile:
-            st.info("📱 **Modo Simplificado (Mobile)**. O limite inicial (threshold) do grafo foi ajustado dinamicamente para evitar nodos isolados e limpar a visualização.", icon="ℹ️")
+            st.info(i18n.t("mobile_network"), icon="ℹ️")
             
         st.markdown("<div id='toc-graph'></div>", unsafe_allow_html=True)
         col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
@@ -2418,7 +2492,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             st.plotly_chart(fig_gower_heat, use_container_width=True)
         else:
             # Layout Mobile (Apenas Tabela com menores distâncias)
-            st.info("📱 **Modo Simplificado (Mobile)**. Acesse em um Computador para visualizar o mapa de calor completo.", icon="ℹ️")
+            st.info(i18n.t("mobile_heatmap"), icon="ℹ️")
             c_gower_top = "#1E2329" if st.session_state.get("light_mode") else "#ddd"
             st.markdown(f"<p style='font-size: 0.9rem; margin-bottom: 5px; margin-top: 15px; color:{c_gower_top};'><strong>{i18n.t('gower_top_pairs', default='Maiores Similaridades (Menores Distâncias)')}</strong></p>", unsafe_allow_html=True)
             
@@ -2492,7 +2566,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         
         is_mobile = st.session_state.get("is_mobile", False)
         if is_mobile:
-            st.info("📱 **Modo Simplificado (Mobile)**. A régua foi rotacionada para a vertical garantindo o scroll (role para baixo para ver a assimetria).", icon="ℹ️")
+            st.info(i18n.t("mobile_ruler"), icon="ℹ️")
     
         ref_cargo_opcoes = list(df_para_gower['Carreira']) if 'Carreira' in df_para_gower.columns else [str(x) for x in df_para_gower.index]
         
@@ -2546,7 +2620,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         
         is_mobile = st.session_state.get("is_mobile", False)
         if is_mobile:
-            st.info("📱 **Modo Simplificado (Mobile)**. A árvore hierárquica foi disposta lateralmente para evitar encavalamento de textos.", icon="ℹ️")
+            st.info(i18n.t("mobile_tree"), icon="ℹ️")
     
         col_metric_17, col_linkage_17 = st.columns(2)
         with col_metric_17:
@@ -2668,7 +2742,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         
         is_mobile = st.session_state.get("is_mobile", False)
         if is_mobile:
-            st.info("📱 **Modo Simplificado (Mobile)**. O gráfico foi reduzido ao Top 10 para não esmagar as barras na tela. Acesse em um Computador para visualizar o Top 30 completo.", icon="ℹ️")
+            st.info(i18n.t("mobile_upset"), icon="ℹ️")
         
         df_upset = df_original_limpo.set_index('Carreira') if 'Carreira' in df_original_limpo.columns else df_original_limpo.copy()
         if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
