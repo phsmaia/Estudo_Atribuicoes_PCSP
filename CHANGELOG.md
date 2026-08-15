@@ -4,6 +4,18 @@ Todas as modificações notáveis neste projeto serão documentadas neste arquiv
 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [Unreleased] - 2026-08-15
+
+### Added
+- **Novos Cenários 2024/2025**: Incorporação de 6 novos cenários de reestruturação do grupo de estudos e do Governo (R1 e R2), separados pelas versões "Papiloscopista como Perito" e "Não Perito".
+- **Histórico Global de Nomenclatura**: Adição de uma nova seção na Visão 4 (Longitudinal) que exibe a alteração e o histórico dos nomes dos cargos ao longo dos cenários selecionados.
+- **Rastreamento Dinâmico de Nomes**: Atualização no motor do sistema (`csv_dump.json`) para realizar o de-para dos nomes dos cargos automaticamente, evitando que sumam nos gráficos caso o cargo mude de nome de um ano para o outro.
+- **Status Badge Unificado**: Inserção de uma "tag" (badge) no painel de controle (Visão 5 e 1) que alerta visualmente o usuário sobre qual cenário ele está operando no momento.
+
+### Fixed
+- **Cache Mismatching**: Correção de nomenclatura sensível a maiúsculas/minúsculas ("Analista de identificação") que quebrava o rastreamento longitudinal.
+- **Dicionário Comparativo**: Resolvido erro de indexação (`KeyError: 0`) na geração da tabela de comparações "Cenário A vs B" ao acessar linhas do dataframe interno.
+
 ## [Unreleased] - 2026-08-09
 
 ### Added
