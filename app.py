@@ -1207,7 +1207,12 @@ opcoes_cenarios = [
     "Atual Com Correção",
     "LONPC Sem Correção",
     "LONPC Com Correção",
-    "Reestruturação 2024"
+    "Reestruturação 2024 Papis não peritos",
+    "Reestruturação 2024 Papis como peritos",
+    "Rest 2025 Gov R1 Papis não peritos",
+    "Rest 2025 Gov R1 Papis como peritos",
+    "Rest 2025 Gov R2 Papis não peritos",
+    "Rest 2025 Gov R2 Papis como peritos"
 ]
 
 mapa_cenarios = {
@@ -1215,7 +1220,12 @@ mapa_cenarios = {
     "Atual Com Correção": datasets["atual_com_correcao"],
     "LONPC Sem Correção": datasets["lonpc_sem_correcao"],
     "LONPC Com Correção": datasets["lonpc_com_correcao"],
-    "Reestruturação 2024": datasets["reestruturacao"]
+    "Reestruturação 2024 Papis não peritos": datasets["reestruturacao_papis_nao_peritos"],
+    "Reestruturação 2024 Papis como peritos": datasets["reestruturacao_papis_peritos"],
+    "Rest 2025 Gov R1 Papis não peritos": datasets["rest_2025_gov_r1_papis_nao_peritos"],
+    "Rest 2025 Gov R1 Papis como peritos": datasets["rest_2025_gov_r1_papis_peritos"],
+    "Rest 2025 Gov R2 Papis não peritos": datasets["rest_2025_gov_r2_papis_nao_peritos"],
+    "Rest 2025 Gov R2 Papis como peritos": datasets["rest_2025_gov_r2_papis_peritos"]
 }
 
 # --- CABEÇALHO GLOBAL E ROTEAMENTO ---
@@ -1256,7 +1266,9 @@ with st.container():
     
 
     def _muda_idioma():
-        val = st.session_state.lang_radio
+        val = st.session_state.get("lang_radio")
+        if val is None:
+            return
         novo_idioma = 'PT-BR' if 'PT-BR' in val else 'EN'
         st.session_state.language = novo_idioma
         st.query_params["lang"] = novo_idioma

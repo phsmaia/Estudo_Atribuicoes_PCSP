@@ -63,6 +63,31 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
     if st.session_state.get('show_explanations', False):
         st.info(explanations.get_explanation("m4_micro_inicio", tone=st.session_state.get('explanation_tone', 'tecnico'), language=lang))
     
+    # --- RENDERIZAR TABELA DE MUDANÇA DE NOMES ---
+    try:
+        if os.path.exists('csv_dump.json'):
+            with open('csv_dump.json', 'r', encoding='utf-8') as f:
+                lista_mapa_geral = json.load(f)
+                if lista_mapa_geral:
+                    with st.expander("🔄 HISTÓRICO DE ALTERAÇÕES DE NOMES DOS CARGOS", expanded=False):
+                        st.markdown("**Acompanhamento de nomenclaturas através dos cenários:**")
+                        df_mapa_geral = pd.DataFrame(lista_mapa_geral)
+                        
+                        # Função para destacar onde o nome muda em relação a "Atual Sem Correção"
+                        def highlight_mudancas_gerais(col):
+                            if col.name == 'Atual Sem Correção':
+                                return [''] * len(col)
+                            # Destaca se o valor da célula for diferente do cargo original na primeira coluna
+                            return ['background-color: rgba(255, 165, 0, 0.2)' if v != df_mapa_geral['Atual Sem Correção'].iloc[i] else '' for i, v in enumerate(col)]
+                        
+                        st.dataframe(df_mapa_geral.style.apply(highlight_mudancas_gerais, axis=0), use_container_width=True, hide_index=True)
+                        st.markdown("*(Células destacadas indicam que o cargo recebeu uma nova nomenclatura ou foi fundido naquele cenário)*")
+    except Exception as e:
+        st.error(f"Erro ao carregar tabela de nomes: {e}")
+        pass
+    # ---------------------------------------------
+
+    
     # Load Dict
     mapa_dict = {}
     try:
@@ -109,7 +134,16 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             gower_df = data_processing.calcular_distancias(df_temp, metric='gower')
             
             for c_base in cargos_base:
-                c_cenario = mapa_dict[c_base].get(cenario, "")
+                # Map the UI scenario name to the CSV column name
+                cenario_csv_col = cenario
+                if "Reestruturação 2024" in cenario:
+                    cenario_csv_col = "Reestruturação 2024"
+                elif "Rest 2025 Gov R1" in cenario:
+                    cenario_csv_col = "Reestruturação Reunião 1 2025"
+                elif "Rest 2025 Gov R2" in cenario:
+                    cenario_csv_col = "Reestruturação Reunião 2 2025"
+
+                c_cenario = mapa_dict[c_base].get(cenario_csv_col, "")
                 
                 if c_cenario in df_temp.index:
                     hist_volume[c_base][cenario] = int(df_limpo.loc[c_cenario].sum())

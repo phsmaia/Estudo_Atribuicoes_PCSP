@@ -68,6 +68,14 @@ def render_creative_view(mapa_cenarios, cenario_sel, current_section):
     st.markdown("## " + i18n.t("m5_intro_title", default="🎨 5. Creative / Interactive Mode"))
     st.markdown(i18n.t("m5_intro_desc", default="Bem-vindo ao laboratório criativo! Aqui exploramos os dados de formas menos convencionais e mais divertidas."))
     
+    header_html = f"""
+<div style='display: flex; gap: 5px; flex-wrap: wrap; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);'>
+<div class='status-badge'>{i18n.t('badge_scenario', default='Cenário:')} <strong>{i18n.t(cenario_sel)}</strong></div>
+</div>
+"""
+    st.markdown(header_html, unsafe_allow_html=True)
+
+    
     df_cenario = mapa_cenarios[cenario_sel]
     
     if current_section == "m5_sub_tree_title":

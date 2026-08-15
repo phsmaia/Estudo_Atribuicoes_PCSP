@@ -104,7 +104,16 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
             nodes, edges, pos = data_processing.gerar_dados_grafo(adj_matrix, threshold=1)
             
             for c_base in cargos_base:
-                c_cenario = mapa_dict[c_base].get(cenario, "")
+                # Map the UI scenario name to the CSV column name
+                cenario_csv_col = cenario
+                if "Reestruturação 2024" in cenario:
+                    cenario_csv_col = "Reestruturação 2024"
+                elif "Rest 2025 Gov R1" in cenario:
+                    cenario_csv_col = "Reestruturação Reunião 1 2025"
+                elif "Rest 2025 Gov R2" in cenario:
+                    cenario_csv_col = "Reestruturação Reunião 2 2025"
+
+                c_cenario = mapa_dict[c_base].get(cenario_csv_col, "")
                 
                 if c_cenario in df_temp.index:
                     hist_volume[c_base][cenario] = int(df_limpo.loc[c_cenario].sum())

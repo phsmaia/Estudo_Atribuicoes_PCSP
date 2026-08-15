@@ -65,10 +65,24 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         mapa_dict = json.load(f)
     
     # mapa_dict is a list of dicts. We want mapping from cenario_a to cenario_b
+    
+    # Map the UI scenario name to the CSV column name
+    def map_ui_to_csv_col(cenario):
+        if "Reestruturação 2024" in cenario:
+            return "Reestruturação 2024"
+        elif "Rest 2025 Gov R1" in cenario:
+            return "Reestruturação Reunião 1 2025"
+        elif "Rest 2025 Gov R2" in cenario:
+            return "Reestruturação Reunião 2 2025"
+        return cenario
+
+    cenario_a_csv = map_ui_to_csv_col(cenario_a)
+    cenario_b_csv = map_ui_to_csv_col(cenario_b)
+
     mapping_a_to_b = {}
     for row in mapa_dict:
-        val_a = row.get(cenario_a)
-        val_b = row.get(cenario_b)
+        val_a = row.get(cenario_a_csv)
+        val_b = row.get(cenario_b_csv)
         if not val_a or not val_b: continue
         
         if val_a == "Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial)":
@@ -1058,6 +1072,20 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                     st.markdown(data_processing.df_to_inline_html(df_coph_b, col_style_func=color_coph), unsafe_allow_html=True)
                 else:
                     st.dataframe(df_coph_b.style.map(color_coph), use_container_width=True)
+                    
+        with st.expander("🔄 ALTERAÇÕES DE NOMES DOS CARGOS", expanded=False):
+            st.markdown(f"**Comparativo de nomenclaturas entre {i18n.t(cenario_a)} e {i18n.t(cenario_b)}:**")
+            
+            # Use the mapping_a_to_b dict created earlier
+            df_mapping = pd.DataFrame(list(mapping_a_to_b.items()), columns=[i18n.t(cenario_a), i18n.t(cenario_b)])
+            
+            # Remove where roles didn't change (optional, but requested to see changes usually. I'll just show all, but highlight changes)
+            def highlight_diff(row):
+                if row.iloc[0] != row.iloc[1]:
+                    return ['background-color: rgba(255, 165, 0, 0.2)'] * 2
+                return [''] * 2
+            
+            st.dataframe(df_mapping.style.apply(highlight_diff, axis=1), use_container_width=True, hide_index=True)
+            st.markdown("*(Linhas destacadas indicam alteração na nomenclatura do cargo ou quadro entre os cenários)*")
     
         st.markdown("<div style='height: 150px;'></div>", unsafe_allow_html=True)
-    

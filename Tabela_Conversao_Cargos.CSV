@@ -1,15 +1,15 @@
-Atual Sem Correção;Atual Com Correção;LONPC Sem Correção;LONPC Com Correção;Reestruturação 2024
-Delegado de Polícia;Delegado de Polícia;Delegado de Polícia;Delegado de Polícia;Delegado de Polícia
-Escrivão de Polícia;Escrivão de Polícia;Oficial Investigador de Polícia;Oficial Investigador de Polícia;Escrivão de Polícia
-Investigador de Polícia;Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial);Oficial Investigador de Polícia;Oficial Investigador de Polícia;Oficial Investigador de Polícia
-Perito Criminal;Perito Criminal;Perito Criminal;Perito Criminal;Perito Criminal
-Médico Legista;Médico Legista;Médico Legista;Médico Legista;Médico Legista
-Papiloscopista Policial;Papiloscopista Policial;Perito Papiloscopista;Perito Papiloscopista;Papiloscopista Policial
-Auxiliar de Papiloscopista Policial;Auxiliar de Papiloscopista Policial;Agente de Perícia Papiloscópica;Agente de Perícia Papiloscópica;Papiloscopista Policial
-Agente de Telecomunicações Policial;Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial);Oficial Investigador de Polícia;Oficial Investigador de Polícia;Agente de Polícia Judiciária
-Agente Policial;Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial);Oficial Investigador de Polícia;Oficial Investigador de Polícia;Agente de Polícia Judiciária
-Carcereiro Policial;Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial);Oficial Investigador de Polícia;Oficial Investigador de Polícia;Agente de Polícia Judiciária
-Fotógrafo Técnico Pericial;Fotógrafo Técnico Pericial;Agente de Perícia Criminalística;Agente de Perícia Criminalística;Agente de Perícia Criminalística
-Desenhista Técnico Pericial;Desenhista Técnico Pericial;Agente de Perícia Criminalística;Agente de Perícia Criminalística;Agente de Perícia Criminalística
-Auxiliar de Necrópsia Policial;Auxiliar de Necrópsia Policial;Agente de Perícia Médico Legal;Agente de Perícia Médico Legal;Agente de Perícia Médico Legal
-Atendente de Necrotério Policial;Atendente de Necrotério Policial;Agente de Perícia Médico Legal;Agente de Perícia Médico Legal;Agente de Perícia Médico Legal
+Atual Sem Correção;Atual Com Correção;LONPC Sem Correção;LONPC Com Correção;Reestruturação 2024;Reestruturação Reunião 1 2025;Reestruturação Reunião 2 2025
+Delegado de Polícia;Delegado de Polícia;Delegado de Polícia;Delegado de Polícia;Delegado de Polícia;Delegado de Polícia;Delegado de Polícia
+Escrivão de Polícia;Escrivão de Polícia;Oficial Investigador de Polícia;Oficial Investigador de Polícia;Escrivão de Polícia;Oficial Investigador de Polícia - Especialista Cartorário;Oficial Investigador de Polícia
+Investigador de Polícia;Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial);Oficial Investigador de Polícia;Oficial Investigador de Polícia;Oficial Investigador de Polícia;Oficial Investigador de Polícia - Especialista Investigativo;Oficial Investigador de Polícia
+Perito Criminal;Perito Criminal;Perito Criminal;Perito Criminal;Perito Criminal;Perito Oficial Criminal - Especialista Perícia Criminalística;Perito Oficial Criminal
+Médico Legista;Médico Legista;Médico Legista;Médico Legista;Médico Legista;Perito Oficial Criminal - Especialista Técnico Medicina Legal;Perito Oficial Criminal
+Papiloscopista Policial;Papiloscopista Policial;Perito Papiloscopista;Perito Papiloscopista;Papiloscopista Policial;Analista de Polícia Judiciária;Analista de Identificação Policial
+Auxiliar de Papiloscopista Policial;Auxiliar de Papiloscopista Policial;Agente de Perícia Papiloscópica;Agente de Perícia Papiloscópica;Papiloscopista Policial;Agente de Polícia Judiciária;Analista de Identificação Policial
+Agente de Telecomunicações Policial;Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial);Oficial Investigador de Polícia;Oficial Investigador de Polícia;Agente de Polícia Judiciária;Analista de Polícia Judiciária;Agente de Polícia Judiciária
+Agente Policial;Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial);Oficial Investigador de Polícia;Oficial Investigador de Polícia;Agente de Polícia Judiciária;Agente de Polícia Judiciária;Agente de Polícia Judiciária
+Carcereiro Policial;Investigador de Polícia (+ Agente de Telecomunicações Policial + Agente Policial + Carcereiro Policial);Oficial Investigador de Polícia;Oficial Investigador de Polícia;Agente de Polícia Judiciária;Agente de Polícia Judiciária;Agente de Polícia Judiciária
+Fotógrafo Técnico Pericial;Fotógrafo Técnico Pericial;Agente de Perícia Criminalística;Agente de Perícia Criminalística;Agente de Perícia Criminalística;Oficial de Perícia Criminal - Especialista Perícia Criminalística;Oficial de Perícia Criminal
+Desenhista Técnico Pericial;Desenhista Técnico Pericial;Agente de Perícia Criminalística;Agente de Perícia Criminalística;Agente de Perícia Criminalística;Oficial de Perícia Criminal - Especialista Perícia Criminalística;Oficial de Perícia Criminal
+Auxiliar de Necrópsia Policial;Auxiliar de Necrópsia Policial;Agente de Perícia Médico Legal;Agente de Perícia Médico Legal;Agente de Perícia Médico Legal;Oficial de Perícia Criminal - Especialista Técnico Medicina Legal;Oficial de Perícia Criminal
+Atendente de Necrotério Policial;Atendente de Necrotério Policial;Agente de Perícia Médico Legal;Agente de Perícia Médico Legal;Agente de Perícia Médico Legal;Oficial de Perícia Criminal - Especialista Técnico Medicina Legal;Oficial de Perícia Criminal
