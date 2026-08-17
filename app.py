@@ -44,7 +44,7 @@ if "language" not in st.session_state:
 
 # Sincroniza modo e seção a partir da URL (para links compartilhados)
 if "last_modo_visao" not in st.session_state and "mode" in st.query_params:
-    _valid_modes = ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5"]
+    _valid_modes = ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]
     _qs_mode = st.query_params.get("mode", "mode_1")
     if _qs_mode in _valid_modes:
         st.session_state.last_modo_visao = _qs_mode
@@ -54,13 +54,40 @@ if "shared_section" not in st.session_state and "section" in st.query_params:
     st.session_state.shared_section = st.query_params.get("section", "")
 
 try:
-    df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', sep=';', encoding='iso-8859-1')
-    df_conv.to_json('csv_dump.json', orient='records', force_ascii=False)
-
+    # Tenta carregar df_conv com utf-8, senão iso-8859-1
+    try:
+        df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', sep=';', encoding='utf-8')
+    except UnicodeDecodeError:
+        df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', sep=';', encoding='iso-8859-1')
+        
+    # Forçar o cabeçalho correto na matriz interna do DataFrame da Tabela de Conversão
+    col_translations = {
+        df_conv.columns[0]: 'Atual Sem Correção',
+        df_conv.columns[1]: 'Atual Com Correção',
+        df_conv.columns[2]: 'LONPC Sem Correção',
+        df_conv.columns[3]: 'LONPC Com Correção',
+        df_conv.columns[4]: 'Reestruturação 2024',
+        df_conv.columns[5]: 'Reestruturação Reunião 1 2025',
+        df_conv.columns[6]: 'Reestruturação Reunião 2 2025',
+        df_conv.columns[7]: 'Decreto 47788 / 1967'
+    }
+    df_conv = df_conv.rename(columns=col_translations)
     
+    # Criar um DataFrame exportável com os nomes BASE (apenas as 6 posições), filtrando os estados dos Toggles Globais
+    incluir_correcoes = st.session_state.get('toggle_correcoes', True)
+    df_dump = pd.DataFrame()
+    df_dump['Atual'] = df_conv['Atual Com Correção'] if incluir_correcoes else df_conv['Atual Sem Correção']
+    df_dump['Decreto de 1967'] = df_conv['Decreto 47788 / 1967']
+    df_dump['LONPC'] = df_conv['LONPC Com Correção'] if incluir_correcoes else df_conv['LONPC Sem Correção']
+    df_dump['Reestruturação 2024'] = df_conv['Reestruturação 2024']
+    df_dump['Reestruturação Reunião 1 2025'] = df_conv['Reestruturação Reunião 1 2025']
+    df_dump['Reestruturação Reunião 2 2025'] = df_conv['Reestruturação Reunião 2 2025']
+    
+    df_dump.to_json('csv_dump.json', orient='records', force_ascii=False)
+
 except Exception as e:
     with open('erro.txt', 'w') as f: f.write(str(e))
-    pass
+    df_conv = None
 
 # Iniciar o banco de dados de log
 logger.init_db()
@@ -1203,54 +1230,89 @@ else:
 
 datasets = data_loader.get_all_datasets()
 opcoes_cenarios = [
-    "Atual Sem Correção",
-    "Atual Com Correção",
-    "LONPC Sem Correção",
-    "LONPC Com Correção",
-    "Reestruturação 2024 Papis não peritos",
-    "Reestruturação 2024 Papis como peritos",
-    "Rest 2025 Gov R1 Papis não peritos",
-    "Rest 2025 Gov R1 Papis como peritos",
-    "Rest 2025 Gov R2 Papis não peritos",
-    "Rest 2025 Gov R2 Papis como peritos"
+    "Atual",
+    "Decreto de 1967",
+    "LONPC",
+    "Reestruturação 2024",
+    "Reestruturação Reunião 1 2025",
+    "Reestruturação Reunião 2 2025"
 ]
 
+incluir_atrib_comuns = st.session_state.get('toggle_atrib_comuns', False)
+incluir_correcoes = st.session_state.get('toggle_correcoes', True)
+papis_peritos = st.session_state.get('toggle_papis_peritos', False)
+
 mapa_cenarios = {
-    "Atual Sem Correção": datasets["atual_sem_correcao"],
-    "Atual Com Correção": datasets["atual_com_correcao"],
-    "LONPC Sem Correção": datasets["lonpc_sem_correcao"],
-    "LONPC Com Correção": datasets["lonpc_com_correcao"],
-    "Reestruturação 2024 Papis não peritos": datasets["reestruturacao_papis_nao_peritos"],
-    "Reestruturação 2024 Papis como peritos": datasets["reestruturacao_papis_peritos"],
-    "Rest 2025 Gov R1 Papis não peritos": datasets["rest_2025_gov_r1_papis_nao_peritos"],
-    "Rest 2025 Gov R1 Papis como peritos": datasets["rest_2025_gov_r1_papis_peritos"],
-    "Rest 2025 Gov R2 Papis não peritos": datasets["rest_2025_gov_r2_papis_nao_peritos"],
-    "Rest 2025 Gov R2 Papis como peritos": datasets["rest_2025_gov_r2_papis_peritos"]
+    "Atual": datasets["atual_com_correcao"] if incluir_correcoes else datasets["atual_sem_correcao"],
+    "Decreto de 1967": datasets["decreto_1967_com_correcao"] if incluir_correcoes else datasets["decreto_1967_dgp_2012"],
+    "LONPC": datasets["lonpc_com_correcao"] if incluir_correcoes else datasets["lonpc_sem_correcao"],
+    "Reestruturação 2024": datasets["reestruturacao_papis_peritos"] if papis_peritos else datasets["reestruturacao_papis_nao_peritos"],
+    "Reestruturação Reunião 1 2025": datasets["rest_2025_gov_r1_papis_peritos"] if papis_peritos else datasets["rest_2025_gov_r1_papis_nao_peritos"],
+    "Reestruturação Reunião 2 2025": datasets["rest_2025_gov_r2_papis_peritos"] if papis_peritos else datasets["rest_2025_gov_r2_papis_nao_peritos"]
 }
 
+def get_scenario_df(cenario, correcoes, papi):
+    if cenario == "Atual":
+        return datasets["atual_com_correcao"] if correcoes else datasets["atual_sem_correcao"]
+    elif cenario == "Decreto de 1967":
+        return datasets["decreto_1967_com_correcao"] if correcoes else datasets["decreto_1967_dgp_2012"]
+    elif cenario == "LONPC":
+        return datasets["lonpc_com_correcao"] if correcoes else datasets["lonpc_sem_correcao"]
+    elif cenario == "Reestruturação 2024":
+        return datasets["reestruturacao_papis_peritos"] if papi else datasets["reestruturacao_papis_nao_peritos"]
+    elif cenario == "Reestruturação Reunião 1 2025":
+        return datasets["rest_2025_gov_r1_papis_peritos"] if papi else datasets["rest_2025_gov_r1_papis_nao_peritos"]
+    elif cenario == "Reestruturação Reunião 2 2025":
+        return datasets["rest_2025_gov_r2_papis_peritos"] if papi else datasets["rest_2025_gov_r2_papis_nao_peritos"]
+    return None
+
+
+if not incluir_atrib_comuns:
+    import data_processing
+    for cenario_key, df in mapa_cenarios.items():
+        if df is not None and not df.empty:
+            # Applies the function directly to the copy inside the dictionary
+            mapa_cenarios[cenario_key] = data_processing.remover_atribuicoes_comuns(df.copy())
 # --- CABEÇALHO GLOBAL E ROTEAMENTO ---
 st.markdown("""
     <style>
-    .block-container {
-        padding-top: 1rem !important; 
-        margin-top: -3.5rem !important;
-        padding-bottom: 1rem !important;
+    /* Remove padding superior da área principal */
+    .block-container, 
+    div.block-container,
+    div[data-testid="stAppViewBlockContainer"],
+    .stApp > div > div.block-container {
+        padding-top: 0rem !important;
+        padding-bottom: 0rem !important;
+        margin-top: -11rem !important;
     }
     
+    /* Para mobile, ajustamos ainda mais a margem para evitar muito espaço */
     @media (max-width: 768px) {
-        .block-container {
-            margin-top: -4.5rem !important;
+        .block-container, 
+        div.block-container,
+        div[data-testid="stAppViewBlockContainer"] {
+            margin-top: -12rem !important;
+            padding-top: 0rem !important;
         }
     }
     
-    header[data-testid="stHeader"] {
-        display: none;
+    /* Completely hide headers and decoration bars */
+    header[data-testid="stHeader"],
+    .stApp > header,
+    div[data-testid="stDecoration"] {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0px !important;
+        min-height: 0px !important;
+        padding: 0px !important;
+        margin: 0px !important;
     }
     
-    header[data-testid="stHeader"] {
-        display: none;
+    footer {
+        display: none !important;
     }
     
+    /* Fix the metric box */
     .custom-metric-box { background: #1E1E1E; border: 1px solid #333; }
     </style>
 """, unsafe_allow_html=True)
@@ -1344,8 +1406,8 @@ with st.container():
         st.session_state.last_modo_visao = "mode_1"
     else:
         # Fallback caso last_modo_visao seja uma string traduzida em vez de key
-        if st.session_state.last_modo_visao not in ["mode_1", "mode_2", "mode_3", "mode_4"]:
-            for k in ["mode_1", "mode_2", "mode_3", "mode_4"]:
+        if st.session_state.last_modo_visao not in ["mode_2", "mode_3", "mode_4", "mode_5"]:
+            for k in ["mode_2", "mode_3", "mode_4", "mode_5"]:
                 if st.session_state.last_modo_visao == i18n.t(k):
                     st.session_state.last_modo_visao = k
                     break
@@ -1353,7 +1415,7 @@ with st.container():
     # Se o widget de rádio existe na sessão, confiamos nele. 
     # Se o usuário trocou o modo, a chave 'modo_visao_radio' já estará atualizada antes desta linha rodar.
     if "modo_visao_radio" in st.session_state:
-        if st.session_state.modo_visao_radio in ["mode_1", "mode_2", "mode_3", "mode_4"]:
+        if st.session_state.modo_visao_radio in ["mode_2", "mode_3", "mode_4", "mode_5"]:
             st.session_state.last_modo_visao = st.session_state.modo_visao_radio
     else:
         # Se não existe, o Streamlit perdeu o estado (bug do unmount do popover). Restauramos do backup.
@@ -1381,29 +1443,54 @@ with st.container():
             _render_configs()
             st.markdown("<hr style='margin: 15px 0; border: none; border-top: 1px solid rgba(150,150,150,0.3);'>", unsafe_allow_html=True)
             
-        status_bar_placeholder = st.empty()
-        if not use_compact_header:
-            status_bar_placeholder.markdown("<div style='border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;'></div>", unsafe_allow_html=True)
+
             
-        if current_mode_for_layout == "mode_3" or is_mobile:
+        if current_mode_for_layout in ["mode_4", "mode_7", "mode_1", "mode_5"] or is_mobile:
             col_menu_global = st.container()
+            col_menu_toggles = st.container()
             col_menu_especifico = st.container()
         else:
-            col_menu_global, col_menu_especifico = st.columns(2)
+            col_menu_global, col_menu_toggles, col_menu_especifico = st.columns([1.5, 1, 1.5])
+            
+        _modes_with_modifiers = ["mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]
+        if current_mode_for_layout in _modes_with_modifiers:
+            with col_menu_toggles.popover("🎛️ Modificadores Globais", use_container_width=True):
+                st.markdown("<div style='margin-bottom:5px; font-size:1.1rem; font-weight:bold;'>Variações Interpretativas</div>", unsafe_allow_html=True)
+                
+                # Descobrir quais cenários estão sendo visualizados para desativar toggles irrelevantes
+                cenarios_ativos = set()
+                if current_mode_for_layout == "mode_2":
+                    cenarios_ativos.add(st.session_state.get('cenario_base', 'Atual'))
+                elif current_mode_for_layout in ["mode_3", "mode_5"]:
+                    cenarios_ativos.add(st.session_state.get('cenario_a', 'Atual'))
+                    cenarios_ativos.add(st.session_state.get('cenario_b', 'Decreto de 1967'))
+                else:
+                    cenarios_ativos.update(opcoes_cenarios)
+                    
+                correcoes_app = any(c in ["Atual", "Decreto de 1967", "LONPC"] for c in cenarios_ativos)
+                papis_app = any(c in ["Reestruturação 2024", "Reestruturação Reunião 1 2025", "Reestruturação Reunião 2 2025"] for c in cenarios_ativos)
+                
+                st.checkbox("Atribuições Comuns (DGP 30/2012)", value=False, key="toggle_atrib_comuns", help="Aplica as atribuições gerais comuns a todo policial civil estabelecidas pela Portaria DGP 30/2012.")
+                
+                if current_mode_for_layout == "mode_4":
+                    st.info("No **Análise de Cenários**, as variações de Correção, Decreto e Papiloscopista Perito são ajustadas individualmente nos seletores de cada cenário (A e B).")
+                else:
+                    st.checkbox("Correções Ortográficas e Técnicas", value=True, key="toggle_correcoes", disabled=not correcoes_app, help="Utiliza a versão com correções técnicas nos cenários base. Aplicável a: Atual, Decreto 1967 e LONPC.")
+                    st.checkbox("Papiloscopistas como Peritos Oficiais", value=False, key="toggle_papis_peritos", disabled=not papis_app, help="Eleva o status do cargo de Papiloscopista para Perito Oficial. Aplicável a: Reestruturação 2024 e 2025.")
             
         # Âncora invisível para o tour geral referenciar este elemento (mantido por precaução estrutural)
         st.markdown("<div id='tour-anchor-modes'></div>", unsafe_allow_html=True)
         with col_menu_global.popover(i18n.t('modes_and_explanations'), use_container_width=True):
             st.markdown(f"<div style='margin-bottom:5px; font-size:1.1rem; font-weight:bold;'>{i18n.t('view_modes')}</div>", unsafe_allow_html=True)
 
-            opcoes_modos_keys = ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5"]
+            opcoes_modos_keys = ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]
             
             modo_visao_key = st.radio(
                 i18n.t("nav_analytic"),
                 opcoes_modos_keys,
                 format_func=lambda x: i18n.t(x),
                 key="modo_visao_radio",
-                horizontal=False,
+                horizontal=True,
                 label_visibility="collapsed"
             )
             modo_visao = i18n.t(modo_visao_key)
@@ -1415,7 +1502,23 @@ with st.container():
             # Divisor mais compacto que o st.divider()
             st.markdown("<hr style='margin: 0px 0 15px 0; border: none; border-top: 1px solid rgba(150,150,150,0.3);'>", unsafe_allow_html=True)
             
-            show_exp = st.toggle(i18n.t("explanation_mode"), key="show_explanations")
+            is_mode_7 = (modo_visao_key == "mode_1")
+            
+            if 'saved_show_exp' not in st.session_state:
+                st.session_state.saved_show_exp = False
+            if 'saved_tone' not in st.session_state:
+                st.session_state.saved_tone = "tecnico"
+
+            if is_mode_7:
+                show_exp_widget = st.toggle(i18n.t("explanation_mode"), value=False, disabled=True, key="show_exp_disabled")
+                st.session_state.show_explanations = False
+            else:
+                show_exp_widget = st.toggle(i18n.t("explanation_mode"), value=st.session_state.saved_show_exp, key="show_exp_enabled")
+                st.session_state.saved_show_exp = show_exp_widget
+                st.session_state.show_explanations = show_exp_widget
+                
+            show_exp = st.session_state.show_explanations
+
             if 'last_show_exp' not in st.session_state:
                 st.session_state.last_show_exp = show_exp
         
@@ -1423,18 +1526,50 @@ with st.container():
             analytics.log_event("toggle_explanations", {"enabled": show_exp})
             st.session_state.last_show_exp = show_exp
             
-        if st.session_state.get('show_explanations', False):
-            tone = st.radio(i18n.t("reading_tone"), ["tecnico", "leigo"], format_func=lambda x: i18n.t("tone_academic") if x == "tecnico" else i18n.t("tone_layman"), horizontal=True, label_visibility="collapsed", key="explanation_tone")
+        if show_exp:
+            tone_idx = 0 if st.session_state.saved_tone == "tecnico" else 1
+            tone_widget = st.radio(i18n.t("reading_tone"), ["tecnico", "leigo"], index=tone_idx, format_func=lambda x: i18n.t("tone_academic") if x == "tecnico" else i18n.t("tone_layman"), horizontal=True, label_visibility="collapsed", key="exp_tone_enabled")
+            st.session_state.saved_tone = tone_widget
+            st.session_state.explanation_tone = tone_widget
+            
             if 'last_tone' not in st.session_state:
-                st.session_state.last_tone = tone
-            if st.session_state.last_tone != tone:
-                analytics.log_event("toggle_explanations", {"tone": tone})
-                st.session_state.last_tone = tone
+                st.session_state.last_tone = tone_widget
+            if st.session_state.last_tone != tone_widget:
+                analytics.log_event("toggle_explanations", {"tone": tone_widget})
+                st.session_state.last_tone = tone_widget
+        
+    status_bar_placeholder = st.empty()
+    if not use_compact_header:
+        status_bar_placeholder.markdown("<div style='border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;'></div>", unsafe_allow_html=True)
         
     is_sample_biased_global = False
+
+    # --- HTML dos badges de Modificadores Globais (reutilizável em todos os modos) ---
+    def _build_modifier_badges(incluir_1967: bool = False) -> str:
+        """Gera o HTML dos badges de modificadores globais para injeção na status bar."""
+        badges = []
+        # Atribuições Comuns
+        if incluir_atrib_comuns:
+            badges.append("<div class='status-badge' style='background:rgba(124,179,66,0.15);border:1px solid rgba(124,179,66,0.5);color:#aed581;'>🧩 Genéricas: <strong>ON</strong></div>")
+        else:
+            badges.append("<div class='status-badge' style='opacity:0.45;'>🧩 Genéricas: <strong>OFF</strong></div>")
+        # Correções Ortográficas
+        if incluir_correcoes:
+            badges.append("<div class='status-badge' style='background:rgba(79,195,247,0.15);border:1px solid rgba(79,195,247,0.5);color:#81d4fa;'>✏️ Correção: <strong>ON</strong></div>")
+        else:
+            badges.append("<div class='status-badge' style='opacity:0.45;'>✏️ Correção: <strong>OFF</strong></div>")
+        # Papis como Peritos
+        if papis_peritos:
+            badges.append("<div class='status-badge' style='background:rgba(171,71,188,0.15);border:1px solid rgba(171,71,188,0.5);color:#ce93d8;'>🔬 Papis Peritos: <strong>ON</strong></div>")
+        else:
+            badges.append("<div class='status-badge' style='opacity:0.45;'>🔬 Papis Peritos: <strong>OFF</strong></div>")
+        # Decreto 1967 (apenas se aplicável e ativo)
+        if incluir_1967:
+            badges.append("<div class='status-badge' style='background:rgba(255,183,77,0.15);border:1px solid rgba(255,183,77,0.5);color:#ffcc80;'>📜 1967: <strong>ON</strong></div>")
+        return "".join(badges)
     
     # --- CONTROLES SUPERIORES (APENAS EXPLORADOR INDIVIDUAL) ---
-    if modo_visao == i18n.t("mode_1"):
+    if modo_visao == i18n.t("mode_3"):
         st.markdown("<div id='tour-anchor-config'></div>", unsafe_allow_html=True)
         with col_menu_especifico.popover(i18n.t("config_analytic"), use_container_width=True):
             is_mobile = st.session_state.get("is_mobile", False)
@@ -1447,17 +1582,17 @@ with st.container():
                 cargos_disponiveis = df_cenario['Carreira'].tolist() if df_cenario is not None and 'Carreira' in df_cenario.columns else (df_cenario.index.tolist() if df_cenario is not None else [])
                 
                 st.markdown("<div style='margin-top: 10px; margin-bottom: 5px;'></div>", unsafe_allow_html=True)
-                incluir_comuns = st.checkbox(i18n.t("include_generic"), value=False)
+                incluir_1967 = st.checkbox(i18n.t("include_1967_layer"), value=False, disabled=cenario_sel == "Decreto de 1967")
                 
                 opcoes_matriz = ["condensed", "original"]
                 tipo_matriz_raw = st.selectbox(
                     i18n.t("matrix_format"), 
                     opcoes_matriz, 
                     format_func=lambda x: i18n.t(x),
-                    disabled=incluir_comuns,
+                    disabled=incluir_atrib_comuns,
                     key="tipo_matriz_raw"
                 )
-                tipo_matriz = "Original" if "original" in tipo_matriz_raw or incluir_comuns else "Condensada"
+                tipo_matriz = "Original" if "original" in tipo_matriz_raw or incluir_atrib_comuns else "Condensada"
                 
                 # Valores padrão (opções ocultas no mobile)
                 grupo_sel = "filter_all"
@@ -1480,17 +1615,17 @@ with st.container():
                     cargos_pc = [c for c in cargos_disponiveis if c not in cargos_cientifica]
                     
                     st.markdown("<div style='margin-top: 5px; margin-bottom: 5px;'></div>", unsafe_allow_html=True)
-                    incluir_comuns = st.checkbox(i18n.t("include_generic"), value=False)
+                    incluir_1967 = st.checkbox(i18n.t("include_1967_layer"), value=False, disabled=cenario_sel == "Decreto de 1967")
                     
                     opcoes_matriz = ["condensed", "original"]
                     tipo_matriz_raw = st.selectbox(
                         i18n.t("matrix_format"), 
                         opcoes_matriz, 
                         format_func=lambda x: i18n.t(x),
-                        disabled=incluir_comuns,
+                        disabled=incluir_atrib_comuns,
                         key="tipo_matriz_raw"
                     )
-                    tipo_matriz = "Original" if "original" in tipo_matriz_raw or incluir_comuns else "Condensada"
+                    tipo_matriz = "Original" if "original" in tipo_matriz_raw or incluir_atrib_comuns else "Condensada"
                     
                     opcoes_grupos = ["filter_all", "filter_no_cientifica", "filter_only_cientifica", "filter_custom"]
                     grupo_sel = st.selectbox(
@@ -1559,16 +1694,70 @@ with st.container():
                         
             if 'filtro_cargos' in locals() and 'cargos_disponiveis' in locals():
                 if filtro_cargos and len(filtro_cargos) < len(cargos_disponiveis):
-                    is_sample_biased_global = True
-
-    elif modo_visao == i18n.t("mode_2"):
+                    # Se o grupo selecionado for "Todos os Cargos", evitamos ativar o aviso por oscilações na contagem interna devido a atribuições comuns.
+                    if 'grupo_sel' in locals() and grupo_sel == 'filter_all':
+                        is_sample_biased_global = False
+                    else:
+                        is_sample_biased_global = True
+    elif modo_visao == i18n.t("mode_4"):
         traduzir_cargos = st.session_state.get('language', 'PT-BR') == 'EN'
         with col_menu_especifico.popover(i18n.t("config_compare"), use_container_width=True):
             col_a, col_b = st.columns(2)
-            cenario_a = col_a.selectbox(i18n.t("scenario_a"), opcoes_cenarios, index=0, format_func=lambda x: i18n.t(x), key="cenario_a_sel")
-            cenario_b = col_b.selectbox(i18n.t("scenario_b"), opcoes_cenarios, index=1, format_func=lambda x: i18n.t(x), key="cenario_b_sel")
             
-            df_a = mapa_cenarios.get(cenario_a)
+            cenario_a = col_a.selectbox(i18n.t("scenario_a"), opcoes_cenarios, index=0, format_func=lambda x: i18n.t(x), key="cenario_a_sel")
+            correcoes_a_disp = cenario_a in ["Atual", "Decreto de 1967", "LONPC"]
+            papis_a_disp = cenario_a in ["Reestruturação 2024", "Reestruturação Reunião 1 2025", "Reestruturação Reunião 2 2025"]
+            correcoes_a = col_a.checkbox("Com Correções", value=True, key="corr_a", disabled=not correcoes_a_disp)
+            papi_a = col_a.checkbox("Papi Perito", value=False, key="papi_a", disabled=not papis_a_disp)
+            incluir_1967_a = col_a.checkbox(i18n.t("include_1967_layer"), value=False, key="incluir_1967_a", disabled=(cenario_a == "Decreto de 1967"))
+            
+            cenario_b = col_b.selectbox(i18n.t("scenario_b"), opcoes_cenarios, index=1, format_func=lambda x: i18n.t(x), key="cenario_b_sel")
+            correcoes_b_disp = cenario_b in ["Atual", "Decreto de 1967", "LONPC"]
+            papis_b_disp = cenario_b in ["Reestruturação 2024", "Reestruturação Reunião 1 2025", "Reestruturação Reunião 2 2025"]
+            correcoes_b = col_b.checkbox("Com Correções", value=True, key="corr_b", disabled=not correcoes_b_disp)
+            papi_b = col_b.checkbox("Papi Perito", value=False, key="papi_b", disabled=not papis_b_disp)
+            incluir_1967_b = col_b.checkbox(i18n.t("include_1967_layer"), value=False, key="incluir_1967_b", disabled=(cenario_b == "Decreto de 1967"))
+            
+            df_a_raw = get_scenario_df(cenario_a, correcoes_a, papi_a)
+            df_a = df_a_raw.copy() if df_a_raw is not None else None
+            df_b_raw = get_scenario_df(cenario_b, correcoes_b, papi_b)
+            df_b = df_b_raw.copy() if df_b_raw is not None else None
+            
+            if not incluir_atrib_comuns:
+                import data_processing
+                if df_a is not None: df_a = data_processing.remover_atribuicoes_comuns(df_a)
+                if df_b is not None: df_b = data_processing.remover_atribuicoes_comuns(df_b)
+                
+            if incluir_1967_a or incluir_1967_b:
+                import pandas as pd
+                try:
+                    df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', encoding='utf-8-sig', sep=';')
+                except:
+                    df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', encoding='iso-8859-1', sep=';')
+                
+                import data_processing
+                if incluir_1967_a and df_a is not None:
+                    df_1967_a = get_scenario_df("Decreto de 1967", correcoes_a, False)
+                    df_a = data_processing.mesclar_com_1967(df_a, cenario_a, df_1967_a, df_conv)
+                if incluir_1967_b and df_b is not None:
+                    df_1967_b = get_scenario_df("Decreto de 1967", correcoes_b, False)
+                    df_b = data_processing.mesclar_com_1967(df_b, cenario_b, df_1967_b, df_conv)
+                
+            def get_scenario_title(cenario, correcoes, papi, incluir_1967):
+                mods = []
+                if cenario in ["Atual", "Decreto de 1967", "LONPC"]:
+                    mods.append("c/ Corr" if correcoes else "s/ Corr")
+                if cenario in ["Reestruturação 2024", "Reestruturação Reunião 1 2025", "Reestruturação Reunião 2 2025"]:
+                    mods.append("c/ Perito" if papi else "s/ Perito")
+                if incluir_1967 and cenario != "Decreto de 1967":
+                    mods.append("+ 1967")
+                
+                mod_str = f" [{', '.join(mods)}]" if mods else ""
+                return f"{i18n.t(cenario)}{mod_str}"
+            
+            cenario_a_title = get_scenario_title(cenario_a, correcoes_a, papi_a, incluir_1967_a)
+            cenario_b_title = get_scenario_title(cenario_b, correcoes_b, papi_b, incluir_1967_b)
+            
             if df_a is not None and 'Carreira' in df_a.columns:
                 cargos_base = df_a['Carreira'].tolist()
             else:
@@ -1598,7 +1787,7 @@ with st.container():
             c_foco_trans = i18n.traduzir_cargo(cargo_foco_b) if traduzir_cargos else cargo_foco_b
             tracker_text_color = "#333" if st.session_state.get('light_mode') else "#E0E0E0"
             tracker_bg = "rgba(0, 114, 178, 0.1)" if st.session_state.get('light_mode') else "rgba(0, 114, 178, 0.2)"
-            rastreio_html = f"<div title='{i18n.t('tracking_title')}' style='cursor: help; background: {tracker_bg}; border: 1px solid #0072B2; padding: 6px 15px; border-radius: 8px; font-size: 0.85rem; color: {tracker_text_color}; width: 100%; margin-top: 5px;'>{i18n.t('tracking_main')} <strong style='color: #4da6ff;'>{c_sel_trans}</strong> ({i18n.t(cenario_a)}) ➔ <strong style='color: #4da6ff;'>{c_foco_trans}</strong> ({i18n.t(cenario_b)}) <span style='float:right'>ℹ️</span></div>"
+            rastreio_html = f"<div title='{i18n.t('tracking_title')}' style='cursor: help; background: {tracker_bg}; border: 1px solid #0072B2; padding: 6px 15px; border-radius: 8px; font-size: 0.85rem; color: {tracker_text_color}; width: 100%; margin-top: 5px;'>{i18n.t('tracking_main')} <strong style='color: #4da6ff;'>{c_sel_trans}</strong> ({cenario_a_title}) ➔ <strong style='color: #4da6ff;'>{c_foco_trans}</strong> ({cenario_b_title}) <span style='float:right'>ℹ️</span></div>"
         else:
             rastreio_html = ""
             
@@ -1608,14 +1797,16 @@ with st.container():
             badge_destaque_2 = f" <div class='status-badge' style='background: rgba(255, 152, 0, 0.2); border: 1px solid rgba(255, 152, 0, 0.5); color: #ffb74d;'>{i18n.t('highlights_lbl')} <strong>{str_dest_2}</strong></div>"
 
         badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('badge_bias')}</div>" if is_sample_biased_global else ""
+        _mod_badges_4 = _build_modifier_badges(incluir_1967=incluir_1967_a or incluir_1967_b)
         status_bar_placeholder.markdown(f"""
         <div id='sticky-header-anchor'></div>
         <div style='display: flex; flex-direction: column;'>
             <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 5px; flex-wrap: wrap; gap: 10px;'>
                 <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
-                    <div class='status-badge' title='{i18n.t("mode2_tooltip")}' style='cursor: help;'>{i18n.t("badge_mode")} <strong>{i18n.t("mode_2").split(". ")[1]}</strong> <span style='font-size:0.7rem'>ℹ️</span></div>
-                    <div class='status-badge' title='{i18n.t("scenario_origin_tooltip")}' style='cursor: help;'>{i18n.t("badge_scenario_a")}<strong>{i18n.t(cenario_a)}</strong></div>
-                    <div class='status-badge' title='{i18n.t("scenario_dest_tooltip")}' style='cursor: help;'>{i18n.t("badge_scenario_b")}<strong>{i18n.t(cenario_b)}</strong></div>{badge_destaque_2}
+                    <div class='status-badge'>{i18n.t("badge_mode")} <strong>{i18n.t("mode_4").split(". ", 1)[-1]}</strong></div>
+                    <div class='status-badge' title='{i18n.t("scenario_origin_tooltip")}' style='cursor: help;'>{i18n.t("badge_scenario_a")}<strong>{cenario_a_title}</strong></div>
+                    <div class='status-badge' title='{i18n.t("scenario_dest_tooltip")}' style='cursor: help;'>{i18n.t("badge_scenario_b")}<strong>{cenario_b_title}</strong></div>{badge_destaque_2}
+                    {_mod_badges_4}
                 </div>
             </div>
             {rastreio_html}
@@ -1623,19 +1814,21 @@ with st.container():
         """, unsafe_allow_html=True)
             
     # --- CONTROLES MODO 3 ---
-    elif modo_visao == i18n.t("mode_3"):
+    elif modo_visao == i18n.t("mode_5"):
         badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('badge_bias')}</div>" if is_sample_biased_global else ""
+        _mod_badges_5 = _build_modifier_badges()
         status_bar_placeholder.markdown(f"""
         <div id='sticky-header-anchor'></div>
         <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
             <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
-                <div class='status-badge'>{i18n.t('badge_mode_3')}</div>
+                <div class='status-badge'>{i18n.t('badge_mode_4')}</div>
+                {_mod_badges_5}
             </div>
         </div>
         """, unsafe_allow_html=True)
 
     # --- CONTROLES MODO 4 ---
-    elif modo_visao == i18n.t("mode_4"):
+    elif modo_visao == i18n.t("mode_6"):
         import json
         import os
         cargos_base_long = []
@@ -1643,7 +1836,8 @@ with st.container():
             if os.path.exists('csv_dump.json'):
                 with open('csv_dump.json', 'r', encoding='utf-8') as f:
                     lista_mapa = json.load(f)
-                    cargos_base_long = [row['Atual Sem Correção'] for row in lista_mapa]
+                    # dict.fromkeys preserva a ordem e remove duplicatas (Investigador aparece em múltiplas linhas do JSON)
+                    cargos_base_long = list(dict.fromkeys(row['Atual'] for row in lista_mapa if row.get('Atual')))
         except Exception:
             pass
             
@@ -1667,32 +1861,52 @@ with st.container():
                 is_sample_biased_global = True
 
         badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('badge_bias')}</div>" if is_sample_biased_global else ""
+        _mod_badges_6 = _build_modifier_badges()
         status_bar_placeholder.markdown(f"""
         <div id='sticky-header-anchor'></div>
         <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
             <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
-                <div class='status-badge'>{i18n.t('badge_mode_4')}</div>
+                <div class='status-badge'>{i18n.t('badge_mode_5')}</div>
                 <div class='status-badge'>{i18n.t('badge_filtered_roles')} <strong>{len(filtro_cargos_long)}</strong></div>
+                {_mod_badges_6}
             </div>
         </div>
         """, unsafe_allow_html=True)
         
     # --- CONTROLES MODO 5 ---
-    elif modo_visao == i18n.t("mode_5"):
+    elif modo_visao == i18n.t("mode_7"):
         with col_menu_especifico.popover("⚙️ Cenário / Scenario", use_container_width=True):
             cenario_sel = st.selectbox(i18n.t("select_scenario"), opcoes_cenarios, format_func=lambda x: i18n.t(x), key="creative_cenario_sel_top")
+
+        _cenario_7 = st.session_state.get("creative_cenario_sel_top", opcoes_cenarios[0] if opcoes_cenarios else "")
+        _cenario_7_label = i18n.t(_cenario_7) if _cenario_7 else "—"
+        status_bar_placeholder.markdown(f"""
+        <div id='sticky-header-anchor'></div>
+        <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
+            <div style='display: flex; gap: 5px; flex-wrap: wrap;'>
+                <div class='status-badge'>🎨 {i18n.t("mode_7").split(". ", 1)[-1]}</div>
+                <div class='status-badge'>{i18n.t('badge_scenario')} <strong>{_cenario_7_label}</strong></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
     # Navegação Interna Condicional (Substitui as bolinhas flutuantes)
     st.markdown("<div style='margin-top: 5px;'></div>", unsafe_allow_html=True)
     
-    if modo_visao == i18n.t("mode_1"):
+    if modo_visao == i18n.t("mode_3"):
         nav_options = ["sub_matrix", "sub_adj", "sub_dyn", "sub_graph", "sub_gower", "sub_ruler", "sub_dendro", "sub_upset"]
-    elif modo_visao == i18n.t("mode_2"):
-        nav_options = ["sub_delta_title", "sub_dist_title", "sub_flow_title", "sub_radar_title", "sub_network_comp_title", "sub_tree_comp_title"]
-    elif modo_visao == i18n.t("mode_3"):
-        nav_options = ["m3_sub_gower_title", "m3_sub_vol_title", "m3_sub_share_title", "m3_sub_coph_title"]
     elif modo_visao == i18n.t("mode_4"):
+        nav_options = ["sub_delta_title", "sub_dist_title", "sub_flow_title", "sub_radar_title", "sub_network_comp_title", "sub_tree_comp_title"]
+    elif modo_visao == i18n.t("mode_5"):
+        nav_options = ["m3_sub_gower_title", "m3_sub_vol_title", "m3_sub_share_title", "m3_sub_coph_title"]
+    elif modo_visao == i18n.t("mode_6"):
         nav_options = ["m4_sub_volume_title", "m4_sub_exclusive_title", "m4_sub_shared_title", "m4_sub_adj_title", "m4_sub_gower_title", "m4_sub_neighbor_title"]
+    elif modo_visao == i18n.t("mode_7"):
+        nav_options = ["m5_sub_tree_title", "m5_sub_akinator_title"]
+    elif modo_visao == i18n.t("mode_2"):
+        nav_options = ["m6_sub_sources_title", "m6_sub_principles_title"]
+    elif modo_visao == i18n.t("mode_1"):
+        nav_options = []
     else:
         nav_options = ["m5_sub_tree_title", "m5_sub_akinator_title"]
         
@@ -1715,28 +1929,32 @@ with st.container():
             st.session_state[safe_key] = _shared_sec
             st.session_state[radio_key] = _shared_sec
 
-    if is_mobile:
-        current_section = menu_expander.selectbox(
-            "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
-            options=nav_options, 
-            format_func=lambda x: i18n.t(x),
-            key=radio_key,
-            on_change=_update_section,
-            help="Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
-        )
+    if nav_options:
+        if is_mobile:
+            current_section = menu_expander.selectbox(
+                "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
+                options=nav_options, 
+                format_func=lambda x: i18n.t(x),
+                key=radio_key,
+                on_change=_update_section,
+                help="Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
+            )
+        else:
+            current_section = menu_expander.radio(
+                "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
+                options=nav_options, 
+                format_func=lambda x: i18n.t(x),
+                key=radio_key,
+                horizontal=True,
+                on_change=_update_section,
+                help="Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
+            )
+        
+        if safe_key not in st.session_state:
+            st.session_state[safe_key] = current_section
     else:
-        current_section = menu_expander.radio(
-            "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
-            options=nav_options, 
-            format_func=lambda x: i18n.t(x),
-            key=radio_key,
-            horizontal=True,
-            on_change=_update_section,
-            help="Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
-        )
-    
-    if safe_key not in st.session_state:
-        st.session_state[safe_key] = current_section
+        current_section = None
+        st.session_state[safe_key] = None
 
     # Sincroniza modo e seção atuais na URL (atualização passiva - não causa rerun)
     st.query_params["mode"] = modo_visao_key
@@ -1746,19 +1964,19 @@ with st.container():
 if is_sample_biased_global:
     st.warning(explanations.get_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="⚠️")
 
-if modo_visao == i18n.t("mode_2"):
+if modo_visao == i18n.t("mode_4"):
     with st.spinner("⏳ Carregando visão..." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "⏳ Loading view..."):
         import comparative_view
         import importlib
         importlib.reload(comparative_view)
-        comparative_view.render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b, carreira_sel_comparativo, cargos_destaque_2, current_section)
-elif modo_visao == i18n.t("mode_3"):
+        comparative_view.render_comparativo_axb(df_a, df_b, cenario_a_title, cenario_b_title, carreira_sel_comparativo, cargos_destaque_2, current_section, cenario_a, cenario_b, correcoes_a, correcoes_b, papi_a, papi_b, incluir_1967_a, incluir_1967_b)
+elif modo_visao == i18n.t("mode_5"):
     with st.spinner("⏳ Carregando visão..." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "⏳ Loading view..."):
         import timeline_view
         import importlib
         importlib.reload(timeline_view)
         timeline_view.render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section)
-elif modo_visao == i18n.t("mode_4"):
+elif modo_visao == i18n.t("mode_6"):
     with st.spinner("⏳ Carregando visão..." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "⏳ Loading view..."):
         import longitudinal_view
         import importlib
@@ -1770,7 +1988,7 @@ if 'visit_logged' not in st.session_state:
     cenario_para_log = cenario_sel if 'cenario_sel' in locals() else modo_visao
     logger.log_visit(cenario_para_log)
 
-if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.empty:
+if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.empty:
     with st.spinner("⏳ Carregando visão..." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "⏳ Loading view..."):
         # Higienização de Nomes Longos que quebram a interface
         if 'Carreira' in df_cenario.columns:
@@ -1785,7 +2003,12 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
             else:
                 df_cenario = df_cenario.loc[filtro_cargos]
                 
+        # Mesclagem da Camada Histórica (Decreto 1967)
+        if incluir_1967:
+            df_cenario = data_processing.mesclar_com_1967(df_cenario, cenario_sel, mapa_cenarios.get("Decreto de 1967"), df_conv)
+            
         # Processamento Matemático Principal
+        incluir_comuns = incluir_atrib_comuns
         if incluir_comuns:
             col_sums = df_cenario.sum(axis=0)
             num_reais = len(df_cenario)
@@ -1875,6 +2098,7 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
 <div class='status-badge'>{i18n.t('badge_generic')} <strong>{lbl_genericas}</strong></div>
 <div class='status-badge'>{i18n.t('badge_texts')} <strong>{lbl_textos}</strong></div>
 <div class='status-badge'>{i18n.t('badge_roles')} <strong>{lbl_cargos}</strong></div>{badge_destaque}
+{_build_modifier_badges(incluir_1967=incluir_1967)}
 </div>
 {lista_cargos_html}
 """
@@ -1944,7 +2168,12 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         if is_sample_biased:
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
         st.markdown("<div id='toc-matrix'></div>", unsafe_allow_html=True)
-        st.subheader(f"{i18n.t('sub_matrix')} ({i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')})", help=i18n.t('sub_matrix_help'))
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(f"{i18n.t('sub_matrix')} ({i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')})", help=i18n.t('sub_matrix_help'))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_matrix"))
         if st.session_state.get('language', 'PT-BR') == 'PT-BR':
             st.markdown(f"<p style='font-size: 0.85rem; color: #9E9E9E; margin-top: -15px; margin-bottom: 10px;'>{i18n.t('tip_hover')}</p>", unsafe_allow_html=True)
         lbl_matriz_translated = i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')
@@ -2029,7 +2258,12 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         if is_sample_biased:
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
         st.markdown("<div id='toc-adj'></div>", unsafe_allow_html=True)
-        st.subheader(i18n.t('sub_adj'), help=i18n.t('sub_adj_help'))
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t('sub_adj'), help=i18n.t('sub_adj_help'))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_adj"))
         
         # Prepara Top Pairs
         adj_matrix_copy = adj_matrix.copy()
@@ -2194,7 +2428,12 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         if is_sample_biased:
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
         st.markdown("<div id='toc-dyn'></div>", unsafe_allow_html=True)
-        st.subheader(i18n.t('sub_dyn'), help=i18n.t('sub_dyn_help'))
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t('sub_dyn'), help=i18n.t('sub_dyn_help'))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_dyn"))
         
         df_explorer = df_original_limpo.set_index('Carreira') if 'Carreira' in df_original_limpo.columns else df_original_limpo.copy()
         if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
@@ -2481,7 +2720,12 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         if is_sample_biased:
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
         st.markdown("<div id='toc-gower'></div>", unsafe_allow_html=True)
-        st.subheader(i18n.t("sub_gower"), help=i18n.t("sub_gower_help"))
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t("sub_gower"), help=i18n.t("sub_gower_help"))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_matrix"))
         
         selected_metric_key_15 = st.selectbox(
             i18n.t("select_metric", default="Selecione a Métrica de Similaridade"),
@@ -2574,7 +2818,12 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         if is_sample_biased:
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
         st.markdown("<div id='toc-ruler'></div>", unsafe_allow_html=True)
-        st.subheader(i18n.t("sub_ruler"), help=i18n.t("sub_ruler_help"))
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t("sub_ruler"), help=i18n.t("sub_ruler_help"))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_ruler"))
         
         is_mobile = st.session_state.get("is_mobile", False)
         if is_mobile:
@@ -2628,45 +2877,126 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         if is_sample_biased:
             st.warning(explanations.get_short_bias_warning(language=st.session_state.get('language', 'PT-BR')), icon="🚨")
         st.markdown("<div id='toc-dendro'></div>", unsafe_allow_html=True)
-        st.subheader(i18n.t("sub_dendro"), help=i18n.t("sub_dendro_help"))
-        
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t("sub_dendro"), help=i18n.t("sub_dendro_help"))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_dendro"))
+
         is_mobile = st.session_state.get("is_mobile", False)
         if is_mobile:
             st.info(i18n.t("mobile_tree"), icon="ℹ️")
-    
+
+        # --- Calcular índices cofenéticos antecipadamente para alimentar os defaults ---
+        df_coph_17 = data_processing.get_cophenetic_comparison_table(df_para_gower)
+        best_metric_17, best_linkage_17 = data_processing.get_best_cophenetic_combo(df_coph_17)
+
+        linkage_options_17 = {
+            'single': i18n.t("linkage_single", default="Single Linkage (usado no artigo)"),
+            'complete': i18n.t("linkage_complete", default="Complete Linkage"),
+            'average': i18n.t("linkage_average", default="Average Linkage (UPGMA)")
+        }
+        metric_keys_17 = list(metric_options.keys())
+        linkage_keys_17 = list(linkage_options_17.keys())
+
+        default_metric_idx = metric_keys_17.index(best_metric_17) if best_metric_17 in metric_keys_17 else 0
+        default_linkage_idx = linkage_keys_17.index(best_linkage_17) if best_linkage_17 in linkage_keys_17 else 0
+
         col_metric_17, col_linkage_17 = st.columns(2)
         with col_metric_17:
             selected_metric_key_17 = st.selectbox(
                 i18n.t("select_metric", default="Selecione a Métrica de Similaridade"),
-                list(metric_options.keys()),
+                metric_keys_17,
+                index=default_metric_idx,
                 format_func=lambda x: metric_options[x],
                 key="metric_selectbox_17"
             )
         with col_linkage_17:
-            linkage_options_17 = {
-                'single': i18n.t("linkage_single", default="Single Linkage (usado no artigo)"),
-                'complete': i18n.t("linkage_complete", default="Complete Linkage"),
-                'average': i18n.t("linkage_average", default="Average Linkage (UPGMA)")
-            }
             selected_linkage_17 = st.selectbox(
                 i18n.t("select_linkage", default="Selecione o Método de Agrupamento (Linkage)"),
-                list(linkage_options_17.keys()),
+                linkage_keys_17,
+                index=default_linkage_idx,
                 format_func=lambda x: linkage_options_17[x],
                 key="linkage_selectbox_17"
             )
-            
+
+        # --- Expander com índices cofenéticos como grade de botões interativos ---
+        with st.expander("📊 Índices Cofenéticos — Clique para selecionar um combo"):
+            st.caption("🟢 ≥0.90  |  🟡 ≥0.75  |  🟠 ≥0.50  |  🔴 <0.50  · Clique em qualquer valor para aplicar a métrica e o método automaticamente.")
+            if not df_coph_17.empty:
+                _df_btn = df_coph_17.copy()
+                _metric_col = "Métrica" if "Métrica" in _df_btn.columns else _df_btn.columns[0]
+                _linkage_cols = [c for c in _df_btn.columns if c != _metric_col]
+                _metric_map_rev = {
+                    'Gower': 'gower', 'Jaccard': 'jaccard', 'Sokal & Sneath': 'sokalsneath',
+                    'Sørensen-Dice': 'dice', 'Overlap': 'overlap', 'Cosine': 'cosine'
+                }
+                _linkage_map_rev = {'Single': 'single', 'Complete': 'complete', 'Average': 'average'}
+
+                def _coph_color(val_str):
+                    try:
+                        v = float(str(val_str).split(" ")[0])
+                    except Exception:
+                        return "#555555", "white"
+                    if v >= 0.90: return "#1a7a1a", "white"
+                    if v >= 0.75: return "#a08000", "white"
+                    if v >= 0.50: return "#c06000", "white"
+                    return "#8b0000", "white"
+
+                # Cabeçalho da grade
+                hdr_cols = st.columns([2] + [1] * len(_linkage_cols))
+                hdr_cols[0].markdown("**Métrica**")
+                for ci, lc in enumerate(_linkage_cols):
+                    hdr_cols[ci + 1].markdown(f"**{lc}**")
+
+                for _, row17 in _df_btn.iterrows():
+                    metric_display = row17[_metric_col]
+                    row_cols = st.columns([2] + [1] * len(_linkage_cols))
+                    row_cols[0].markdown(f"_{metric_display}_")
+                    for ci, lc in enumerate(_linkage_cols):
+                        val_str = str(row17.get(lc, "N/A"))
+                        bg, fg = _coph_color(val_str)
+                        m_key = _metric_map_rev.get(metric_display, 'gower')
+                        l_key = _linkage_map_rev.get(lc, 'single')
+                        parts = val_str.split(" ", 1)
+                        btn_label = parts[0] if parts else val_str
+                        rank_label = parts[1] if len(parts) > 1 else ""
+                        is_selected = (m_key == st.session_state.get("metric_selectbox_17", best_metric_17) and
+                                       l_key == st.session_state.get("linkage_selectbox_17", best_linkage_17))
+                        border = "3px solid #4da6ff" if is_selected else f"2px solid {bg}"
+                        row_cols[ci + 1].markdown(
+                            f"<div style='background:{bg};color:{fg};border:{border};border-radius:6px;"
+                            f"text-align:center;padding:4px 2px;font-size:0.85rem;font-weight:bold;cursor:pointer'>"
+                            f"{btn_label}</div>",
+                            unsafe_allow_html=True
+                        )
+                        # Callback para atualizar os seletores
+                        def set_coph_combo_17(m, l):
+                            st.session_state["metric_selectbox_17"] = m
+                            st.session_state["linkage_selectbox_17"] = l
+
+                        # Botão real com a posição do ranking no label (usando callback)
+                        row_cols[ci + 1].button(
+                            f"↩ {rank_label}", 
+                            key=f"coph_btn_{m_key}_{l_key}_17", 
+                            on_click=set_coph_combo_17, 
+                            args=(m_key, l_key), 
+                            help=f"Aplicar: {metric_display} + {lc}"
+                        )
+
         df_gower_17 = data_processing.calcular_distancias(df_para_gower, metric=selected_metric_key_17)
         if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
             df_gower_17.index = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_17.index]
             df_gower_17.columns = [i18n.dic_traducao_cargos.get(c, c) for c in df_gower_17.columns]
-    
+
         st.markdown(i18n.t("dendro_method"))
         if len(df_gower_17.columns) > 1:
             fig_dendro = visualizations.plot_dendrogram(df_gower_17, f"{i18n.t('dendro_title')} - {i18n.t(cenario_sel)}", cargos_destaque=cargos_destaque_ui, linkage_method=selected_linkage_17)
             st.plotly_chart(fig_dendro, use_container_width=True)
             
-            st.markdown("💡 **Dica:** Abra o painel abaixo para comparar as métricas e os métodos de agrupamento recomendados para o cenário atual.")
-            with st.expander("📖 ABRIR COMPARAÇÕES E ÍNDICES COFENÉTICOS"):
+            st.markdown("💡 **Dica:** Abra o painel abaixo para comparar as métricas e os métodos de agrupamento.")
+            with st.expander("📖 ABRIR COMPARAÇÕES DE MÉTRICAS E AGRUPAMENTOS"):
                 st.markdown("#### Métricas de Distância")
                 df_comp_17 = explanations.get_metrics_comparison_df()
                 if st.session_state.get("light_mode"):
@@ -2681,59 +3011,9 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
                     st.markdown(f'<div class="light-table-container">{df_comp_link.to_html(index=False, escape=False)}</div>', unsafe_allow_html=True)
                 else:
                     st.dataframe(df_comp_link, use_container_width=True)
-                
-                st.markdown("#### Índices Cofenéticos (Cenário Atual)")
-                st.markdown("<span style='color:#00cc00; font-weight:bold;'>Verde (≥0.90)</span> | <span style='color:#ffcc00; font-weight:bold;'>Amarelo (≥0.75)</span> | <span style='color:#ff9900; font-weight:bold;'>Laranja (≥0.50)</span> | <span style='color:#ff3333; font-weight:bold;'>Vermelho (<0.50)</span>", unsafe_allow_html=True)
-                df_coph = data_processing.get_cophenetic_comparison_table(df_para_gower)
-                
-                def color_coph(val):
-                    if isinstance(val, str):
-                        if " (" in val:
-                            val = val.split(" ")[0]
-                        try:
-                            val = float(val)
-                        except ValueError:
-                            pass
-                            
-                    if isinstance(val, (int, float)):
-                        if val >= 0.90:
-                            f = (val - 0.90) / 0.10
-                            f = max(0, min(1, f))
-                            r = int(150 + f * (0 - 150))
-                            g = int(255 + f * (200 - 255))
-                            b = int(150 + f * (0 - 150))
-                        elif val >= 0.75:
-                            f = (val - 0.75) / 0.15
-                            f = max(0, min(1, f))
-                            r = int(255 + f * (150 - 255))
-                            g = int(220 + f * (255 - 220))
-                            b = int(0 + f * (150 - 0))
-                        elif val >= 0.50:
-                            f = (val - 0.50) / 0.25
-                            f = max(0, min(1, f))
-                            r = int(255 + f * (255 - 255))
-                            g = int(150 + f * (220 - 150))
-                            b = int(0 + f * (0 - 0))
-                        else:
-                            f = val / 0.50
-                            f = max(0, min(1, f))
-                            r = int(255 + f * (255 - 255))
-                            g = int(50 + f * (150 - 50))
-                            b = int(50 + f * (0 - 50))
-                        return f'background-color: #{r:02x}{g:02x}{b:02x}; color: black;'
-                    return ''
-                    
-                if not df_coph.empty and "Métrica" in df_coph.columns:
-                    df_coph = df_coph.set_index("Métrica")
-                    
-                if st.session_state.get("light_mode"):
-                    html = data_processing.df_to_inline_html(df_coph, col_style_func=color_coph)
-                    st.markdown(html, unsafe_allow_html=True)
-                else:
-                    st.dataframe(df_coph.style.map(color_coph), use_container_width=True)
         else:
             st.warning(i18n.t("dendro_warning"))
-    
+
         if st.session_state.get('show_explanations', False):
             tone_key = st.session_state.get('explanation_tone', 'tecnico')
             st.info(explanations.get_explanation("dendograma", tone_key, language=st.session_state.get('language', 'PT-BR')))
@@ -2774,11 +3054,21 @@ if modo_visao == i18n.t("mode_1") and df_cenario is not None and not df_cenario.
         if 'interaction_ui' in locals(): interaction_ui.render_like_button("1.8 UpSet Plot", "1_8")
 
 
-elif modo_visao == i18n.t("mode_1"):
+elif modo_visao == i18n.t("mode_3"):
     st.error("Cenário indisponível.")
 
-elif modo_visao == i18n.t("mode_5"):
+elif modo_visao == i18n.t("mode_7"):
     creative_view.render_creative_view(mapa_cenarios, cenario_sel, current_section)
+
+elif modo_visao == i18n.t("mode_2"):
+    import sources_view
+    importlib.reload(sources_view)
+    sources_view.render_sources_view(current_section)
+
+elif modo_visao == i18n.t("mode_1"):
+    import assignments_view
+    importlib.reload(assignments_view)
+    assignments_view.render_assignments_view(current_section)
 
 # Renderizar Botão Flutuante de Comentários (Geral para a Visão Atual)
 try:
@@ -2786,8 +3076,8 @@ try:
 except Exception as e:
     pass
 
-# Padding para não esconder gráficos atrás do botão de rodapé
-st.markdown("<div style='height: 150px;'></div>", unsafe_allow_html=True)
+# Padding adicionado para evitar que o HUD flutuante cubra o botão curtir
+st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
 
 if persona_placeholder is not None:
     try:

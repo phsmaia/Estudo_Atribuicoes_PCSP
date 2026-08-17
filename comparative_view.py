@@ -10,8 +10,9 @@ import i18n
 import interaction_ui
 import visualizations
 from floating_toc import render_toc
-def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b, cargo_foco_a, cargos_destaque=None, current_section=None):
-    if cenario_a == cenario_b:
+def render_comparativo_axb(df_a, df_b, cenario_a_title, cenario_b_title, cargo_foco_a, cargos_destaque=None, current_section=None, cenario_a=None, cenario_b=None, correcoes_a=False, correcoes_b=False, papi_a=False, papi_b=False, incluir_1967_a=False, incluir_1967_b=False):
+    # Check if they are exactly the same scenario AND same modifiers
+    if cenario_a_title == cenario_b_title:
         st.warning(i18n.t("warning_diff_scenarios"))
         return
 
@@ -50,9 +51,6 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
     destaques_completos = list(set(cargos_destaque))
     if cargo_foco_a and cargo_foco_a not in destaques_completos:
         destaques_completos.append(cargo_foco_a)
-
-    df_a = mapa_cenarios[cenario_a].copy()
-    df_b = mapa_cenarios[cenario_b].copy()
 
     # Higienização de Nomes Longos igual ao app.py
     for df in [df_a, df_b]:
@@ -154,7 +152,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
         col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
         with col_sub:
             st.subheader(
-                i18n.t("sub_delta_title").format(cenario_a=i18n.t(cenario_a), cenario_b=i18n.t(cenario_b)),
+                i18n.t("sub_delta_title").format(cenario_a=cenario_a_title, cenario_b=cenario_b_title),
                 help=i18n.t("sub_delta_help")
             )
         with col_tut:
@@ -319,8 +317,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             
             df_bar = pd.DataFrame({
                 'Zona': counts_a.index,
-                i18n.t(cenario_a): counts_a.values,
-                i18n.t(cenario_b): counts_b.values
+                cenario_a_title: counts_a.values,
+                cenario_b_title: counts_b.values
             }).melt(id_vars='Zona', var_name='Cenário', value_name='Quantidade')
             
             txt_color = "black" if st.session_state.get("light_mode") else "white"
@@ -332,7 +330,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             )
             st.plotly_chart(fig_bar, use_container_width=True)
             
-            st.markdown(f"**Top 5 Pares Mais Similares ({i18n.t(cenario_a)})**")
+            st.markdown(f"**Top 5 Pares Mais Similares ({cenario_a_title})**")
             if st.session_state.get("light_mode"):
                 import data_processing
                 html_top_a = data_processing.df_to_inline_html(top_a.set_index("Cargo 1").round(3))
@@ -340,7 +338,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             else:
                 st.dataframe(top_a.style.format({"Distância": "{:.3f}"}), use_container_width=True, hide_index=True)
             
-            st.markdown(f"**Top 5 Pares Mais Similares ({i18n.t(cenario_b)})**")
+            st.markdown(f"**Top 5 Pares Mais Similares ({cenario_b_title})**")
             if st.session_state.get("light_mode"):
                 import data_processing
                 html_top_b = data_processing.df_to_inline_html(top_b.set_index("Cargo 1").round(3))
@@ -351,16 +349,16 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             sync_zoom = st.toggle("Sincronizar Seleção de Eixos (Zoom Conjunto)", value=False, key="sync_zoom_22")
             
             if sync_zoom:
-                fig_dist = visualizations.plot_distance_histogram_comparative(gower_a, gower_b, i18n.t(cenario_a), i18n.t(cenario_b))
+                fig_dist = visualizations.plot_distance_histogram_comparative(gower_a, gower_b, cenario_a_title, cenario_b_title)
                 st.plotly_chart(fig_dist, use_container_width=True)
             else:
                 dist_col_a, dist_col_b = st.columns(2)
                 with dist_col_a:
-                    st.markdown(f"**{i18n.t(cenario_a)}**")
+                    st.markdown(f"**{cenario_a_title}**")
                     fig_dist_a = visualizations.plot_distance_histogram(gower_a, "")
                     st.plotly_chart(fig_dist_a, use_container_width=True)
                 with dist_col_b:
-                    st.markdown(f"**{i18n.t(cenario_b)}**")
+                    st.markdown(f"**{cenario_b_title}**")
                     fig_dist_b = visualizations.plot_distance_histogram(gower_b, "")
                     st.plotly_chart(fig_dist_b, use_container_width=True)
     
@@ -397,11 +395,11 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 val_b = row_b.get(attr, 0)
                 
                 if val_a == 1 and val_b == 0:
-                    comparativo_attrs.append({i18n.t("hover_assignment"): attr, "Status": i18n.t("status_lost"), i18n.t(cenario_a): i18n.t("lbl_yes"), i18n.t(cenario_b): i18n.t("lbl_no")})
+                    comparativo_attrs.append({i18n.t("hover_assignment"): attr, "Status": i18n.t("status_lost"), cenario_a_title: i18n.t("lbl_yes"), cenario_b_title: i18n.t("lbl_no")})
                 elif val_a == 0 and val_b == 1:
-                    comparativo_attrs.append({i18n.t("hover_assignment"): attr, "Status": i18n.t("status_gained"), i18n.t(cenario_a): i18n.t("lbl_no"), i18n.t(cenario_b): i18n.t("lbl_yes")})
+                    comparativo_attrs.append({i18n.t("hover_assignment"): attr, "Status": i18n.t("status_gained"), cenario_a_title: i18n.t("lbl_no"), cenario_b_title: i18n.t("lbl_yes")})
                 elif val_a == 1 and val_b == 1:
-                    comparativo_attrs.append({i18n.t("hover_assignment"): attr, "Status": i18n.t("status_maintained"), i18n.t(cenario_a): i18n.t("lbl_yes"), i18n.t(cenario_b): i18n.t("lbl_yes")})
+                    comparativo_attrs.append({i18n.t("hover_assignment"): attr, "Status": i18n.t("status_maintained"), cenario_a_title: i18n.t("lbl_yes"), cenario_b_title: i18n.t("lbl_yes")})
                     
             df_comparativo_attrs = pd.DataFrame(comparativo_attrs)
             
@@ -558,7 +556,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 r=vals_a + [vals_a[0]], 
                 theta=todas_carreiras_display + [todas_carreiras_display[0]],
                 fill='toself',
-                name=f"{i18n.t(cenario_a)}",
+                name=f"{cenario_a_title}",
                 line_color='cyan',
                 hovertemplate=i18n.t("radar_hover")
             ))
@@ -567,7 +565,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 r=vals_b + [vals_b[0]],
                 theta=todas_carreiras_display + [todas_carreiras_display[0]],
                 fill='toself',
-                name=f"{i18n.t(cenario_b)}",
+                name=f"{cenario_b_title}",
                 line_color='orange',
                 hovertemplate=i18n.t("radar_hover")
             ))
@@ -623,13 +621,13 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 c_display = i18n.traduzir_cargo(c) if traduzir else c
                 tabela_dados.append({
                     i18n.t("col_related_career"): c_display,
-                    f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})": float(sim_a * 100),
-                    f"{i18n.t('col_new_affinity')} ({i18n.t(cenario_b)})": float(sim_b * 100),
+                    f"{i18n.t('col_base_affinity')} ({cenario_a_title})": float(sim_a * 100),
+                    f"{i18n.t('col_new_affinity')} ({cenario_b_title})": float(sim_b * 100),
                     i18n.t("col_delta_var"): float(delta * 100),
                     i18n.t("col_trend"): seta
                 })
                 
-            df_radar_comp = pd.DataFrame(tabela_dados).sort_values(by=f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})", ascending=False).reset_index(drop=True)
+            df_radar_comp = pd.DataFrame(tabela_dados).sort_values(by=f"{i18n.t('col_base_affinity')} ({cenario_a_title})", ascending=False).reset_index(drop=True)
             
             opcoes_status_24 = ["trend_approached", "trend_distanced", "trend_stable"]
             filtro_status_24 = st.multiselect(
@@ -653,7 +651,7 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 
             import data_processing
             if st.session_state.get("light_mode"):
-                for col in [f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})", f"{i18n.t('col_new_affinity')} ({i18n.t(cenario_b)})", i18n.t("col_delta_var")]:
+                for col in [f"{i18n.t('col_base_affinity')} ({cenario_a_title})", f"{i18n.t('col_new_affinity')} ({cenario_b_title})", i18n.t("col_delta_var")]:
                     if col in df_mostrar_24.columns:
                         if i18n.t("col_delta_var") in col:
                             df_mostrar_24[col] = df_mostrar_24[col].apply(lambda x: f"{x:+.1f}%")
@@ -663,8 +661,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 st.markdown(f'<div class="light-table-container">{html_24}</div>', unsafe_allow_html=True)
             else:
                 styled_24 = df_mostrar_24.style.format({
-                    f"{i18n.t('col_base_affinity')} ({i18n.t(cenario_a)})": "{:.1f}%",
-                    f"{i18n.t('col_new_affinity')} ({i18n.t(cenario_b)})": "{:.1f}%",
+                    f"{i18n.t('col_base_affinity')} ({cenario_a_title})": "{:.1f}%",
+                    f"{i18n.t('col_new_affinity')} ({cenario_b_title})": "{:.1f}%",
                     i18n.t("col_delta_var"): "{:+.1f}%"
                 }).apply(highlight_24, axis=1)
                 st.dataframe(styled_24, use_container_width=True)
@@ -722,8 +720,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             cargos_destaque_a = [c for c in destaques_completos if c in adj_a.index] or None
             cargos_destaque_b = [c for c in destaques_b if c in adj_b.index] or None
             
-        fig_grafo_a = visualizations.plot_network_graph(nodes_a, edges_a, f"{i18n.t('network_graph_base')} ({cenario_a})", cargos_destaque=cargos_destaque_a)
-        fig_grafo_b = visualizations.plot_network_graph(nodes_b, edges_b, f"{i18n.t('network_graph_target')} ({cenario_b})", cargos_destaque=cargos_destaque_b)
+        fig_grafo_a = visualizations.plot_network_graph(nodes_a, edges_a, f"{i18n.t('network_graph_base')} ({cenario_a_title})", cargos_destaque=cargos_destaque_a)
+        fig_grafo_b = visualizations.plot_network_graph(nodes_b, edges_b, f"{i18n.t('network_graph_target')} ({cenario_b_title})", cargos_destaque=cargos_destaque_b)
         
         col_grafo1, col_grafo2 = st.columns(2)
         with col_grafo1:
@@ -790,9 +788,9 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
 
             col_table_a, col_table_b = st.columns(2)
             with col_table_a:
-                render_edges_table(adj_a, text_matrix_a, i18n.t(cenario_a), "A")
+                render_edges_table(adj_a, text_matrix_a, cenario_a_title, "A")
             with col_table_b:
-                render_edges_table(adj_b, text_matrix_b, i18n.t(cenario_b), "B")
+                render_edges_table(adj_b, text_matrix_b, cenario_b_title, "B")
     
         st.markdown(i18n.t("network_details_title"))
         st.caption(i18n.t("network_details_caption").format(threshold=threshold_adj_comp))
@@ -818,8 +816,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             c_display = i18n.traduzir_cargo(c) if traduzir else c
             tabela_grafo.append({
                 i18n.t("hover_career"): c_display,
-                i18n.t('col_conn_base').format(cenario=i18n.t(cenario_a)): deg_a,
-                i18n.t('col_conn_base').format(cenario=i18n.t(cenario_b)): deg_b,
+                i18n.t('col_conn_base').format(cenario=cenario_a_title): deg_a,
+                i18n.t('col_conn_base').format(cenario=cenario_b_title): deg_b,
                 i18n.t("col_conn_var"): diff,
                 i18n.t("col_net_impact"): status
             })
@@ -920,8 +918,8 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                 destaques_a_disp = [c for c in destaques_completos if c in gower_a_dendro.columns] or None
                 destaques_b_disp = [c for c in destaques_b if c in gower_b_dendro.columns] or None
                 
-            fig_dendro_a = visualizations.plot_dendrogram(gower_a_disp, f"{i18n.t('tree_graph_base')} ({cenario_a})", cargos_destaque=destaques_a_disp, linkage_method=selected_linkage_dendro, is_mobile=is_mobile)
-            fig_dendro_b = visualizations.plot_dendrogram(gower_b_disp, f"{i18n.t('tree_graph_target')} ({cenario_b})", cargos_destaque=destaques_b_disp, linkage_method=selected_linkage_dendro, is_mobile=is_mobile)
+            fig_dendro_a = visualizations.plot_dendrogram(gower_a_disp, f"{i18n.t('tree_graph_base')} ({cenario_a_title})", cargos_destaque=destaques_a_disp, linkage_method=selected_linkage_dendro, is_mobile=is_mobile)
+            fig_dendro_b = visualizations.plot_dendrogram(gower_b_disp, f"{i18n.t('tree_graph_target')} ({cenario_b_title})", cargos_destaque=destaques_b_disp, linkage_method=selected_linkage_dendro, is_mobile=is_mobile)
             
             col_dendro1, col_dendro2 = st.columns(2)
             with col_dendro1:
@@ -957,15 +955,15 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                     
                     tabela_dendro.append({
                         i18n.t("hover_career"): c_display,
-                        f"{i18n.t('col_closest_neighbor')} ({i18n.t(cenario_a)})": vizinho_a_display,
-                        f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})": val_a,
-                        f"{i18n.t('col_new_neighbor')} ({i18n.t(cenario_b)})": vizinho_b_display,
-                        f"{i18n.t('col_distance')} ({i18n.t(cenario_b)})": val_b,
+                        f"{i18n.t('col_closest_neighbor')} ({cenario_a_title})": vizinho_a_display,
+                        f"{i18n.t('col_distance')} ({cenario_a_title})": val_a,
+                        f"{i18n.t('col_new_neighbor')} ({cenario_b_title})": vizinho_b_display,
+                        f"{i18n.t('col_distance')} ({cenario_b_title})": val_b,
                         i18n.t("col_branch_change"): mudou_galho
                     })
             
             if tabela_dendro:
-                df_dendro = pd.DataFrame(tabela_dendro).sort_values(by=f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})").reset_index(drop=True)
+                df_dendro = pd.DataFrame(tabela_dendro).sort_values(by=f"{i18n.t('col_distance')} ({cenario_a_title})").reset_index(drop=True)
                 
                 opcoes_status_26 = ["branch_jumped", "branch_maintained"]
                 filtro_status_26 = st.multiselect(
@@ -989,15 +987,15 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
                     
                 import data_processing
                 if st.session_state.get("light_mode"):
-                    for col in [f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})", f"{i18n.t('col_distance')} ({i18n.t(cenario_b)})"]:
+                    for col in [f"{i18n.t('col_distance')} ({cenario_a_title})", f"{i18n.t('col_distance')} ({cenario_b_title})"]:
                         if col in df_mostrar_26.columns:
                             df_mostrar_26[col] = df_mostrar_26[col].apply(lambda x: f"{x:.3f}")
                     html_26 = data_processing.df_to_inline_html(df_mostrar_26, highlight_26)
                     st.markdown(f'<div class="light-table-container">{html_26}</div>', unsafe_allow_html=True)
                 else:
                     styled_26 = df_mostrar_26.style.format({
-                        f"{i18n.t('col_distance')} ({i18n.t(cenario_a)})": "{:.3f}",
-                        f"{i18n.t('col_distance')} ({i18n.t(cenario_b)})": "{:.3f}"
+                        f"{i18n.t('col_distance')} ({cenario_a_title})": "{:.3f}",
+                        f"{i18n.t('col_distance')} ({cenario_b_title})": "{:.3f}"
                     }).apply(highlight_26, axis=1)
                     st.dataframe(styled_26, use_container_width=True)
                 
@@ -1061,23 +1059,23 @@ def render_comparativo_axb(opcoes_cenarios, mapa_cenarios, cenario_a, cenario_b,
             coph_col_a, coph_col_b = st.columns(2)
             
             with coph_col_a:
-                st.markdown(f"**{i18n.t(cenario_a)}**")
+                st.markdown(f"**{cenario_a_title}**")
                 if st.session_state.get("light_mode"):
                     st.markdown(data_processing.df_to_inline_html(df_coph_a, col_style_func=color_coph), unsafe_allow_html=True)
                 else:
                     st.dataframe(df_coph_a.style.map(color_coph), use_container_width=True)
             with coph_col_b:
-                st.markdown(f"**{i18n.t(cenario_b)}**")
+                st.markdown(f"**{cenario_b_title}**")
                 if st.session_state.get("light_mode"):
                     st.markdown(data_processing.df_to_inline_html(df_coph_b, col_style_func=color_coph), unsafe_allow_html=True)
                 else:
                     st.dataframe(df_coph_b.style.map(color_coph), use_container_width=True)
                     
         with st.expander("🔄 ALTERAÇÕES DE NOMES DOS CARGOS", expanded=False):
-            st.markdown(f"**Comparativo de nomenclaturas entre {i18n.t(cenario_a)} e {i18n.t(cenario_b)}:**")
+            st.markdown(f"**Comparativo de nomenclaturas entre {cenario_a_title} e {cenario_b_title}:**")
             
             # Use the mapping_a_to_b dict created earlier
-            df_mapping = pd.DataFrame(list(mapping_a_to_b.items()), columns=[i18n.t(cenario_a), i18n.t(cenario_b)])
+            df_mapping = pd.DataFrame(list(mapping_a_to_b.items()), columns=[cenario_a_title, cenario_b_title])
             
             # Remove where roles didn't change (optional, but requested to see changes usually. I'll just show all, but highlight changes)
             def highlight_diff(row):

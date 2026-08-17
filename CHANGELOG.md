@@ -4,6 +4,18 @@ Todas as modificações notáveis neste projeto serão documentadas neste arquiv
 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [Unreleased] - 2026-08-17
+
+### Added
+- **Expansão de Ajuda/Tutoriais**: Implementação de botões de popover contextual (💡) em todas as visualizações ausentes do Modo 1, 2, e 4 para garantir o correto entendimento leigo dos gráficos complexos (MDS, Dendrogramas, Gower e Adjacência).
+
+### Changed
+- **Profissionalização de UX (Desvinculação de Rede Social)**: Substituição radical de todos os jargões remanescentes de redes sociais. O botão "Curtir" foi convertido em funcionalidade de "Útil", e "Compartilhar" renomeado para "Copiar Link de Acesso". O manifesto de isenção de rede social foi ajustado para refletir a mudança.
+
+### Fixed
+- **Identificadores Duplicados no Pandas**: Solução para o erro `KeyError: Styler.apply and .map are not compatible` ao comparar dois cenários com os mesmos títulos base. A geração de títulos foi dinamizada com marcadores `[Base]` e `[Alvo]` prevenindo conflitos absolutos de chave na construção de *Dataframes*.
+- **Vazamento de Escopo em Módulo Local**: Correção do `UnboundLocalError` na injeção modular, removendo importações com *shadowing* e restaurando a passagem controlada de DataFrames (`df_a` e `df_b`) diretamente do núcleo para as funções de visualização comparativa.
+
 ## [Unreleased] - 2026-08-15
 
 ### Added
