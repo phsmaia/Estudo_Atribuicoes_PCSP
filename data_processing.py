@@ -219,7 +219,12 @@ def calcular_distancias(df: pd.DataFrame, metric: str = 'jaccard', _cache_buster
         dist_array = pdist(df_temp, metric=metric_arg)
         dist_matrix = squareform(dist_array)
         
+    # Fixar a diagonal como 0 e preencher NaNs na matriz bruta antes de jogar pro DataFrame
+    dist_matrix = np.nan_to_num(dist_matrix, nan=1.0)
+    np.fill_diagonal(dist_matrix, 0.0)
+    
     df_dist = pd.DataFrame(dist_matrix, index=df_temp.index, columns=df_temp.index)
+    
     return df_dist
 
 from scipy.cluster.hierarchy import cophenet
@@ -294,6 +299,33 @@ def get_cophenetic_comparison_table(df: pd.DataFrame, _cache_buster: int = 2) ->
         df_results[col] = formatted_col
         
     return df_results
+
+def get_best_cophenetic_combo(df_coph: pd.DataFrame):
+    """
+    Identifica a melhor métrica e método (onde o valor contém '(1º)')
+    Retorna uma tupla (metric_key, linkage_key)
+    """
+    metric_map = {
+        'Gower': 'gower',
+        'Jaccard': 'jaccard',
+        'Sokal & Sneath': 'sokalsneath',
+        'Sørensen-Dice': 'dice',
+        'Overlap': 'overlap',
+        'Cosine': 'cosine'
+    }
+    
+    for col in ['Single', 'Complete', 'Average']:
+        if col not in df_coph.columns:
+            continue
+        for i, val in enumerate(df_coph[col]):
+            if isinstance(val, str) and "(1º)" in val:
+                metric_display = df_coph['Métrica'].iloc[i]
+                metric_key = metric_map.get(metric_display, 'gower')
+                return metric_key, col.lower()
+                
+    # Fallback
+    return 'gower', 'single'
+
 def get_cargo_color_hex(cargo_name, cargos_destaque_list):
     """Retorna a cor associada ao cargo com base na paleta do grafo."""
     if cargos_destaque_list and cargo_name in cargos_destaque_list:
@@ -343,3 +375,81 @@ def df_to_inline_html(df, row_style_func=None, col_style_func=None):
         
     html += '</tbody></table>'
     return html
+
+@st.cache_data(show_spinner=False)
+def mesclar_com_1967(df_base: pd.DataFrame, base_name: str, df_1967: pd.DataFrame, df_conv: pd.DataFrame) -> pd.DataFrame:
+    """
+    Mescla o dataframe base com as atribuições históricas do Decreto 1967 usando a lógica OR (max).
+    Se o cargo da base tiver um correspondente em 1967 na Tabela de Conversão, as colunas do 
+    Decreto serão injetadas/sobrepostas à matriz do cargo.
+    """
+    if "1967" in base_name:
+        return df_base
+        
+    incluir_correcoes = st.session_state.get('toggle_correcoes', False)
+        
+    # Mapear o nome amigável do menu para o ÍNDICE da coluna da Tabela de Conversão (evita erros de encoding)
+    col_idx_map = {
+        "Atual": 1 if incluir_correcoes else 0,
+        "LONPC": 3 if incluir_correcoes else 2,
+        "Reestruturação 2024": 4,
+        "Reestruturação Reunião 1 2025": 5,
+        "Reestruturação Reunião 2 2025": 6
+    }
+    
+    col_idx = col_idx_map.get(base_name)
+    if col_idx is None or col_idx >= len(df_conv.columns) or len(df_conv.columns) < 8:
+        return df_base # Não é possível mapear, retorna intacto
+        
+    col_name = df_conv.columns[col_idx]
+    col_1967 = df_conv.columns[7] # A coluna do Decreto 1967 é sempre a 8ª (índice 7)
+        
+    # Criar dicionário de conversão: Cargo Atual -> Cargo 1967
+    conv_clean = df_conv.dropna(subset=[col_name, col_1967])
+    mapping = dict(zip(conv_clean[col_name], conv_clean[col_1967]))
+    
+    df_combined = df_base.copy()
+    
+    new_cols_data = {}
+    
+    for pos, (idx, row) in enumerate(df_combined.iterrows()):
+        carreira_atual = row['Carreira']
+        carreira_1967 = mapping.get(carreira_atual)
+        
+        if carreira_1967:
+            row_1967 = df_1967[df_1967['Carreira'] == carreira_1967]
+            
+            if row_1967.empty:
+                safe_map = {
+                    "Delegado de Polícia": "Delegado",
+                    "Fiscal de Diversões Públicas": "Fiscal",
+                    "Médico Legista": "Legista",
+                    "Pesquisador Datiloscópico": "Pesquisador",
+                    "Datiloscopista": "Datiloscopista",
+                    "Radiotelegrafista": "Radiotelegrafista",
+                    "Motorista": "Motorista",
+                    "Perito Criminal": "Perito Criminal"
+                }
+                safe_term = safe_map.get(carreira_1967)
+                if safe_term:
+                    matches = df_1967[df_1967['Carreira'].str.contains(safe_term, na=False, case=False)]
+                    if not matches.empty:
+                        row_1967 = matches
+                        
+            if not row_1967.empty:
+                row_1967 = row_1967.iloc[0]
+                
+                for col in df_1967.columns:
+                    if col != 'Carreira' and row_1967.get(col, 0) == 1:
+                        if col not in df_combined.columns:
+                            if col not in new_cols_data:
+                                new_cols_data[col] = [0] * len(df_combined)
+                            new_cols_data[col][pos] = 1
+                        else:
+                            df_combined.at[idx, col] = 1
+                            
+    if new_cols_data:
+        df_new = pd.DataFrame(new_cols_data, index=df_combined.index)
+        df_combined = pd.concat([df_combined, df_new], axis=1)
+                        
+    return df_combined

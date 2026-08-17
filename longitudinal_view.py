@@ -72,13 +72,15 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
                     with st.expander("🔄 HISTÓRICO DE ALTERAÇÕES DE NOMES DOS CARGOS", expanded=False):
                         st.markdown("**Acompanhamento de nomenclaturas através dos cenários:**")
                         df_mapa_geral = pd.DataFrame(lista_mapa_geral)
+                        # Remove linhas duplicadas por cargo Atual (Investigador aparece N vezes no JSON por ter múltiplos mapeamentos)
+                        df_mapa_geral = df_mapa_geral.drop_duplicates(subset=['Atual'], keep='first')
                         
                         # Função para destacar onde o nome muda em relação a "Atual Sem Correção"
                         def highlight_mudancas_gerais(col):
-                            if col.name == 'Atual Sem Correção':
+                            if col.name == 'Atual':
                                 return [''] * len(col)
                             # Destaca se o valor da célula for diferente do cargo original na primeira coluna
-                            return ['background-color: rgba(255, 165, 0, 0.2)' if v != df_mapa_geral['Atual Sem Correção'].iloc[i] else '' for i, v in enumerate(col)]
+                            return ['background-color: rgba(255, 165, 0, 0.2)' if v != df_mapa_geral['Atual'].iloc[i] else '' for i, v in enumerate(col)]
                         
                         st.dataframe(df_mapa_geral.style.apply(highlight_mudancas_gerais, axis=0), use_container_width=True, hide_index=True)
                         st.markdown("*(Células destacadas indicam que o cargo recebeu uma nova nomenclatura ou foi fundido naquele cenário)*")
@@ -95,7 +97,9 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             with open('csv_dump.json', 'r', encoding='utf-8') as f:
                 lista_mapa = json.load(f)
                 for row in lista_mapa:
-                    mapa_dict[row['Atual Sem Correção']] = row
+                    # setdefault garante que apenas a PRIMEIRA ocorrência de cada cargo é usada
+                    # (Investigador aparece N vezes no JSON com mapeamentos diferentes para 1967)
+                    mapa_dict.setdefault(row['Atual'], row)
     except Exception as e:
         st.error(f"{i18n.t('err_load_global_map')} {e}")
         pass
@@ -134,16 +138,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             gower_df = data_processing.calcular_distancias(df_temp, metric='gower')
             
             for c_base in cargos_base:
-                # Map the UI scenario name to the CSV column name
-                cenario_csv_col = cenario
-                if "Reestruturação 2024" in cenario:
-                    cenario_csv_col = "Reestruturação 2024"
-                elif "Rest 2025 Gov R1" in cenario:
-                    cenario_csv_col = "Reestruturação Reunião 1 2025"
-                elif "Rest 2025 Gov R2" in cenario:
-                    cenario_csv_col = "Reestruturação Reunião 2 2025"
-
-                c_cenario = mapa_dict[c_base].get(cenario_csv_col, "")
+                c_cenario = mapa_dict[c_base].get(cenario, "")
                 
                 if c_cenario in df_temp.index:
                     hist_volume[c_base][cenario] = int(df_limpo.loc[c_cenario].sum())
@@ -240,7 +235,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             style_str = f"color: {cor_linha}; font-weight:bold; background-color: {label_bg}; padding: 4px 8px; border-radius: 6px; display: inline-block;"
             html += f"<td><span style='{style_str}'>{c_label}</span></td>"
             
-            control_val = hist_dict[c].get("Atual Sem Correção", None)
+            control_val = hist_dict[c].get("Atual", None)
             
             if is_float and isinstance(control_val, float):
                 control_str = f"{control_val:.3f}"
@@ -279,7 +274,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             
         st.caption(descricao)
         
-        todos_secundarios = [c for c in opcoes_cenarios if c != "Atual Sem Correção"]
+        todos_secundarios = [c for c in opcoes_cenarios if c != "Atual"]
         default_selection = todos_secundarios[:2] if is_mobile and len(todos_secundarios) > 2 else todos_secundarios
         
         cenarios_secundarios = st.multiselect(
@@ -294,7 +289,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             st.info(i18n.t("m4_table_filter_empty", default="Selecione ao menos um cenário secundário para exibição."))
             return
             
-        cenarios_filtrados = ["Atual Sem Correção"] + cenarios_secundarios
+        cenarios_filtrados = ["Atual"] + cenarios_secundarios
         
         # Renderizar gráfico de linha (exceto se for texto)
         if not is_string:

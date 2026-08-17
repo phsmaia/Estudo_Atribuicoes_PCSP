@@ -1,3 +1,4 @@
+# Força reload 2
 import pandas as pd
 import streamlit as st
 import os
@@ -13,7 +14,20 @@ def load_csv_data(filepath: str) -> pd.DataFrame:
         return pd.DataFrame()
         
     try:
-        return pd.read_csv(filepath, encoding='iso-8859-1', sep=';')
+        try:
+            df = pd.read_csv(filepath, encoding='utf-8-sig', sep=';')
+        except UnicodeDecodeError:
+            df = pd.read_csv(filepath, encoding='iso-8859-1', sep=';')
+        
+        # Mapeamento para indicar aos usuários a antiga nomenclatura das novas atribuições
+        rename_map = {
+            "Assessoramento Técnico Papiloscópico": "Assessoramento Técnico Papiloscópico (ℹ️ Antiga perícia papiloscópica de local)",
+            "Suporte a desastres": "Suporte a desastres (ℹ️ Antiga perícia papiloscópica em desastres)",
+            "Edição de relatórios de assessoramento e exame papiloscópicos não periciais": "Edição de relatórios papiloscópicos (ℹ️ Antigos laudos periciais papiloscópicos)"
+        }
+        df = df.rename(columns=rename_map)
+        
+        return df
     except Exception as e:
         st.error(f"Erro ao ler o arquivo {filepath}: {e}")
         return pd.DataFrame()
@@ -35,6 +49,8 @@ def get_all_datasets(base_dir: str = ".") -> dict:
         "rest_2025_gov_r1_papis_nao_peritos": load_csv_data(os.path.join(base_dir, "07 - Atrib Rest 2025 Gov R1 Papis nao peritos.csv")),
         "rest_2025_gov_r1_papis_peritos": load_csv_data(os.path.join(base_dir, "08 - Atrib Rest 2025 Gov R1 Papis como peritos.CSV")),
         "rest_2025_gov_r2_papis_nao_peritos": load_csv_data(os.path.join(base_dir, "09 - Atrib Rest 2025 Gov R2 Papis nao peritos.CSV")),
-        "rest_2025_gov_r2_papis_peritos": load_csv_data(os.path.join(base_dir, "10 - Atrib Rest 2025 Gov R2 Papis como peritos.CSV"))
+        "rest_2025_gov_r2_papis_peritos": load_csv_data(os.path.join(base_dir, "10 - Atrib Rest 2025 Gov R2 Papis como peritos.CSV")),
+        "decreto_1967_dgp_2012": load_csv_data(os.path.join(base_dir, "11 - Atrib Decreto 47788-1967 original e DGP 30-2012.CSV")),
+        "decreto_1967_com_correcao": load_csv_data(os.path.join(base_dir, "12 - Atrib Decreto 47788-1967 com correcoes e DGP 30-2012.CSV"))
     }
     return datasets

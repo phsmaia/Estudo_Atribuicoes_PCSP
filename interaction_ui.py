@@ -23,13 +23,17 @@ def render_like_button(section_name: str, key_suffix: str = ""):
     has_liked = db.query(Interaction).filter_by(section_name=section_name, user_hash=user_hash).first()
     likes_count = db.query(Interaction).filter_by(section_name=section_name).count()
     
-    col1, col2 = st.columns([85, 15])
+    col_spacer, col_btn, col_text = st.columns([75, 12, 13])
     
-    with col2:
-        # Mostra o total de curtidas logo acima do botão para ficar alinhado
+    with col_text:
         lbl_likes = i18n.t("total_likes", default="Total de Curtidas")
-        st.markdown(f"<div style='font-size: 0.85rem; color: var(--text-color); opacity: 0.8; margin-bottom: 5px;'>{lbl_likes}: <b style='color: #4da6ff; font-size: 1rem;'>{likes_count}</b></div>", unsafe_allow_html=True)
+        st.markdown(f"""
+            <div style='display: flex; align-items: center; height: 100%; min-height: 40px; font-size: 0.85rem; color: var(--text-color); opacity: 0.8;'>
+                {lbl_likes}:&nbsp;<b style='color: #4da6ff; font-size: 1rem;'>{likes_count}</b>
+            </div>
+        """, unsafe_allow_html=True)
         
+    with col_btn:
         if has_liked:
             # Estado já curtido: ícone de tiro/explosão e texto
             if st.button(f"💥 {i18n.t('btn_liked')}", key=f"btn_like_{safe_key}_on"):
@@ -209,27 +213,22 @@ def render_floating_comments(global_topic: str):
     """
     
     # 1. Botão fantasma que ativa a Modal
-    # Precisamos criar de forma que ele não ocupe espaço nenhum na tela
-    st.markdown("<div id='ghost_btn_container' style='display:none;'>", unsafe_allow_html=True)
-    btn_ghost = st.button("open_hidden_modal", key="btn_open_comments")
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    # Hack de CSS para zerar o espaço ocupado pelo botão 
+    # Usamos uma classe específica para ocultar o container pai inteiro
     st.markdown("""
+        <div id='ghost_btn_container_wrapper' style='display:none;'></div>
         <style>
-        /* Procura pelo container do botão fantasma e o colapsa.
-           Atenção: Não podemos dar display:none direto no botão pq o JS precisa clicar nele */
-        div[data-testid="stVerticalBlock"] > div:has(#ghost_btn_container) {
-            height: 0px !important;
-            min-height: 0px !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: hidden !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
+        /* Oculta o container do markdown */
+        div[data-testid="stVerticalBlock"] > div.element-container:has(#ghost_btn_container_wrapper) {
+            display: none !important;
+        }
+        /* Oculta o botão fantasma (que é o próximo elemento imediatamente abaixo do markdown) */
+        div[data-testid="stVerticalBlock"] > div.element-container:has(#ghost_btn_container_wrapper) + div.element-container {
+            display: none !important;
         }
         </style>
     """, unsafe_allow_html=True)
+    
+    btn_ghost = st.button("open_hidden_modal", key="btn_open_comments")
 
     if btn_ghost:
         modal_comentarios(global_topic)
