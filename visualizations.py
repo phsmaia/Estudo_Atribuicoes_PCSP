@@ -669,17 +669,16 @@ def plot_dendrogram(df_gower: pd.DataFrame, title: str, cargos_destaque: list = 
         title=title,
         title_font_size=18,
         title_x=0.5,
-        title_xref="paper",
         height=dendro_height,
-        margin=dict(l=250 if not is_mobile else 180, r=50, t=110, b=50),
+        margin=dict(l=250 if not is_mobile else 180, r=50, t=100, b=50),
         autosize=True
     )
     
     fig.add_annotation(
         text=f"<b>{c_label} {c:.3f}</b>",
         xref="paper", yref="paper",
-        x=0.5, y=1.02,
-        xanchor="center", yanchor="bottom",
+        x=0.98, y=0.98,
+        xanchor="right", yanchor="top",
         showarrow=False,
         font=dict(color=coph_color, size=13),
         bgcolor="#1E2329",

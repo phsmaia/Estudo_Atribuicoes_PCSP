@@ -45,7 +45,7 @@ def show_admin_panel():
             st.session_state["persona_test_mode"] = True
             st.rerun()
 
-    st.write("Bem-vindo! Aqui você gerencia comentários e interações da plataforma.")
+    st.write("Bem-vindo! Aqui você gerencia comentários e interações da aplicação.")
     
     tabs = st.tabs(["Moderação de Comentários", "Estatísticas de Interação", "Tráfego e Acessos"])
     

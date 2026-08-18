@@ -40,6 +40,7 @@ def get_all_datasets(base_dir: str = ".") -> dict:
     """
     datasets = {
         "editais": load_csv_data(os.path.join(base_dir, "Atribuicoes_Carreiras_Editais.CSV")),
+        "00_atrib_portaria_30": load_csv_data(os.path.join(base_dir, "00 - Atrib Portaria 30 de 2012.CSV")),
         "atual_sem_correcao": load_csv_data(os.path.join(base_dir, "01 - Atrib Atual No Cor.CSV")),
         "atual_com_correcao": load_csv_data(os.path.join(base_dir, "02 - Atrib Atual With Cor.CSV")),
         "lonpc_sem_correcao": load_csv_data(os.path.join(base_dir, "03 - Atrib LONPC No Cor.CSV")),
@@ -50,7 +51,7 @@ def get_all_datasets(base_dir: str = ".") -> dict:
         "rest_2025_gov_r1_papis_peritos": load_csv_data(os.path.join(base_dir, "08 - Atrib Rest 2025 Gov R1 Papis como peritos.CSV")),
         "rest_2025_gov_r2_papis_nao_peritos": load_csv_data(os.path.join(base_dir, "09 - Atrib Rest 2025 Gov R2 Papis nao peritos.CSV")),
         "rest_2025_gov_r2_papis_peritos": load_csv_data(os.path.join(base_dir, "10 - Atrib Rest 2025 Gov R2 Papis como peritos.CSV")),
-        "decreto_1967_dgp_2012": load_csv_data(os.path.join(base_dir, "11 - Atrib Decreto 47788-1967 original e DGP 30-2012.CSV")),
-        "decreto_1967_com_correcao": load_csv_data(os.path.join(base_dir, "12 - Atrib Decreto 47788-1967 com correcoes e DGP 30-2012.CSV"))
+        "decreto_1967_dgp_2012": load_csv_data(os.path.join(base_dir, "11 - Atrib Decreto 47788-1967 original.CSV")),
+        "decreto_1967_com_correcao": load_csv_data(os.path.join(base_dir, "12 - Atrib Decreto 47788-1967 com correcoes.CSV"))
     }
     return datasets

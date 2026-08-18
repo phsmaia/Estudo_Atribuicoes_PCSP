@@ -8,10 +8,11 @@ def remover_atribuicoes_comuns(df: pd.DataFrame) -> pd.DataFrame:
     Identifica e remove atribuições (colunas) que possuam valor 1 em todas as carreiras.
     Essas atribuições são comuns a todos e não possuem valor discriminatório.
     """
-    # Identifica as colunas que têm 1 em todas as linhas
-    cols_all_ones = df.loc[:, (df == 1).all()].columns.tolist()
-    if cols_all_ones:
-        return df.drop(cols_all_ones, axis=1)
+    # Desativado: As atribuições comuns agora são gerenciadas manualmente via arquivo próprio
+    # e injetadas/removidas pelo seletor na UI (DGP 30 de 2012)
+    # cols_all_ones = df.loc[:, (df == 1).all()].columns.tolist()
+    # if cols_all_ones:
+    #     return df.drop(cols_all_ones, axis=1)
     return df
 
 @st.cache_data(show_spinner=False)
@@ -441,6 +442,60 @@ def mesclar_com_1967(df_base: pd.DataFrame, base_name: str, df_1967: pd.DataFram
                 
                 for col in df_1967.columns:
                     if col != 'Carreira' and row_1967.get(col, 0) == 1:
+                        if col not in df_combined.columns:
+                            if col not in new_cols_data:
+                                new_cols_data[col] = [0] * len(df_combined)
+                            new_cols_data[col][pos] = 1
+                        else:
+                            df_combined.at[idx, col] = 1
+                            
+    if new_cols_data:
+        df_new = pd.DataFrame(new_cols_data, index=df_combined.index)
+        df_combined = pd.concat([df_combined, df_new], axis=1)
+                        
+    return df_combined
+
+def mesclar_com_dgp30(df_base: pd.DataFrame, base_name: str, df_dgp30: pd.DataFrame, df_conv: pd.DataFrame) -> pd.DataFrame:
+    """
+    Mescla o dataframe base com as atribuições comuns da Portaria DGP 30 de 2012.
+    """
+    col_idx_map = {
+        "Atual Sem Correção": 1,
+        "Atual Com Correção": 2,
+        "LONPC Sem Correção": 3,
+        "LONPC Com Correção": 4,
+        "Reestruturação 2024": 5,
+        "Reestruturação Reunião 1 2025": 6,
+        "Reestruturação Reunião 2 2025": 7,
+        "Atual": 2,
+        "LONPC": 4
+    }
+    
+    col_idx = col_idx_map.get(base_name)
+    if col_idx is None or col_idx >= len(df_conv.columns):
+        return df_base
+        
+    col_name = df_conv.columns[col_idx]
+    col_dgp30 = df_conv.columns[0] # DGP 30 is at index 0
+        
+    conv_clean = df_conv.dropna(subset=[col_name, col_dgp30])
+    mapping = dict(zip(conv_clean[col_name], conv_clean[col_dgp30]))
+    
+    df_combined = df_base.copy()
+    new_cols_data = {}
+    
+    for pos, (idx, row) in enumerate(df_combined.iterrows()):
+        carreira_atual = row['Carreira']
+        carreira_dgp30 = mapping.get(carreira_atual)
+        
+        if carreira_dgp30:
+            row_dgp30 = df_dgp30[df_dgp30['Carreira'] == carreira_dgp30]
+            
+            if not row_dgp30.empty:
+                row_dgp30 = row_dgp30.iloc[0]
+                
+                for col in df_dgp30.columns:
+                    if col != 'Carreira' and row_dgp30.get(col, 0) == 1:
                         if col not in df_combined.columns:
                             if col not in new_cols_data:
                                 new_cols_data[col] = [0] * len(df_combined)

@@ -46,17 +46,17 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
     tr_hover = "#F8F9FA" if is_light else "#333"
     
     st.markdown(f"""
-    <style>
-    .html-table {{ width: 100%; border-collapse: collapse; color: {text_color}; font-size: 0.95rem; margin-bottom: 20px;}}
-    .html-table th {{ background-color: {th_bg}; padding: 12px 10px; text-align: left; border-bottom: 2px solid {th_border};}}
-    .html-table td {{ padding: 10px 10px; border-bottom: 1px solid {td_border}; }}
-    .html-table tr:hover {{ background-color: {tr_hover} !important; opacity: 1.0 !important; }}
-    .up-arrow {{ color: {'#388E3C' if is_light else '#4CAF50'}; font-weight: bold; }}
-    .down-arrow {{ color: {'#D32F2F' if is_light else '#F44336'}; font-weight: bold; }}
-    .flat-arrow {{ color: {'#6c757d' if is_light else '#9E9E9E'}; }}
-    .jump-arrow {{ color: {'#F57F17' if is_light else '#FFC107'}; font-weight: bold; }}
-    </style>
-    """, unsafe_allow_html=True)
+<style>
+.html-table {{ width: 100%; border-collapse: collapse; color: {text_color}; font-size: 0.95rem; margin-bottom: 20px;}}
+.html-table th {{ background-color: {th_bg}; padding: 12px 10px; text-align: left; border-bottom: 2px solid {th_border};}}
+.html-table td {{ padding: 10px 10px; border-bottom: 1px solid {td_border}; }}
+.html-table tr:hover {{ background-color: {tr_hover} !important; opacity: 1.0 !important; }}
+.up-arrow {{ color: {'#388E3C' if is_light else '#4CAF50'}; font-weight: bold; }}
+.down-arrow {{ color: {'#D32F2F' if is_light else '#F44336'}; font-weight: bold; }}
+.flat-arrow {{ color: {'#6c757d' if is_light else '#9E9E9E'}; }}
+.jump-arrow {{ color: {'#F57F17' if is_light else '#FFC107'}; font-weight: bold; }}
+</style>
+""", unsafe_allow_html=True)
     
     st.markdown(i18n.t("m4_intro_title"))
     st.markdown(i18n.t("m4_intro_desc"))
@@ -259,7 +259,12 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             st.markdown(f"<div id='{anchor_id}'></div>", unsafe_allow_html=True)
             
         if help_text:
-            st.subheader(titulo, help=help_text)
+            col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+            with col_sub:
+                st.subheader(titulo, help=help_text)
+            with col_tut:
+                with st.popover(i18n.t("tutorial_popover", default="Tutorial")):
+                    st.info(help_text)
         else:
             st.subheader(titulo)
             

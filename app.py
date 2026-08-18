@@ -114,32 +114,32 @@ try:
         marca_texto = f"{remote_user} ({agora}) [{st.session_state.forensic_id}]"
         
         watermark_html = f"""
-        <style>
-        .leak-tracer {{
-            position: fixed;
-            top: -50%; left: -50%; width: 200vw; height: 200vh;
-            pointer-events: none;
-            z-index: 9999999;
-            /* Reduzido para 0.5% (0.005) para ficar totalmente invisível a olho nu */
-            color: #FFF;
-            opacity: 0.005;
-            mix-blend-mode: difference;
-            font-size: 24px;
-            font-family: monospace;
-            font-weight: bold;
-            display: flex;
-            flex-wrap: wrap;
-            overflow: hidden;
-            transform: rotate(-30deg);
-            align-content: center;
-            justify-content: center;
-        }}
-        .leak-tracer span {{
-            padding: 30px 50px;
-        }}
-        </style>
-        <div class="leak-tracer">
-        """
+<style>
+.leak-tracer {{
+    position: fixed;
+    top: -50%; left: -50%; width: 200vw; height: 200vh;
+    pointer-events: none;
+    z-index: 9999999;
+    /* Reduzido para 0.5% (0.005) para ficar totalmente invisível a olho nu */
+    color: #FFF;
+    opacity: 0.005;
+    mix-blend-mode: difference;
+    font-size: 24px;
+    font-family: monospace;
+    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    transform: rotate(-30deg);
+    align-content: center;
+    justify-content: center;
+}}
+.leak-tracer span {{
+    padding: 30px 50px;
+}}
+</style>
+<div class="leak-tracer">
+"""
         # Repete o nome do usuário para preencher a tela (diagonal tracking)
         spans = "".join([f"<span>{marca_texto}</span>" for _ in range(400)])
         watermark_html += spans + "</div>"
@@ -198,146 +198,146 @@ st.plotly_chart = _custom_plotly_chart
 
 if st.session_state.get("light_mode"):
     st.markdown("""
-        <style>
-        /* Fundo principal suave (não branco puro) */
-        [data-testid="stAppViewContainer"] { background-color: #F4F6F9 !important; color: #1E2329 !important; }
-        [data-testid="stSidebar"] { background-color: #E8ECEF !important; color: #1E2329 !important; }
-        [data-testid="stHeader"] { background-color: transparent !important; }
-        
-        /* Preservar as luzes azul e vermelha no fundo invertendo o modo de mesclagem */
-        .stApp::before, .stApp::after { mix-blend-mode: multiply !important; opacity: 0.25 !important; }
-        
-        /* Força textos para escuro, preservando spans para cores inline */
-        .stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6, label { color: #1E2329 !important; }
-        
-        /* Menus (Selectboxes, Dropdowns) */
-        div[data-baseweb="select"] > div { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
-        div[data-baseweb="select"] span { color: #1E2329 !important; }
-        /* Inputs, Textareas e Menus Suspensos (Dropdowns) */
-        .stTextArea textarea, .stTextInput input, [data-baseweb="textarea"] textarea, [data-baseweb="input"] input, [data-baseweb="textarea"], [data-baseweb="input"] {
-            background-color: #F0F2F6 !important;
-            color: #1E2329 !important;
-            border-color: #CED4DA !important;
-            -webkit-text-fill-color: #1E2329 !important;
-        }
-        
-        ul[role="listbox"], [data-baseweb="menu"], div[role="listbox"] {
-            background-color: #FFFFFF !important;
-            border: 1px solid #CED4DA !important;
-        }
-        
-        li[role="option"] { 
-            background-color: #FFFFFF !important;
-            color: #1E2329 !important; 
-        }
-        li[role="option"]:hover, li[role="option"][aria-selected="true"] { 
-            background-color: #F0F2F6 !important; 
-            color: #0072B2 !important;
-        }
-        
-        /* Abas (Tabs) */
-        button[data-baseweb="tab"] p { color: #5C6C7B !important; font-weight: 600 !important; }
-        button[data-baseweb="tab"][aria-selected="true"] p { color: #0072B2 !important; font-weight: 800 !important; }
-        
-        /* Multiselect Tags (Carreiras) */
-        span[data-baseweb="tag"] {
-            background-color: #E8ECEF !important;
-            color: #1E2329 !important;
-            border: 1px solid #CED4DA !important;
-        }
-        span[data-baseweb="tag"] span { color: #1E2329 !important; }
-        span[data-baseweb="tag"] svg { fill: #1E2329 !important; }
-        
-        /* Tooltips e Balões de Ajuda */
-        [data-baseweb="tooltip"] > div, div[data-testid="stTooltipContent"], [data-baseweb="popover"] > div {
-            background-color: #FFFFFF !important;
-            color: #1E2329 !important;
-            border: 1px solid #CED4DA !important;
-        }
-        [data-testid="stTooltipHoverTarget"] {
-            color: #1E2329 !important;
-        }
-        [data-testid="stTooltipHoverTarget"] svg {
-            stroke: #1E2329 !important;
-            color: #1E2329 !important;
-            opacity: 1 !important;
-        }
-        /* Botões */
-        button[kind="secondary"] { background-color: #FFFFFF !important; color: #1E2329 !important; border-color: #CED4DA !important; }
-        
-        /* Ajustar containers escuros (Header fixo e Caixas) */
-        div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor) { background-color: rgba(244, 246, 249, 0.95) !important; border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important; }
-        .transparency-box { background-color: #FFFFFF !important; }
-        /* Forçar variáveis nativas do Streamlit para Light Mode em todos os elementos flutuantes */
-        :root, .stApp, [data-baseweb], div[role="dialog"] {
-            --background-color: #FFFFFF !important;
-            --secondary-background-color: #F0F2F6 !important;
-            --text-color: #1E2329 !important;
-            --primary-color: #0072B2 !important;
-        }
-        
-        .status-badge { background-color: #FFFFFF !important; border: 1px solid #CED4DA !important; color: #1E2329 !important; }
-        .status-badge strong { color: #0072B2 !important; }
-        
-        /* Tabela Light (HTML customizada) */
-        .light-table-container { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
-        .light-table-container table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; font-family: sans-serif; background-color: #FFFFFF !important; }
-        .light-table-container th { background-color: #F0F2F6 !important; color: #1E2329 !important; padding: 10px; text-align: left; border: 1px solid #CED4DA !important; }
-        .light-table-container td { padding: 10px; border: 1px solid #CED4DA !important; color: #1E2329; }
-        /* Efeitos visuais suaves nas tabelas claras */
-        .light-table-container tr:hover td { filter: brightness(0.92); }
-        
-        /* Expander (Modos de Visão e Explicações) e Configurações Analíticas */
-        [data-testid="stExpander"], .stExpander, div[data-testid="stExpander"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
-        [data-testid="stExpander"] summary, .stExpander summary { color: #1E2329 !important; background-color: #FFFFFF !important; }
-        [data-testid="stExpander"] summary:hover, .stExpander summary:hover { background-color: #F0F2F6 !important; }
-        [data-testid="stExpander"] summary p, [data-testid="stExpander"] summary span, .stExpander summary p, .stExpander summary span { color: #1E2329 !important; font-weight: 700 !important; }
-        [data-testid="stExpanderDetails"], .stExpanderDetails, div[data-testid="stExpanderDetails"] { background-color: #FFFFFF !important; color: #1E2329 !important; }
-        [data-testid="stExpanderDetails"] p, [data-testid="stExpanderDetails"] h4, .stExpanderDetails p, .stExpanderDetails h4 { color: #1E2329 !important; }
-        
-        /* Toasts (Mensagens flutuantes) */
-        [data-testid="stToast"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
-        [data-testid="stToast"] > div, [data-testid="stToast"] p { color: #1E2329 !important; }
-        
-        /* Popovers (Modos de Visão / Configurações) */
-        [data-testid="stPopoverBody"], div[data-testid="stPopoverBody"], .stPopoverBody, div[data-baseweb="popover"] > div, div[data-baseweb="popover"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; color: #1E2329 !important; }
-        [data-testid="stPopoverBody"] p, [data-testid="stPopoverBody"] h4, [data-testid="stPopoverBody"] label, div[data-baseweb="popover"] p, div[data-baseweb="popover"] label { color: #1E2329 !important; }
-        
-        /* Caixas de Alerta (st.info) */
-        [data-testid="stAlert"] { background-color: #E8F4F8 !important; border: 1px solid #B6D4E3 !important; color: #1E2329 !important; }
-        [data-testid="stAlert"] p { color: #1E2329 !important; }
-        
-        /* Custom Metric Boxes */
-        .custom-metric-box { background: #FFFFFF !important; border: 1px solid #CED4DA !important; padding: 15px; border-radius: 10px; color: #1E2329 !important; }
-        
-        /* Tooltips e labels */
-        [data-testid="stWidgetLabel"] { color: #1E2329 !important; }
-        
-        /* Modals e Dialogs */
-        [data-testid="stDialog"] > div, [data-testid="stModal"] > div, div[role="dialog"] > div, div[data-baseweb="modal"] > div { background-color: #FFFFFF !important; border: 1px solid #CED4DA !important; }
-        [data-testid="stDialog"] *, [data-testid="stModal"] *, div[role="dialog"] *, div[data-baseweb="modal"] * { color: #1E2329 !important; }
-        
-        /* Inputs, Selects, Menus suspensos (Dropdowns) */
-        [data-baseweb="select"] > div, [data-baseweb="menu"], ul[role="listbox"], ul[role="listbox"] li { background-color: #FFFFFF !important; color: #1E2329 !important; }
-        [data-baseweb="select"] *, [data-baseweb="menu"] *, ul[role="listbox"] * { color: #1E2329 !important; }
-        [data-testid="stSelectbox"] label, [data-testid="stMultiSelect"] label, [data-testid="stRadio"] label { color: #1E2329 !important; }
-        
-        /* Tabs active state */
-        [data-baseweb="tab"][aria-selected="true"] { background-color: transparent !important; }
-        </style>
+<style>
+/* Fundo principal suave (não branco puro) */
+[data-testid="stAppViewContainer"] { background-color: #F4F6F9 !important; color: #1E2329 !important; }
+[data-testid="stSidebar"] { background-color: #E8ECEF !important; color: #1E2329 !important; }
+[data-testid="stHeader"] { background-color: transparent !important; }
+
+/* Preservar as luzes azul e vermelha no fundo invertendo o modo de mesclagem */
+.stApp::before, .stApp::after { mix-blend-mode: multiply !important; opacity: 0.25 !important; }
+
+/* Força textos para escuro, preservando spans para cores inline */
+.stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6, label { color: #1E2329 !important; }
+
+/* Menus (Selectboxes, Dropdowns) */
+div[data-baseweb="select"] > div { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
+div[data-baseweb="select"] span { color: #1E2329 !important; }
+/* Inputs, Textareas e Menus Suspensos (Dropdowns) */
+.stTextArea textarea, .stTextInput input, [data-baseweb="textarea"] textarea, [data-baseweb="input"] input, [data-baseweb="textarea"], [data-baseweb="input"] {
+    background-color: #F0F2F6 !important;
+    color: #1E2329 !important;
+    border-color: #CED4DA !important;
+    -webkit-text-fill-color: #1E2329 !important;
+}
+
+ul[role="listbox"], [data-baseweb="menu"], div[role="listbox"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid #CED4DA !important;
+}
+
+li[role="option"] { 
+    background-color: #FFFFFF !important;
+    color: #1E2329 !important; 
+}
+li[role="option"]:hover, li[role="option"][aria-selected="true"] { 
+    background-color: #F0F2F6 !important; 
+    color: #0072B2 !important;
+}
+
+/* Abas (Tabs) */
+button[data-baseweb="tab"] p { color: #5C6C7B !important; font-weight: 600 !important; }
+button[data-baseweb="tab"][aria-selected="true"] p { color: #0072B2 !important; font-weight: 800 !important; }
+
+/* Multiselect Tags (Carreiras) */
+span[data-baseweb="tag"] {
+    background-color: #E8ECEF !important;
+    color: #1E2329 !important;
+    border: 1px solid #CED4DA !important;
+}
+span[data-baseweb="tag"] span { color: #1E2329 !important; }
+span[data-baseweb="tag"] svg { fill: #1E2329 !important; }
+
+/* Tooltips e Balões de Ajuda */
+[data-baseweb="tooltip"] > div, div[data-testid="stTooltipContent"], [data-baseweb="popover"] > div {
+    background-color: #FFFFFF !important;
+    color: #1E2329 !important;
+    border: 1px solid #CED4DA !important;
+}
+[data-testid="stTooltipHoverTarget"] {
+    color: #1E2329 !important;
+}
+[data-testid="stTooltipHoverTarget"] svg {
+    stroke: #1E2329 !important;
+    color: #1E2329 !important;
+    opacity: 1 !important;
+}
+/* Botões */
+button[kind="secondary"] { background-color: #FFFFFF !important; color: #1E2329 !important; border-color: #CED4DA !important; }
+
+/* Ajustar containers escuros (Header fixo e Caixas) */
+div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor) { background-color: rgba(244, 246, 249, 0.95) !important; border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important; }
+.transparency-box { background-color: #FFFFFF !important; }
+/* Forçar variáveis nativas do Streamlit para Light Mode em todos os elementos flutuantes */
+:root, .stApp, [data-baseweb], div[role="dialog"] {
+    --background-color: #FFFFFF !important;
+    --secondary-background-color: #F0F2F6 !important;
+    --text-color: #1E2329 !important;
+    --primary-color: #0072B2 !important;
+}
+
+.status-badge { background-color: #FFFFFF !important; border: 1px solid #CED4DA !important; color: #1E2329 !important; }
+.status-badge strong { color: #0072B2 !important; }
+
+/* Tabela Light (HTML customizada) */
+.light-table-container { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+.light-table-container table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; font-family: sans-serif; background-color: #FFFFFF !important; }
+.light-table-container th { background-color: #F0F2F6 !important; color: #1E2329 !important; padding: 10px; text-align: left; border: 1px solid #CED4DA !important; }
+.light-table-container td { padding: 10px; border: 1px solid #CED4DA !important; color: #1E2329; }
+/* Efeitos visuais suaves nas tabelas claras */
+.light-table-container tr:hover td { filter: brightness(0.92); }
+
+/* Expander (Modos de Visão e Explicações) e Configurações Analíticas */
+[data-testid="stExpander"], .stExpander, div[data-testid="stExpander"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
+[data-testid="stExpander"] summary, .stExpander summary { color: #1E2329 !important; background-color: #FFFFFF !important; }
+[data-testid="stExpander"] summary:hover, .stExpander summary:hover { background-color: #F0F2F6 !important; }
+[data-testid="stExpander"] summary p, [data-testid="stExpander"] summary span, .stExpander summary p, .stExpander summary span { color: #1E2329 !important; font-weight: 700 !important; }
+[data-testid="stExpanderDetails"], .stExpanderDetails, div[data-testid="stExpanderDetails"] { background-color: #FFFFFF !important; color: #1E2329 !important; }
+[data-testid="stExpanderDetails"] p, [data-testid="stExpanderDetails"] h4, .stExpanderDetails p, .stExpanderDetails h4 { color: #1E2329 !important; }
+
+/* Toasts (Mensagens flutuantes) */
+[data-testid="stToast"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; }
+[data-testid="stToast"] > div, [data-testid="stToast"] p { color: #1E2329 !important; }
+
+/* Popovers (Modos de Visão / Configurações) */
+[data-testid="stPopoverBody"], div[data-testid="stPopoverBody"], .stPopoverBody, div[data-baseweb="popover"] > div, div[data-baseweb="popover"] { background-color: #FFFFFF !important; border-color: #CED4DA !important; color: #1E2329 !important; }
+[data-testid="stPopoverBody"] p, [data-testid="stPopoverBody"] h4, [data-testid="stPopoverBody"] label, div[data-baseweb="popover"] p, div[data-baseweb="popover"] label { color: #1E2329 !important; }
+
+/* Caixas de Alerta (st.info) */
+[data-testid="stAlert"] { background-color: #E8F4F8 !important; border: 1px solid #B6D4E3 !important; color: #1E2329 !important; }
+[data-testid="stAlert"] p { color: #1E2329 !important; }
+
+/* Custom Metric Boxes */
+.custom-metric-box { background: #FFFFFF !important; border: 1px solid #CED4DA !important; padding: 15px; border-radius: 10px; color: #1E2329 !important; }
+
+/* Tooltips e labels */
+[data-testid="stWidgetLabel"] { color: #1E2329 !important; }
+
+/* Modals e Dialogs */
+[data-testid="stDialog"] > div, [data-testid="stModal"] > div, div[role="dialog"] > div, div[data-baseweb="modal"] > div { background-color: #FFFFFF !important; border: 1px solid #CED4DA !important; }
+[data-testid="stDialog"] *, [data-testid="stModal"] *, div[role="dialog"] *, div[data-baseweb="modal"] * { color: #1E2329 !important; }
+
+/* Inputs, Selects, Menus suspensos (Dropdowns) */
+[data-baseweb="select"] > div, [data-baseweb="menu"], ul[role="listbox"], ul[role="listbox"] li { background-color: #FFFFFF !important; color: #1E2329 !important; }
+[data-baseweb="select"] *, [data-baseweb="menu"] *, ul[role="listbox"] * { color: #1E2329 !important; }
+[data-testid="stSelectbox"] label, [data-testid="stMultiSelect"] label, [data-testid="stRadio"] label { color: #1E2329 !important; }
+
+/* Tabs active state */
+[data-baseweb="tab"][aria-selected="true"] { background-color: transparent !important; }
+</style>
     """, unsafe_allow_html=True)
 else:
     st.markdown("""
-        <style>
-        .custom-metric-box { background: #1E1E1E !important; border: 1px solid #333 !important; padding: 15px; border-radius: 10px; }
-        </style>
+<style>
+.custom-metric-box { background: #1E1E1E !important; border: 1px solid #333 !important; padding: 15px; border-radius: 10px; }
+</style>
     """, unsafe_allow_html=True)
 
 # --- ESTILOS GLOBAIS COMUNS ---
 st.markdown("""
-    <style>
-    /* Reservado para futuros estilos globais */
-    </style>
+<style>
+/* Reservado para futuros estilos globais */
+</style>
 """, unsafe_allow_html=True)
 
 # --- MODO TESTE DE PERSONA (UI) ---
@@ -987,8 +987,8 @@ if "first_load_done" not in st.session_state:
             @keyframes scanAnim {{ 0% {{ top: 15%; }} 50% {{ top: 85%; }} 100% {{ top: 15%; }} }}
             
             .progress-bar-container {{
-                width: 300px; height: 6px; background: ${{progressBg}};
-                border-radius: 3px; margin: 15px 0; overflow: hidden; position: relative;
+                width: 50%; max-width: 600px; height: 6px; background: ${{progressBg}};
+                border-radius: 3px; margin: 25px 0 15px 0; overflow: hidden; position: relative;
             }}
             .progress-bar-fill {{
                 position: absolute; top: 0; left: 0; height: 100%; background: ${{strokeColor}};
@@ -1088,7 +1088,7 @@ if "first_load_done" not in st.session_state:
         
         if (acceptBtn) {{
             acceptBtn.addEventListener('click', () => {{
-                acceptBtn.innerText = "Autorizado! Carregando a plataforma...";
+                acceptBtn.innerText = "Autorizado! Carregando o ambiente analítico...";
                 acceptBtn.style.opacity = '0.7';
                 acceptBtn.style.cursor = 'wait';
                 
@@ -1231,7 +1231,6 @@ else:
 datasets = data_loader.get_all_datasets()
 opcoes_cenarios = [
     "Atual",
-    "Decreto de 1967",
     "LONPC",
     "Reestruturação 2024",
     "Reestruturação Reunião 1 2025",
@@ -1241,10 +1240,10 @@ opcoes_cenarios = [
 incluir_atrib_comuns = st.session_state.get('toggle_atrib_comuns', False)
 incluir_correcoes = st.session_state.get('toggle_correcoes', True)
 papis_peritos = st.session_state.get('toggle_papis_peritos', False)
+incluir_decreto_1967 = st.session_state.get('toggle_decreto_1967', False)
 
 mapa_cenarios = {
     "Atual": datasets["atual_com_correcao"] if incluir_correcoes else datasets["atual_sem_correcao"],
-    "Decreto de 1967": datasets["decreto_1967_com_correcao"] if incluir_correcoes else datasets["decreto_1967_dgp_2012"],
     "LONPC": datasets["lonpc_com_correcao"] if incluir_correcoes else datasets["lonpc_sem_correcao"],
     "Reestruturação 2024": datasets["reestruturacao_papis_peritos"] if papis_peritos else datasets["reestruturacao_papis_nao_peritos"],
     "Reestruturação Reunião 1 2025": datasets["rest_2025_gov_r1_papis_peritos"] if papis_peritos else datasets["rest_2025_gov_r1_papis_nao_peritos"],
@@ -1254,8 +1253,6 @@ mapa_cenarios = {
 def get_scenario_df(cenario, correcoes, papi):
     if cenario == "Atual":
         return datasets["atual_com_correcao"] if correcoes else datasets["atual_sem_correcao"]
-    elif cenario == "Decreto de 1967":
-        return datasets["decreto_1967_com_correcao"] if correcoes else datasets["decreto_1967_dgp_2012"]
     elif cenario == "LONPC":
         return datasets["lonpc_com_correcao"] if correcoes else datasets["lonpc_sem_correcao"]
     elif cenario == "Reestruturação 2024":
@@ -1264,18 +1261,49 @@ def get_scenario_df(cenario, correcoes, papi):
         return datasets["rest_2025_gov_r1_papis_peritos"] if papi else datasets["rest_2025_gov_r1_papis_nao_peritos"]
     elif cenario == "Reestruturação Reunião 2 2025":
         return datasets["rest_2025_gov_r2_papis_peritos"] if papi else datasets["rest_2025_gov_r2_papis_nao_peritos"]
+    elif cenario == "Decreto de 1967":
+        return datasets["decreto_1967_com_correcao"] if correcoes else datasets["decreto_1967_dgp_2012"]
     return None
 
 
-if not incluir_atrib_comuns:
-    import data_processing
+import data_processing
+import pandas as pd
+
+if incluir_atrib_comuns or incluir_decreto_1967:
+    try:
+        df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', encoding='utf-8-sig', sep=';')
+    except:
+        df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', encoding='iso-8859-1', sep=';')
+        
     for cenario_key, df in mapa_cenarios.items():
         if df is not None and not df.empty:
-            # Applies the function directly to the copy inside the dictionary
-            mapa_cenarios[cenario_key] = data_processing.remover_atribuicoes_comuns(df.copy())
+            df_atualizado = df.copy()
+            if incluir_atrib_comuns:
+                df_atualizado = data_processing.mesclar_com_dgp30(df_atualizado, cenario_key, datasets.get("00_atrib_portaria_30"), df_conv)
+            if incluir_decreto_1967:
+                df_1967 = datasets["decreto_1967_com_correcao"] if incluir_correcoes else datasets["decreto_1967_dgp_2012"]
+                df_atualizado = data_processing.mesclar_com_1967(df_atualizado, cenario_key, df_1967, df_conv)
+            mapa_cenarios[cenario_key] = df_atualizado
+
+# Remoção ativa de atribuições comuns se estiverem inativas
+if not incluir_atrib_comuns:
+    for cenario_key, df in mapa_cenarios.items():
+        if df is not None and not df.empty:
+            # Se for uma coluna numérica (como os binários de atribuição) e todos os valores forem > 0, removemos.
+            # Não remover a coluna "Carreira"
+            cols_to_drop = []
+            for col in df.columns:
+                if col != 'Carreira':
+                    try:
+                        if (pd.to_numeric(df[col], errors='coerce') > 0).all():
+                            cols_to_drop.append(col)
+                    except:
+                        pass
+            if cols_to_drop:
+                mapa_cenarios[cenario_key] = df.drop(columns=cols_to_drop)
 # --- CABEÇALHO GLOBAL E ROTEAMENTO ---
 st.markdown("""
-    <style>
+<style>
     /* Remove padding superior da área principal */
     .block-container, 
     div.block-container,
@@ -1314,7 +1342,7 @@ st.markdown("""
     
     /* Fix the metric box */
     .custom-metric-box { background: #1E1E1E; border: 1px solid #333; }
-    </style>
+</style>
 """, unsafe_allow_html=True)
 
 # Container Exclusivo para o Header Sticky
@@ -1467,7 +1495,7 @@ with st.container():
                 else:
                     cenarios_ativos.update(opcoes_cenarios)
                     
-                correcoes_app = any(c in ["Atual", "Decreto de 1967", "LONPC"] for c in cenarios_ativos)
+                correcoes_app = any(c in ["Atual", "LONPC"] for c in cenarios_ativos)
                 papis_app = any(c in ["Reestruturação 2024", "Reestruturação Reunião 1 2025", "Reestruturação Reunião 2 2025"] for c in cenarios_ativos)
                 
                 st.checkbox("Atribuições Comuns (DGP 30/2012)", value=False, key="toggle_atrib_comuns", help="Aplica as atribuições gerais comuns a todo policial civil estabelecidas pela Portaria DGP 30/2012.")
@@ -1475,7 +1503,8 @@ with st.container():
                 if current_mode_for_layout == "mode_4":
                     st.info("No **Análise de Cenários**, as variações de Correção, Decreto e Papiloscopista Perito são ajustadas individualmente nos seletores de cada cenário (A e B).")
                 else:
-                    st.checkbox("Correções Ortográficas e Técnicas", value=True, key="toggle_correcoes", disabled=not correcoes_app, help="Utiliza a versão com correções técnicas nos cenários base. Aplicável a: Atual, Decreto 1967 e LONPC.")
+                    st.checkbox("Decreto de 1967 (Adição Histórica)", value=False, key="toggle_decreto_1967", help="Sobrepõe as atribuições do antigo decreto (OR) sobre as do cenário atual.")
+                    st.checkbox("Correções Ortográficas e Técnicas", value=True, key="toggle_correcoes", disabled=not correcoes_app, help="Utiliza a versão com correções técnicas nos cenários base. Aplicável a: Atual e LONPC.")
                     st.checkbox("Papiloscopistas como Peritos Oficiais", value=False, key="toggle_papis_peritos", disabled=not papis_app, help="Eleva o status do cargo de Papiloscopista para Perito Oficial. Aplicável a: Reestruturação 2024 e 2025.")
             
         # Âncora invisível para o tour geral referenciar este elemento (mantido por precaução estrutural)
@@ -1545,7 +1574,7 @@ with st.container():
     is_sample_biased_global = False
 
     # --- HTML dos badges de Modificadores Globais (reutilizável em todos os modos) ---
-    def _build_modifier_badges(incluir_1967: bool = False) -> str:
+    def _build_modifier_badges(incluir_1967: bool = None) -> str:
         """Gera o HTML dos badges de modificadores globais para injeção na status bar."""
         badges = []
         # Atribuições Comuns
@@ -1563,9 +1592,14 @@ with st.container():
             badges.append("<div class='status-badge' style='background:rgba(171,71,188,0.15);border:1px solid rgba(171,71,188,0.5);color:#ce93d8;'>🔬 Papis Peritos: <strong>ON</strong></div>")
         else:
             badges.append("<div class='status-badge' style='opacity:0.45;'>🔬 Papis Peritos: <strong>OFF</strong></div>")
-        # Decreto 1967 (apenas se aplicável e ativo)
+        # Decreto 1967
+        if incluir_1967 is None:
+            incluir_1967 = st.session_state.get("toggle_decreto_1967", False)
+            
         if incluir_1967:
             badges.append("<div class='status-badge' style='background:rgba(255,183,77,0.15);border:1px solid rgba(255,183,77,0.5);color:#ffcc80;'>📜 1967: <strong>ON</strong></div>")
+        else:
+            badges.append("<div class='status-badge' style='opacity:0.45;'>📜 1967: <strong>OFF</strong></div>")
         return "".join(badges)
     
     # --- CONTROLES SUPERIORES (APENAS EXPLORADOR INDIVIDUAL) ---
@@ -1582,7 +1616,7 @@ with st.container():
                 cargos_disponiveis = df_cenario['Carreira'].tolist() if df_cenario is not None and 'Carreira' in df_cenario.columns else (df_cenario.index.tolist() if df_cenario is not None else [])
                 
                 st.markdown("<div style='margin-top: 10px; margin-bottom: 5px;'></div>", unsafe_allow_html=True)
-                incluir_1967 = st.checkbox(i18n.t("include_1967_layer"), value=False, disabled=cenario_sel == "Decreto de 1967")
+                incluir_1967 = st.session_state.get("toggle_decreto_1967", False)
                 
                 opcoes_matriz = ["condensed", "original"]
                 tipo_matriz_raw = st.selectbox(
@@ -1615,7 +1649,7 @@ with st.container():
                     cargos_pc = [c for c in cargos_disponiveis if c not in cargos_cientifica]
                     
                     st.markdown("<div style='margin-top: 5px; margin-bottom: 5px;'></div>", unsafe_allow_html=True)
-                    incluir_1967 = st.checkbox(i18n.t("include_1967_layer"), value=False, disabled=cenario_sel == "Decreto de 1967")
+                    incluir_1967 = st.session_state.get("toggle_decreto_1967", False)
                     
                     opcoes_matriz = ["condensed", "original"]
                     tipo_matriz_raw = st.selectbox(
@@ -1723,10 +1757,16 @@ with st.container():
             df_b_raw = get_scenario_df(cenario_b, correcoes_b, papi_b)
             df_b = df_b_raw.copy() if df_b_raw is not None else None
             
-            if not incluir_atrib_comuns:
+            if incluir_atrib_comuns:
                 import data_processing
-                if df_a is not None: df_a = data_processing.remover_atribuicoes_comuns(df_a)
-                if df_b is not None: df_b = data_processing.remover_atribuicoes_comuns(df_b)
+                import pandas as pd
+                try:
+                    df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', encoding='utf-8-sig', sep=';')
+                except:
+                    df_conv = pd.read_csv('Tabela_Conversao_Cargos.CSV', encoding='iso-8859-1', sep=';')
+                    
+                if df_a is not None: df_a = data_processing.mesclar_com_dgp30(df_a, cenario_a, datasets.get("00_atrib_portaria_30"), df_conv)
+                if df_b is not None: df_b = data_processing.mesclar_com_dgp30(df_b, cenario_b, datasets.get("00_atrib_portaria_30"), df_conv)
                 
             if incluir_1967_a or incluir_1967_b:
                 import pandas as pd
@@ -2003,10 +2043,7 @@ if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.
             else:
                 df_cenario = df_cenario.loc[filtro_cargos]
                 
-        # Mesclagem da Camada Histórica (Decreto 1967)
-        if incluir_1967:
-            df_cenario = data_processing.mesclar_com_1967(df_cenario, cenario_sel, mapa_cenarios.get("Decreto de 1967"), df_conv)
-            
+
         # Processamento Matemático Principal
         incluir_comuns = incluir_atrib_comuns
         if incluir_comuns:
@@ -2017,7 +2054,7 @@ if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.
             df_original_limpo = df_cenario[colunas_comuns + colunas_outras].copy()
             df_condensado = df_original_limpo
         else:
-            df_original_limpo = data_processing.remover_atribuicoes_comuns(df_cenario)
+            df_original_limpo = df_cenario.copy()
             df_condensado, historico = data_processing.condensar_dataframe(df_cenario)
         
         # Switch Lógico
@@ -2095,7 +2132,6 @@ if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.
 {badge_vies_html}
 <div class='status-badge'>{i18n.t('badge_scenario')} <strong>{i18n.t(cenario_sel)}</strong></div>
 <div class='status-badge'>{i18n.t('badge_matrix')} <strong>{i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')}</strong></div>
-<div class='status-badge'>{i18n.t('badge_generic')} <strong>{lbl_genericas}</strong></div>
 <div class='status-badge'>{i18n.t('badge_texts')} <strong>{lbl_textos}</strong></div>
 <div class='status-badge'>{i18n.t('badge_roles')} <strong>{lbl_cargos}</strong></div>{badge_destaque}
 {_build_modifier_badges(incluir_1967=incluir_1967)}
@@ -2105,7 +2141,7 @@ if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.
     status_bar_placeholder.markdown(header_html, unsafe_allow_html=True)
 
     # --- INJEÇÃO DOS KPIs DENTRO DA GAVETA ---
-    is_sample_biased = filtro_cargos and len(filtro_cargos) < len(cargos_disponiveis)
+    is_sample_biased = is_sample_biased_global
 
     reducao = len(df_original_limpo.columns) - len(df_condensado.columns)
     pct_reducao = (reducao / len(df_original_limpo.columns)) * 100 if len(df_original_limpo.columns) > 0 else 0
@@ -2228,6 +2264,11 @@ if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.
                 html_table = df_long.to_html(index=False, border=0, classes=["table", "table-striped"])
                 # Adiciona um container com scroll e estilo básico
                 st.markdown(f"""
+<style>
+    .table {{ width: 100%; border-collapse: collapse; }}
+    .table th, .table td {{ padding: 8px; text-align: left; border-bottom: 1px solid rgba(128,128,128,0.2); }}
+    .table th {{ font-weight: bold; }}
+</style>
                 <div style="max-height: 400px; overflow-y: auto; font-size: 0.85rem;">
                     {html_table}
                 </div>
@@ -2725,7 +2766,7 @@ if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.
             st.subheader(i18n.t("sub_gower"), help=i18n.t("sub_gower_help"))
         with col_tut:
             with st.popover(i18n.t("tutorial_popover")):
-                st.info(i18n.t("tut_sec_matrix"))
+                st.info(i18n.t("tut_sec_gower"))
         
         selected_metric_key_15 = st.selectbox(
             i18n.t("select_metric", default="Selecione a Métrica de Similaridade"),

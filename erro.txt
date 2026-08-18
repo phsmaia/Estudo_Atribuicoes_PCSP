@@ -1,0 +1,1 @@
+Cannot set a DataFrame with multiple columns to the single column Decreto de 1967

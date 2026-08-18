@@ -151,7 +151,12 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
         fig1.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
         
         st.markdown("<div id='toc-gower'></div>", unsafe_allow_html=True)
-        st.subheader(i18n.t("m3_sub_gower_title"), help=i18n.t("m3_sub_gower_help"))
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t("m3_sub_gower_title"), help=i18n.t("m3_sub_gower_help"))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("m3_sub_gower_help"))
         st.plotly_chart(fig1, use_container_width=True)
         interaction_ui.render_like_button("3.1 Distancia Media Gower", "3_1")
         st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_gower_desc')}</p>", unsafe_allow_html=True)
@@ -170,7 +175,12 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
                 fig2.add_annotation(x=row[i18n.t("m3_col_scenario")], y=row[i18n.t("m3_col_total_unique")], text=f'{row[i18n.t("m3_col_total_unique")]}', showarrow=False, yshift=15, font=dict(color=txt_color, size=11))
         
         st.markdown("<div id='toc-vol'></div>", unsafe_allow_html=True)
-        st.subheader(i18n.t("m3_sub_vol_title"), help=i18n.t("m3_sub_vol_help"))
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t("m3_sub_vol_title"), help=i18n.t("m3_sub_vol_help"))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("m3_sub_vol_help"))
         st.plotly_chart(fig2, use_container_width=True)
         interaction_ui.render_like_button("3.2 Volume de Atribuicoes", "3_2")
         st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_vol_desc')}</p>", unsafe_allow_html=True)
@@ -189,7 +199,12 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
         fig3.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
         
         st.markdown("<div id='toc-share'></div>", unsafe_allow_html=True)
-        st.subheader(i18n.t("m3_sub_share_title"), help=i18n.t("m3_sub_share_help"))
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t("m3_sub_share_title"), help=i18n.t("m3_sub_share_help"))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("m3_sub_share_help"))
         st.plotly_chart(fig3, use_container_width=True)
         interaction_ui.render_like_button("3.3 Nivel de Compartilhamento", "3_3")
         st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_share_desc')}</p>", unsafe_allow_html=True)
@@ -209,7 +224,12 @@ def render_timeline_mode(opcoes_cenarios, mapa_cenarios, current_section=None):
         fig4.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=0, r=0, t=30, b=0), coloraxis_showscale=False)
         
         st.markdown("<div id='toc-coph'></div>", unsafe_allow_html=True)
-        st.subheader(i18n.t("m3_sub_coph_title"), help=i18n.t("m3_sub_coph_help"))
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t("m3_sub_coph_title"), help=i18n.t("m3_sub_coph_help"))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("m3_sub_coph_help"))
         st.plotly_chart(fig4, use_container_width=True)
         interaction_ui.render_like_button("3.4 Indice Cofenético", "3_4")
         st.markdown(f"<p style='font-size:0.8rem; color:#aaa; margin-top:5px;'>{i18n.t('m3_coph_desc')}</p>", unsafe_allow_html=True)

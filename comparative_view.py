@@ -157,7 +157,7 @@ def render_comparativo_axb(df_a, df_b, cenario_a_title, cenario_b_title, cargo_f
             )
         with col_tut:
             with st.popover(i18n.t("tutorial_popover")):
-                st.info(i18n.t("tut_sec_matrix"))
+                st.info(i18n.t("tut_sec_comp_delta"))
         interaction_ui.render_like_button("2.3 Discrepancias", "2_3")
         st.markdown(f"<p style='color:#ccc; font-size:0.9rem;'>{i18n.t('delta_subtitle')}</p>", unsafe_allow_html=True)
         
@@ -276,10 +276,15 @@ def render_comparativo_axb(df_a, df_b, cenario_a_title, cenario_b_title, cargo_f
     
     if current_section is None or current_section == "sub_dist_title":
         st.markdown("<div id='toc-dist'></div>", unsafe_allow_html=True)
-        st.subheader(
-            i18n.t("sub_dist_title", default="Distribuição de Distâncias"),
-            help="Mostra como as distâncias estão distribuídas dentro de cada cenário."
-        )
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(
+                i18n.t("sub_dist_title", default="Distribuição de Distâncias"),
+                help="Mostra como as distâncias estão distribuídas dentro de cada cenário."
+            )
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_comp_dist"))
         
         if is_mobile:
             st.info(i18n.t("mobile_dist"), icon="ℹ️")
@@ -366,10 +371,15 @@ def render_comparativo_axb(df_a, df_b, cenario_a_title, cenario_b_title, cargo_f
 
     if current_section is None or current_section == "sub_flow_title":
         st.markdown("<div id='toc-flow'></div>", unsafe_allow_html=True)
-        st.subheader(
-            i18n.t("sub_flow_title"),
-            help=i18n.t("sub_flow_help")
-        )
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(
+                i18n.t("sub_flow_title"),
+                help=i18n.t("sub_flow_help")
+            )
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_comp_flow"))
         interaction_ui.render_like_button("2.1 Comparativo Direito (Base)", "2_1")
         
         if is_mobile:
@@ -478,10 +488,15 @@ def render_comparativo_axb(df_a, df_b, cenario_a_title, cenario_b_title, cargo_f
     
     if current_section is None or current_section == "sub_radar_title":
         st.markdown("<div id='toc-radar'></div>", unsafe_allow_html=True)
-        st.subheader(
-            i18n.t("sub_radar_title"),
-            help=i18n.t("sub_radar_help")
-        )
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(
+                i18n.t("sub_radar_title"),
+                help=i18n.t("sub_radar_help")
+            )
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("sub_radar_help"))
         interaction_ui.render_like_button("2.2 Similaridade Geral (Radar)", "2_2")
         
         if not cargo_foco_a:
@@ -673,10 +688,15 @@ def render_comparativo_axb(df_a, df_b, cenario_a_title, cenario_b_title, cargo_f
     
     if current_section is None or current_section == "sub_network_comp_title":
         st.markdown("<div id='toc-network'></div>", unsafe_allow_html=True)
-        st.subheader(
-            i18n.t("sub_network_comp_title"),
-            help=i18n.t("sub_network_comp_help")
-        )
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(
+                i18n.t("sub_network_comp_title"),
+                help=i18n.t("sub_network_comp_help")
+            )
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_comp_net"))
         if is_mobile:
             st.info(i18n.t("mobile_network"), icon="ℹ️")
         
@@ -862,10 +882,15 @@ def render_comparativo_axb(df_a, df_b, cenario_a_title, cenario_b_title, cargo_f
 
     if current_section is None or current_section == "sub_tree_comp_title":
         st.markdown("<div id='toc-tree'></div>", unsafe_allow_html=True)
-        st.subheader(
-            i18n.t("sub_tree_comp_title"),
-            help=i18n.t("sub_tree_comp_help")
-        )
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(
+                i18n.t("sub_tree_comp_title"),
+                help=i18n.t("sub_tree_comp_help")
+            )
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover")):
+                st.info(i18n.t("tut_sec_comp_dendro"))
         
         if is_mobile:
             st.info(i18n.t("mobile_basic"), icon="ℹ️")
@@ -918,8 +943,8 @@ def render_comparativo_axb(df_a, df_b, cenario_a_title, cenario_b_title, cargo_f
                 destaques_a_disp = [c for c in destaques_completos if c in gower_a_dendro.columns] or None
                 destaques_b_disp = [c for c in destaques_b if c in gower_b_dendro.columns] or None
                 
-            fig_dendro_a = visualizations.plot_dendrogram(gower_a_disp, f"{i18n.t('tree_graph_base')} ({cenario_a_title})", cargos_destaque=destaques_a_disp, linkage_method=selected_linkage_dendro, is_mobile=is_mobile)
-            fig_dendro_b = visualizations.plot_dendrogram(gower_b_disp, f"{i18n.t('tree_graph_target')} ({cenario_b_title})", cargos_destaque=destaques_b_disp, linkage_method=selected_linkage_dendro, is_mobile=is_mobile)
+            fig_dendro_a = visualizations.plot_dendrogram(gower_a_disp, f"{i18n.t('tree_graph_base')}<br><span style='font-size: 14px;'>({cenario_a_title})</span>", cargos_destaque=destaques_a_disp, linkage_method=selected_linkage_dendro, is_mobile=is_mobile)
+            fig_dendro_b = visualizations.plot_dendrogram(gower_b_disp, f"{i18n.t('tree_graph_target')}<br><span style='font-size: 14px;'>({cenario_b_title})</span>", cargos_destaque=destaques_b_disp, linkage_method=selected_linkage_dendro, is_mobile=is_mobile)
             
             col_dendro1, col_dendro2 = st.columns(2)
             with col_dendro1:

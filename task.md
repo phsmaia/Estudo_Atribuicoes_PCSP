@@ -1,1 +1,2 @@
-
+- [x] Remover "Decreto de 1967" da lista de `opcoes_cenarios` e tratar globalmente como toggle (adição).
+- [x] Aplicar lógica de remoção ativa de Atribuições Comuns (`condensar_dataframe`) caso a opção esteja desligada.

@@ -23,13 +23,13 @@ def render_like_button(section_name: str, key_suffix: str = ""):
     has_liked = db.query(Interaction).filter_by(section_name=section_name, user_hash=user_hash).first()
     likes_count = db.query(Interaction).filter_by(section_name=section_name).count()
     
-    col_spacer, col_btn, col_text = st.columns([75, 12, 13])
+    col_spacer, col_btn, col_text = st.columns([86, 6, 8])
     
     with col_text:
-        lbl_likes = i18n.t("total_likes", default="Total de Curtidas")
+        lbl_likes = i18n.t("total_likes", default="Útil para")
         st.markdown(f"""
             <div style='display: flex; align-items: center; height: 100%; min-height: 40px; font-size: 0.85rem; color: var(--text-color); opacity: 0.8;'>
-                {lbl_likes}:&nbsp;<b style='color: #4da6ff; font-size: 1rem;'>{likes_count}</b>
+                {lbl_likes}&nbsp;<b style='color: #4da6ff; font-size: 1rem;'>{likes_count}</b>
             </div>
         """, unsafe_allow_html=True)
         
@@ -126,13 +126,18 @@ def modal_comentarios(global_topic: str):
     st.warning(i18n.t("disclaimer_comments"), icon="⚠️")
     
     st.markdown("""
-        <style>
-        /* Distribui o espaço das abas de forma igualitária e centralizada */
-        div[data-testid="stTabs"] button[data-baseweb="tab"] {
-            flex: 1;
-            justify-content: center;
-        }
-        </style>
+<style>
+/* Distribui o espaço das abas de forma igualitária e centralizada */
+div[data-testid="stTabs"] button[data-baseweb="tab"] {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+}
+/* Caixa do Input text centralizada e com padding maior */
+div[data-testid="stChatInput"] {
+    padding-bottom: 20px;
+}
+</style>
     """, unsafe_allow_html=True)
     
     tabs = st.tabs(["📖 Ler Comentários", "✏️ Escrever Comentário"])
@@ -216,16 +221,17 @@ def render_floating_comments(global_topic: str):
     # Usamos uma classe específica para ocultar o container pai inteiro
     st.markdown("""
         <div id='ghost_btn_container_wrapper' style='display:none;'></div>
-        <style>
-        /* Oculta o container do markdown */
-        div[data-testid="stVerticalBlock"] > div.element-container:has(#ghost_btn_container_wrapper) {
-            display: none !important;
-        }
-        /* Oculta o botão fantasma (que é o próximo elemento imediatamente abaixo do markdown) */
-        div[data-testid="stVerticalBlock"] > div.element-container:has(#ghost_btn_container_wrapper) + div.element-container {
-            display: none !important;
-        }
-        </style>
+<style>
+/* Oculta o container do markdown */
+div[data-testid="stVerticalBlock"] > div.element-container:has(#ghost_btn_container_wrapper) {
+    display: none !important;
+}
+
+/* Encontra o container principal do botão Ghost (que tem key='ghost_comments_btn') e o oculta completamente */
+div[data-testid="stButton"] button[kind="secondary"]:has(p:contains("👻_GHOST_BTN")) {
+    display: none !important;
+}
+</style>
     """, unsafe_allow_html=True)
     
     btn_ghost = st.button("open_hidden_modal", key="btn_open_comments")

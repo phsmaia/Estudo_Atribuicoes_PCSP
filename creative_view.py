@@ -64,27 +64,25 @@ def ensure_assets_copied():
 
 def render_creative_view(mapa_cenarios, cenario_sel, current_section):
     ensure_assets_copied()
-    st.markdown("<div id='toc-creative-mode'></div>", unsafe_allow_html=True)
-    st.markdown("## " + i18n.t("m5_intro_title", default="🎨 5. Creative / Interactive Mode"))
-    st.markdown(i18n.t("m5_intro_desc", default="Bem-vindo ao laboratório criativo! Aqui exploramos os dados de formas menos convencionais e mais divertidas."))
-    
-    header_html = f"""
-<div style='display: flex; gap: 5px; flex-wrap: wrap; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);'>
-<div class='status-badge'>{i18n.t('badge_scenario', default='Cenário:')} <strong>{i18n.t(cenario_sel)}</strong></div>
-</div>
-"""
-    st.markdown(header_html, unsafe_allow_html=True)
-
     
     df_cenario = mapa_cenarios[cenario_sel]
     
     if current_section == "m5_sub_tree_title":
+        st.markdown("<div id='toc-creative-mode'></div>", unsafe_allow_html=True)
+        st.markdown("## " + i18n.t("m5_intro_title", default="🎨 5. Creative / Interactive Mode"))
+        st.markdown(i18n.t("m5_intro_desc", default="Bem-vindo ao laboratório criativo! Aqui exploramos os dados de formas menos convencionais e mais divertidas."))
         render_taxonomic_tree(df_cenario)
     elif current_section == "m5_sub_akinator_title":
         render_akinator_game(df_cenario)
 
 def render_taxonomic_tree(df_cenario):
-    st.subheader(i18n.t("m5_tree_title", default="🌳 Árvore Taxonômica das Carreiras"))
+    st.markdown("<div id='toc-tree'></div>", unsafe_allow_html=True)
+    col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+    with col_sub:
+        st.subheader(i18n.t("m5_tree_title", default="🌳 Árvore Taxonômica das Carreiras"), help=i18n.t("m5_tree_desc"))
+    with col_tut:
+        with st.popover(i18n.t("tutorial_popover", default="Tutorial")):
+            st.info(i18n.t("m5_tree_desc"))
     st.markdown(i18n.t("m5_tree_desc", default="Aqui visualizamos as carreiras da PCSP como se fossem espécies biológicas. Cargos na base da árvore compartilham as atribuições mais fundamentais e universais da polícia, sendo considerados mais 'basais' (primitivos). Conforme a árvore se ramifica, encontramos as funções mais especializadas e exclusivas, que formam os ramos mais 'derivados' e complexos."))
     
     if df_cenario is None or df_cenario.empty:
@@ -430,75 +428,89 @@ def reset_game():
         st.session_state.akinator_internal_mascot = random.choices(choices, weights=weights)[0]
 
 def render_akinator_game(df_cenario):
-    with st.expander(i18n.t("akinator_cheat_title", default="📖 Cola do Oráculo: Consulte as atribuições para saber o que responder"), expanded=False):
-        st.markdown(i18n.t("akinator_cheat_desc", default="Se você não conhece os cargos a fundo, escolha um cargo abaixo para ver a lista exata de atribuições ativas dele. Você pode usar isso como 'cola' para responder às perguntas do oráculo sem errar!"))
-        
-        df_cola = df_cenario.copy()
-        if 'Carreira' in df_cola.columns:
-            df_cola = df_cola.set_index('Carreira')
-            
-        cargos_cola = sorted(df_cola.index.tolist())
-        cargo_cola_sel = st.selectbox(i18n.t("akinator_cheat_select", default="Selecione um cargo para inspecionar:"), cargos_cola, format_func=i18n.traduzir_cargo, key="cola_cargo_sel")
-        
-        if cargo_cola_sel:
-            row = df_cola.loc[cargo_cola_sel]
-            atribs = row[row > 0].index.tolist()
-            st.success(i18n.t("akinator_cheat_success", default="O cargo **{cargo}** possui **{count}** atribuições ativas neste cenário:").format(cargo=i18n.traduzir_cargo(cargo_cola_sel), count=len(atribs)))
-            for a in atribs:
-                st.markdown(f"- {i18n.traduzir_atribuicao(a)}")
-
-    st.subheader(i18n.t("akinator_title", default="🔮 O Oráculo da PCSP (Adivinhador de Cargos)"))
-    st.markdown(i18n.t("akinator_desc", default="Pense em um cargo da Polícia Civil. Eu vou tentar adivinhar qual é através das atribuições dele!"))
+    col_img, col_ui = st.columns([1, 4])
     
-    st.markdown("""
-    <style>
-    @media (max-width: 768px) {
-        [data-testid="stImage"] img {
-            max-height: 25vh !important;
-            object-fit: contain !important;
-            margin: 0 auto !important;
-            display: block !important;
-        }
+    with col_ui:
+        st.markdown("<div id='toc-creative-mode'></div>", unsafe_allow_html=True)
+        st.markdown("## " + i18n.t("m5_intro_title", default="🎨 5. Creative / Interactive Mode"))
+        st.markdown(i18n.t("m5_intro_desc", default="Bem-vindo ao laboratório criativo! Aqui exploramos os dados de formas menos convencionais e mais divertidas."))
+        
+        st.markdown("<div id='toc-akinator'></div>", unsafe_allow_html=True)
+        col_sub, col_tut = st.columns([85, 15], vertical_alignment="center")
+        with col_sub:
+            st.subheader(i18n.t("akinator_title", default="🔮 O Oráculo da PCSP (Adivinhador de Cargos)"), help=i18n.t("akinator_desc"))
+        with col_tut:
+            with st.popover(i18n.t("tutorial_popover", default="Tutorial")):
+                st.info(i18n.t("akinator_desc", default="Pense em um cargo da Polícia Civil. Eu vou tentar adivinhar qual é através das atribuições dele!"))
+        st.markdown(i18n.t("akinator_desc", default="Pense em um cargo da Polícia Civil. Eu vou tentar adivinhar qual é através das atribuições dele!"))
+        
+        st.markdown("""
+<style>
+    [data-testid="stImage"] img {
+        max-height: 25vh !important;
+        object-fit: contain !important;
+        margin: 0 auto !important;
+        display: block !important;
     }
-    </style>
-    """, unsafe_allow_html=True)
-    
-    if 'akinator_state' not in st.session_state:
-        st.session_state.mascote_sel_key = "mascot_aleatorio"
-        reset_game()
+}
+/* Mascot CSS moved to JS injection */
+</style>
+        """, unsafe_allow_html=True)
         
-    col_config1, col_config2 = st.columns(2)
-    with col_config1:
-        tipo_jogo = st.radio(i18n.t("akinator_how_to_play", default="Como quer jogar?"), [i18n.t("akinator_mode_q", default="Perguntas (Modo Divertido)"), i18n.t("akinator_mode_m", default="Seleção Rápida (Multiselect)")], horizontal=True, on_change=reset_game)
-        dificuldade = st.radio(
-            i18n.t("akinator_difficulty", default="Dificuldade (Nível de Detalhe):"), 
-            ["akinator_diff_easy", "akinator_diff_hard"], 
-            format_func=lambda x: i18n.t(x, default="🟢 Fácil (Atribuições Aglutinadas)" if "easy" in x else "🔴 Difícil (Matriz Completa/Granular)"),
-            horizontal=True, 
-            on_change=reset_game
-        )
-    with col_config2:
-        visible_mascots = ["🐶 Inspetor Cão", "🦫 Investigadora Capi", "🦉 Oráculo (Coruja)"]
-        radio_options = ["mascot_aleatorio"] + visible_mascots
-        
-        def format_mascot_option(x):
-            if x == "mascot_aleatorio":
-                return i18n.t_lang("mascot_aleatorio", st.session_state.get('language', 'PT-BR'))
-            key_map = {
-                "🐶 Inspetor Cão": "mascot_cao",
-                "🦫 Investigadora Capi": "mascot_capivara",
-                "🦉 Oráculo (Coruja)": "mascot_coruja"
-            }
-            return i18n.t_lang(key_map.get(x, x), st.session_state.get('language', 'PT-BR'))
+        if 'akinator_state' not in st.session_state:
+            st.session_state.mascote_sel_key = "mascot_aleatorio"
+            reset_game()
             
-        mascote_sel = st.radio(
-            i18n.t("akinator_choose_mascot", default="Escolha seu Mascote:"), 
-            radio_options, 
-            format_func=format_mascot_option, 
-            horizontal=True, 
-            key="mascote_sel_key"
-        )
-        
+        with st.expander(i18n.t("akinator_config_title", default="⚙️ Configurações (Como jogar e Dificuldade)"), expanded=False):
+            col_config1, col_config2 = st.columns(2)
+            with col_config1:
+                tipo_jogo = st.radio(i18n.t("akinator_how_to_play", default="Como quer jogar?"), [i18n.t("akinator_mode_q", default="Perguntas (Modo Divertido)"), i18n.t("akinator_mode_m", default="Seleção Rápida (Multiselect)")], horizontal=True, on_change=reset_game)
+                dificuldade = st.radio(
+                    i18n.t("akinator_difficulty", default="Dificuldade (Nível de Detalhe):"), 
+                    ["akinator_diff_easy", "akinator_diff_hard"], 
+                    format_func=lambda x: i18n.t(x, default="🟢 Fácil (Atribuições Aglutinadas)" if "easy" in x else "🔴 Difícil (Matriz Completa/Granular)"),
+                    horizontal=True, 
+                    on_change=reset_game
+                )
+            with col_config2:
+                visible_mascots = ["🐶 Inspetor Cão", "🦫 Investigadora Capi", "🦉 Oráculo (Coruja)"]
+                radio_options = ["mascot_aleatorio"] + visible_mascots
+                
+                def format_mascot_option(x):
+                    if x == "mascot_aleatorio":
+                        return i18n.t_lang("mascot_aleatorio", st.session_state.get('language', 'PT-BR'))
+                    key_map = {
+                        "🐶 Inspetor Cão": "mascot_cao",
+                        "🦫 Investigadora Capi": "mascot_capivara",
+                        "🦉 Oráculo (Coruja)": "mascot_coruja"
+                    }
+                    return i18n.t_lang(key_map.get(x, x), st.session_state.get('language', 'PT-BR'))
+                    
+                mascote_sel = st.radio(
+                    i18n.t("akinator_choose_mascot", default="Escolha seu Mascote:"), 
+                    radio_options, 
+                    format_func=format_mascot_option, 
+                    horizontal=True, 
+                    key="mascote_sel_key"
+                )
+                
+        with st.expander(i18n.t("akinator_cheat_title", default="📖 Cola do Oráculo: Consulte as atribuições para saber o que responder"), expanded=False):
+            st.markdown(i18n.t("akinator_cheat_desc", default="Se você não conhece os cargos a fundo, escolha um cargo abaixo para ver a lista exata de atribuições ativas dele. Você pode usar isso como 'cola' para responder às perguntas do oráculo sem errar!"))
+            
+            df_cola = df_cenario.copy()
+            if 'Carreira' in df_cola.columns:
+                df_cola = df_cola.set_index('Carreira')
+                
+            cargos_cola = sorted(df_cola.index.tolist())
+            cargo_cola_sel = st.selectbox(i18n.t("akinator_cheat_select", default="Selecione um cargo para inspecionar:"), cargos_cola, format_func=i18n.traduzir_cargo, key="cola_cargo_sel")
+            
+            if cargo_cola_sel:
+                row = df_cola.loc[cargo_cola_sel]
+                atribs = row[row > 0].index.tolist()
+                st.success(i18n.t("akinator_cheat_success", default="O cargo **{cargo}** possui **{count}** atribuições ativas neste cenário:").format(cargo=i18n.traduzir_cargo(cargo_cola_sel), count=len(atribs)))
+                for a in atribs:
+                    st.markdown(f"- {i18n.traduzir_atribuicao(a)}")
+
     if mascote_sel == "mascot_aleatorio":
         mascote_real = st.session_state.get("akinator_internal_mascot", "🐶 Inspetor Cão")
     else:
@@ -518,11 +530,6 @@ def render_akinator_game(df_cenario):
     
     if st.session_state.akinator_remaining is None:
         st.session_state.akinator_remaining = df_bin.copy()
-    
-    # Exibe a imagem do Mascote no canto
-    mascot_img_path = os.path.join(ASSETS_DIR, MASCOTS[mascote_real]["file"])
-    
-    st.markdown("---")
     
     if tipo_jogo == i18n.t("akinator_mode_m", default="Seleção Rápida (Multiselect)"):
         todas_atrib = df_bin.columns.tolist()
@@ -581,10 +588,55 @@ def render_akinator_game(df_cenario):
                 
         mascot_img_path_dynamic = os.path.join(ASSETS_DIR, MASCOTS[mascote_real].get(mascot_file_key, MASCOTS[mascote_real]["file"]))
         
-        col_img, col_ui = st.columns([1, 4])
         with col_img:
             if os.path.exists(mascot_img_path_dynamic):
-                st.image(Image.open(mascot_img_path_dynamic), use_container_width=True)
+                import base64
+                with open(mascot_img_path_dynamic, "rb") as image_file:
+                    encoded_string = base64.b64encode(image_file.read()).decode()
+                st.markdown(f'<div id="mascot-source-container-1" style="display:none;"><img src="data:image/png;base64,{encoded_string}" style="width: 100%; border-radius: 8px;"></div>', unsafe_allow_html=True)
+                
+                import streamlit.components.v1 as components
+                components.html("""
+                <script>
+                const setupMascotSync = () => {
+                    const parentWin = window.parent;
+                    const doc = parentWin.document;
+                    
+                    if (!parentWin.mascotInterval) {
+                        parentWin.mascotInterval = parentWin.setInterval(() => {
+                            const source1 = doc.getElementById('mascot-source-container-1');
+                            const source2 = doc.getElementById('mascot-source-container-2');
+                            let floating = doc.getElementById('mascot-floating-fixed');
+                            
+                            if (source1 || source2) {
+                                const activeSource = source1 || source2;
+                                if (!floating) {
+                                    floating = doc.createElement('div');
+                                    floating.id = 'mascot-floating-fixed';
+                                    floating.style.position = 'fixed';
+                                    floating.style.bottom = '80px';
+                                    floating.style.left = 'max(1.5rem, 2vw)';
+                                    floating.style.width = '16vw';
+                                    floating.style.minWidth = '150px';
+                                    floating.style.maxWidth = '250px';
+                                    floating.style.zIndex = '9999';
+                                    floating.style.pointerEvents = 'none';
+                                    doc.body.appendChild(floating);
+                                }
+                                floating.innerHTML = activeSource.innerHTML;
+                            } else {
+                                if (floating) {
+                                    floating.remove();
+                                }
+                            }
+                        }, 500);
+                    }
+                };
+                setupMascotSync();
+                </script>
+                """, height=0)
+                
+
                 
         with col_ui:
             # Renderiza o select
@@ -637,10 +689,55 @@ def render_akinator_game(df_cenario):
             
         mascot_img_path_dynamic = os.path.join(ASSETS_DIR, MASCOTS[mascote_real][mascot_file_key])
             
-        col_img, col_ui = st.columns([1, 4])
         with col_img:
             if os.path.exists(mascot_img_path_dynamic):
-                st.image(Image.open(mascot_img_path_dynamic), use_container_width=True)
+                import base64
+                with open(mascot_img_path_dynamic, "rb") as image_file:
+                    encoded_string = base64.b64encode(image_file.read()).decode()
+                st.markdown(f'<div id="mascot-source-container-2" style="display:none;"><img src="data:image/png;base64,{encoded_string}" style="width: 100%; border-radius: 8px;"></div>', unsafe_allow_html=True)
+                
+                import streamlit.components.v1 as components
+                components.html("""
+                <script>
+                const setupMascotSync2 = () => {
+                    const parentWin = window.parent;
+                    const doc = parentWin.document;
+                    
+                    if (!parentWin.mascotInterval) {
+                        parentWin.mascotInterval = parentWin.setInterval(() => {
+                            const source1 = doc.getElementById('mascot-source-container-1');
+                            const source2 = doc.getElementById('mascot-source-container-2');
+                            let floating = doc.getElementById('mascot-floating-fixed');
+                            
+                            if (source1 || source2) {
+                                const activeSource = source1 || source2;
+                                if (!floating) {
+                                    floating = doc.createElement('div');
+                                    floating.id = 'mascot-floating-fixed';
+                                    floating.style.position = 'fixed';
+                                    floating.style.bottom = '80px';
+                                    floating.style.left = 'max(1.5rem, 2vw)';
+                                    floating.style.width = '16vw';
+                                    floating.style.minWidth = '150px';
+                                    floating.style.maxWidth = '250px';
+                                    floating.style.zIndex = '9999';
+                                    floating.style.pointerEvents = 'none';
+                                    doc.body.appendChild(floating);
+                                }
+                                floating.innerHTML = activeSource.innerHTML;
+                            } else {
+                                if (floating) {
+                                    floating.remove();
+                                }
+                            }
+                        }, 500);
+                    }
+                };
+                setupMascotSync2();
+                </script>
+                """, height=0)
+                
+
                 
         with col_ui:
             if mascote_real == "🐺 Lobo-Guará Secreto":
