@@ -4,6 +4,15 @@ Todas as modificações notáveis neste projeto serão documentadas neste arquiv
 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [Unreleased] - 2026-08-18
+
+### Added
+- **Dockerização Completa**: Implementação de infraestrutura Docker (`Dockerfile` e `docker-compose.yml`) com o intuito de portabilizar a aplicação para deploy unificado, resolvendo inconsistências de ambiente entre Windows e o VPS Hostgator.
+- **Protocolos de Commit e VPS**: Atualização dos artefatos de agentes (`commit-protocol.md` e `vps_management/SKILL.md`) adotando fluxos focados em containers para pré-commits, testes e deploy de produção, desligando de vez serviços antigos via `systemctl`.
+
+### Fixed
+- **Isolamento de Escopo do Akinator (Visão 7.2)**: Resolução do problema de persistência global da imagem flutuante ("Fantasma do Akinator") ao transitar por outras seções da aplicação. O Javascript embutido foi refatorado adotando um padrão de "agente residente" em `window.parent` que rastreia os componentes ativos do Streamlit a cada 500ms e destrói o mascote automaticamente assim que a página 7.2 é desmontada.
+
 ## [Unreleased] - 2026-08-17
 
 ### Added
