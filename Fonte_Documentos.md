@@ -22,7 +22,7 @@
 
 - [Edital Agente Policial 2017](https://documento.vunesp.com.br/documento/stream/NDMzNDIz) Acessado em: 15/08/2026
 
-- **<span style="color: red;"> Edital Carcereiro Policial 2013 - NÃO ENCONTRADO Caso tenha o link ou documento do último edital do concurso de Carcereiro, favor enviar através do botão CONTATO. </span>**
+- **<span style="color: red;"> Edital Carcereiro Policial 2013 - EDITAL SEM ATRIBUIÇÕES. Caso tenha documento com as atribuições, favor entrar em contato. </span>**
 
 - [Edital Fotógrafo Técnico Pericial 2013](https://www.acheconcursos.com.br/edital-concurso/edital-concurso-policia-civil-sp-fotografoRL) Acessado em: 15/08/2026
 
@@ -38,8 +38,8 @@
 
 - [Projeto Reestruturação PC SP 2024](http://adpesp.org.br/wp-content/uploads/2024/09/APRESENTACAO.LOP_.18.09.entidades-1.pdf) Acessado em: 16/08/2026
 
-- []()
+- [Primeira Reunião Reestruturação PC SP 2025](https://www.sincopol.com.br/post/governo-de-sp-frustra-policiais-civis-com-esbo%C3%A7o-da-lei-org%C3%A2nica) Acessado em: 16/08/2026
+
+- Segunda Reunião Reestruturação PC SP 2025: <br> Somente uma tabela com a transformação dos cargos apresentada na reunião <br> ![Tabela de Cargos da Segunda Reunião Reestruturação PC SP 2025](assets\Apresentacao_2a_reuniao_reestruturacaoPCSP.jpeg)
 
 - [Tabela de Funções de Extranumerários Mensalistas - Atribuições 1967](https://www.al.sp.gov.br/repositorio/legislacao/decreto/1967/decreto-47788-02.03.1967.html) Acessado em: 16/08/2026
-
-- 

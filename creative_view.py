@@ -14,7 +14,7 @@ import shutil
 from PIL import Image
 
 # Configuração de Assets (Mascotes)
-PROJECT_DIR = r"c:\Users\maiap\OneDrive\Desktop\Desenvolvimento\Estudo_Atribuicoes_PCSP"
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(PROJECT_DIR, "assets")
 if not os.path.exists(ASSETS_DIR):
     os.makedirs(ASSETS_DIR)
@@ -97,36 +97,159 @@ def render_taxonomic_tree(df_cenario):
     # Binariza a matriz
     df_bin = (df_clean > 0).astype(int)
     
-    # Calcula a frequência de cada atribuição (quão "basal" ela é)
+    # Calcula a frequência de cada atribuição para uso de plotagem
     freq_atrib = df_bin.sum(axis=0)
+
+    # --- LÓGICA CLADÍSTICA (Biopython) ---
+    from Bio.Phylo.TreeConstruction import DistanceMatrix, DistanceTreeConstructor
+    from Bio import Phylo
+    from scipy.spatial.distance import pdist, squareform
+    import networkx as nx
+
+    # Remove a pseudo-carreira injetada globalmente pela opção de Atribuições Comuns no app.py (se houver)
+    df_tree = df_bin.copy()
+    pseudo_row_name = "Policial Civil (todos os cargos)"
+    if pseudo_row_name in df_tree.index:
+        df_tree = df_tree.drop(index=pseudo_row_name)
+        
+    # Matriz de distância Jaccard (apropriada para presenças e ausências filogenéticas)
+    dist_array = pdist(df_tree, metric='jaccard')
+    dist_sq = squareform(dist_array)
     
-    # Calcula um "score de basalidade" para cada cargo
-    # Cargos com muitas atribuições basais e poucas derivadas ficam na base.
+    # Formatar para o Biopython DistanceMatrix (lista de listas triangular inferior)
+    names = df_tree.index.tolist()
+    matrix = []
+    for i in range(len(names)):
+        matrix.append(dist_sq[i, :i+1].tolist())
+        
+    dm = DistanceMatrix(names, matrix)
+    
+    # Adicionar o seletor de algoritmo se não estiver no mobile
+    is_mobile = st.session_state.get("is_mobile", False)
+    # Toggles removidos: O conceito de cladograma exige que a evolução (Autapomorfias) 
+    # seja sempre destrinchada e as atribuições sempre mostradas nos hovers/expansores.
+    mostrar_atribuicoes = True
+    separar_evolucao = True
+    opcoes_estilos = [
+        "🌿 Tradicional (Científico)",
+        i18n.t("m5_clade_fish", default="🐟 Espinha de Peixe (Angular)"),
+        i18n.t("m5_clade_circular", default="🌀 Circular (Radial)")
+    ]
+    estilo_cladograma = st.radio(i18n.t("m5_clade_style", default="Estilo Visual:"), opcoes_estilos, horizontal=True)
+    
+    opcoes_algoritmo = ["UPGMA (Cladograma Alinhado)", "Neighbor-Joining (Árvore Evolutiva Biológica)"]
+    algoritmo_selecionado = st.radio("Algoritmo de Agrupamento:", opcoes_algoritmo, horizontal=True)
+    
+    # Gerar a árvore com UPGMA ou NJ
+    constructor = DistanceTreeConstructor()
+    if algoritmo_selecionado == "Neighbor-Joining (Árvore Evolutiva Biológica)":
+        tree = constructor.nj(dm)
+    else:
+        tree = constructor.upgma(dm)
+    
+    # Calcular a profundidade filogenética
+    depths = tree.depths()
+    terminals = tree.get_terminals()
+    max_d = max(depths.values()) if depths else 1
+    
+    # Calcular profundidade topológica (para organizar a árvore perfeitamente sem nós "quebrados")
+    topo_depths = {clade: len(tree.get_path(clade)) for clade in tree.find_clades()}
+    max_topo = max(topo_depths.values()) if topo_depths else 1
+    
     cargo_scores = {}
-    for cargo in df_bin.index:
-        atribs = df_bin.columns[df_bin.loc[cargo] > 0]
-        if len(atribs) == 0:
-            cargo_scores[cargo] = 0
-            continue
-        # Média da frequência das atribuições do cargo
-        score = sum(freq_atrib[a] for a in atribs) / len(atribs)
-        cargo_scores[cargo] = score
+    leaf_y_pos = {}
+    
+    # Ordenar terminais pela travessia nativa da árvore biológica (impede cruzamento de galhos)
+    terminals_sorted = tree.get_terminals()
+    
+    for i, leaf in enumerate(terminals_sorted):
+        cargo = leaf.name
+        # O Score de basalidade agora é obtido pela menor quantidade de divisões (nós) desde a raiz
+        cargo_scores[cargo] = ((max_topo - topo_depths[leaf]) / max(1, max_topo)) * 10.0
+        leaf_y_pos[leaf] = float(i) / max(1, len(terminals_sorted) - 1)
         
     sorted_cargos = sorted(cargo_scores.keys(), key=lambda x: cargo_scores[x], reverse=True)
     
-    mostrar_atribuicoes = st.toggle(i18n.t("m5_show_attr", default="👁️ Mostrar Atribuições na Árvore"), value=False)
-    estilo_cladograma = st.radio(i18n.t("m5_clade_style", default="Estilo Visual:"), [i18n.t("m5_clade_elegant", default="🌿 Elegante (Clássico)"), i18n.t("m5_clade_fish", default="🐟 Espinha de Peixe (Angular)")], horizontal=True)
+    # Construir Grafo Direcionado nativo para o Plotly a partir do Biopython
+    G = nx.DiGraph()
+    root_name = i18n.t("m5_common_ancestor", default="Policial Civil")
     
-    if mostrar_atribuicoes:
-        separar_evolucao = st.checkbox(i18n.t("m5_split_evol", default="🧬 Separar evolução (Atribuições Exclusivas vs Herdadas)"), value=False)
-    else:
-        separar_evolucao = False
+    def calc_pos(clade):
+        if clade in leaf_y_pos:
+            y = leaf_y_pos[clade]
+        else:
+            children_y = [calc_pos(c) for c in clade.clades]
+            y = sum(children_y) / len(children_y) if children_y else 0
+            
+        # Usa a profundidade topológica para X
+        # O raiz do UPGMA ficará em x=0. As folhas ficarão em x=1.
+        x_depth = topo_depths[clade] / max_topo
+        
+        name = clade.name if clade.name else f"b_{id(clade)}"
+        
+        # X passa a ser a distância cumulativa (depth topológico ou real) e Y o espalhamento (leaf_y_pos)
+        # Invertemos para cladograma horizontal (Raiz na esquerda, folhas na direita)
+        G.add_node(name, pos=(x_depth, y), is_terminal=clade.is_terminal(), original_name=clade.name, score=cargo_scores.get(clade.name, 0) if clade.is_terminal() else 0)
+        
+        for child in clade.clades:
+            child_name = child.name if child.name else f"b_{id(child)}"
+            # O tamanho do galho para repulsão/desenho (no NJ é real, no UPGMA é flat)
+            branch_len = child.branch_length if child.branch_length is not None else 1.0
+            G.add_edge(name, child_name, length=branch_len)
+            
+        return y
+        
+    # Criar raiz basal a partir da própria árvore gerada (sem nós artificiais injetados)
+    calc_pos(tree.root)
     
-    is_mobile = st.session_state.get("is_mobile", False)
+    # Ordenar os cargos explicitamente por basalidade (opcional para listagem mobile)
+    sorted_cargos = sorted(cargo_scores.keys(), key=lambda x: cargo_scores[x], reverse=True)
     
-    fig = _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mostrar_atribuicoes, separar_evolucao, estilo_cladograma)
+    # Distanciamento Y inteligente: Repulsão para evitar sobreposição de nós próximos
+    # Pegamos todas as posições atuais
+    nodes = list(G.nodes())
+    y_vals = [G.nodes[n]['pos'][1] for n in nodes]
+    # Nós precisamos separar quem está muito perto.
+    min_dist = 0.05
+    for _ in range(10): # 10 iterações de relaxamento
+        for i in range(len(nodes)):
+            for j in range(i+1, len(nodes)):
+                n1, n2 = nodes[i], nodes[j]
+                x1, y1 = G.nodes[n1]['pos']
+                x2, y2 = G.nodes[n2]['pos']
+                # Se eles estão no mesmo X (ou próximos) e Y muito perto, empurrar Y
+                if abs(x1 - x2) < 0.2 and abs(y1 - y2) < min_dist:
+                    push = (min_dist - abs(y1 - y2)) / 2.0
+                    if y1 > y2:
+                        G.nodes[n1]['pos'] = (x1, y1 + push)
+                        G.nodes[n2]['pos'] = (x2, y2 - push)
+                    else:
+                        G.nodes[n1]['pos'] = (x1, y1 - push)
+                        G.nodes[n2]['pos'] = (x2, y2 + push)
+
+    # Identificar se há textos muito longos para esticar a tela
+    max_label_len = max([len(n) for n in sorted_cargos]) if sorted_cargos else 20
+    
+    fig = _plot_vertical_cladogram(G, root_name, sorted_cargos, cargo_scores, df_bin, freq_atrib, mostrar_atribuicoes, separar_evolucao, estilo_cladograma, max_topo, max_label_len)
         
     st.plotly_chart(fig, use_container_width=True)
+    
+    if is_mobile:
+        st.markdown("### " + i18n.t("m5_basal_table_title", default="Tabela de Basalidade"))
+        import pandas as pd
+        df_basal = pd.DataFrame([
+            {i18n.t("m5_basal_rank", default="Rank"): i + 1, "Carreira": i18n.traduzir_cargo(cargo), i18n.t("m5_basal_score", default="Score Basal"): round(cargo_scores[cargo], 2)}
+            for i, cargo in enumerate(sorted_cargos)
+        ])
+        st.dataframe(df_basal, use_container_width=True, hide_index=True)
+    else:
+        with st.expander("📊 " + i18n.t("m5_basal_table_title", default="Tabela de Basalidade")):
+            import pandas as pd
+            df_basal = pd.DataFrame([
+                {i18n.t("m5_basal_rank", default="Rank"): i + 1, "Carreira": i18n.traduzir_cargo(cargo), i18n.t("m5_basal_score", default="Score Basal"): round(cargo_scores[cargo], 2)}
+                for i, cargo in enumerate(sorted_cargos)
+            ])
+            st.dataframe(df_basal, use_container_width=True, hide_index=True)
     
     # Em mobile, o hover é ruim. Exibimos na tela via lista.
     if is_mobile and mostrar_atribuicoes:
@@ -188,198 +311,250 @@ def render_taxonomic_tree(df_cenario):
         
     if 'interaction_ui' in globals(): interaction_ui.render_like_button("5.1 Arvore Taxonomica", "5_1")
 
-def _plot_vertical_cladogram(sorted_cargos, cargo_scores, df_bin, freq_atrib, mostrar_atribuicoes, separar_evolucao, estilo_cladograma):
+def _plot_vertical_cladogram(G, root_name, sorted_cargos, cargo_scores, df_bin, freq_atrib, mostrar_atribuicoes, separar_evolucao, estilo_cladograma, max_topo, max_label_len=20):
     import networkx as nx
-    G = nx.DiGraph()
+    import plotly.graph_objects as go
+    import plotly.express as px
+    import plotly.colors as pcolors
+    import numpy as np
     
-    # Adicionando um nó raiz implícito em (0.5, 0)
-    root = i18n.t("m5_common_ancestor", default="Policial Civil")
-    G.add_node(root, pos=(0.5, 0))
+    is_elegant = estilo_cladograma == "🌿 Tradicional (Científico)"
+    is_circular = estilo_cladograma == i18n.t("m5_clade_circular", default="🌀 Circular (Radial)")
     
-    max_score = max(cargo_scores.values()) if cargo_scores else 1
-    min_score = min(cargo_scores.values()) if cargo_scores else 0
-    
-    is_elegant = estilo_cladograma == i18n.t("m5_clade_elegant", default="🌿 Elegante (Clássico)")
-    
-    if is_elegant:
-        nodes_x = np.linspace(0.1, 0.9, len(sorted_cargos))
-    else:
-        nodes_x = []
-        for i in range(len(sorted_cargos)):
-            if i % 2 == 0:
-                nodes_x.append(0.15)
-            else:
-                nodes_x.append(0.85)
-    
-    # Criamos a espinha dorsal principal conectando nós em zigue-zague
-    last_node = root
-    last_x, last_y = 0.5, 0
-    
-    for i, cargo in enumerate(sorted_cargos):
-        if max_score > min_score:
-            y = 1 - ((cargo_scores[cargo] - min_score) / (max_score - min_score))
-        else:
-            y = 1
-        y = y * 0.8 + 0.2
-        
-        # Branch node point
-        branch_y = (last_y + y) / 2
-        if is_elegant:
-            branch_x = (last_x + nodes_x[i]) / 2
-        else:
-            branch_x = (last_x * 0.85) + (nodes_x[i] * 0.15) 
-        
-        branch_name = f"b_{i}"
-        
-        G.add_node(branch_name, pos=(branch_x, branch_y))
-        G.add_node(cargo, pos=(nodes_x[i], y))
-        
-        G.add_edge(last_node, branch_name)
-        G.add_edge(branch_name, cargo)
-        
-        last_node = branch_name
-        last_x, last_y = branch_x, branch_y
-
     pos = nx.get_node_attributes(G, 'pos')
+    max_score = max(cargo_scores.values()) if cargo_scores and max(cargo_scores.values()) > 0 else 10
     
-    spine_x = [pos[root][0]]
-    spine_y = [pos[root][1]]
-    branch_edges_x = []
-    branch_edges_y = []
+    def get_leaves(graph, n):
+        leaves = []
+        for desc in nx.descendants(graph, n) | {n}:
+            if graph.nodes[desc].get('is_terminal'):
+                leaves.append(graph.nodes[desc].get('original_name', desc))
+        return leaves
+        
+    def get_shared_traits(leaves):
+        if not leaves: return set()
+        shared = set(df_bin.columns)
+        for leaf in leaves:
+            if leaf in df_bin.index:
+                shared &= set(df_bin.columns[df_bin.loc[leaf] > 0])
+        return shared
     
-    for i, cargo in enumerate(sorted_cargos):
-        b_name = f"b_{i}"
-        spine_x.append(pos[b_name][0])
-        spine_y.append(pos[b_name][1])
+    if is_circular:
+        new_pos = {}
+        # Mapeia as folhas no círculo
+        terminals = [n for n, attr in G.nodes(data=True) if attr.get('is_terminal', False)]
+        n_cargos = len(terminals)
+        angles = np.linspace(0, 2 * np.pi * (n_cargos - 1) / max(1, n_cargos), n_cargos)
+        terminal_angles = {n: angles[i] for i, n in enumerate(terminals)}
         
-        branch_edges_x.extend([pos[b_name][0], pos[cargo][0], None])
-        branch_edges_y.extend([pos[b_name][1], pos[cargo][1], None])
-        
+        def get_angle(node):
+            if node in terminal_angles:
+                return terminal_angles[node]
+            children = list(G.successors(node))
+            if not children: return 0
+            child_angles = [get_angle(c) for c in children]
+            return np.mean(child_angles)
+            
+        for node in G.nodes():
+            # r=0 deve ser a raiz, que está em x=0 na topologia.
+            r = pos[node][0]
+            theta = get_angle(node) + np.pi / 2
+            new_pos[node] = (r * np.cos(theta), r * np.sin(theta))
+            
+        pos = new_pos
+
     fig = go.Figure()
-    # Espinha Dorsal (Curva suave e contínua)
-    fig.add_trace(go.Scatter(x=spine_x, y=spine_y, line=dict(width=2, color='#555', shape='spline', smoothing=1.3), mode='lines', hoverinfo='none', showlegend=False))
-    # Ramos (Linhas retas menores saindo da espinha)
-    fig.add_trace(go.Scatter(x=branch_edges_x, y=branch_edges_y, line=dict(width=1.5, color='#777'), mode='lines', hoverinfo='none', showlegend=False))
+    
+    # Adicionar as arestas (galhos) com espessuras baseadas em sinapomorfias
+    for edge in G.edges():
+        u, v = edge
+        x0, y0 = pos[u]
+        x1, y1 = pos[v]
+        
+        leaves_u = get_leaves(G, u)
+        leaves_v = get_leaves(G, v)
+        
+        shared_u = get_shared_traits(leaves_u)
+        shared_v = get_shared_traits(leaves_v)
+        
+        new_traits = len(shared_v - shared_u)
+        
+        # Espessura base é 1.5, aumenta 0.5 por cada nova atribuição inovada (máx 6)
+        thickness = min(1.5 + (new_traits * 0.5), 6)
+        edge_color = '#666' if new_traits == 0 else '#4d4d4d'
+        
+        if is_elegant and not is_circular:
+            # Traçado ortogonal tipo dendrograma
+            branch_x = [x0, x1, x1]
+            branch_y = [y0, y0, y1]
+        else:
+            branch_x = [x0, x1]
+            branch_y = [y0, y1]
+            
+        fig.add_trace(go.Scatter(x=branch_x, y=branch_y, line=dict(width=thickness, color=edge_color), mode='lines', hoverinfo='none', showlegend=False))
+    
+    # Dummy traces para criar a Legenda Lateral (Caixa explicativa)
+    palette = px.colors.qualitative.Pastel
+    fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers', marker=dict(size=8, color=palette[4], line=dict(width=1.5, color='#333')), name=i18n.t("m5_leg_node", default="Divisão (Ramos mais grossos = Muitas Inovações)")))
+    fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers', marker=dict(size=14, color='rgba(215, 48, 39, 1)', line=dict(width=1.5, color='#333')), name=i18n.t("m5_leg_leaf1", default="Carreira Atual (Especializada/Derivada)")))
+    fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers', marker=dict(size=14, color='rgba(69, 117, 180, 1)', line=dict(width=1.5, color='#333')), name=i18n.t("m5_leg_leaf2", default="Carreira Atual (Generalista/Basal)")))
     
     node_x = []
     node_y = []
     text = []
     colors = []
     labels = []
-    
-    import plotly.express as px
-    palette = px.colors.qualitative.Pastel
+    sizes = []
     
     comuns = set(df_bin.columns[df_bin.sum(axis=0) == len(df_bin)])
-    branch_attrs = {}
-    if separar_evolucao:
-        for i in range(len(sorted_cargos)):
-            cargos_sub = sorted_cargos[i:]
-            if len(cargos_sub) > 0:
-                sub_df = df_bin.loc[cargos_sub]
-                b_attr = set(sub_df.columns[sub_df.sum(axis=0) == len(cargos_sub)])
-            else:
-                b_attr = set()
-            branch_attrs[f"b_{i}"] = b_attr
-            
-    for i, node in enumerate(G.nodes()):
-        is_branch = node.startswith("b_")
-        if is_branch and not separar_evolucao:
-            continue # hide branch nodes if not splitting
-            
-        if is_branch:
-            idx = int(node.split("_")[1])
-            total_here = branch_attrs[node]
-            total_parent = comuns if idx == 0 else branch_attrs[f"b_{idx-1}"]
-            atribs = total_here - total_parent
-            if len(atribs) == 0:
-                continue # hide empty branches
-            score = 0
-            node_trad = f"{i18n.t('m5_branch_node', default='Divisão Evolutiva')} {idx+1}"
-        elif node == root:
-            score = max_score
-            node_trad = root
-            atribs = comuns
-        else:
-            score = cargo_scores.get(node, 0)
-            node_trad = i18n.traduzir_cargo(node)
-            all_attr = set(df_bin.columns[df_bin.loc[node] > 0]) if node in df_bin.index else set()
-            if separar_evolucao:
-                idx = sorted_cargos.index(node)
-                atribs = all_attr - branch_attrs[f"b_{idx}"]
-            else:
-                atribs = all_attr
-                
+    
+    for node, attr in G.nodes(data=True):
+        is_term = attr.get('is_terminal', False)
         x, y = pos[node]
         node_x.append(x)
         node_y.append(y)
         
-        if is_branch:
-            hover_text = f"<b>{node_trad}</b>"
-        else:
-            hover_text = f"<b>{node_trad}</b><br>Score Basal: {score:.2f}"
+        if not is_term:
+            # Todos os nós não-terminais (inclusive a raiz do clustering) são tratados como Divisão Evolutiva
+            children = list(G.successors(node))
+            hover_text = f"<b>{i18n.t('m5_branch_node', default='Divisão Evolutiva')}</b>"
             
-        if mostrar_atribuicoes and len(atribs) > 0:
-            atribs_trad = [i18n.traduzir_atribuicao(a) for a in atribs]
-            # Linha a linha com limite de chars ou quebra
-            atribs_str = "<br>".join([f"- {a}" for a in atribs_trad])
-            
-            if separar_evolucao:
-                title_attr = i18n.t('m5_attr_syn', default="Sinapomorfias (Novas):") if is_branch else i18n.t('m5_attr_aut', default="Autapomorfias (Exclusivas):") if node != root else i18n.t('m5_attr_com', default="Atribuições Comuns:")
-            else:
-                title_attr = i18n.t('m5_attr_list', default='Atribuições:')
+            if len(children) == 2:
+                leaves1 = get_leaves(G, children[0])
+                leaves2 = get_leaves(G, children[1])
                 
-            hover_text += f"<br><br><b>{title_attr}</b><br>{atribs_str}"
-        
-        text.append(hover_text)
-        
-        if is_branch:
+                shared1 = get_shared_traits(leaves1)
+                shared2 = get_shared_traits(leaves2)
+                
+                syn1 = shared1 - shared2
+                syn2 = shared2 - shared1
+                
+                def format_syns(syns, clade_leaves):
+                    if not syns: return ""
+                    syns_list = list(syns)
+                    display = syns_list[:5]
+                    res = "<br>".join([f"- {i18n.traduzir_atribuicao(a)}" for a in display])
+                    if len(syns_list) > 5:
+                        res += f"<br><i>(+{len(syns_list)-5} outras)</i>"
+                        
+                    rep_name = i18n.traduzir_cargo(clade_leaves[0])
+                    if len(clade_leaves) > 1:
+                        rep_name += f" e +{len(clade_leaves)-1}"
+                        
+                    return f"<br><br><b>Ramo '{rep_name}' inovou com:</b><br>{res}"
+                    
+                hover_text += format_syns(syn1, leaves1)
+                hover_text += format_syns(syn2, leaves2)
+                
+            text.append(hover_text)
             colors.append(palette[4])
-            labels.append(i18n.t('m5_leg_divisao', default="Divisão (Sinapomorfia)"))
-        elif score > 0.8 * max_score:
-            colors.append(palette[2])
-            labels.append(i18n.t('m5_leg_basal', default="Muito Basal"))
-        elif score > 0.5 * max_score:
-            colors.append(palette[1])
-            labels.append(i18n.t('m5_leg_inter', default="Intermediário"))
+            labels.append("")
+            sizes.append(8)
         else:
-            colors.append(palette[0])
-            labels.append(i18n.t('m5_leg_deriv', default="Especializado (Derivado)"))
-            
-    # Draw Legend groups
-    groups_to_draw = [i18n.t('m5_leg_basal', default="Muito Basal"), i18n.t('m5_leg_inter', default="Intermediário"), i18n.t('m5_leg_deriv', default="Especializado (Derivado)")]
-    color_to_draw = [palette[2], palette[1], palette[0]]
-    if separar_evolucao:
-        groups_to_draw.append(i18n.t('m5_leg_divisao', default="Divisão (Sinapomorfia)"))
-        color_to_draw.append(palette[4])
-        
-    for group, color in zip(groups_to_draw, color_to_draw):
-        fig.add_trace(go.Scatter(
-            x=[None], y=[None], mode='markers',
-            marker=dict(size=12, color=color),
-            name=group
-        ))
+            cargo = attr.get('original_name', node)
+            score = attr.get('score', 0)
+            cargo_trad = i18n.traduzir_cargo(cargo)
+            if separar_evolucao:
+                atribs = list(set(df_bin.columns[df_bin.loc[cargo] > 0]) - comuns)
+            else:
+                atribs = df_bin.columns[df_bin.loc[cargo] > 0]
+            hover_text = f"<b>{cargo_trad}</b><br>"
+            if len(atribs) > 0:
+                hover_text += f"<i>{i18n.t('m5_attr_aut_long', default='Autapomorfias:')}</i><br>"
+                hover_text += "<br>".join([f"- {i18n.traduzir_atribuicao(a)}" for a in list(atribs)[:5]])
+            text.append(hover_text)
+            score = attr.get('score', 0)
+            norm = score / 10.0
+            colors.append(pcolors.sample_colorscale("RdYlBu", norm)[0])
+            sizes.append(12 + ((1 - norm) * 6))
+            labels.append(cargo_trad)
             
     fig.add_trace(go.Scatter(
-        x=node_x, y=node_y, mode='markers+text',
-        text=[n if n == root or n.startswith("b_") else i18n.traduzir_cargo(n).split(' ')[0] for n in G.nodes() if not (n.startswith("b_") and (not separar_evolucao or len(branch_attrs[n] - (comuns if int(n.split('_')[1])==0 else branch_attrs[f"b_{int(n.split('_')[1])-1}"]))==0))],
-        textposition="top center",
+        x=node_x, y=node_y,
+        mode='markers',
+        hoverinfo='text',
         hovertext=text,
-        hoverinfo="text",
-        marker=dict(size=12, color=colors, line=dict(width=1, color='#333')),
-        showlegend=False
+        marker=dict(size=sizes, color=colors, line=dict(width=1.5, color='#333')),
+        showlegend=False,
+        cliponaxis=False
     ))
     
-    fig.update_layout(
-        title="Cladograma Evolutivo das Carreiras (Ângulo V)",
-        showlegend=True,
-        legend_title="Grau Taxonômico",
-        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False), # Removed autorange="reversed"
+    # Usar annotations em vez de 'text' no Scatter para forçar a renderização bulletproof
+    annotations = []
+    if not is_circular:
+        for x, y, label in zip(node_x, node_y, labels):
+            if label:
+                annotations.append(dict(
+                    x=x, y=y,
+                    text=f"<b>{label}</b>",
+                    showarrow=False,
+                    xanchor='left',
+                    yanchor='middle',
+                    xshift=12, # Afasta 12px do ponto
+                    font=dict(size=12, color='white')
+                ))
+    else:
+        for x, y, label in zip(node_x, node_y, labels):
+            if label:
+                # No circular, os labels apontam para fora a partir do centro
+                angle = np.arctan2(y, x)
+                annotations.append(dict(
+                    x=x, y=y,
+                    text=f"<b>{label}</b>",
+                    showarrow=False,
+                    xanchor='left' if np.cos(angle) >= 0 else 'right',
+                    yanchor='middle',
+                    xshift=12 * np.sign(np.cos(angle)),
+                    font=dict(size=11, color='white')
+                ))
+
+    
+    if not is_circular:
+        # Calcular o limite máximo de X para NJ ou UPGMA
+        max_x = max([pos[n][0] for n in G.nodes()]) if G.nodes() else 1.0
+        
+        fig.update_layout(
+            xaxis=dict(range=[-0.1, max_x + 0.1], showgrid=False, zeroline=False, visible=False),
+            yaxis=dict(range=[-0.1, 1.1], showgrid=False, zeroline=False, visible=False),
+            margin=dict(l=40, r=min(500, max(200, max_label_len * 8)), t=60, b=40),
+            legend=dict(
+                title=dict(text="<b>Legenda</b>", font=dict(color="white")),
+                font=dict(color="white"),
+                orientation="v",
+                yanchor="top", y=1,
+                xanchor="left", x=1.05,
+                bgcolor="rgba(0,0,0,0.5)",
+                bordercolor="gray",
+                borderwidth=1
+            )
+        )
+        
+    layout_update = dict(
+        title="Cladograma Filogenético Especializado (Biopython UPGMA)",
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
-        height=650
+        hovermode='closest',
+        margin=dict(l=40, r=40, t=60, b=40),
+        height=max(700, max_topo * 65),
+        annotations=annotations
     )
+    
+    if is_circular:
+        layout_update['xaxis'] = dict(showgrid=False, zeroline=False, showticklabels=False)
+        layout_update['yaxis'] = dict(showgrid=False, zeroline=False, showticklabels=False, scaleanchor='x', scaleratio=1)
+        layout_update['height'] = max(800, max_topo * 70)
+        layout_update['legend'] = dict(
+            title=dict(text="<b>Legenda</b>", font=dict(color="white")),
+            font=dict(color="white"),
+            orientation="v",
+            yanchor="top", y=1,
+            xanchor="left", x=1.05,
+            bgcolor="rgba(0,0,0,0.5)",
+            bordercolor="gray",
+            borderwidth=1
+        )
+        
+    fig.update_layout(**layout_update)
     return fig
 
 
@@ -593,49 +768,30 @@ def render_akinator_game(df_cenario):
                 import base64
                 with open(mascot_img_path_dynamic, "rb") as image_file:
                     encoded_string = base64.b64encode(image_file.read()).decode()
-                st.markdown(f'<div id="mascot-source-container-1" style="display:none;"><img src="data:image/png;base64,{encoded_string}" style="width: 100%; border-radius: 8px;"></div>', unsafe_allow_html=True)
-                
                 import streamlit.components.v1 as components
-                components.html("""
+                st.markdown("<style>#mascot-floating-fixed { display: block !important; }</style>", unsafe_allow_html=True)
+                components.html(f"""
                 <script>
-                const setupMascotSync = () => {
                     const parentWin = window.parent;
                     const doc = parentWin.document;
                     
-                    if (!parentWin.mascotInterval) {
-                        parentWin.mascotInterval = parentWin.setInterval(() => {
-                            const source1 = doc.getElementById('mascot-source-container-1');
-                            const source2 = doc.getElementById('mascot-source-container-2');
-                            let floating = doc.getElementById('mascot-floating-fixed');
-                            
-                            if (source1 || source2) {
-                                const activeSource = source1 || source2;
-                                if (!floating) {
-                                    floating = doc.createElement('div');
-                                    floating.id = 'mascot-floating-fixed';
-                                    floating.style.position = 'fixed';
-                                    floating.style.bottom = '80px';
-                                    floating.style.left = 'max(1.5rem, 2vw)';
-                                    floating.style.width = '16vw';
-                                    floating.style.minWidth = '150px';
-                                    floating.style.maxWidth = '250px';
-                                    floating.style.zIndex = '9999';
-                                    floating.style.pointerEvents = 'none';
-                                    doc.body.appendChild(floating);
-                                }
-                                floating.innerHTML = activeSource.innerHTML;
-                            } else {
-                                if (floating) {
-                                    floating.remove();
-                                }
-                            }
-                        }, 500);
-                    }
-                };
-                setupMascotSync();
+                    let floating = doc.getElementById('mascot-floating-fixed');
+                    if (!floating) {{
+                        floating = doc.createElement('div');
+                        floating.id = 'mascot-floating-fixed';
+                        floating.style.position = 'fixed';
+                        floating.style.bottom = '80px';
+                        floating.style.left = 'max(1.5rem, 2vw)';
+                        floating.style.width = '16vw';
+                        floating.style.minWidth = '150px';
+                        floating.style.maxWidth = '250px';
+                        floating.style.zIndex = '50';
+                        floating.style.pointerEvents = 'none';
+                        doc.body.appendChild(floating);
+                    }}
+                    floating.innerHTML = '<img src="data:image/png;base64,{encoded_string}" style="width: 100%; border-radius: 8px;">';
                 </script>
                 """, height=0)
-                
 
                 
         with col_ui:
@@ -694,46 +850,28 @@ def render_akinator_game(df_cenario):
                 import base64
                 with open(mascot_img_path_dynamic, "rb") as image_file:
                     encoded_string = base64.b64encode(image_file.read()).decode()
-                st.markdown(f'<div id="mascot-source-container-2" style="display:none;"><img src="data:image/png;base64,{encoded_string}" style="width: 100%; border-radius: 8px;"></div>', unsafe_allow_html=True)
-                
                 import streamlit.components.v1 as components
-                components.html("""
+                st.markdown("<style>#mascot-floating-fixed { display: block !important; }</style>", unsafe_allow_html=True)
+                components.html(f"""
                 <script>
-                const setupMascotSync2 = () => {
                     const parentWin = window.parent;
                     const doc = parentWin.document;
                     
-                    if (!parentWin.mascotInterval) {
-                        parentWin.mascotInterval = parentWin.setInterval(() => {
-                            const source1 = doc.getElementById('mascot-source-container-1');
-                            const source2 = doc.getElementById('mascot-source-container-2');
-                            let floating = doc.getElementById('mascot-floating-fixed');
-                            
-                            if (source1 || source2) {
-                                const activeSource = source1 || source2;
-                                if (!floating) {
-                                    floating = doc.createElement('div');
-                                    floating.id = 'mascot-floating-fixed';
-                                    floating.style.position = 'fixed';
-                                    floating.style.bottom = '80px';
-                                    floating.style.left = 'max(1.5rem, 2vw)';
-                                    floating.style.width = '16vw';
-                                    floating.style.minWidth = '150px';
-                                    floating.style.maxWidth = '250px';
-                                    floating.style.zIndex = '9999';
-                                    floating.style.pointerEvents = 'none';
-                                    doc.body.appendChild(floating);
-                                }
-                                floating.innerHTML = activeSource.innerHTML;
-                            } else {
-                                if (floating) {
-                                    floating.remove();
-                                }
-                            }
-                        }, 500);
-                    }
-                };
-                setupMascotSync2();
+                    let floating = doc.getElementById('mascot-floating-fixed');
+                    if (!floating) {{
+                        floating = doc.createElement('div');
+                        floating.id = 'mascot-floating-fixed';
+                        floating.style.position = 'fixed';
+                        floating.style.bottom = '80px';
+                        floating.style.left = 'max(1.5rem, 2vw)';
+                        floating.style.width = '16vw';
+                        floating.style.minWidth = '150px';
+                        floating.style.maxWidth = '250px';
+                        floating.style.zIndex = '50';
+                        floating.style.pointerEvents = 'none';
+                        doc.body.appendChild(floating);
+                    }}
+                    floating.innerHTML = '<img src="data:image/png;base64,{encoded_string}" style="width: 100%; border-radius: 8px;">';
                 </script>
                 """, height=0)
                 

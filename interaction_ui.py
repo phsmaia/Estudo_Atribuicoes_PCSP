@@ -8,8 +8,64 @@ import json
 import analytics
 
 def inject_global_loader():
-    # Removido em favor do novo sistema de carregamento direcionado no app.py
-    pass
+    import json
+    phrases = i18n.t("loading_msgs")
+    
+    js_code = f"""
+    <script>
+    const phrases = {json.dumps(phrases)};
+    let currentPhrase = phrases[0];
+    let isVisible = false;
+    
+    // Intervalo de alta frequência para interceptar o loader padrão do Streamlit impiedosamente
+    setInterval(() => {{
+        const statusWidget = window.parent.document.querySelector('div[data-testid="stStatusWidget"]');
+        
+        if (statusWidget) {{
+            if (!isVisible) {{
+                // Acabou de aparecer
+                isVisible = true;
+                currentPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+            }}
+            
+            // Sempre força a substituição do texto se não tiver nosso emoji
+            const label = statusWidget.querySelector('label') || statusWidget.querySelector('p') || statusWidget.querySelector('div[class*="st-"]');
+            if (label) {{
+                // Remove elementos filhos que o Streamlit possa injetar (como small spinners extras)
+                if (label.innerText.includes("Running") || !label.innerHTML.includes("🚨")) {{
+                    label.innerHTML = "🚨 " + currentPhrase;
+                }}
+            }}
+            
+            // Aplica estilos visuais agressivos diretamente (mesmo que o CSS mude)
+            statusWidget.style.backgroundColor = '#D32F2F';
+            statusWidget.style.border = '1px solid #B71C1C';
+            statusWidget.style.borderRadius = '8px';
+            statusWidget.style.boxShadow = '0 4px 15px rgba(211, 47, 47, 0.5)';
+            statusWidget.style.position = 'fixed';
+            statusWidget.style.bottom = '20px';
+            statusWidget.style.left = '50%';
+            statusWidget.style.transform = 'translateX(-50%)';
+            statusWidget.style.top = 'auto';
+            statusWidget.style.right = 'auto';
+            statusWidget.style.zIndex = '9999999';
+            
+            // Garante cores
+            const allText = statusWidget.querySelectorAll('*');
+            allText.forEach(el => {{
+                el.style.color = 'white';
+                if(el.tagName === 'SVG') {{
+                    el.style.stroke = 'white';
+                    el.style.fill = 'white';
+                }}
+            }});
+        }} else {{
+            isVisible = false;
+        }}
+    }}, 50);
+    </script>
+    """
+    components.html(js_code, height=0)
 
 import time
 
@@ -23,12 +79,12 @@ def render_like_button(section_name: str, key_suffix: str = ""):
     has_liked = db.query(Interaction).filter_by(section_name=section_name, user_hash=user_hash).first()
     likes_count = db.query(Interaction).filter_by(section_name=section_name).count()
     
-    col_spacer, col_btn, col_text = st.columns([86, 6, 8])
+    col_spacer, col_text, col_btn = st.columns([60, 25, 15], vertical_alignment="center")
     
     with col_text:
         lbl_likes = i18n.t("total_likes", default="Útil para")
         st.markdown(f"""
-            <div style='display: flex; align-items: center; height: 100%; min-height: 40px; font-size: 0.85rem; color: var(--text-color); opacity: 0.8;'>
+            <div style='display: flex; align-items: center; justify-content: flex-end; height: 100%; min-height: 40px; font-size: 0.85rem; color: var(--text-color); opacity: 0.8;'>
                 {lbl_likes}&nbsp;<b style='color: #4da6ff; font-size: 1rem;'>{likes_count}</b>
             </div>
         """, unsafe_allow_html=True)

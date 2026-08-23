@@ -95,6 +95,9 @@ logger.init_db()
 # Configuração Básica da Página
 st.set_page_config(page_title="Estudo de Atribuições PCSP", layout="wide")
 
+import interaction_ui
+interaction_ui.inject_global_loader()
+
 # --- SESSÃO DE SEGURANÇA: WATERMARK INVISÍVEL ---
 import uuid
 
@@ -337,6 +340,10 @@ else:
 st.markdown("""
 <style>
 /* Reservado para futuros estilos globais */
+[data-testid="stExpander"] {
+    position: relative;
+    z-index: 100;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -602,6 +609,9 @@ targeted_loader_js = f"""
                     target = target.parentNode;
                 }}
                 
+                if (eggTriggered) return;
+                triggerEasterEgg();
+                
                 if (!isTrigger) return;
                 
                 // Clear any existing custom loaders
@@ -766,34 +776,6 @@ div[data-testid="stVerticalBlock"] > div:nth-child(3) {{ animation-delay: 0.25s;
 div[data-testid="stVerticalBlock"] > div:nth-child(4) {{ animation-delay: 0.35s; }}
 div[data-testid="stVerticalBlock"] > div:nth-child(5) {{ animation-delay: 0.45s; }}
 
-/* Sticky Container Header */
-div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor):has(div[data-testid="stRadio"]) {{
-    position: sticky;
-    top: 0;
-    z-index: 999;
-    background-color: {sticky_bg};
-    padding: 15px 20px 10px 20px;
-    border-radius: 12px;
-    border-bottom: 1px solid {sticky_border};
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    margin-bottom: 25px;
-    backdrop-filter: blur(10px);
-}}
-
-@media (max-width: 768px) {{
-    div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor) div[data-testid="stHorizontalBlock"] {{
-        flex-wrap: nowrap !important;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 8px;
-    }}
-    div[data-testid="stLayoutWrapper"]:has(div#sticky-header-anchor) div[data-testid="column"] {{
-        min-width: fit-content !important;
-        flex: 0 0 auto !important;
-        padding-right: 1rem;
-    }}
-}}
-
 @media (min-width: 769px) {{
     /* Hide plotly text labels on desktop to preserve hover-only clean look */
     .js-plotly-plot .textpoint {{
@@ -813,7 +795,11 @@ st.markdown("""
 }
 header[data-testid="stHeader"] {
     background: transparent !important;
-    height: 0px !important;
+    box-shadow: none !important;
+}
+
+div[data-testid="stDecoration"] {
+    display: none !important;
 }
 
 .transparency-box {
@@ -859,6 +845,9 @@ header[data-testid="stHeader"] {
 """, unsafe_allow_html=True)
 
 # --- CARREGAMENTO DE DADOS COM SPLASH SCREEN ---
+if "loaded" in st.query_params and st.query_params["loaded"] == "true":
+    st.session_state.first_load_done = True
+
 if "first_load_done" not in st.session_state:
     msgs_json = json.dumps(i18n.t("loading_msgs"))
     title_str = i18n.t("title")
@@ -899,11 +888,46 @@ if "first_load_done" not in st.session_state:
     
     splash_html = f"""
     <script>
-    if (!window.parent.document.getElementById('custom-splash-screen')) {{
-        const splash = window.parent.document.createElement('div');
-        splash.id = 'custom-splash-screen';
+    function triggerStreamlit(btnName) {{
+        let clicked = false;
+        const buttons = window.parent.document.querySelectorAll('button');
+        for (let b of buttons) {{
+            if (b.textContent.includes(btnName)) {{
+                b.dispatchEvent(new PointerEvent('pointerdown', {{bubbles: true, cancelable: true, view: window.parent}}));
+                b.dispatchEvent(new MouseEvent('mousedown', {{bubbles: true, cancelable: true, view: window.parent}}));
+                b.dispatchEvent(new PointerEvent('pointerup', {{bubbles: true, cancelable: true, view: window.parent}}));
+                b.dispatchEvent(new MouseEvent('mouseup', {{bubbles: true, cancelable: true, view: window.parent}}));
+                b.click();
+                clicked = true;
+            }}
+        }}
         
-        // --- AUTO DETECT LANGUAGE ---
+        if (btnName === 'continue_load') {{
+            setTimeout(() => {{
+                // Se a comunicação com o Python falhar, nós removemos a splash screen da tela na marra
+                // garantindo que o usuário consiga usar a aplicação.
+                const splashContainer = window.parent.document.getElementById('custom-splash-screen');
+                if (splashContainer) {{
+                    splashContainer.style.transition = 'opacity 1s ease-out';
+                    splashContainer.style.opacity = '0';
+                    setTimeout(() => splashContainer.remove(), 1000);
+                }}
+            }}, 2000);
+        }}
+        
+        return clicked;
+    }}
+    
+    // Se a splash screen já existe (re-render por mudança de config), removemos para recriar com novos estilos
+    const oldSplash = window.parent.document.getElementById('custom-splash-screen');
+    if (oldSplash) {{
+        oldSplash.remove();
+    }}
+    
+    const splash = window.parent.document.createElement('div');
+    splash.id = 'custom-splash-screen';
+    
+    // --- AUTO DETECT LANGUAGE ---
         const urlParams = new URLSearchParams(window.parent.location.search);
         if (!urlParams.has('lang')) {{
             const userLang = navigator.language || navigator.userLanguage;
@@ -931,7 +955,8 @@ if "first_load_done" not in st.session_state:
         splash.innerHTML = `
             <style>
             #custom-splash-screen {{
-                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                position: fixed; top: 0; left: 0;
+                width: 100vw; height: 100vh;
                 background: ${{bgColor}};
                 z-index: 9999999; display: flex; flex-direction: column;
                 align-items: center; justify-content: center; color: ${{textColor}};
@@ -987,7 +1012,7 @@ if "first_load_done" not in st.session_state:
             @keyframes scanAnim {{ 0% {{ top: 15%; }} 50% {{ top: 85%; }} 100% {{ top: 15%; }} }}
             
             .progress-bar-container {{
-                width: 50%; max-width: 600px; height: 6px; background: ${{progressBg}};
+                width: 90%; max-width: 1200px; height: 6px; background: ${{progressBg}};
                 border-radius: 3px; margin: 25px 0 15px 0; overflow: hidden; position: relative;
             }}
             .progress-bar-fill {{
@@ -1032,12 +1057,12 @@ if "first_load_done" not in st.session_state:
             <!-- Painel de Configurações Flutuante -->
             <div class="splash-settings" id="splash-settings-bar">
                 <label>🌐</label>
-                <a class="splash-s-btn{lbl_lang_pt_active}" href="{url_lang_pt}" target="_parent">PT-BR</a>
-                <a class="splash-s-btn{lbl_lang_en_active}" href="{url_lang_en}" target="_parent">EN</a>
+                <button class="splash-s-btn{lbl_lang_pt_active}" onclick="triggerStreamlit('splash_lang_pt')">PT-BR</button>
+                <button class="splash-s-btn{lbl_lang_en_active}" onclick="triggerStreamlit('splash_lang_en')">EN</button>
                 <span class="splash-s-sep">|</span>
-                <a class="splash-s-btn" href="{url_theme}" target="_parent">{lbl_theme}</a>
+                <button class="splash-s-btn" onclick="triggerStreamlit('splash_theme')">{lbl_theme}</button>
                 <span class="splash-s-sep">|</span>
-                <a class="splash-s-btn{lbl_mobile_active}" href="{url_mobile}" target="_parent">{lbl_mobile}</a>
+                <button class="splash-s-btn{lbl_mobile_active}" onclick="triggerStreamlit('splash_mobile')">{lbl_mobile}</button>
             </div>
             
             <h2 style="margin-bottom: 15px; color: ${{splashTitleColor}}; text-align: center; text-transform: uppercase; letter-spacing: 2px; z-index: 10; font-size: 1.5rem;">{title_str}</h2>
@@ -1046,7 +1071,7 @@ if "first_load_done" not in st.session_state:
                 {warn_msg}
             </div>
             
-            <div class="terms-container" style="max-width: 800px; max-height: 40vh; overflow-y: auto; background: ${{btnBg}}; padding: 20px 25px; border-radius: 10px; margin-bottom: 25px; border: 1px solid ${{btnBorder}}; font-size: 0.95rem; line-height: 1.6; backdrop-filter: blur(10px); z-index: 10; text-align: justify; scrollbar-width: thin; scrollbar-color: ${{strokeColor}} transparent; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <div class="terms-container" style="width: 95%; max-width: 1400px; max-height: 40vh; overflow-y: auto; background: ${{btnBg}}; padding: 20px 25px; border-radius: 10px; margin-bottom: 25px; border: 1px solid ${{btnBorder}}; font-size: 0.95rem; line-height: 1.6; backdrop-filter: blur(10px); z-index: 10; text-align: justify; scrollbar-width: thin; scrollbar-color: ${{strokeColor}} transparent; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
                 <p>{p1}</p>
                 <p>{p2}</p>
                 <p>{p3}</p>
@@ -1073,7 +1098,7 @@ if "first_load_done" not in st.session_state:
         `;
         window.parent.document.body.appendChild(splash);
         
-        if (window.innerWidth <= 768 || navigator.maxTouchPoints > 0) {{
+        if (window.parent.innerWidth <= 768) {{
             const mobileWarning = window.parent.document.getElementById('splash-mobile-warning');
             if (mobileWarning) mobileWarning.style.display = 'block';
         }}
@@ -1091,14 +1116,7 @@ if "first_load_done" not in st.session_state:
                 acceptBtn.innerText = "Autorizado! Carregando o ambiente analítico...";
                 acceptBtn.style.opacity = '0.7';
                 acceptBtn.style.cursor = 'wait';
-                
-                const btns = window.parent.document.querySelectorAll('.stButton button p');
-                for (let b of btns) {{
-                    if (b.innerText === 'continue_load') {{
-                        b.parentElement.click();
-                        break;
-                    }}
-                }}
+                triggerStreamlit('continue_load');
             }});
             
             acceptBtn.addEventListener('mouseover', () => {{
@@ -1119,7 +1137,7 @@ if "first_load_done" not in st.session_state:
                     () => {{
                         // 1. Acesso Confidencial
                         splash.style.background = isLight ? '#fff0f0' : '#2b0000';
-                        const lights = window.parent.document.querySelector('.police-lights');
+                        const lights = splash.querySelector('.police-lights');
                         if(lights) lights.style.animation = 'strobe 0.5s infinite';
                         badge.style.borderColor = '#ffd700';
                         badge.querySelector('svg').style.stroke = '#ffd700';
@@ -1132,7 +1150,7 @@ if "first_load_done" not in st.session_state:
                         splash.style.background = '#0a001a';
                         const titleEl = splash.querySelector('h2');
                         if(titleEl) titleEl.style.color = '#e0b3ff';
-                        const lights = window.parent.document.querySelector('.police-lights');
+                        const lights = splash.querySelector('.police-lights');
                         if(lights) lights.style.display = 'none';
                         badge.style.borderColor = '#b84dff';
                         badge.style.boxShadow = '0 0 40px #b84dff';
@@ -1203,30 +1221,58 @@ if "first_load_done" not in st.session_state:
                 msgEl.innerText = msgs[Math.floor(Math.random() * msgs.length)];
             }}
         }}, 2000);
-    }}
     </script>
     """
     components.html(splash_html, height=0)
     
-    st.markdown("<div style='display:none;'>", unsafe_allow_html=True)
-    btn = st.button("continue_load", key="btn_continue_load")
-    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown("""
+    <style>
+    /* Esconde a coluna inteira que contém a âncora dos botões gatilho */
+    div[data-testid="column"]:has(#splash-triggers-anchor) {
+        display: none !important;
+        position: absolute !important;
+        opacity: 0 !important;
+        width: 0px !important;
+        height: 0px !important;
+        overflow: hidden !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    hide_col, _ = st.columns([1, 99])
+    with hide_col:
+        st.markdown('<div id="splash-triggers-anchor"></div>', unsafe_allow_html=True)
+        btn_continue = st.button("continue_load", key="btn_continue_load")
+        btn_lang_pt = st.button("splash_lang_pt")
+        btn_lang_en = st.button("splash_lang_en")
+        btn_theme = st.button("splash_theme")
+        btn_mobile = st.button("splash_mobile")
     
-    if btn:
+    if btn_continue:
         st.session_state.first_load_done = True
         st.rerun()
-else:
-    remove_splash_js = """
-    <script>
-    const splash = window.parent.document.getElementById('custom-splash-screen');
-    if (splash) {
-        splash.style.opacity = '0';
-        splash.style.transition = 'opacity 0.5s ease';
-        setTimeout(() => splash.remove(), 500);
-    }
-    </script>
-    """
-    components.html(remove_splash_js, height=0)
+    if btn_lang_pt:
+        st.session_state.language = "PT-BR"
+        st.query_params["lang"] = "PT-BR"
+        st.rerun()
+    if btn_lang_en:
+        st.session_state.language = "EN"
+        st.query_params["lang"] = "EN"
+        st.rerun()
+    if btn_theme:
+        st.session_state.light_mode = not st.session_state.get("light_mode", False)
+        if st.session_state.light_mode:
+            st.query_params["theme"] = "light"
+        else:
+            if "theme" in st.query_params: del st.query_params["theme"]
+        st.rerun()
+    if btn_mobile:
+        st.session_state.is_mobile = not st.session_state.get("is_mobile", False)
+        st.query_params["is_mobile"] = str(st.session_state.is_mobile).lower()
+        st.rerun()
+
+    # Frontend tweaks handled via CSS natively now.
 
 datasets = data_loader.get_all_datasets()
 opcoes_cenarios = [
@@ -1249,6 +1295,57 @@ mapa_cenarios = {
     "Reestruturação Reunião 1 2025": datasets["rest_2025_gov_r1_papis_peritos"] if papis_peritos else datasets["rest_2025_gov_r1_papis_nao_peritos"],
     "Reestruturação Reunião 2 2025": datasets["rest_2025_gov_r2_papis_peritos"] if papis_peritos else datasets["rest_2025_gov_r2_papis_nao_peritos"]
 }
+
+# --- HTML dos badges de Modificadores Globais (reutilizável em todos os modos) ---
+def _build_modifier_badges(incluir_1967: bool = None) -> str:
+    """Gera o HTML dos badges de modificadores globais para injeção na status bar."""
+    badges = []
+    # Atribuições Comuns
+    title_comuns = "Atribuições comuns a todas as carreiras da PCSP"
+    if incluir_atrib_comuns:
+        badges.append(f"<div class='status-badge' title='{title_comuns}' style='background:rgba(124,179,66,0.15);border:1px solid rgba(124,179,66,0.5);color:#aed581;cursor:help;'>🧩 Genéricas: <strong>ON</strong></div>")
+    else:
+        badges.append(f"<div class='status-badge' title='{title_comuns}' style='opacity:0.45;cursor:help;'>🧩 Genéricas: <strong>OFF</strong></div>")
+    
+    # Correções Ortográficas
+    title_correcoes = "Pequenas correções ortográficas e de nomenclatura"
+    if incluir_correcoes:
+        badges.append(f"<div class='status-badge' title='{title_correcoes}' style='background:rgba(79,195,247,0.15);border:1px solid rgba(79,195,247,0.5);color:#81d4fa;cursor:help;'>📝 Correção: <strong>ON</strong></div>")
+    else:
+        badges.append(f"<div class='status-badge' title='{title_correcoes}' style='opacity:0.45;cursor:help;'>📝 Correção: <strong>OFF</strong></div>")
+    
+    # Papis como Peritos
+    title_papis = "Trata as carreiras de papiloscopia no escopo pericial"
+    if papis_peritos:
+        badges.append(f"<div class='status-badge' title='{title_papis}' style='background:rgba(171,71,188,0.15);border:1px solid rgba(171,71,188,0.5);color:#ce93d8;cursor:help;'>🧬 Papis Peritos: <strong>ON</strong></div>")
+    else:
+        badges.append(f"<div class='status-badge' title='{title_papis}' style='opacity:0.45;cursor:help;'>🧬 Papis Peritos: <strong>OFF</strong></div>")
+    
+    # Decreto 1967
+    title_1967 = "Legislação base histórica de 1967"
+    if incluir_1967 is None:
+        incluir_1967 = st.session_state.get("toggle_decreto_1967", False)
+        
+    if incluir_1967:
+        badges.append(f"<div class='status-badge' title='{title_1967}' style='background:rgba(255,183,77,0.15);border:1px solid rgba(255,183,77,0.5);color:#ffcc80;cursor:help;'>📜 1967: <strong>ON</strong></div>")
+    else:
+        badges.append(f"<div class='status-badge' title='{title_1967}' style='opacity:0.45;cursor:help;'>📜 1967: <strong>OFF</strong></div>")
+    return "".join(badges)
+
+def _build_config_badges() -> str:
+    """Gera o HTML dos badges de configs da UI (Idioma, Fonte, Tema, View) para injeção na status bar."""
+    badges = []
+    lang_str = st.session_state.get("language", "PT-BR")
+    font_str = f"A {st.session_state.base_font_size}px"
+    theme_str = "☀️ Claro" if st.session_state.get("light_mode", False) else "🌙 Escuro"
+    layout_str = "📱 Mobile" if st.session_state.get("is_mobile", False) else ("📦 Compacto" if st.session_state.get("compact_mode", False) else "🖥️ Desktop")
+    
+    badges.append(f"<div class='status-badge' title='Idioma'>🌐 <strong>{lang_str}</strong></div>")
+    badges.append(f"<div class='status-badge' title='Tamanho da Fonte'>🔎 <strong>{font_str}</strong></div>")
+    badges.append(f"<div class='status-badge' title='Tema Visual'><strong>{theme_str}</strong></div>")
+    badges.append(f"<div class='status-badge' title='Layout'><strong>{layout_str}</strong></div>")
+    
+    return "".join(badges)
 
 def get_scenario_df(cenario, correcoes, papi):
     if cenario == "Atual":
@@ -1302,59 +1399,168 @@ if not incluir_atrib_comuns:
             if cols_to_drop:
                 mapa_cenarios[cenario_key] = df.drop(columns=cols_to_drop)
 # --- CABEÇALHO GLOBAL E ROTEAMENTO ---
-st.markdown("""
-<style>
-    /* Remove padding superior da área principal */
+# Agrupa os estilos e âncoras em um único markdown para não gerar espaços verticais fantasmas
+
+if "base_font_size" not in st.session_state:
+    st.session_state.base_font_size = 16
+
+st.markdown(f"""
+<style id="global-css-override">
+    /* 1. Reduce top padding of the main container */
     .block-container, 
     div.block-container,
     div[data-testid="stAppViewBlockContainer"],
-    .stApp > div > div.block-container {
+    div[data-testid="stMainBlockContainer"],
+    .stMainBlockContainer,
+    .stApp > div > div.block-container {{
         padding-top: 0rem !important;
         padding-bottom: 0rem !important;
-        margin-top: -11rem !important;
-    }
+        margin-top: 0rem !important;
+    }}
     
-    /* Para mobile, ajustamos ainda mais a margem para evitar muito espaço */
-    @media (max-width: 768px) {
+    @media (max-width: 768px) {{
         .block-container, 
         div.block-container,
-        div[data-testid="stAppViewBlockContainer"] {
-            margin-top: -12rem !important;
-            padding-top: 0rem !important;
-        }
-    }
+        div[data-testid="stAppViewBlockContainer"],
+        div[data-testid="stMainBlockContainer"],
+        .stMainBlockContainer {{
+            margin-top: 0rem !important;
+            padding-top: 0.5rem !important;
+        }}
+    }}
     
-    /* Completely hide headers and decoration bars */
     header[data-testid="stHeader"],
-    .stApp > header,
-    div[data-testid="stDecoration"] {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0px !important;
-        min-height: 0px !important;
-        padding: 0px !important;
-        margin: 0px !important;
-    }
+    .stApp > header {{
+        background: transparent !important;
+        box-shadow: none !important;
+        pointer-events: none !important;
+        z-index: 999999 !important;
+    }}
     
-    footer {
-        display: none !important;
-    }
+    /* Reabilita cliques apenas nos elementos específicos do header (para não bloquear o que está embaixo) */
+    header[data-testid="stHeader"] .stAppDeployButton,
+    header[data-testid="stHeader"] [data-testid="stStatusWidget"],
+    header[data-testid="stHeader"] [data-testid="stToastContainer"],
+    header[data-testid="stHeader"] [data-testid="stToolbar"] {{
+        pointer-events: auto;
+    }}
     
-    /* Fix the metric box */
-    .custom-metric-box { background: #1E1E1E; border: 1px solid #333; }
+    footer {{
+        display: none !important;
+    }}
+    
+    #mascot-floating-fixed {{
+        display: none !important;
+    }}
+    
+    .custom-metric-box {{ background: #1E1E1E; border: 1px solid #333; }}
+    
+    html {{ font-size: {st.session_state.base_font_size}px !important; }}
+    
+    div[data-testid="stPopover"] button {{
+        padding: 0.2rem 0.5rem;
+        min-height: 0;
+        font-size: 0.9rem;
+    }}
+    
+    /* Move Toasts e Spinner para a base inferior, centralizado */
+    div[data-testid="stToastContainer"],
+    div[data-testid="stStatusWidget"],
+    div[data-testid="stSpinner"] {{
+        top: auto !important;
+        bottom: 20px !important;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        position: fixed !important;
+        z-index: 9999999 !important;
+    }}
+    
+    div[data-testid="stStatusWidget"] {{
+        background-color: #D32F2F !important;
+        border: 1px solid #B71C1C !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 15px rgba(211, 47, 47, 0.5) !important;
+    }}
+    
+    div[data-testid="stStatusWidget"] * {{
+        color: white !important;
+    }}
+    
+    div[data-testid="stStatusWidget"] svg {{
+        stroke: white !important;
+        fill: white !important;
+    }}
+    
+    /* 2. Hide style injection wrapper completely */
+    div.element-container:has(style):not(:has(.leak-tracer)) {{
+        position: absolute !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }}
+
+    /* Remove espaço do wrapper do watermark (pois o filho já é fixed) */
+    div.element-container:has(.leak-tracer) {{
+        position: absolute !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+    }}
+
+    /* 3. Collapse and absolute-position the iframe script wrappers (REMOVE O BURACO GIGANTE) */
+    div.element-container:has(iframe) {{
+        position: absolute !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }}
+
+    /* 4. Ensure parent blocks allow sticky positioning */
+    .stMainBlockContainer, [data-testid="stAppViewBlockContainer"], 
+    .stMainBlockContainer > div, [data-testid="stAppViewBlockContainer"] > div {{
+        overflow: visible !important;
+    }}
+    
+    /* 5. Make the header container wrapper sticky (Captura o st.container() que tem a âncora E colunas) */
+    div.element-container:has(#sticky-header-anchor):has(div[data-testid="column"]),
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(#sticky-header-anchor):has(div[data-testid="column"]) {{
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0px !important;
+        z-index: 999 !important;
+        background-color: var(--background-color, #1a1c24) !important;
+        padding: 15px 20px 10px 20px !important;
+        border-radius: 0 0 12px 12px !important;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important;
+    }}
+    
+    @media (max-width: 768px) {{
+        div[data-testid="stAppViewBlockContainer"] > div[data-testid="stVerticalBlock"] > div:has(#sticky-header-anchor) div[data-testid="stHorizontalBlock"] {{
+            flex-wrap: wrap !important;
+            overflow: visible !important;
+            padding-bottom: 5px;
+        }}
+        div[data-testid="stAppViewBlockContainer"] > div[data-testid="stVerticalBlock"] > div:has(#sticky-header-anchor) div[data-testid="column"] {{
+            min-width: fit-content !important;
+            flex: 0 0 auto !important;
+            padding-right: 1rem;
+        }}
+    }}
 </style>
 """, unsafe_allow_html=True)
 
 # Container Exclusivo para o Header Sticky
 with st.container():
-    st.markdown("<div id='sticky-header-anchor'></div>", unsafe_allow_html=True)
-    
-    # Mover a declaração de estilo para fora das colunas para não criar gaps invisíveis
-    if "base_font_size" not in st.session_state:
-        st.session_state.base_font_size = 16
-    st.markdown(f"<style>html {{ font-size: {st.session_state.base_font_size}px !important; }}</style>", unsafe_allow_html=True)
-    
-
     def _muda_idioma():
         val = st.session_state.get("lang_radio")
         if val is None:
@@ -1383,59 +1589,69 @@ with st.container():
         st.session_state.compact_mode = st.session_state.compact_mode_toggle
 
     def _render_configs():
-        with st.popover("⚙️ Configs", use_container_width=True):
-            st.radio(
-                "🌐 Idioma / Language", 
-                options=["PT-BR", "EN"], 
-                index=0 if st.session_state.get('language', 'PT-BR') == 'PT-BR' else 1,
-                key="lang_radio",
-                on_change=_muda_idioma,
-                horizontal=True
-            )
+        is_mobile = st.session_state.get("is_mobile", False)
+        popover_label = "⚙️" if is_mobile else "⚙️ Configs"
+        with st.popover(popover_label, use_container_width=True):
+            col_lang, col_font = st.columns(2)
+            with col_lang:
+                st.radio("🌐 Idioma", options=["PT-BR", "EN"], index=0 if st.session_state.get('language', 'PT-BR') == 'PT-BR' else 1, key="lang_radio", on_change=_muda_idioma, horizontal=True)
+            with col_font:
+                st.number_input("🔎 Fonte", min_value=10, max_value=24, value=st.session_state.base_font_size, step=1, key="font_input", on_change=_change_font)
             
-            st.number_input(
-                "🔎 Fonte / Font Size", 
-                min_value=10, 
-                max_value=24, 
-                value=st.session_state.base_font_size, 
-                key="font_input", 
-                on_change=_change_font
-            )
-            
-            is_light = st.session_state.get("light_mode", False)
-            toggle_label = "☀️ Modo Claro" if is_light else "🌙 Modo Escuro"
-            st.toggle(toggle_label, value=is_light, key="light_mode_toggle", on_change=_sync_theme)
-            
-            st.toggle("📱 Modo Mobile", value=st.session_state.get("is_mobile", False), key="mobile_mode_toggle", on_change=_sync_mobile)
-            
-            if not st.session_state.get("is_mobile", False):
-                st.toggle("📦 Menu Compacto (Desktop)", value=st.session_state.get("compact_mode", False), key="compact_mode_toggle", on_change=_sync_compact)
-            
-        mobile_str = "📱 Mobile" if st.session_state.get("is_mobile", False) else "🖥️ Desktop"
-        lang_str = st.session_state.get("language", "PT-BR")
-        font_str = f"A {st.session_state.base_font_size}px"
-        theme_str = "☀️ Light" if st.session_state.get("light_mode", False) else "🌙 Dark"
-        align = "center" if st.session_state.get("is_mobile", False) else "right"
-        st.markdown(f"<div style='font-size: 0.75rem; color: #888; text-align: {align}; margin-top: 4px;'>{mobile_str} | {lang_str} | {font_str} | {theme_str}</div>", unsafe_allow_html=True)
+            col_t1, col_t2, col_t3 = st.columns(3)
+            with col_t1:
+                toggle_label = "☀️ Claro" if st.session_state.get('light_mode', False) else "🌙 Escuro"
+                st.toggle(toggle_label, value=st.session_state.get('light_mode', False), key="light_mode_toggle", on_change=_sync_theme)
+            with col_t2:
+                st.toggle("📱 Mobile", value=st.session_state.get("is_mobile", False), key="mobile_mode_toggle", on_change=_sync_mobile)
+            with col_t3:
+                if not st.session_state.get("is_mobile", False):
+                    st.toggle("📦 Compacto", value=st.session_state.get("compact_mode", False), key="compact_mode_toggle", on_change=_sync_compact)
 
     is_mobile = st.session_state.get("is_mobile", False)
     use_compact_header = is_mobile or st.session_state.get("compact_mode", False)
     
-    if not use_compact_header:
-        # Dar mais espaço para o bloco de botões para que os componentes do Streamlit não encolham demais
-        col_title, col_btn = st.columns([85, 15], vertical_alignment="top")
-        with col_title:
-            st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.4rem; color: #E0E0E0; white-space: nowrap; margin-top: 5px;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
-        with col_btn:
-            _render_configs()
+    # Se quiser o título e badges numa mesma linha do sticky:
+    with st.container():
+        st.markdown("<div id='sticky-header-anchor'></div>", unsafe_allow_html=True)
+        
+        st.markdown(f"""
+        <div style='display: flex; align-items: center; justify-content: center; width: 100%; padding: 5px 0;'>
+            <h1 style='margin: 0; padding: 0; font-size: clamp(0.9rem, 1.8vw, 1.2rem) !important; font-weight: 700; color: white; white-space: normal; text-align: center;'>ESTUDO COMPARATIVO DE ATRIBUIÇÕES DA POLÍCIA CIVIL DO ESTADO DE SÃO PAULO</h1>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Injeção JS para garantir o Sticky Menu de forma infalível
+    components.html("""
+    <script>
+    const anchor = window.parent.document.getElementById('sticky-header-anchor');
+    if (anchor) {
+        let container = anchor.closest('div[data-testid="stVerticalBlockBorderWrapper"]');
+        if (!container) container = anchor.closest('.element-container');
+        
+        if (container) {
+            container.style.position = 'sticky';
+            container.style.top = '0px';
+            container.style.zIndex = '999999';
+            
+            // Liberar o overflow dos pais até o stMain para permitir que o sticky funcione
+            let p = container.parentElement;
+            while(p && !p.classList.contains('stMain')) {
+                p.style.setProperty('overflow', 'visible', 'important');
+                p = p.parentElement;
+            }
+        }
+    }
+    </script>
+    """, height=0)
 
     # Recupera ou inicializa a fonte da verdade para o modo atual
     if 'last_modo_visao' not in st.session_state:
         st.session_state.last_modo_visao = "mode_1"
     else:
         # Fallback caso last_modo_visao seja uma string traduzida em vez de key
-        if st.session_state.last_modo_visao not in ["mode_2", "mode_3", "mode_4", "mode_5"]:
-            for k in ["mode_2", "mode_3", "mode_4", "mode_5"]:
+        if st.session_state.last_modo_visao not in ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]:
+            for k in ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]:
                 if st.session_state.last_modo_visao == i18n.t(k):
                     st.session_state.last_modo_visao = k
                     break
@@ -1443,22 +1659,17 @@ with st.container():
     # Se o widget de rádio existe na sessão, confiamos nele. 
     # Se o usuário trocou o modo, a chave 'modo_visao_radio' já estará atualizada antes desta linha rodar.
     if "modo_visao_radio" in st.session_state:
-        if st.session_state.modo_visao_radio in ["mode_2", "mode_3", "mode_4", "mode_5"]:
+        if st.session_state.modo_visao_radio in ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]:
             st.session_state.last_modo_visao = st.session_state.modo_visao_radio
     else:
         # Se não existe, o Streamlit perdeu o estado (bug do unmount do popover). Restauramos do backup.
         st.session_state["modo_visao_radio"] = st.session_state.last_modo_visao
 
     current_mode_for_layout = st.session_state.last_modo_visao
-    is_mobile = st.session_state.get("is_mobile", False)
-    c_title = "#1E2329" if st.session_state.get("light_mode") else "#E0E0E0"
-    
-    if is_mobile and use_compact_header:
-        st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.2rem; color: {c_title}; text-align: center; margin-bottom: 15px; white-space: normal;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
     
     # Criamos o expander para reduzir o espaço da interface
     if use_compact_header:
-        menu_label = "📊 Menu e Configurações" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📊 Menu & Settings"
+        menu_label = "📊 Menu e Configurações Globais" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📊 Menu & Settings"
     else:
         menu_label = "🛠️ Menu Principal (Configurações e Navegação)" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "🛠️ Main Menu (Settings and Navigation)"
         
@@ -1466,19 +1677,35 @@ with st.container():
         
     with menu_expander:
         if use_compact_header:
-            if not is_mobile:
-                st.markdown(f"<h3 style='margin: 0; padding: 0; font-size: 1.2rem; color: {c_title}; text-align: center; margin-bottom: 15px; white-space: normal;'>{i18n.t('title')}</h3>", unsafe_allow_html=True)
-            _render_configs()
-            st.markdown("<hr style='margin: 15px 0; border: none; border-top: 1px solid rgba(150,150,150,0.3);'>", unsafe_allow_html=True)
+            st.markdown("<hr style='margin: 5px 0 15px 0; border: none; border-top: 1px solid rgba(150,150,150,0.3);'>", unsafe_allow_html=True)
             
 
             
-        if current_mode_for_layout in ["mode_4", "mode_7", "mode_1", "mode_5"] or is_mobile:
+        if is_mobile:
+            col_configs = st.container()
             col_menu_global = st.container()
             col_menu_toggles = st.container()
             col_menu_especifico = st.container()
         else:
-            col_menu_global, col_menu_toggles, col_menu_especifico = st.columns([1.5, 1, 1.5])
+            col_configs, col_menu_global = st.columns(2)
+            
+            _has_mod = current_mode_for_layout in ["mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]
+            _has_spec = current_mode_for_layout in ["mode_3", "mode_4", "mode_6", "mode_7"]
+            
+            if _has_mod and _has_spec:
+                col_menu_toggles, col_menu_especifico = st.columns(2)
+            elif _has_mod and not _has_spec:
+                col_menu_toggles = st.container()
+                col_menu_especifico = st.container()
+            elif not _has_mod and _has_spec:
+                col_menu_especifico = st.container()
+                col_menu_toggles = st.container()
+            else:
+                col_menu_toggles = st.container()
+                col_menu_especifico = st.container()
+            
+        with col_configs:
+            _render_configs()
             
         _modes_with_modifiers = ["mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]
         if current_mode_for_layout in _modes_with_modifiers:
@@ -1498,14 +1725,20 @@ with st.container():
                 correcoes_app = any(c in ["Atual", "LONPC"] for c in cenarios_ativos)
                 papis_app = any(c in ["Reestruturação 2024", "Reestruturação Reunião 1 2025", "Reestruturação Reunião 2 2025"] for c in cenarios_ativos)
                 
-                st.checkbox("Atribuições Comuns (DGP 30/2012)", value=False, key="toggle_atrib_comuns", help="Aplica as atribuições gerais comuns a todo policial civil estabelecidas pela Portaria DGP 30/2012.")
+                col_m1, col_m2 = st.columns(2)
+                
+                with col_m1:
+                    st.checkbox("Atribuições Comuns (DGP 30/2012)", value=False, key="toggle_atrib_comuns", help="Aplica as atribuições gerais comuns a todo policial civil estabelecidas pela Portaria DGP 30/2012.")
                 
                 if current_mode_for_layout == "mode_4":
                     st.info("No **Análise de Cenários**, as variações de Correção, Decreto e Papiloscopista Perito são ajustadas individualmente nos seletores de cada cenário (A e B).")
                 else:
-                    st.checkbox("Decreto de 1967 (Adição Histórica)", value=False, key="toggle_decreto_1967", help="Sobrepõe as atribuições do antigo decreto (OR) sobre as do cenário atual.")
-                    st.checkbox("Correções Ortográficas e Técnicas", value=True, key="toggle_correcoes", disabled=not correcoes_app, help="Utiliza a versão com correções técnicas nos cenários base. Aplicável a: Atual e LONPC.")
-                    st.checkbox("Papiloscopistas como Peritos Oficiais", value=False, key="toggle_papis_peritos", disabled=not papis_app, help="Eleva o status do cargo de Papiloscopista para Perito Oficial. Aplicável a: Reestruturação 2024 e 2025.")
+                    with col_m2:
+                        st.checkbox("Decreto de 1967 (Adição Histórica)", value=False, key="toggle_decreto_1967", help="Sobrepõe as atribuições do antigo decreto (OR) sobre as do cenário atual.")
+                    with col_m1:
+                        st.checkbox("Correções Ortográficas e Técnicas", value=True, key="toggle_correcoes", disabled=not correcoes_app, help="Utiliza a versão com correções técnicas nos cenários base. Aplicável a: Atual e LONPC.")
+                    with col_m2:
+                        st.checkbox("Papiloscopistas como Peritos Oficiais", value=False, key="toggle_papis_peritos", disabled=not papis_app, help="Eleva o status do cargo de Papiloscopista para Perito Oficial. Aplicável a: Reestruturação 2024 e 2025.")
             
         # Âncora invisível para o tour geral referenciar este elemento (mantido por precaução estrutural)
         st.markdown("<div id='tour-anchor-modes'></div>", unsafe_allow_html=True)
@@ -1573,34 +1806,7 @@ with st.container():
         
     is_sample_biased_global = False
 
-    # --- HTML dos badges de Modificadores Globais (reutilizável em todos os modos) ---
-    def _build_modifier_badges(incluir_1967: bool = None) -> str:
-        """Gera o HTML dos badges de modificadores globais para injeção na status bar."""
-        badges = []
-        # Atribuições Comuns
-        if incluir_atrib_comuns:
-            badges.append("<div class='status-badge' style='background:rgba(124,179,66,0.15);border:1px solid rgba(124,179,66,0.5);color:#aed581;'>🧩 Genéricas: <strong>ON</strong></div>")
-        else:
-            badges.append("<div class='status-badge' style='opacity:0.45;'>🧩 Genéricas: <strong>OFF</strong></div>")
-        # Correções Ortográficas
-        if incluir_correcoes:
-            badges.append("<div class='status-badge' style='background:rgba(79,195,247,0.15);border:1px solid rgba(79,195,247,0.5);color:#81d4fa;'>✏️ Correção: <strong>ON</strong></div>")
-        else:
-            badges.append("<div class='status-badge' style='opacity:0.45;'>✏️ Correção: <strong>OFF</strong></div>")
-        # Papis como Peritos
-        if papis_peritos:
-            badges.append("<div class='status-badge' style='background:rgba(171,71,188,0.15);border:1px solid rgba(171,71,188,0.5);color:#ce93d8;'>🔬 Papis Peritos: <strong>ON</strong></div>")
-        else:
-            badges.append("<div class='status-badge' style='opacity:0.45;'>🔬 Papis Peritos: <strong>OFF</strong></div>")
-        # Decreto 1967
-        if incluir_1967 is None:
-            incluir_1967 = st.session_state.get("toggle_decreto_1967", False)
-            
-        if incluir_1967:
-            badges.append("<div class='status-badge' style='background:rgba(255,183,77,0.15);border:1px solid rgba(255,183,77,0.5);color:#ffcc80;'>📜 1967: <strong>ON</strong></div>")
-        else:
-            badges.append("<div class='status-badge' style='opacity:0.45;'>📜 1967: <strong>OFF</strong></div>")
-        return "".join(badges)
+
     
     # --- CONTROLES SUPERIORES (APENAS EXPLORADOR INDIVIDUAL) ---
     if modo_visao == i18n.t("mode_3"):
@@ -1839,33 +2045,37 @@ with st.container():
         badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('badge_bias')}</div>" if is_sample_biased_global else ""
         _mod_badges_4 = _build_modifier_badges(incluir_1967=incluir_1967_a or incluir_1967_b)
         status_bar_placeholder.markdown(f"""
-        <div id='sticky-header-anchor'></div>
-        <div style='display: flex; flex-direction: column;'>
-            <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 5px; flex-wrap: wrap; gap: 10px;'>
-                <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
-                    <div class='status-badge'>{i18n.t("badge_mode")} <strong>{i18n.t("mode_4").split(". ", 1)[-1]}</strong></div>
-                    <div class='status-badge' title='{i18n.t("scenario_origin_tooltip")}' style='cursor: help;'>{i18n.t("badge_scenario_a")}<strong>{cenario_a_title}</strong></div>
-                    <div class='status-badge' title='{i18n.t("scenario_dest_tooltip")}' style='cursor: help;'>{i18n.t("badge_scenario_b")}<strong>{cenario_b_title}</strong></div>{badge_destaque_2}
-                    {_mod_badges_4}
-                </div>
-            </div>
-            {rastreio_html}
+<div style='display: flex; flex-direction: column;'>
+    <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 5px; flex-wrap: wrap; gap: 10px;'>
+        <div style='display: flex; gap: 5px; flex-wrap: wrap; align-items: center;'>
+{badge_vies_html}
+{_build_config_badges()}
+{_mod_badges_4}
+<div style="flex-grow: 1; min-width: 20px;"></div>
+<div class='status-badge'>{i18n.t("badge_mode")} <strong>{i18n.t("mode_4").split(". ", 1)[-1]}</strong></div>
+<div class='status-badge' title='{i18n.t("scenario_origin_tooltip")}' style='cursor: help;'>{i18n.t("badge_scenario_a")}<strong>{cenario_a_title}</strong></div>
+<div class='status-badge' title='{i18n.t("scenario_dest_tooltip")}' style='cursor: help;'>{i18n.t("badge_scenario_b")}<strong>{cenario_b_title}</strong></div>{badge_destaque_2}
         </div>
-        """, unsafe_allow_html=True)
+    </div>
+    {rastreio_html}
+</div>
+""", unsafe_allow_html=True)
             
     # --- CONTROLES MODO 3 ---
     elif modo_visao == i18n.t("mode_5"):
         badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('badge_bias')}</div>" if is_sample_biased_global else ""
         _mod_badges_5 = _build_modifier_badges()
         status_bar_placeholder.markdown(f"""
-        <div id='sticky-header-anchor'></div>
-        <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
-            <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
-                <div class='status-badge'>{i18n.t('badge_mode_4')}</div>
-                {_mod_badges_5}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+<div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
+    <div style='display: flex; gap: 5px; flex-wrap: wrap; align-items: center;'>
+{badge_vies_html}
+{_build_config_badges()}
+{_mod_badges_5}
+<div style="flex-grow: 1; min-width: 20px;"></div>
+<div class='status-badge'>{i18n.t('badge_mode_4')}</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
     # --- CONTROLES MODO 4 ---
     elif modo_visao == i18n.t("mode_6"):
@@ -1903,12 +2113,14 @@ with st.container():
         badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('badge_bias')}</div>" if is_sample_biased_global else ""
         _mod_badges_6 = _build_modifier_badges()
         status_bar_placeholder.markdown(f"""
-        <div id='sticky-header-anchor'></div>
         <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
-            <div style='display: flex; gap: 5px; flex-wrap: wrap;'>{badge_vies_html}
+            <div style='display: flex; gap: 5px; flex-wrap: wrap;'>
+{badge_vies_html}
+{_build_config_badges()}
+{_mod_badges_6}
+                <div style="flex-grow: 1; min-width: 20px;"></div>
                 <div class='status-badge'>{i18n.t('badge_mode_5')}</div>
                 <div class='status-badge'>{i18n.t('badge_filtered_roles')} <strong>{len(filtro_cargos_long)}</strong></div>
-                {_mod_badges_6}
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1920,10 +2132,14 @@ with st.container():
 
         _cenario_7 = st.session_state.get("creative_cenario_sel_top", opcoes_cenarios[0] if opcoes_cenarios else "")
         _cenario_7_label = i18n.t(_cenario_7) if _cenario_7 else "—"
+        _mod_badges_7 = _build_modifier_badges()
+        
         status_bar_placeholder.markdown(f"""
-        <div id='sticky-header-anchor'></div>
         <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
             <div style='display: flex; gap: 5px; flex-wrap: wrap;'>
+{_build_config_badges()}
+{_mod_badges_7}
+                <div style="flex-grow: 1; min-width: 20px;"></div>
                 <div class='status-badge'>🎨 {i18n.t("mode_7").split(". ", 1)[-1]}</div>
                 <div class='status-badge'>{i18n.t('badge_scenario')} <strong>{_cenario_7_label}</strong></div>
             </div>
@@ -1970,24 +2186,27 @@ with st.container():
             st.session_state[radio_key] = _shared_sec
 
     if nav_options:
+        label = "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:"
+        help_text = "Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
+        
         if is_mobile:
             current_section = menu_expander.selectbox(
-                "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
+                label, 
                 options=nav_options, 
                 format_func=lambda x: i18n.t(x),
                 key=radio_key,
                 on_change=_update_section,
-                help="Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
+                help=help_text
             )
         else:
             current_section = menu_expander.radio(
-                "📍 Navegação Rápida:" if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "📍 Quick Navigation:", 
+                label, 
                 options=nav_options, 
                 format_func=lambda x: i18n.t(x),
                 key=radio_key,
-                horizontal=True,
                 on_change=_update_section,
-                help="Escolha uma seção para visualizá-la. O sistema carregará apenas a seção escolhida para economizar recursos e agilizar sua navegação." if st.session_state.get('language', 'PT-BR') == 'PT-BR' else "Choose a section to view. The system will load only the selected section to save resources and speed up your navigation."
+                help=help_text,
+                horizontal=True
             )
         
         if safe_key not in st.session_state:
@@ -2128,13 +2347,15 @@ if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.
     badge_vies_html = f"<div class='status-badge' style='background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;'>{i18n.t('warning_bias')}</div>" if is_sample_biased_global else ""
 
     header_html = f"""
-<div style='display: flex; gap: 5px; flex-wrap: wrap; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);'>
+<div style='display: flex; gap: 5px; flex-wrap: wrap; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); align-items: center;'>
 {badge_vies_html}
+{_build_config_badges()}
+{_build_modifier_badges(incluir_1967=incluir_1967)}
+<div style="flex-grow: 1;"></div>
 <div class='status-badge'>{i18n.t('badge_scenario')} <strong>{i18n.t(cenario_sel)}</strong></div>
 <div class='status-badge'>{i18n.t('badge_matrix')} <strong>{i18n.t('lbl_original') if tipo_matriz == 'Original' else i18n.t('lbl_condensed')}</strong></div>
 <div class='status-badge'>{i18n.t('badge_texts')} <strong>{lbl_textos}</strong></div>
 <div class='status-badge'>{i18n.t('badge_roles')} <strong>{lbl_cargos}</strong></div>{badge_destaque}
-{_build_modifier_badges(incluir_1967=incluir_1967)}
 </div>
 {lista_cargos_html}
 """
@@ -2260,24 +2481,8 @@ if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.
                 if dic_reverso:
                     df_long['Atribuição'] = df_long['Atribuição'].map(lambda x: dic_reverso.get(x, x))
                 
-                # Renderizar como HTML para herdar o CSS global (Light/Dark mode)
-                html_table = df_long.to_html(index=False, border=0, classes=["table", "table-striped"])
-                # Adiciona um container com scroll e estilo básico
-                st.markdown(f"""
-<style>
-    .table {{ width: 100%; border-collapse: collapse; }}
-    .table th, .table td {{ padding: 8px; text-align: left; border-bottom: 1px solid rgba(128,128,128,0.2); }}
-    .table th {{ font-weight: bold; }}
-</style>
-                <div style="max-height: 400px; overflow-y: auto; font-size: 0.85rem;">
-                    {html_table}
-                </div>
-                <style>
-                    .table {{ width: 100%; border-collapse: collapse; }}
-                    .table th, .table td {{ padding: 8px; text-align: left; border-bottom: 1px solid rgba(128,128,128,0.2); }}
-                    .table th {{ font-weight: bold; }}
-                </style>
-                """, unsafe_allow_html=True)
+                # Renderizar como st.dataframe para não gerar HTML cru no mobile
+                st.dataframe(df_long, use_container_width=True, hide_index=True, height=400)
                 
                 # Explicação Mobile
                 if st.session_state.get('language', 'PT-BR') == 'PT-BR':
@@ -2418,15 +2623,15 @@ if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.
             if st.session_state.get('light_mode'):
                 html_table = df_top_pairs.to_html(index=False, classes="table table-striped", border=0)
                 st.markdown(f"""
-                <div style="overflow-x: auto; font-size: 0.85rem;">
-                    {html_table}
-                </div>
-                <style>
-                    .table {{ width: 100%; border-collapse: collapse; }}
-                    .table th, .table td {{ padding: 8px; text-align: left; border-bottom: 1px solid rgba(128,128,128,0.2); }}
-                    .table th {{ font-weight: bold; }}
-                </style>
-                """, unsafe_allow_html=True)
+<div style="overflow-x: auto; font-size: 0.85rem;">
+    {html_table}
+</div>
+<style>
+.table {{ width: 100%; border-collapse: collapse; }}
+.table th, .table td {{ padding: 8px; text-align: left; border-bottom: 1px solid rgba(128,128,128,0.2); }}
+.table th {{ font-weight: bold; }}
+</style>
+""", unsafe_allow_html=True)
             else:
                 st.dataframe(df_top_pairs, use_container_width=True, hide_index=True)
                 
@@ -2822,15 +3027,15 @@ if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.
             if st.session_state.get('light_mode'):
                 html_table_g = df_top_g.to_html(index=False, classes="table table-striped", border=0)
                 st.markdown(f"""
-                <div style="overflow-x: auto; font-size: 0.85rem;">
-                    {html_table_g}
-                </div>
-                <style>
-                    .table {{ width: 100%; border-collapse: collapse; }}
-                    .table th, .table td {{ padding: 8px; text-align: left; border-bottom: 1px solid rgba(128,128,128,0.2); }}
-                    .table th {{ font-weight: bold; }}
-                </style>
-                """, unsafe_allow_html=True)
+<div style="overflow-x: auto; font-size: 0.85rem;">
+    {html_table_g}
+</div>
+<style>
+.table {{ width: 100%; border-collapse: collapse; }}
+.table th, .table td {{ padding: 8px; text-align: left; border-bottom: 1px solid rgba(128,128,128,0.2); }}
+.table th {{ font-weight: bold; }}
+</style>
+""", unsafe_allow_html=True)
             else:
                 st.dataframe(df_top_g, use_container_width=True, hide_index=True)
         
@@ -2897,8 +3102,26 @@ if modo_visao == i18n.t("mode_3") and df_cenario is not None and not df_cenario.
         # Checkbox para habilitar ou desabilitar o zoom automático no eixo X
         auto_zoom = st.checkbox(i18n.t("ruler_zoom_toggle", default="🔍 Habilitar Zoom Automático (Ajustar gráfico à dispersão)"), value=True, key="ruler_zoom_16")
         
-        fig_gower_ruler = visualizations.plot_gower_ruler(df_gower_16, reference_career=ref_cargo, cargos_destaque=cargos_destaque, full_scale=not auto_zoom)
+        ref_cargo_mapped = ref_cargo
+        if st.session_state.get('language', 'PT-BR') == 'EN' and traduzir_cargos:
+            ref_cargo_mapped = i18n.dic_traducao_cargos.get(ref_cargo, ref_cargo)
+            
+        fig_gower_ruler = visualizations.plot_gower_ruler(df_gower_16, reference_career=ref_cargo_mapped, cargos_destaque=cargos_destaque, full_scale=not auto_zoom)
         st.plotly_chart(fig_gower_ruler, use_container_width=True)
+        
+        if is_mobile and ref_cargo_mapped in df_gower_16.columns:
+            dist_serie = df_gower_16[ref_cargo_mapped].sort_values()
+            df_mobile_ruler = dist_serie.reset_index()
+            # Mapeamento de colunas com fallback
+            cargo_col_name = i18n.t('adj_tbl_role') if i18n.t('adj_tbl_role') != 'adj_tbl_role' else 'Cargo'
+            dist_col_name = 'Distância'
+            df_mobile_ruler.columns = [cargo_col_name, dist_col_name]
+            df_mobile_ruler[dist_col_name] = df_mobile_ruler[dist_col_name].map(lambda x: f"{x:.3f}")
+            df_mobile_ruler.insert(0, '#', range(1, len(df_mobile_ruler) + 1))
+            
+            # Substituição de tabela HTML por st.dataframe
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.dataframe(df_mobile_ruler, use_container_width=True, hide_index=True, height=400)
         
         st.markdown("💡 **Dica:** Abra o painel abaixo para ver como cada métrica calcula as distâncias.")
         with st.expander("📖 ABRIR TABELA COMPARATIVA DE MÉTRICAS"):

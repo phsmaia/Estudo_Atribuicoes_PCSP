@@ -95,35 +95,51 @@ def render_assignments_view(current_section=None):
             df_display = df_display.drop(columns=[c for c in cols_to_drop if c in df_display.columns])
 
             # Filters
-            st.markdown(f"#### 🔍 Filtros / Filters" if lang == 'EN' else f"#### 🔍 Filtros")
-            col1, col2 = st.columns(2)
-            
-            carreira_col = 'Career / Role' if lang == 'EN' else 'Carreira'
-            norma_col = 'Norm/Source' if lang == 'EN' else 'Norma/Edital'
+            with st.expander("🔍 Filtros de Pesquisa / Search Filters", expanded=True):
+                col1, col2, col3 = st.columns(3)
+                
+                carreira_col = 'Career / Role' if lang == 'EN' else 'Carreira'
+                norma_col = 'Norm/Source' if lang == 'EN' else 'Norma/Edital'
 
-            with col1:
-                carreiras_unicas = sorted([str(x) for x in df_display[carreira_col].dropna().unique()])
-                selected_carreiras = st.multiselect(
-                    "Filtrar por Carreira / Filter by Role" if lang == 'EN' else "Filtrar por Carreira",
-                    options=carreiras_unicas,
-                    default=[]
-                )
-            
-            with col2:
-                normas_unicas = sorted([str(x) for x in df_display[norma_col].dropna().unique()])
-                selected_normas = st.multiselect(
-                    "Filtrar por Norma / Filter by Norm" if lang == 'EN' else "Filtrar por Norma/Edital",
-                    options=normas_unicas,
-                    default=[]
-                )
+                with col1:
+                    carreiras_unicas = sorted([str(x) for x in df_display[carreira_col].dropna().unique()])
+                    selected_carreiras = st.multiselect(
+                        "Filtrar por Carreira / Role" if lang == 'EN' else "Carreira",
+                        options=carreiras_unicas,
+                        default=[]
+                    )
+                
+                with col2:
+                    normas_unicas = sorted([str(x) for x in df_display[norma_col].dropna().unique()])
+                    selected_normas = st.multiselect(
+                        "Filtrar por Norma / Norm" if lang == 'EN' else "Norma/Edital",
+                        options=normas_unicas,
+                        default=[]
+                    )
+                    
+                with col3:
+                    status_unicos = sorted([str(x) for x in df_display['Status'].dropna().unique()])
+                    selected_status = st.multiselect(
+                        "Filtrar por Status / Status" if lang == 'EN' else "Status",
+                        options=status_unicos,
+                        default=[]
+                    )
+
+                search_term = st.text_input(i18n.t("search_assignments", default="Pesquisa livre por texto (Ex: inquérito, perícia):"), key="search_tab1")
 
             # Apply filters
             if selected_carreiras:
                 df_display = df_display[df_display[carreira_col].isin(selected_carreiras)]
             if selected_normas:
                 df_display = df_display[df_display[norma_col].isin(selected_normas)]
+            if selected_status:
+                df_display = df_display[df_display['Status'].isin(selected_status)]
+                
+            if search_term:
+                mask = df_display.apply(lambda row: row.astype(str).str.contains(search_term, case=False, na=False).any(), axis=1)
+                df_display = df_display[mask]
 
-            st.markdown(f"**Total de registros:** {len(df_display)}" if lang == 'PT-BR' else f"**Total records:** {len(df_display)}")
+            st.markdown(f"**Total de registros encontrados:** {len(df_display)}" if lang == 'PT-BR' else f"**Total records found:** {len(df_display)}")
 
             # Display interactive dataframe
             st.dataframe(
@@ -166,6 +182,15 @@ def render_assignments_view(current_section=None):
                 df_conv = df_conv.rename(columns=col_translations)
                 for col in df_conv.columns:
                     df_conv[col] = df_conv[col].apply(lambda x: i18n.traduzir_cargo(x) if pd.notna(x) and isinstance(x, str) else x)
+            
+            with st.expander("🔍 Filtros de Pesquisa / Search Filters", expanded=True):
+                search_term2 = st.text_input(i18n.t("search_roles", default="Pesquisa livre por Cargo (Ex: Investigador, Escrivão):"), key="search_tab2")
+                
+            if search_term2:
+                mask = df_conv.apply(lambda row: row.astype(str).str.contains(search_term2, case=False, na=False).any(), axis=1)
+                df_conv = df_conv[mask]
+            
+            st.markdown(f"**Total de registros encontrados:** {len(df_conv)}" if lang == 'PT-BR' else f"**Total records found:** {len(df_conv)}")
             
             st.dataframe(
                 df_conv,

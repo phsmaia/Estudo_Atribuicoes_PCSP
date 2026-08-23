@@ -4,6 +4,17 @@ Todas as modificações notáveis neste projeto serão documentadas neste arquiv
 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [Unreleased] - 2026-08-23
+
+### Changed
+- **Árvore Filogenética Reestruturada**: O cladograma da Seção 5.1 foi totalmente refeito visual e logicamente, abandonando plotagens sobrepostas por renderizações ortogonais maduras.
+- **Topologia Evolutiva e Algoritmo NJ**: Inclusão de um novo seletor que permite ao usuário escolher entre o algoritmo UPGMA (Dendrograma alinhado em tabela) e o *Neighbor-Joining* (Árvore evolutiva biológica real, que reflete o comprimento da linha proporcional à quantidade de mudanças de atribuições).
+- **Remoção do Ancestral Fantasma**: O falso nó injetado "Policial Civil (Ancestral Comum)" foi removido da topologia cladística. O cálculo matemático para UPGMA/NJ agora é feito exclusivamente sobre os cargos reais, parando de corromper a raiz da árvore e resgatando o cálculo perfeito das sinapomorfias inter-clados.
+- **Espessura Evolutiva (Sinapomorfias)**: As arestas (galhos) que conectam os ramos agora são traçadas dinamicamente. Quanto mais atribuições exclusivas (sinapomorfias) foram inauguradas naquela bifurcação evolutiva, mais grossa é a linha no gráfico.
+- **Esquema de Cores por Basalidade (RdYlBu)**: Abandono da pintura monocromática em favor de um mapeamento térmico (Colormap Divergente RdYlBu). Cargos basais assumem tons frios (Azul), enquanto cargos especializados/derivados assumem tons quentes (Vermelho). O tamanho das "folhas" (pontos) também escala com o grau de derivação do cargo.
+- **Anti-Sobreposição Magnética (Y-Spreading)**: Inserção de uma lógica de física de repulsão no eixo Y. Cargos que acabam agrupados horizontal e verticalmente se "empurram" para garantir legibilidade. Ademais, o eixo horizontal foi esticado para ocupar 100% da tela visível, delegando o estouro do texto à margem protetora invisível, resolvendo visualmente o achatamento.
+- **Legenda e Limpeza de UI**: O Cladograma ganhou uma nova legenda inteligente lateral, e botões secundários da UI ("Mostrar Atribuições" e "Separar Evolução") foram removidos por serem obrigatórios no paradigma biológico adotado.
+
 ## [Unreleased] - 2026-08-18
 
 ### Added
@@ -45,7 +56,6 @@ O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 - **Painel Flutuante de Configurações**: Inclusão de controles diretos de URL na Splash Screen (Idioma, Tema Claro/Escuro, Modo Mobile) operando como links `<a href>` nativos para prevenção de bloqueios de iframe no escopo Javascript.
 - **Easter Egg Biométrico**: Inclusão do scanner biométrico animado que reage a toques (mobile/desktop) com easter eggs interativos (Modo CSI, Investigador Honorário, Acesso Nível 5) ao reter clique por 3 segundos.
 - **Evolução de Atribuições (Apomorfias vs Autapomorfias)**: Implementação de um novo toggle no Cladograma da Seção 5.1 que permite ao usuário separar as atribuições de forma evolutiva. Nós de divisão exibem as sinapomorfias (traços novos herdados por todos os descendentes), enquanto os nós folha (cargos) exibem apenas suas autapomorfias (traços exclusivos).
-- **Ancestral Comum**: O nó raiz do Cladograma agora é exibido como "Policial Civil (Ancestral Comum)" listando cirurgicamente apenas as atribuições universais a todas as carreiras.
 - **Ajuda Visual do Akinator (Multiselect)**: Adicionada uma lógica dinâmica usando Emojis (já que selects padrão não suportam CSS no texto) para indicar se a atribuição é 🔴 Incompatível, 🟡 Possível (reduz o grupo) ou 🟢 Única/Definitiva para desvendar o cargo.
 - **Dinâmica de Mascotes do Akinator**: O mascote companheiro agora é randomizado sempre que se inicia a seção ou ao clicar em "Jogar Novamente", trazendo variedade ao assistente. O estado "Confuso/Derrotado" também foi ativado para o modo Multiselect quando as respostas levam a nenhum cargo.
 - **Histórico do Akinator**: Adição de um contador real de perguntas e a listagem de atribuições testadas no menu expandível "Ver status dos cargos" do Modo 5.
