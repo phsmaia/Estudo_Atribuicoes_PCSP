@@ -4,6 +4,8 @@ Antes de realizar qualquer commit, o sistema/desenvolvedor deve obrigatoriamente
 
 1. **Revisão e Refatoração (Clean Code):** Revise o código que foi alterado. Garanta que ele está enxuto, eficiente, legível e seguro. Remova códigos mortos, variáveis não utilizadas e *logs* temporários de debug (ex: `console.log`, `print`).
 
+1.5. **Inclusão de Arquivos Novos (Untracked Files):** Sempre verifique a existência de arquivos não rastreados com `git status`. Se houver arquivos novos que compõem o escopo do repositório (ex: novas imagens, scripts definitivos, assets), inclua-os explicitamente com `git add <arquivo>`. Não deixe arquivos cruciais esquecidos.
+
 2. **Prevenção contra Vazamento de Dados (Secrets & PII):** Verifique rigorosamente se as alterações contêm chaves de API, senhas, tokens ou dados pessoais (PII) sensíveis. Qualquer dado desse tipo deve ser removido do código-fonte e tratado via variáveis de ambiente (`.env`).
 
 3. **Análise de Segurança:** Avalie as mudanças em busca de vulnerabilidades comuns (ex: falta de validação de input, dependências inseguras). O código a ser salvo não pode introduzir novos riscos ao sistema.
