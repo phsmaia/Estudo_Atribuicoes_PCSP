@@ -14,5 +14,6 @@ cargos_ingles_descricao.xlsx
 csv_dump.*
 dump_*.py
 test_strings.py
-scratch_update_explanations.py
+scratch_*.py
+erro.txt
 Deploying_Application_To_VPS.md
