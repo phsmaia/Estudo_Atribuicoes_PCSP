@@ -44,12 +44,32 @@ def render_sources_view(current_section):
     elif current_section == "m6_sub_principles_title":
         st.markdown(f"### ⚖️ {i18n.t('m6_sub_principles_title')}")
         
-        st.warning("🚧 **Seção em Construção:** Os princípios orientadores utilizados na interpretação dos dados e metodologias serão listados aqui em breve pelo autor.")
-        
-        st.markdown("""
-        *Esta seção detalhará as premissas lógicas, acadêmicas e operacionais que nortearam a categorização de atribuições (ex: o que foi considerado atribuição meio vs fim, critérios de equivalência semântica e agrupamento de sinônimos).*
-        """)
+        try:
+            import os
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            lang = st.session_state.get('language', 'PT-BR')
+            file_name = "Principles_Application_and_Study.md" if lang == "EN" else "Principios_Aplicacao_e_Estudo.md"
+            file_path = os.path.join(base_dir, file_name)
+            with open(file_path, "r", encoding="utf-8") as f:
+                principles_md = f.read()
+            st.markdown(principles_md, unsafe_allow_html=True)
+        except Exception as e:
+            st.error(f"Erro ao carregar arquivo de princípios: {e}")
         
         # Opcional: Like button de interação
         if 'interaction_ui' in globals():
             interaction_ui.render_like_button("6.2 Princípios do Autor", "6_2")
+
+    elif current_section == "m6_sub_faq_title":
+        st.markdown(f"### ❓ {i18n.t('m6_sub_faq_title')}")
+        if st.session_state.get('language', 'PT-BR') == 'EN':
+            st.warning("🚧 **Under Construction:** Frequently asked questions will be listed here soon.")
+        else:
+            st.warning("🚧 **Seção em Construção:** As perguntas frequentes serão listadas aqui em breve.")
+
+    elif current_section == "m6_sub_tech_list_title":
+        st.markdown(f"### 🛠️ {i18n.t('m6_sub_tech_list_title')}")
+        if st.session_state.get('language', 'PT-BR') == 'EN':
+            st.warning("🚧 **Under Construction:** The technical list will be detailed here soon.")
+        else:
+            st.warning("🚧 **Seção em Construção:** A lista técnica será detalhada aqui em breve.")

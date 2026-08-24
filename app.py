@@ -2160,7 +2160,7 @@ with st.container():
     elif modo_visao == i18n.t("mode_7"):
         nav_options = ["m5_sub_tree_title", "m5_sub_akinator_title"]
     elif modo_visao == i18n.t("mode_2"):
-        nav_options = ["m6_sub_sources_title", "m6_sub_principles_title"]
+        nav_options = ["m6_sub_sources_title", "m6_sub_principles_title", "m6_sub_faq_title", "m6_sub_tech_list_title"]
     elif modo_visao == i18n.t("mode_1"):
         nav_options = []
     else:

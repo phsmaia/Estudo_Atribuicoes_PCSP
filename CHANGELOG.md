@@ -6,7 +6,12 @@ O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ## [Unreleased] - 2026-08-23
 
+### Added
+- **Versão em Inglês dos Princípios**: Criação do arquivo `Principles_Application_and_Study.md` para suportar a internacionalização das premissas do estudo.
+- **Navegação Rápida (Modo 2)**: Inclusão das seções "2.3 Perguntas Frequentes" e "2.4 Lista Técnica" no rádio de navegação do Modo 2, preparando terreno para futuras implementações.
+
 ### Changed
+- **Revisão dos Princípios do Autor**: O arquivo `Principios_Aplicacao_e_Estudo.md` foi totalmente reestruturado sob um jargão mais rigoroso, científico (voltado para a Ciência de Dados) e jurídico-administrativo. Os 24 itens originais foram aglutinados em 12 princípios estruturais (divididos em três eixos) e implementados dinamicamente na seção "2.2 Princípios do Estudo" dependendo do idioma ativo do sistema.
 - **Árvore Filogenética Reestruturada**: O cladograma da Seção 5.1 foi totalmente refeito visual e logicamente, abandonando plotagens sobrepostas por renderizações ortogonais maduras.
 - **Topologia Evolutiva e Algoritmo NJ**: Inclusão de um novo seletor que permite ao usuário escolher entre o algoritmo UPGMA (Dendrograma alinhado em tabela) e o *Neighbor-Joining* (Árvore evolutiva biológica real, que reflete o comprimento da linha proporcional à quantidade de mudanças de atribuições).
 - **Remoção do Ancestral Fantasma**: O falso nó injetado "Policial Civil (Ancestral Comum)" foi removido da topologia cladística. O cálculo matemático para UPGMA/NJ agora é feito exclusivamente sobre os cargos reais, parando de corromper a raiz da árvore e resgatando o cálculo perfeito das sinapomorfias inter-clados.
