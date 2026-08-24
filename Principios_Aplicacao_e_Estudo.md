@@ -31,3 +31,5 @@ Este documento estabelece as diretrizes científicas e jurídicas que fundamenta
 ## III. Eixo de Visualização e Heurística Cognitiva
 
 12. **Comunicação Visual e Entropia Heurística:** Os achados matemáticos devem ser traduzidos em representações visuais acessíveis (dendrogramas, grafos, mapas de calor, etc.). Admite-se a introdução controlada de ruído nos dados (entropia) e a exploração de representações artísticas de caráter subsidiário, não como viés, mas como ferramenta heurística para evocar novas percepções cognitivas ("emoção sobre ruído") e quebrar estagnações interpretativas frente a fenômenos institucionais complexos.
+
+13. **Fomento Epistêmico e Difusão Multidisciplinar:** O estudo deve transcender a mera catalogação administrativa, atuando como vetor de criação de conhecimento e intersecção disciplinar (Direito, Ciência de Dados, Administração Pública e Ciências Forenses). Os achados e metodologias devem primar pela transparência e acessibilidade, promovendo a divulgação científica e educativa, de modo a instrumentalizar a sociedade, a academia e os gestores públicos com dados estruturados para a tomada de decisões estratégicas.

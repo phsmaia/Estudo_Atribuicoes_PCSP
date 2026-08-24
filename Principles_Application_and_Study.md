@@ -31,3 +31,5 @@ This document establishes the scientific and legal guidelines that underpin the 
 ## III. Visualization and Cognitive Heuristics Axis
 
 12. **Visual Communication and Heuristic Entropy:** Mathematical findings must be translated into accessible visual representations (dendrograms, graphs, heat maps, etc.). The controlled introduction of noise in the data (entropy) and the exploration of artistic representations of a subsidiary nature are admitted, not as a bias, but as a heuristic tool to evoke new cognitive perceptions ("emotion over noise") and break interpretative stagnations regarding complex institutional phenomena.
+
+13. **Epistemic Promotion and Multidisciplinary Diffusion:** The study must transcend mere administrative cataloging, acting as a vector for knowledge creation and disciplinary intersection (Law, Data Science, Public Administration, and Forensic Sciences). The findings and methodologies must prioritize transparency and accessibility, promoting scientific and educational dissemination, in order to equip society, academia, and public managers with structured data for strategic decision-making.

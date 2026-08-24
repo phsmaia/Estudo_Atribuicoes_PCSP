@@ -1276,8 +1276,8 @@ if "first_load_done" not in st.session_state:
 
 datasets = data_loader.get_all_datasets()
 opcoes_cenarios = [
-    "Atual",
-    "LONPC",
+    "Atual: Situação 2023 (até LONPC)",
+    "LONPC: Adequação à LONPC",
     "Reestruturação 2024",
     "Reestruturação Reunião 1 2025",
     "Reestruturação Reunião 2 2025"
@@ -1289,8 +1289,8 @@ papis_peritos = st.session_state.get('toggle_papis_peritos', False)
 incluir_decreto_1967 = st.session_state.get('toggle_decreto_1967', False)
 
 mapa_cenarios = {
-    "Atual": datasets["atual_com_correcao"] if incluir_correcoes else datasets["atual_sem_correcao"],
-    "LONPC": datasets["lonpc_com_correcao"] if incluir_correcoes else datasets["lonpc_sem_correcao"],
+    "Atual: Situação 2023 (até LONPC)": datasets["atual_com_correcao"] if incluir_correcoes else datasets["atual_sem_correcao"],
+    "LONPC: Adequação à LONPC": datasets["lonpc_com_correcao"] if incluir_correcoes else datasets["lonpc_sem_correcao"],
     "Reestruturação 2024": datasets["reestruturacao_papis_peritos"] if papis_peritos else datasets["reestruturacao_papis_nao_peritos"],
     "Reestruturação Reunião 1 2025": datasets["rest_2025_gov_r1_papis_peritos"] if papis_peritos else datasets["rest_2025_gov_r1_papis_nao_peritos"],
     "Reestruturação Reunião 2 2025": datasets["rest_2025_gov_r2_papis_peritos"] if papis_peritos else datasets["rest_2025_gov_r2_papis_nao_peritos"]
@@ -1348,9 +1348,9 @@ def _build_config_badges() -> str:
     return "".join(badges)
 
 def get_scenario_df(cenario, correcoes, papi):
-    if cenario == "Atual":
+    if cenario == "Atual: Situação 2023 (até LONPC)":
         return datasets["atual_com_correcao"] if correcoes else datasets["atual_sem_correcao"]
-    elif cenario == "LONPC":
+    elif cenario == "LONPC: Adequação à LONPC":
         return datasets["lonpc_com_correcao"] if correcoes else datasets["lonpc_sem_correcao"]
     elif cenario == "Reestruturação 2024":
         return datasets["reestruturacao_papis_peritos"] if papi else datasets["reestruturacao_papis_nao_peritos"]
@@ -1715,14 +1715,14 @@ with st.container():
                 # Descobrir quais cenários estão sendo visualizados para desativar toggles irrelevantes
                 cenarios_ativos = set()
                 if current_mode_for_layout == "mode_2":
-                    cenarios_ativos.add(st.session_state.get('cenario_base', 'Atual'))
+                    cenarios_ativos.add(st.session_state.get('cenario_base', 'Atual: Situação 2023 (até LONPC)'))
                 elif current_mode_for_layout in ["mode_3", "mode_5"]:
-                    cenarios_ativos.add(st.session_state.get('cenario_a', 'Atual'))
+                    cenarios_ativos.add(st.session_state.get('cenario_a', 'Atual: Situação 2023 (até LONPC)'))
                     cenarios_ativos.add(st.session_state.get('cenario_b', 'Decreto de 1967'))
                 else:
                     cenarios_ativos.update(opcoes_cenarios)
                     
-                correcoes_app = any(c in ["Atual", "LONPC"] for c in cenarios_ativos)
+                correcoes_app = any(c in ["Atual: Situação 2023 (até LONPC)", "LONPC: Adequação à LONPC"] for c in cenarios_ativos)
                 papis_app = any(c in ["Reestruturação 2024", "Reestruturação Reunião 1 2025", "Reestruturação Reunião 2 2025"] for c in cenarios_ativos)
                 
                 col_m1, col_m2 = st.columns(2)
@@ -1945,14 +1945,14 @@ with st.container():
             col_a, col_b = st.columns(2)
             
             cenario_a = col_a.selectbox(i18n.t("scenario_a"), opcoes_cenarios, index=0, format_func=lambda x: i18n.t(x), key="cenario_a_sel")
-            correcoes_a_disp = cenario_a in ["Atual", "Decreto de 1967", "LONPC"]
+            correcoes_a_disp = cenario_a in ["Atual: Situação 2023 (até LONPC)", "Decreto de 1967", "LONPC: Adequação à LONPC"]
             papis_a_disp = cenario_a in ["Reestruturação 2024", "Reestruturação Reunião 1 2025", "Reestruturação Reunião 2 2025"]
             correcoes_a = col_a.checkbox("Com Correções", value=True, key="corr_a", disabled=not correcoes_a_disp)
             papi_a = col_a.checkbox("Papi Perito", value=False, key="papi_a", disabled=not papis_a_disp)
             incluir_1967_a = col_a.checkbox(i18n.t("include_1967_layer"), value=False, key="incluir_1967_a", disabled=(cenario_a == "Decreto de 1967"))
             
             cenario_b = col_b.selectbox(i18n.t("scenario_b"), opcoes_cenarios, index=1, format_func=lambda x: i18n.t(x), key="cenario_b_sel")
-            correcoes_b_disp = cenario_b in ["Atual", "Decreto de 1967", "LONPC"]
+            correcoes_b_disp = cenario_b in ["Atual: Situação 2023 (até LONPC)", "Decreto de 1967", "LONPC: Adequação à LONPC"]
             papis_b_disp = cenario_b in ["Reestruturação 2024", "Reestruturação Reunião 1 2025", "Reestruturação Reunião 2 2025"]
             correcoes_b = col_b.checkbox("Com Correções", value=True, key="corr_b", disabled=not correcoes_b_disp)
             papi_b = col_b.checkbox("Papi Perito", value=False, key="papi_b", disabled=not papis_b_disp)
@@ -1991,7 +1991,7 @@ with st.container():
                 
             def get_scenario_title(cenario, correcoes, papi, incluir_1967):
                 mods = []
-                if cenario in ["Atual", "Decreto de 1967", "LONPC"]:
+                if cenario in ["Atual: Situação 2023 (até LONPC)", "Decreto de 1967", "LONPC: Adequação à LONPC"]:
                     mods.append("c/ Corr" if correcoes else "s/ Corr")
                 if cenario in ["Reestruturação 2024", "Reestruturação Reunião 1 2025", "Reestruturação Reunião 2 2025"]:
                     mods.append("c/ Perito" if papi else "s/ Perito")

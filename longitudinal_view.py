@@ -235,7 +235,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             style_str = f"color: {cor_linha}; font-weight:bold; background-color: {label_bg}; padding: 4px 8px; border-radius: 6px; display: inline-block;"
             html += f"<td><span style='{style_str}'>{c_label}</span></td>"
             
-            control_val = hist_dict[c].get("Atual", None)
+            control_val = hist_dict[c].get("Atual: Situação 2023 (até LONPC)", None)
             
             if is_float and isinstance(control_val, float):
                 control_str = f"{control_val:.3f}"
@@ -279,7 +279,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             
         st.caption(descricao)
         
-        todos_secundarios = [c for c in opcoes_cenarios if c != "Atual"]
+        todos_secundarios = [c for c in opcoes_cenarios if c != "Atual: Situação 2023 (até LONPC)"]
         default_selection = todos_secundarios[:2] if is_mobile and len(todos_secundarios) > 2 else todos_secundarios
         
         cenarios_secundarios = st.multiselect(
@@ -294,7 +294,7 @@ def render_longitudinal_mode(opcoes_cenarios, mapa_cenarios, filtro_cargos, carg
             st.info(i18n.t("m4_table_filter_empty", default="Selecione ao menos um cenário secundário para exibição."))
             return
             
-        cenarios_filtrados = ["Atual"] + cenarios_secundarios
+        cenarios_filtrados = ["Atual: Situação 2023 (até LONPC)"] + cenarios_secundarios
         
         # Renderizar gráfico de linha (exceto se for texto)
         if not is_string:

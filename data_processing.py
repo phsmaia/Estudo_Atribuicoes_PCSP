@@ -391,8 +391,8 @@ def mesclar_com_1967(df_base: pd.DataFrame, base_name: str, df_1967: pd.DataFram
         
     # Mapear o nome amigável do menu para o ÍNDICE da coluna da Tabela de Conversão (evita erros de encoding)
     col_idx_map = {
-        "Atual": 1 if incluir_correcoes else 0,
-        "LONPC": 3 if incluir_correcoes else 2,
+        "Atual: Situação 2023 (até LONPC)": 1 if incluir_correcoes else 0,
+        "LONPC: Adequação à LONPC": 3 if incluir_correcoes else 2,
         "Reestruturação 2024": 4,
         "Reestruturação Reunião 1 2025": 5,
         "Reestruturação Reunião 2 2025": 6
@@ -466,9 +466,14 @@ def mesclar_com_dgp30(df_base: pd.DataFrame, base_name: str, df_dgp30: pd.DataFr
         "LONPC Com Correção": 4,
         "Reestruturação 2024": 5,
         "Reestruturação Reunião 1 2025": 6,
-        "Reestruturação Reunião 2 2025": 7,
-        "Atual": 2,
-        "LONPC": 4
+        "Reestruturação Reunião 2 2025": 7
+    }
+    
+    # Prioridades para os cenários principais (quando todos estão ativos no modo longitudinal)
+    prioridade_cenarios = {
+        "Decreto de 1967": 1,
+        "Atual: Situação 2023 (até LONPC)": 2,
+        "LONPC: Adequação à LONPC": 4
     }
     
     col_idx = col_idx_map.get(base_name)
