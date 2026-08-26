@@ -6,7 +6,7 @@
 
 - [Edital Delegado de Polícia 2023](https://documento.vunesp.com.br/documento/stream/MjcwNDEyNg%3d%3d) Acessado em: 15/08/2026
 
-- [Edital Escrivão de Polícia 2023](https://documento.vunesp.com.br/documento/stream/NDgxNTI0OA%3d%3dURL) Acessado em: 15/08/2026
+- [Edital Escrivão de Polícia 2023](https://documento.vunesp.com.br/documento/stream/NDgxNTI0OA%3d%3d) Acessado em: 25/08/2026
 
 - [Edital Investigador de Polícia 2023](https://documento.vunesp.com.br/documento/stream/NDgxNTA4OQ%3d%3d) Acessado em: 15/08/2026
 
@@ -18,19 +18,19 @@
 
 - [Edital Auxiliar de Papiloscopista Policial 2017](https://documento.vunesp.com.br/documento/stream/NDMzNjQ1) Acessado em: 15/08/2026
 
-- [Edital Agente de Telecomunicações Policial 2017](Uhttps://documento.vunesp.com.br/documento/stream/NDE2MjE1RL) Acessado em: 15/08/2026
+- [Edital Agente de Telecomunicações Policial 2017](https://documento.vunesp.com.br/documento/stream/NDE2MjE1) Acessado em: 25/08/2026
 
 - [Edital Agente Policial 2017](https://documento.vunesp.com.br/documento/stream/NDMzNDIz) Acessado em: 15/08/2026
 
 - **<span style="color: red;"> Edital Carcereiro Policial 2013 - EDITAL SEM ATRIBUIÇÕES. Caso tenha documento com as atribuições, favor entrar em contato. </span>**
 
-- [Edital Fotógrafo Técnico Pericial 2013](https://www.acheconcursos.com.br/edital-concurso/edital-concurso-policia-civil-sp-fotografoRL) Acessado em: 15/08/2026
+- [Edital Fotógrafo Técnico Pericial 2013](https://www.acheconcursos.com.br/imagens/anexo/21028/editalpcspfotografo2013.pdf) Acessado em: 25/08/2026
 
-- [Edital Desenhista Técnico Pericial 2013](https://dhg1h5j42swfq.cloudfront.net/2025/06/07143401/edital-policia-cientifica-sp-2013.pdf) Acessado em: 16/08/2026
+- [Edital Desenhista Técnico Pericial 2013](https://arq.pciconcursos.com.br/policia-civil-sp-retifica-edital-com-55-vagas-para-desenhista-tecnico-pericial/178780/b2724831c4/edital_de_abertura_178780.pdf) Acessado em: 25/08/2026
 
 - [Edital Auxiliar de Necropsia 2013](https://www.policiacivil.sp.gov.br/portal/ShowProperty?nodeId=/dipolContent/UCM_004375//idcPrimaryFile&) Acessado em: 16/08/2026
 
-- [Edital Atendente de Necrotério 2013](https://arquivos.qconcursos.com/regulamento/arquivo/2092/pc-sp-2013-atendente-de-necroterio-edital.pdf) Acessado em: 16/08/2026
+- [Edital Atendente de Necrotério 2013](https://www.jusbrasil.com.br/jurisprudencia/tj-sp/1936553095/inteiro-teor-1936553098) Acessado em: 25/08/2026
 
 - [Lei Orgânica Nacional das Polícias Civis 2023](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14735.htm) Acessado em: 16/08/2026
 

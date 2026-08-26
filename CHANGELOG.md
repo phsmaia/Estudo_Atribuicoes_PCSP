@@ -4,6 +4,19 @@ Todas as modificações notáveis neste projeto serão documentadas neste arquiv
 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [Unreleased] - 2026-08-26
+
+### Added
+- **Config Badges em Modos Básicos:** Adicionado os badges de configuração globais (Idioma, Fonte, Tema, Layout) na *status bar* superior dos Modos 1 (Tabela Explícita) e Modo 2 (Estudo Dirigido), garantindo consistência visual e situacional para o usuário.
+
+### Changed
+- **Agregação Dinâmica (Decreto 1967):** Refatorado o `mesclar_com_1967` em `data_processing.py` para permitir o desmembramento de cargos concatenados (via delimitador `+` na tabela de conversão). Agora o motor consolida com precisão agrupamentos híbridos, como Escrivão e Investigador que herdaram as atribuições históricas de Fiscal de Diversões Públicas.
+- **Rigor de Nomenclatura da Papiloscopia:** Atualizado o código da aplicação e metadados para rebatizar (com ressalvas educativas 'ℹ️') as antigas periciais de local e desastres para "Assessoramento Técnico Papiloscópico", "Suporte a desastres", e "Edição de relatórios papiloscópicos", evitando atrito de interpretação legal na comunidade.
+
+### Fixed
+- **Omissão de Traduções (Editais):** Completadas as traduções para o Inglês de atribuições pendentes nas últimas linhas da base oficial `Atribuicoes_Carreiras_Editais.CSV`.
+- **Correção de Crash de Acesso ao Pandas:** O arquivo mestre CSV foi reprocessado para limpar bytes BOM (`\ufeff`) corrompidos do cabeçalho que causavam o temido erro fatal `KeyError: 'Norma/Edital'` ao trocar de idiomas na tabela de dados (Modo 1).
+
 ## [Unreleased] - 2026-08-23
 
 ### Added

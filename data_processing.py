@@ -418,36 +418,43 @@ def mesclar_com_1967(df_base: pd.DataFrame, base_name: str, df_1967: pd.DataFram
         carreira_1967 = mapping.get(carreira_atual)
         
         if carreira_1967:
-            row_1967 = df_1967[df_1967['Carreira'] == carreira_1967]
+            # Dividir múltiplos cargos se separados por '+'
+            sub_carreiras = [c.strip() for c in str(carreira_1967).split('+')]
             
-            if row_1967.empty:
-                safe_map = {
-                    "Delegado de Polícia": "Delegado",
-                    "Fiscal de Diversões Públicas": "Fiscal",
-                    "Médico Legista": "Legista",
-                    "Pesquisador Datiloscópico": "Pesquisador",
-                    "Datiloscopista": "Datiloscopista",
-                    "Radiotelegrafista": "Radiotelegrafista",
-                    "Motorista": "Motorista",
-                    "Perito Criminal": "Perito Criminal"
-                }
-                safe_term = safe_map.get(carreira_1967)
-                if safe_term:
-                    matches = df_1967[df_1967['Carreira'].str.contains(safe_term, na=False, case=False)]
-                    if not matches.empty:
-                        row_1967 = matches
-                        
-            if not row_1967.empty:
-                row_1967 = row_1967.iloc[0]
+            for sub_carreira in sub_carreiras:
+                row_1967 = df_1967[df_1967['Carreira'] == sub_carreira]
                 
-                for col in df_1967.columns:
-                    if col != 'Carreira' and row_1967.get(col, 0) == 1:
-                        if col not in df_combined.columns:
-                            if col not in new_cols_data:
-                                new_cols_data[col] = [0] * len(df_combined)
-                            new_cols_data[col][pos] = 1
-                        else:
-                            df_combined.at[idx, col] = 1
+                if row_1967.empty:
+                    safe_map = {
+                        "Delegado de Polícia": "Delegado",
+                        "Fiscal de Diversões Públicas": "Fiscal",
+                        "Médico Legista": "Legista",
+                        "Pesquisador Datiloscópico": "Pesquisador",
+                        "Datiloscopista": "Datiloscopista",
+                        "Radiotelegrafista": "Radiotelegrafista",
+                        "Motorista": "Motorista",
+                        "Perito Criminal": "Perito Criminal",
+                        "Escrivão de Polícia": "Escrivão",
+                        "Investigador de Polícia": "Investigador",
+                        "Investigador de Policia": "Investigador"
+                    }
+                    safe_term = safe_map.get(sub_carreira)
+                    if safe_term:
+                        matches = df_1967[df_1967['Carreira'].str.contains(safe_term, na=False, case=False)]
+                        if not matches.empty:
+                            row_1967 = matches
+                            
+                if not row_1967.empty:
+                    row_1967 = row_1967.iloc[0]
+                    
+                    for col in df_1967.columns:
+                        if col != 'Carreira' and row_1967.get(col, 0) == 1:
+                            if col not in df_combined.columns:
+                                if col not in new_cols_data:
+                                    new_cols_data[col] = [0] * len(df_combined)
+                                new_cols_data[col][pos] = 1
+                            else:
+                                df_combined.at[idx, col] = 1
                             
     if new_cols_data:
         df_new = pd.DataFrame(new_cols_data, index=df_combined.index)

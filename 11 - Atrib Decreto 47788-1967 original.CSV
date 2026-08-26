@@ -1,13 +1,15 @@
-Carreira;Fiscalizar locais;Verificar horários;Fiscalizar cultura;Notificar Infratores e Lavrar Autos;Tarefas de escritório;exames com ciências naturais;autópsias e exames necroscópicos;exames em vivos;Identificação Papiloscópica Antiga;Tomada Papiloscópica Antiga;Registro de Sinais Corporais;Manutenção Material Papiloscópico;Manusear rádio;Conservar rádio;Manutenção de Viatura;Funções de Carcereiro;fotografar ocorrências diversas de perícia da SPTC;trabalhar fotografias de qualquer tipo relacionadas a perícia SPTC;realizar levantamento de local com desenhos e fotos;manuseio do cadáver em laboratório;manipulação de ossos e partes do corpo
-Delegado de Polícia;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
-Fiscal de Diversões Públicas;1;1;1;1;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
-Perito Criminal;0;0;0;0;1;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
-Médico Legista;0;0;0;0;0;0;1;1;0;0;0;0;0;0;0;0;0;0;0;0;0
-Pesquisador Datiloscópico;0;0;0;0;1;0;0;0;1;0;0;0;0;0;0;0;0;0;0;0;0
-Datiloscopista;0;0;0;0;0;0;0;0;0;1;1;1;0;0;0;0;0;0;0;0;0
-Radiotelegrafista;0;0;0;0;0;0;0;0;0;0;0;0;1;1;0;0;0;0;0;0;0
-Motorista;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;0
-Guarda de Presídio;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0
-Fotógrafo;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;1;0;0;0
-Desenhista;0;0;0;0;1;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0
-Auxiliar de Autópsia;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;1
+Carreira;Organização de Inquérito;Tarefas de escritório;atuar na investigação;Licenciamento e Registro;Manutenção de Escritório;policiamento e prevenção de crime;cumprir mandados;Fiscalizar locais;Verificar horários;Fiscalizar cultura;Notificar Infratores e Lavrar Autos;exames com ciências naturais;autópsias e exames necroscópicos;exames em vivos;Identificação Papiloscópica Antiga;Tomada Papiloscópica Antiga;Registro de Sinais Corporais;Manutenção Material Papiloscópico;Manusear rádio;Conservar rádio;Manutenção de Viatura;Funções de Carcereiro;fotografar ocorrências diversas de perícia da SPTC;trabalhar fotografias de qualquer tipo relacionadas a perícia SPTC;realizar levantamento de local com desenhos e fotos;manuseio do cadáver em laboratório;manipulação de ossos e partes do corpo
+Delegado de Polícia;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Escrivão de Polícia;1;1;1;1;1;0;0;1;1;1;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Investigador de Policia;0;0;1;0;0;1;1;1;1;1;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Fiscal de Diversões Públicas;0;1;0;0;0;0;0;1;1;1;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Perito Criminal;0;1;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Médico Legista;0;0;0;0;0;0;0;0;0;0;0;0;1;1;0;0;0;0;0;0;0;0;0;0;0;0;0
+Pesquisador Datiloscópico;0;1;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;0;0;0;0;0;0;0
+Datiloscopista;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;1;1;0;0;0;0;0;0;0;0;0
+Radiotelegrafista;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;1;0;0;0;0;0;0;0
+Motorista;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0;0
+Guarda de Presídio;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;0;0
+Fotógrafo;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;1;0;0;0
+Desenhista;0;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0
+Auxiliar de Autópsia;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;1

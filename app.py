@@ -2146,6 +2146,19 @@ with st.container():
         </div>
         """, unsafe_allow_html=True)
 
+    elif modo_visao in [i18n.t("mode_1"), i18n.t("mode_2")]:
+        _mod_label = i18n.t("mode_1") if modo_visao == i18n.t("mode_1") else i18n.t("mode_2")
+        _mod_clean = _mod_label.split(". ", 1)[-1] if ". " in _mod_label else _mod_label
+        status_bar_placeholder.markdown(f"""
+        <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
+            <div style='display: flex; gap: 5px; flex-wrap: wrap;'>
+{_build_config_badges()}
+                <div style="flex-grow: 1; min-width: 20px;"></div>
+                <div class='status-badge'><strong>{_mod_clean}</strong></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     # Navegação Interna Condicional (Substitui as bolinhas flutuantes)
     st.markdown("<div style='margin-top: 5px;'></div>", unsafe_allow_html=True)
     
