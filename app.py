@@ -912,6 +912,12 @@ if "first_load_done" not in st.session_state:
                     splashContainer.style.opacity = '0';
                     setTimeout(() => splashContainer.remove(), 1000);
                 }}
+                if (!window.parent.document.getElementById('remove-fog-style')) {{
+                    const style = window.parent.document.createElement('style');
+                    style.id = 'remove-fog-style';
+                    style.innerHTML = '.stApp::after, .stApp::before {{ display: none !important; }}';
+                    window.parent.document.head.appendChild(style);
+                }}
             }}, 2000);
         }}
         
@@ -1272,7 +1278,30 @@ if "first_load_done" not in st.session_state:
         st.query_params["is_mobile"] = str(st.session_state.is_mobile).lower()
         st.rerun()
 
-    # Frontend tweaks handled via CSS natively now.
+    st.stop()
+
+# --- FIM DO CARREGAMENTO COM SPLASH SCREEN ---
+
+# Script de limpeza garantida da splash screen, executado em toda renderização
+# Caso o iframe original seja destruído antes do timeout, isso garante a remoção do DOM pai.
+components.html("""
+<script>
+    const staleSplash = window.parent.document.getElementById('custom-splash-screen');
+    if (staleSplash) {
+        staleSplash.style.transition = 'opacity 0.5s ease-out';
+        staleSplash.style.opacity = '0';
+        setTimeout(() => staleSplash.remove(), 500);
+    }
+    
+    // Remove a névoa adicionando uma classe ou estilo global na página
+    if (!window.parent.document.getElementById('remove-fog-style')) {
+        const style = window.parent.document.createElement('style');
+        style.id = 'remove-fog-style';
+        style.innerHTML = '.stApp::after, .stApp::before { display: none !important; }';
+        window.parent.document.head.appendChild(style);
+    }
+</script>
+""", height=0)
 
 datasets = data_loader.get_all_datasets()
 opcoes_cenarios = [
