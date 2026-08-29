@@ -1,0 +1,6679 @@
+{
+  "total_raw": 3319,
+  "total_removed": 1330,
+  "total_lemmas": 7339,
+  "demo_steps_dict": {
+    "Atribuições Comuns (2012)": {
+      "demo_text": "São atribuições comuns a todas as carreiras policiais da Polícia Civil: a) portar arma, distintivo e algemas; b) atender sempre, com urbanidade e eficiência, o público em geral, pessoalmente ou por telefone; c) elaborar, sob orientação da Autoridade Policial, registro de ocorrência; d) conduzir viat...",
+      "demo_steps": [
+        {
+          "word": "são",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "atribuições",
+          "lemma": "atribuição",
+          "status": "keep"
+        },
+        {
+          "word": "comuns",
+          "lemma": "comum",
+          "status": "keep"
+        },
+        {
+          "word": "a",
+          "lemma": "a",
+          "status": "drop"
+        },
+        {
+          "word": "todas",
+          "lemma": "todo",
+          "status": "drop"
+        },
+        {
+          "word": "as",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "carreiras",
+          "lemma": "carreira",
+          "status": "keep"
+        },
+        {
+          "word": "policiais",
+          "lemma": "policial",
+          "status": "keep"
+        },
+        {
+          "word": "da",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "polícia",
+          "lemma": "polícia",
+          "status": "keep"
+        },
+        {
+          "word": "civil",
+          "lemma": "civil",
+          "status": "keep"
+        },
+        {
+          "word": ":",
+          "lemma": ":",
+          "status": "drop"
+        },
+        {
+          "word": "a",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": "portar",
+          "lemma": "portar",
+          "status": "keep"
+        },
+        {
+          "word": "arma",
+          "lemma": "arma",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "distintivo",
+          "lemma": "distintivo",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "algemas",
+          "lemma": "algema",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "b",
+          "lemma": "b",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": "atender",
+          "lemma": "atender",
+          "status": "keep"
+        },
+        {
+          "word": "sempre",
+          "lemma": "sempre",
+          "status": "drop"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "com",
+          "lemma": "com",
+          "status": "drop"
+        },
+        {
+          "word": "urbanidade",
+          "lemma": "urbanidade",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "eficiência",
+          "lemma": "eficiência",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "o",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "público",
+          "lemma": "público",
+          "status": "keep"
+        },
+        {
+          "word": "em",
+          "lemma": "em",
+          "status": "drop"
+        },
+        {
+          "word": "geral",
+          "lemma": "geral",
+          "status": "drop"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "pessoalmente",
+          "lemma": "pessoalmente",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "por",
+          "lemma": "por",
+          "status": "drop"
+        },
+        {
+          "word": "telefone",
+          "lemma": "telefone",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "c",
+          "lemma": "c",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": "elaborar",
+          "lemma": "elaborar",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sob",
+          "lemma": "sob",
+          "status": "drop"
+        },
+        {
+          "word": "orientação",
+          "lemma": "orientação",
+          "status": "keep"
+        },
+        {
+          "word": "da",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "autoridade",
+          "lemma": "autoridade",
+          "status": "keep"
+        },
+        {
+          "word": "policial",
+          "lemma": "policial",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "registro",
+          "lemma": "registro",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "ocorrência",
+          "lemma": "ocorrência",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "d",
+          "lemma": "d",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": "conduzir",
+          "lemma": "conduzir",
+          "status": "keep"
+        },
+        {
+          "word": "viat",
+          "lemma": "viat",
+          "status": "keep"
+        },
+        {
+          "word": "...",
+          "lemma": "...",
+          "status": "drop"
+        }
+      ]
+    },
+    "Delegado de Polícia (2023)": {
+      "demo_text": "São atribuições inerentes ao exercício do cargo de Delegado de Polícia, dentre outras a elas relacionadas ou delas decorrentes: 2.",
+      "demo_steps": [
+        {
+          "word": "são",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "atribuições",
+          "lemma": "atribuição",
+          "status": "keep"
+        },
+        {
+          "word": "inerentes",
+          "lemma": "inerente",
+          "status": "keep"
+        },
+        {
+          "word": "ao",
+          "lemma": "a o",
+          "status": "drop"
+        },
+        {
+          "word": "exercício",
+          "lemma": "exercício",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "cargo",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "delegado",
+          "lemma": "delegado",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "polícia",
+          "lemma": "polícia",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "dentre",
+          "lemma": "dentre",
+          "status": "keep"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "a",
+          "lemma": "a",
+          "status": "drop"
+        },
+        {
+          "word": "elas",
+          "lemma": "ele",
+          "status": "drop"
+        },
+        {
+          "word": "relacionadas",
+          "lemma": "relacionar",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "delas",
+          "lemma": "de ele",
+          "status": "keep"
+        },
+        {
+          "word": "decorrentes",
+          "lemma": "decorrente",
+          "status": "keep"
+        },
+        {
+          "word": ":",
+          "lemma": ":",
+          "status": "drop"
+        },
+        {
+          "word": "2",
+          "lemma": "2",
+          "status": "drop"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Escrivão de Polícia (2023)": {
+      "demo_text": "São atribuições inerentes ao exercício do cargo de Escrivão de Polícia aquelas previstas no Sistema Único de Cadastro de Cargos e Funções-Atividades (SICAD) da Unidade Central de Recursos Humanos do Estado de São Paulo (UCRH), sem prejuízo de outras a elas relacionadas ou delas decorrentes: 2.",
+      "demo_steps": [
+        {
+          "word": "são",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "atribuições",
+          "lemma": "atribuição",
+          "status": "keep"
+        },
+        {
+          "word": "inerentes",
+          "lemma": "inerente",
+          "status": "keep"
+        },
+        {
+          "word": "ao",
+          "lemma": "a o",
+          "status": "drop"
+        },
+        {
+          "word": "exercício",
+          "lemma": "exercício",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "cargo",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "escrivão",
+          "lemma": "escrivão",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "polícia",
+          "lemma": "polícia",
+          "status": "keep"
+        },
+        {
+          "word": "aquelas",
+          "lemma": "aquele",
+          "status": "drop"
+        },
+        {
+          "word": "previstas",
+          "lemma": "prever",
+          "status": "keep"
+        },
+        {
+          "word": "no",
+          "lemma": "em o",
+          "status": "drop"
+        },
+        {
+          "word": "sistema",
+          "lemma": "sistema",
+          "status": "drop"
+        },
+        {
+          "word": "único",
+          "lemma": "único",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cadastro",
+          "lemma": "cadastro",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cargos",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "funções-atividades",
+          "lemma": "funções-atividade",
+          "status": "keep"
+        },
+        {
+          "word": "(",
+          "lemma": "(",
+          "status": "drop"
+        },
+        {
+          "word": "sicad",
+          "lemma": "sicad",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": "da",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "unidade",
+          "lemma": "unidade",
+          "status": "keep"
+        },
+        {
+          "word": "central",
+          "lemma": "central",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "recursos",
+          "lemma": "recurso",
+          "status": "keep"
+        },
+        {
+          "word": "humanos",
+          "lemma": "humano",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "estado",
+          "lemma": "estado",
+          "status": "drop"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "são",
+          "lemma": "São",
+          "status": "drop"
+        },
+        {
+          "word": "paulo",
+          "lemma": "Paulo",
+          "status": "keep"
+        },
+        {
+          "word": "(",
+          "lemma": "(",
+          "status": "drop"
+        },
+        {
+          "word": "ucrh",
+          "lemma": "ucrh",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "prejuízo",
+          "lemma": "prejuízo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "a",
+          "lemma": "a",
+          "status": "drop"
+        },
+        {
+          "word": "elas",
+          "lemma": "ele",
+          "status": "drop"
+        },
+        {
+          "word": "relacionadas",
+          "lemma": "relacionar",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "delas",
+          "lemma": "de ele",
+          "status": "keep"
+        },
+        {
+          "word": "decorrentes",
+          "lemma": "decorrente",
+          "status": "keep"
+        },
+        {
+          "word": ":",
+          "lemma": ":",
+          "status": "drop"
+        },
+        {
+          "word": "2",
+          "lemma": "2",
+          "status": "drop"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Investigador de Polícia (2023)": {
+      "demo_text": "São atribuições inerentes ao exercício do cargo de Investigador de Polícia aquelas previstas no Sistema Único de Cadastro de Cargos e Funções-Atividades (SICAD) da Unidade Central de Recursos Humanos do Estado de São Paulo (UCRH), sem prejuízo de outras a elas relacionadas ou delas decorrentes: 2.",
+      "demo_steps": [
+        {
+          "word": "são",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "atribuições",
+          "lemma": "atribuição",
+          "status": "keep"
+        },
+        {
+          "word": "inerentes",
+          "lemma": "inerente",
+          "status": "keep"
+        },
+        {
+          "word": "ao",
+          "lemma": "a o",
+          "status": "drop"
+        },
+        {
+          "word": "exercício",
+          "lemma": "exercício",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "cargo",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "investigador",
+          "lemma": "investigador",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "polícia",
+          "lemma": "polícia",
+          "status": "keep"
+        },
+        {
+          "word": "aquelas",
+          "lemma": "aquele",
+          "status": "drop"
+        },
+        {
+          "word": "previstas",
+          "lemma": "prever",
+          "status": "keep"
+        },
+        {
+          "word": "no",
+          "lemma": "em o",
+          "status": "drop"
+        },
+        {
+          "word": "sistema",
+          "lemma": "sistema",
+          "status": "drop"
+        },
+        {
+          "word": "único",
+          "lemma": "único",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cadastro",
+          "lemma": "cadastro",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cargos",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "funções-atividades",
+          "lemma": "funções-atividade",
+          "status": "keep"
+        },
+        {
+          "word": "(",
+          "lemma": "(",
+          "status": "drop"
+        },
+        {
+          "word": "sicad",
+          "lemma": "sicad",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": "da",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "unidade",
+          "lemma": "unidade",
+          "status": "keep"
+        },
+        {
+          "word": "central",
+          "lemma": "central",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "recursos",
+          "lemma": "recurso",
+          "status": "keep"
+        },
+        {
+          "word": "humanos",
+          "lemma": "humano",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "estado",
+          "lemma": "estado",
+          "status": "drop"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "são",
+          "lemma": "São",
+          "status": "drop"
+        },
+        {
+          "word": "paulo",
+          "lemma": "Paulo",
+          "status": "keep"
+        },
+        {
+          "word": "(",
+          "lemma": "(",
+          "status": "drop"
+        },
+        {
+          "word": "ucrh",
+          "lemma": "ucrh",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "prejuízo",
+          "lemma": "prejuízo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "a",
+          "lemma": "a",
+          "status": "drop"
+        },
+        {
+          "word": "elas",
+          "lemma": "ele",
+          "status": "drop"
+        },
+        {
+          "word": "relacionadas",
+          "lemma": "relacionar",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "delas",
+          "lemma": "de ele",
+          "status": "keep"
+        },
+        {
+          "word": "decorrentes",
+          "lemma": "decorrente",
+          "status": "keep"
+        },
+        {
+          "word": ":",
+          "lemma": ":",
+          "status": "drop"
+        },
+        {
+          "word": "2",
+          "lemma": "2",
+          "status": "drop"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Perito Criminal (2023)": {
+      "demo_text": "São atribuições inerentes ao exercício do cargo de Perito Criminal aquelas previstas no Sistema Único de Cadastro de Cargos e Funções-Atividades (SICAD) da Unidade Central de Recursos Humanos do Estado de São Paulo (UCRH), sem prejuízo de outras a elas relacionadas ou que sejam requisitadas no campo...",
+      "demo_steps": [
+        {
+          "word": "são",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "atribuições",
+          "lemma": "atribuição",
+          "status": "keep"
+        },
+        {
+          "word": "inerentes",
+          "lemma": "inerente",
+          "status": "keep"
+        },
+        {
+          "word": "ao",
+          "lemma": "a o",
+          "status": "drop"
+        },
+        {
+          "word": "exercício",
+          "lemma": "exercício",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "cargo",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "perito",
+          "lemma": "perito",
+          "status": "keep"
+        },
+        {
+          "word": "criminal",
+          "lemma": "criminal",
+          "status": "keep"
+        },
+        {
+          "word": "aquelas",
+          "lemma": "aquele",
+          "status": "drop"
+        },
+        {
+          "word": "previstas",
+          "lemma": "prever",
+          "status": "keep"
+        },
+        {
+          "word": "no",
+          "lemma": "em o",
+          "status": "drop"
+        },
+        {
+          "word": "sistema",
+          "lemma": "sistema",
+          "status": "drop"
+        },
+        {
+          "word": "único",
+          "lemma": "único",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cadastro",
+          "lemma": "cadastro",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cargos",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "funções-atividades",
+          "lemma": "funções-atividade",
+          "status": "keep"
+        },
+        {
+          "word": "(",
+          "lemma": "(",
+          "status": "drop"
+        },
+        {
+          "word": "sicad",
+          "lemma": "sicad",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": "da",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "unidade",
+          "lemma": "unidade",
+          "status": "keep"
+        },
+        {
+          "word": "central",
+          "lemma": "central",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "recursos",
+          "lemma": "recurso",
+          "status": "keep"
+        },
+        {
+          "word": "humanos",
+          "lemma": "humano",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "estado",
+          "lemma": "estado",
+          "status": "drop"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "são",
+          "lemma": "São",
+          "status": "drop"
+        },
+        {
+          "word": "paulo",
+          "lemma": "Paulo",
+          "status": "keep"
+        },
+        {
+          "word": "(",
+          "lemma": "(",
+          "status": "drop"
+        },
+        {
+          "word": "ucrh",
+          "lemma": "ucrh",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "prejuízo",
+          "lemma": "prejuízo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "a",
+          "lemma": "a",
+          "status": "drop"
+        },
+        {
+          "word": "elas",
+          "lemma": "ele",
+          "status": "drop"
+        },
+        {
+          "word": "relacionadas",
+          "lemma": "relacionar",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "que",
+          "lemma": "que",
+          "status": "drop"
+        },
+        {
+          "word": "sejam",
+          "lemma": "ser",
+          "status": "keep"
+        },
+        {
+          "word": "requisitadas",
+          "lemma": "requisitar",
+          "status": "keep"
+        },
+        {
+          "word": "no",
+          "lemma": "em o",
+          "status": "drop"
+        },
+        {
+          "word": "campo",
+          "lemma": "campo",
+          "status": "keep"
+        },
+        {
+          "word": "...",
+          "lemma": "...",
+          "status": "drop"
+        }
+      ]
+    },
+    "Médico Legista (2023)": {
+      "demo_text": "São atribuições inerentes ao exercício do cargo de Perito Criminal aquelas previstas no Sistema Único de Cadastro de Cargos e Funções-Atividades (SICAD) da Unidade Central de Recursos Humanos do Estado de São Paulo (UCRH), sem prejuízo de outras a elas relacionadas ou que sejam requisitadas no campo...",
+      "demo_steps": [
+        {
+          "word": "são",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "atribuições",
+          "lemma": "atribuição",
+          "status": "keep"
+        },
+        {
+          "word": "inerentes",
+          "lemma": "inerente",
+          "status": "keep"
+        },
+        {
+          "word": "ao",
+          "lemma": "a o",
+          "status": "drop"
+        },
+        {
+          "word": "exercício",
+          "lemma": "exercício",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "cargo",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "perito",
+          "lemma": "perito",
+          "status": "keep"
+        },
+        {
+          "word": "criminal",
+          "lemma": "criminal",
+          "status": "keep"
+        },
+        {
+          "word": "aquelas",
+          "lemma": "aquele",
+          "status": "drop"
+        },
+        {
+          "word": "previstas",
+          "lemma": "prever",
+          "status": "keep"
+        },
+        {
+          "word": "no",
+          "lemma": "em o",
+          "status": "drop"
+        },
+        {
+          "word": "sistema",
+          "lemma": "sistema",
+          "status": "drop"
+        },
+        {
+          "word": "único",
+          "lemma": "único",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cadastro",
+          "lemma": "cadastro",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cargos",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "funções-atividades",
+          "lemma": "funções-atividade",
+          "status": "keep"
+        },
+        {
+          "word": "(",
+          "lemma": "(",
+          "status": "drop"
+        },
+        {
+          "word": "sicad",
+          "lemma": "sicad",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": "da",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "unidade",
+          "lemma": "unidade",
+          "status": "keep"
+        },
+        {
+          "word": "central",
+          "lemma": "central",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "recursos",
+          "lemma": "recurso",
+          "status": "keep"
+        },
+        {
+          "word": "humanos",
+          "lemma": "humano",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "estado",
+          "lemma": "estado",
+          "status": "drop"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "são",
+          "lemma": "São",
+          "status": "drop"
+        },
+        {
+          "word": "paulo",
+          "lemma": "Paulo",
+          "status": "keep"
+        },
+        {
+          "word": "(",
+          "lemma": "(",
+          "status": "drop"
+        },
+        {
+          "word": "ucrh",
+          "lemma": "ucrh",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "prejuízo",
+          "lemma": "prejuízo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "a",
+          "lemma": "a",
+          "status": "drop"
+        },
+        {
+          "word": "elas",
+          "lemma": "ele",
+          "status": "drop"
+        },
+        {
+          "word": "relacionadas",
+          "lemma": "relacionar",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "que",
+          "lemma": "que",
+          "status": "drop"
+        },
+        {
+          "word": "sejam",
+          "lemma": "ser",
+          "status": "keep"
+        },
+        {
+          "word": "requisitadas",
+          "lemma": "requisitar",
+          "status": "keep"
+        },
+        {
+          "word": "no",
+          "lemma": "em o",
+          "status": "drop"
+        },
+        {
+          "word": "campo",
+          "lemma": "campo",
+          "status": "keep"
+        },
+        {
+          "word": "...",
+          "lemma": "...",
+          "status": "drop"
+        }
+      ]
+    },
+    "Papiloscopista Policial (2017)": {
+      "demo_text": "São atividades inerentes ao exercício do cargo de Papiloscopista Policial o estudo das impressões digitais na palma das mãos, dedos e na sola dos pés através das papilas dérmicas aptas a identificar o ser humano.",
+      "demo_steps": [
+        {
+          "word": "são",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "atividades",
+          "lemma": "atividade",
+          "status": "keep"
+        },
+        {
+          "word": "inerentes",
+          "lemma": "inerente",
+          "status": "keep"
+        },
+        {
+          "word": "ao",
+          "lemma": "a o",
+          "status": "drop"
+        },
+        {
+          "word": "exercício",
+          "lemma": "exercício",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "cargo",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "papiloscopista",
+          "lemma": "papiloscopista",
+          "status": "keep"
+        },
+        {
+          "word": "policial",
+          "lemma": "policial",
+          "status": "keep"
+        },
+        {
+          "word": "o",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "estudo",
+          "lemma": "estudo",
+          "status": "keep"
+        },
+        {
+          "word": "das",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "impressões",
+          "lemma": "impressão",
+          "status": "keep"
+        },
+        {
+          "word": "digitais",
+          "lemma": "digital",
+          "status": "keep"
+        },
+        {
+          "word": "na",
+          "lemma": "em o",
+          "status": "drop"
+        },
+        {
+          "word": "palma",
+          "lemma": "palma",
+          "status": "keep"
+        },
+        {
+          "word": "das",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "mãos",
+          "lemma": "mão",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "dedos",
+          "lemma": "dedo",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "na",
+          "lemma": "em o",
+          "status": "drop"
+        },
+        {
+          "word": "sola",
+          "lemma": "sola",
+          "status": "keep"
+        },
+        {
+          "word": "dos",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "pés",
+          "lemma": "pé",
+          "status": "keep"
+        },
+        {
+          "word": "através",
+          "lemma": "através",
+          "status": "drop"
+        },
+        {
+          "word": "das",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "papilas",
+          "lemma": "papila",
+          "status": "keep"
+        },
+        {
+          "word": "dérmicas",
+          "lemma": "dérmico",
+          "status": "keep"
+        },
+        {
+          "word": "aptas",
+          "lemma": "apto",
+          "status": "keep"
+        },
+        {
+          "word": "a",
+          "lemma": "a",
+          "status": "drop"
+        },
+        {
+          "word": "identificar",
+          "lemma": "identificar",
+          "status": "keep"
+        },
+        {
+          "word": "o",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "ser",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "humano",
+          "lemma": "humano",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Auxiliar de Papiloscopista Policial (2017)": {
+      "demo_text": "São atividades inerentes ao exercício do cargo de Auxiliar de Papiloscopista Policial, sem prejuízo de outras tarefas análogas que possam ser determinadas: executar trabalho de coleta de impressões digitais para identificação pessoal; registrar e encaminhar os dados coletados para classificação e pe...",
+      "demo_steps": [
+        {
+          "word": "são",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "atividades",
+          "lemma": "atividade",
+          "status": "keep"
+        },
+        {
+          "word": "inerentes",
+          "lemma": "inerente",
+          "status": "keep"
+        },
+        {
+          "word": "ao",
+          "lemma": "a o",
+          "status": "drop"
+        },
+        {
+          "word": "exercício",
+          "lemma": "exercício",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "cargo",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "auxiliar",
+          "lemma": "auxiliar",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "papiloscopista",
+          "lemma": "papiloscopista",
+          "status": "keep"
+        },
+        {
+          "word": "policial",
+          "lemma": "policial",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "prejuízo",
+          "lemma": "prejuízo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "análogas",
+          "lemma": "análogo",
+          "status": "keep"
+        },
+        {
+          "word": "que",
+          "lemma": "que",
+          "status": "drop"
+        },
+        {
+          "word": "possam",
+          "lemma": "poder",
+          "status": "keep"
+        },
+        {
+          "word": "ser",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "determinadas",
+          "lemma": "determinar",
+          "status": "keep"
+        },
+        {
+          "word": ":",
+          "lemma": ":",
+          "status": "drop"
+        },
+        {
+          "word": "executar",
+          "lemma": "executar",
+          "status": "keep"
+        },
+        {
+          "word": "trabalho",
+          "lemma": "trabalho",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "coleta",
+          "lemma": "coleta",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "impressões",
+          "lemma": "impressão",
+          "status": "keep"
+        },
+        {
+          "word": "digitais",
+          "lemma": "digital",
+          "status": "keep"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "identificação",
+          "lemma": "identificação",
+          "status": "keep"
+        },
+        {
+          "word": "pessoal",
+          "lemma": "pessoal",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "registrar",
+          "lemma": "registrar",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "encaminhar",
+          "lemma": "encaminhar",
+          "status": "keep"
+        },
+        {
+          "word": "os",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "dados",
+          "lemma": "dado",
+          "status": "keep"
+        },
+        {
+          "word": "coletados",
+          "lemma": "coletar",
+          "status": "keep"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "classificação",
+          "lemma": "classificação",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "pe",
+          "lemma": "pe",
+          "status": "keep"
+        },
+        {
+          "word": "...",
+          "lemma": "...",
+          "status": "drop"
+        }
+      ]
+    },
+    "Agente de Telecomunicações Policial (2017)": {
+      "demo_text": "São atividades inerentes ao exercício do cargo de Agente de Telecomunicações Policial, sem prejuízo de outras tarefas análogas que possam ser determinadas: tarefas de transmissão ou recepção de informações de qualquer natureza por fio, radio, eletricidade, meios óticos ou qualquer outro processo ele...",
+      "demo_steps": [
+        {
+          "word": "são",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "atividades",
+          "lemma": "atividade",
+          "status": "keep"
+        },
+        {
+          "word": "inerentes",
+          "lemma": "inerente",
+          "status": "keep"
+        },
+        {
+          "word": "ao",
+          "lemma": "a o",
+          "status": "drop"
+        },
+        {
+          "word": "exercício",
+          "lemma": "exercício",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "cargo",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "agente",
+          "lemma": "agente",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "telecomunicações",
+          "lemma": "telecomunicação",
+          "status": "keep"
+        },
+        {
+          "word": "policial",
+          "lemma": "policial",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "prejuízo",
+          "lemma": "prejuízo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "análogas",
+          "lemma": "análogo",
+          "status": "keep"
+        },
+        {
+          "word": "que",
+          "lemma": "que",
+          "status": "drop"
+        },
+        {
+          "word": "possam",
+          "lemma": "poder",
+          "status": "keep"
+        },
+        {
+          "word": "ser",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "determinadas",
+          "lemma": "determinar",
+          "status": "keep"
+        },
+        {
+          "word": ":",
+          "lemma": ":",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "transmissão",
+          "lemma": "transmissão",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "recepção",
+          "lemma": "recepção",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "informações",
+          "lemma": "informação",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "qualquer",
+          "lemma": "qualquer",
+          "status": "drop"
+        },
+        {
+          "word": "natureza",
+          "lemma": "natureza",
+          "status": "keep"
+        },
+        {
+          "word": "por",
+          "lemma": "por",
+          "status": "drop"
+        },
+        {
+          "word": "fio",
+          "lemma": "fio",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "radio",
+          "lemma": "radio",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "eletricidade",
+          "lemma": "eletricidade",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "meios",
+          "lemma": "meio",
+          "status": "keep"
+        },
+        {
+          "word": "óticos",
+          "lemma": "ótico",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "qualquer",
+          "lemma": "qualquer",
+          "status": "drop"
+        },
+        {
+          "word": "outro",
+          "lemma": "outro",
+          "status": "keep"
+        },
+        {
+          "word": "processo",
+          "lemma": "processo",
+          "status": "keep"
+        },
+        {
+          "word": "ele",
+          "lemma": "ele",
+          "status": "drop"
+        },
+        {
+          "word": "...",
+          "lemma": "...",
+          "status": "drop"
+        }
+      ]
+    },
+    "Agente Policial (2017)": {
+      "demo_text": "São atividades inerentes ao exercício do cargo de Agente Policial, sem prejuízo de outras tarefas análogas que possam ser determinadas: dirigir viatura policial para os mais diversos trabalhos policiais e administrativos, bem como zelar pelo seu bom funcionamento, manutenção e limpeza, além das funç...",
+      "demo_steps": [
+        {
+          "word": "são",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "atividades",
+          "lemma": "atividade",
+          "status": "keep"
+        },
+        {
+          "word": "inerentes",
+          "lemma": "inerente",
+          "status": "keep"
+        },
+        {
+          "word": "ao",
+          "lemma": "a o",
+          "status": "drop"
+        },
+        {
+          "word": "exercício",
+          "lemma": "exercício",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "cargo",
+          "lemma": "cargo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "agente",
+          "lemma": "agente",
+          "status": "keep"
+        },
+        {
+          "word": "policial",
+          "lemma": "policial",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "prejuízo",
+          "lemma": "prejuízo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "análogas",
+          "lemma": "análogo",
+          "status": "keep"
+        },
+        {
+          "word": "que",
+          "lemma": "que",
+          "status": "drop"
+        },
+        {
+          "word": "possam",
+          "lemma": "poder",
+          "status": "keep"
+        },
+        {
+          "word": "ser",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "determinadas",
+          "lemma": "determinar",
+          "status": "keep"
+        },
+        {
+          "word": ":",
+          "lemma": ":",
+          "status": "drop"
+        },
+        {
+          "word": "dirigir",
+          "lemma": "dirigir",
+          "status": "keep"
+        },
+        {
+          "word": "viatura",
+          "lemma": "viatura",
+          "status": "keep"
+        },
+        {
+          "word": "policial",
+          "lemma": "policial",
+          "status": "keep"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "os",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "mais",
+          "lemma": "mais",
+          "status": "drop"
+        },
+        {
+          "word": "diversos",
+          "lemma": "diverso",
+          "status": "keep"
+        },
+        {
+          "word": "trabalhos",
+          "lemma": "trabalho",
+          "status": "keep"
+        },
+        {
+          "word": "policiais",
+          "lemma": "policial",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "administrativos",
+          "lemma": "administrativo",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "bem",
+          "lemma": "bem",
+          "status": "drop"
+        },
+        {
+          "word": "como",
+          "lemma": "como",
+          "status": "drop"
+        },
+        {
+          "word": "zelar",
+          "lemma": "zelar",
+          "status": "keep"
+        },
+        {
+          "word": "pelo",
+          "lemma": "por o",
+          "status": "drop"
+        },
+        {
+          "word": "seu",
+          "lemma": "seu",
+          "status": "drop"
+        },
+        {
+          "word": "bom",
+          "lemma": "bom",
+          "status": "drop"
+        },
+        {
+          "word": "funcionamento",
+          "lemma": "funcionamento",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "manutenção",
+          "lemma": "manutenção",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "limpeza",
+          "lemma": "limpeza",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "além",
+          "lemma": "além",
+          "status": "drop"
+        },
+        {
+          "word": "das",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "funç",
+          "lemma": "funç",
+          "status": "keep"
+        },
+        {
+          "word": "...",
+          "lemma": "...",
+          "status": "drop"
+        }
+      ]
+    },
+    "Carcereiro Policial (2013)": {
+      "demo_text": "EDITAL SEM ATRIBUIÇÕES.",
+      "demo_steps": [
+        {
+          "word": "edital",
+          "lemma": "edital",
+          "status": "keep"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "atribuições",
+          "lemma": "atribuição",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Fotógrafo Técnico Pericial (2013)": {
+      "demo_text": "O Fotógrafo Técnico-Pericial tem as atribuições adiante listadas, sem prejuízo de outras tarefas análogas que possam ser determinadas: - fotografar ocorrências policiais em qualquer tipo de local de crime com ou sem vítimas, incluindo o contato com materiais contaminados (agentes físicos, químicos e...",
+      "demo_steps": [
+        {
+          "word": "o",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "fotógrafo",
+          "lemma": "fotógrafo",
+          "status": "keep"
+        },
+        {
+          "word": "técnico-pericial",
+          "lemma": "técnico-pericial",
+          "status": "keep"
+        },
+        {
+          "word": "tem",
+          "lemma": "ter",
+          "status": "drop"
+        },
+        {
+          "word": "as",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "atribuições",
+          "lemma": "atribuição",
+          "status": "keep"
+        },
+        {
+          "word": "adiante",
+          "lemma": "adiante",
+          "status": "keep"
+        },
+        {
+          "word": "listadas",
+          "lemma": "listar",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "prejuízo",
+          "lemma": "prejuízo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "análogas",
+          "lemma": "análogo",
+          "status": "keep"
+        },
+        {
+          "word": "que",
+          "lemma": "que",
+          "status": "drop"
+        },
+        {
+          "word": "possam",
+          "lemma": "poder",
+          "status": "keep"
+        },
+        {
+          "word": "ser",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "determinadas",
+          "lemma": "determinar",
+          "status": "keep"
+        },
+        {
+          "word": ":",
+          "lemma": ":",
+          "status": "drop"
+        },
+        {
+          "word": "-",
+          "lemma": "-",
+          "status": "drop"
+        },
+        {
+          "word": "fotografar",
+          "lemma": "fotografar",
+          "status": "keep"
+        },
+        {
+          "word": "ocorrências",
+          "lemma": "ocorrência",
+          "status": "keep"
+        },
+        {
+          "word": "policiais",
+          "lemma": "policial",
+          "status": "keep"
+        },
+        {
+          "word": "em",
+          "lemma": "em",
+          "status": "drop"
+        },
+        {
+          "word": "qualquer",
+          "lemma": "qualquer",
+          "status": "drop"
+        },
+        {
+          "word": "tipo",
+          "lemma": "tipo",
+          "status": "drop"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "local",
+          "lemma": "local",
+          "status": "drop"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "crime",
+          "lemma": "crime",
+          "status": "keep"
+        },
+        {
+          "word": "com",
+          "lemma": "com",
+          "status": "drop"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "vítimas",
+          "lemma": "vítima",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "incluindo",
+          "lemma": "incluir",
+          "status": "keep"
+        },
+        {
+          "word": "o",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "contato",
+          "lemma": "contato",
+          "status": "keep"
+        },
+        {
+          "word": "com",
+          "lemma": "com",
+          "status": "drop"
+        },
+        {
+          "word": "materiais",
+          "lemma": "material",
+          "status": "keep"
+        },
+        {
+          "word": "contaminados",
+          "lemma": "contaminado",
+          "status": "keep"
+        },
+        {
+          "word": "(",
+          "lemma": "(",
+          "status": "drop"
+        },
+        {
+          "word": "agentes",
+          "lemma": "agente",
+          "status": "keep"
+        },
+        {
+          "word": "físicos",
+          "lemma": "físico",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "químicos",
+          "lemma": "químico",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "...",
+          "lemma": "...",
+          "status": "drop"
+        }
+      ]
+    },
+    "Desenhista Técnico Pericial (2013)": {
+      "demo_text": "O Desenhista Técnico-Pericial tem as atribuições adiante listadas, sem prejuízo de outras tarefas análogas que possam ser determinadas.",
+      "demo_steps": [
+        {
+          "word": "o",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "desenhista",
+          "lemma": "desenhista",
+          "status": "keep"
+        },
+        {
+          "word": "técnico-pericial",
+          "lemma": "técnico-pericial",
+          "status": "keep"
+        },
+        {
+          "word": "tem",
+          "lemma": "ter",
+          "status": "drop"
+        },
+        {
+          "word": "as",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "atribuições",
+          "lemma": "atribuição",
+          "status": "keep"
+        },
+        {
+          "word": "adiante",
+          "lemma": "adiante",
+          "status": "keep"
+        },
+        {
+          "word": "listadas",
+          "lemma": "listar",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "prejuízo",
+          "lemma": "prejuízo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "análogas",
+          "lemma": "análogo",
+          "status": "keep"
+        },
+        {
+          "word": "que",
+          "lemma": "que",
+          "status": "drop"
+        },
+        {
+          "word": "possam",
+          "lemma": "poder",
+          "status": "keep"
+        },
+        {
+          "word": "ser",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "determinadas",
+          "lemma": "determinar",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Auxiliar de Necropsia (2013)": {
+      "demo_text": "O Auxiliar de Necropsia tem as atribuições adiante listadas, sem prejuízo de outras tarefas análogas que possam ser determinadas: - Identificação de cadáver; - Manuseio de cadáver para possibilitar a observação de lesões externas; - Execução e acompanhamento de exumações; - Abertura de cavidade cran...",
+      "demo_steps": [
+        {
+          "word": "o",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "auxiliar",
+          "lemma": "auxiliar",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "necropsia",
+          "lemma": "necropsia",
+          "status": "keep"
+        },
+        {
+          "word": "tem",
+          "lemma": "ter",
+          "status": "drop"
+        },
+        {
+          "word": "as",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "atribuições",
+          "lemma": "atribuição",
+          "status": "keep"
+        },
+        {
+          "word": "adiante",
+          "lemma": "adiante",
+          "status": "keep"
+        },
+        {
+          "word": "listadas",
+          "lemma": "listar",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sem",
+          "lemma": "sem",
+          "status": "drop"
+        },
+        {
+          "word": "prejuízo",
+          "lemma": "prejuízo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "análogas",
+          "lemma": "análogo",
+          "status": "keep"
+        },
+        {
+          "word": "que",
+          "lemma": "que",
+          "status": "drop"
+        },
+        {
+          "word": "possam",
+          "lemma": "poder",
+          "status": "keep"
+        },
+        {
+          "word": "ser",
+          "lemma": "ser",
+          "status": "drop"
+        },
+        {
+          "word": "determinadas",
+          "lemma": "determinar",
+          "status": "keep"
+        },
+        {
+          "word": ":",
+          "lemma": ":",
+          "status": "drop"
+        },
+        {
+          "word": "-",
+          "lemma": "-",
+          "status": "drop"
+        },
+        {
+          "word": "identificação",
+          "lemma": "identificação",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cadáver",
+          "lemma": "cadáver",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "-",
+          "lemma": "-",
+          "status": "drop"
+        },
+        {
+          "word": "manuseio",
+          "lemma": "manuseio",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cadáver",
+          "lemma": "cadáver",
+          "status": "keep"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "possibilitar",
+          "lemma": "possibilitar",
+          "status": "keep"
+        },
+        {
+          "word": "a",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "observação",
+          "lemma": "observação",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "lesões",
+          "lemma": "lesão",
+          "status": "keep"
+        },
+        {
+          "word": "externas",
+          "lemma": "externo",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "-",
+          "lemma": "-",
+          "status": "drop"
+        },
+        {
+          "word": "execução",
+          "lemma": "execução",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "acompanhamento",
+          "lemma": "acompanhamento",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "exumações",
+          "lemma": "exumação",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "-",
+          "lemma": "-",
+          "status": "drop"
+        },
+        {
+          "word": "abertura",
+          "lemma": "abertura",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cavidade",
+          "lemma": "cavidade",
+          "status": "keep"
+        },
+        {
+          "word": "cran",
+          "lemma": "cran",
+          "status": "keep"
+        },
+        {
+          "word": "...",
+          "lemma": "...",
+          "status": "drop"
+        }
+      ]
+    },
+    "Atendente de Necrotério (2013)": {
+      "demo_text": "Funções desempenhadas pelo atendente de necrotério: Recolher cadáveres ou parte deles (óbitos recentes e/ou corpos em estado de putrefação e/ou ossadas) nos locais de crimes; Efetuar o transporte de cadáveres ou parte deles até o necrotério; Limpar cadáveres ou parte deles e encaminhá-los para exame...",
+      "demo_steps": [
+        {
+          "word": "funções",
+          "lemma": "função",
+          "status": "keep"
+        },
+        {
+          "word": "desempenhadas",
+          "lemma": "desempenhar",
+          "status": "keep"
+        },
+        {
+          "word": "pelo",
+          "lemma": "por o",
+          "status": "drop"
+        },
+        {
+          "word": "atendente",
+          "lemma": "atendente",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "necrotério",
+          "lemma": "necrotério",
+          "status": "keep"
+        },
+        {
+          "word": ":",
+          "lemma": ":",
+          "status": "drop"
+        },
+        {
+          "word": "recolher",
+          "lemma": "recolher",
+          "status": "keep"
+        },
+        {
+          "word": "cadáveres",
+          "lemma": "cadáver",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "parte",
+          "lemma": "parte",
+          "status": "drop"
+        },
+        {
+          "word": "deles",
+          "lemma": "de eles",
+          "status": "keep"
+        },
+        {
+          "word": "(",
+          "lemma": "(",
+          "status": "drop"
+        },
+        {
+          "word": "óbitos",
+          "lemma": "óbito",
+          "status": "keep"
+        },
+        {
+          "word": "recentes",
+          "lemma": "recente",
+          "status": "keep"
+        },
+        {
+          "word": "e/ou",
+          "lemma": "e/ou",
+          "status": "keep"
+        },
+        {
+          "word": "corpos",
+          "lemma": "corpo",
+          "status": "keep"
+        },
+        {
+          "word": "em",
+          "lemma": "em",
+          "status": "drop"
+        },
+        {
+          "word": "estado",
+          "lemma": "estado",
+          "status": "drop"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "putrefação",
+          "lemma": "putrefação",
+          "status": "keep"
+        },
+        {
+          "word": "e/ou",
+          "lemma": "e/ou",
+          "status": "keep"
+        },
+        {
+          "word": "ossadas",
+          "lemma": "ossar",
+          "status": "keep"
+        },
+        {
+          "word": ")",
+          "lemma": ")",
+          "status": "drop"
+        },
+        {
+          "word": "nos",
+          "lemma": "em o",
+          "status": "drop"
+        },
+        {
+          "word": "locais",
+          "lemma": "local",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "crimes",
+          "lemma": "crime",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "efetuar",
+          "lemma": "efetuar",
+          "status": "keep"
+        },
+        {
+          "word": "o",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "transporte",
+          "lemma": "transporte",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cadáveres",
+          "lemma": "cadáver",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "parte",
+          "lemma": "parte",
+          "status": "drop"
+        },
+        {
+          "word": "deles",
+          "lemma": "de eles",
+          "status": "keep"
+        },
+        {
+          "word": "até",
+          "lemma": "até",
+          "status": "drop"
+        },
+        {
+          "word": "o",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "necrotério",
+          "lemma": "necrotério",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "limpar",
+          "lemma": "limpar",
+          "status": "keep"
+        },
+        {
+          "word": "cadáveres",
+          "lemma": "cadáver",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "parte",
+          "lemma": "parte",
+          "status": "drop"
+        },
+        {
+          "word": "deles",
+          "lemma": "de eles",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "encaminhá-los",
+          "lemma": "encaminhá-los",
+          "status": "keep"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "exame",
+          "lemma": "exame",
+          "status": "keep"
+        },
+        {
+          "word": "...",
+          "lemma": "...",
+          "status": "drop"
+        }
+      ]
+    },
+    "Assessoramento Papiloscopico (2023)": {
+      "demo_text": "Quando acionado pelos Delegados de Polícia, o Instituto de Identificação Ricardo Gumbleton Daunt – IIRGD prestará assessoramento técnico papiloscópico em locais de mortes violentas dolosas, assim entendidas como as decorrentes de intervenção intencional dotada de força externa como causa desencadean...",
+      "demo_steps": [
+        {
+          "word": "quando",
+          "lemma": "quando",
+          "status": "drop"
+        },
+        {
+          "word": "acionado",
+          "lemma": "acionar",
+          "status": "keep"
+        },
+        {
+          "word": "pelos",
+          "lemma": "por o",
+          "status": "drop"
+        },
+        {
+          "word": "delegados",
+          "lemma": "delegado",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "polícia",
+          "lemma": "polícia",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "o",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "instituto",
+          "lemma": "instituto",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "identificação",
+          "lemma": "identificação",
+          "status": "keep"
+        },
+        {
+          "word": "ricardo",
+          "lemma": "ricardo",
+          "status": "keep"
+        },
+        {
+          "word": "gumbleton",
+          "lemma": "Gumbleton",
+          "status": "keep"
+        },
+        {
+          "word": "daunt",
+          "lemma": "daunt",
+          "status": "keep"
+        },
+        {
+          "word": "–",
+          "lemma": "–",
+          "status": "drop"
+        },
+        {
+          "word": "iirgd",
+          "lemma": "iirgd",
+          "status": "keep"
+        },
+        {
+          "word": "prestará",
+          "lemma": "prestar",
+          "status": "keep"
+        },
+        {
+          "word": "assessoramento",
+          "lemma": "assessoramento",
+          "status": "keep"
+        },
+        {
+          "word": "técnico",
+          "lemma": "técnico",
+          "status": "keep"
+        },
+        {
+          "word": "papiloscópico",
+          "lemma": "papiloscópico",
+          "status": "keep"
+        },
+        {
+          "word": "em",
+          "lemma": "em",
+          "status": "drop"
+        },
+        {
+          "word": "locais",
+          "lemma": "local",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "mortes",
+          "lemma": "morte",
+          "status": "keep"
+        },
+        {
+          "word": "violentas",
+          "lemma": "violento",
+          "status": "keep"
+        },
+        {
+          "word": "dolosas",
+          "lemma": "doloso",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "assim",
+          "lemma": "assim",
+          "status": "drop"
+        },
+        {
+          "word": "entendidas",
+          "lemma": "entendir",
+          "status": "keep"
+        },
+        {
+          "word": "como",
+          "lemma": "como",
+          "status": "drop"
+        },
+        {
+          "word": "as",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "decorrentes",
+          "lemma": "decorrente",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "intervenção",
+          "lemma": "intervenção",
+          "status": "keep"
+        },
+        {
+          "word": "intencional",
+          "lemma": "intencional",
+          "status": "keep"
+        },
+        {
+          "word": "dotada",
+          "lemma": "dotar",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "força",
+          "lemma": "força",
+          "status": "keep"
+        },
+        {
+          "word": "externa",
+          "lemma": "externo",
+          "status": "keep"
+        },
+        {
+          "word": "como",
+          "lemma": "como",
+          "status": "drop"
+        },
+        {
+          "word": "causa",
+          "lemma": "causa",
+          "status": "keep"
+        },
+        {
+          "word": "desencadean",
+          "lemma": "desencadean",
+          "status": "keep"
+        },
+        {
+          "word": "...",
+          "lemma": "...",
+          "status": "drop"
+        }
+      ]
+    },
+    "Escrivão (1967)": {
+      "demo_text": "Elaboração e organização de inqueritos e processos policiais sob a orientação direta do Delegado de Polícia; execução de tarefas de escritório em Cartório de Delegacias de Policía de 3.",
+      "demo_steps": [
+        {
+          "word": "elaboração",
+          "lemma": "elaboração",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "organização",
+          "lemma": "organização",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "inqueritos",
+          "lemma": "inquerito",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "processos",
+          "lemma": "processo",
+          "status": "keep"
+        },
+        {
+          "word": "policiais",
+          "lemma": "policial",
+          "status": "keep"
+        },
+        {
+          "word": "sob",
+          "lemma": "sob",
+          "status": "drop"
+        },
+        {
+          "word": "a",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "orientação",
+          "lemma": "orientação",
+          "status": "keep"
+        },
+        {
+          "word": "direta",
+          "lemma": "direto",
+          "status": "keep"
+        },
+        {
+          "word": "do",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "delegado",
+          "lemma": "delegado",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "polícia",
+          "lemma": "polícia",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "execução",
+          "lemma": "execução",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "escritório",
+          "lemma": "escritório",
+          "status": "keep"
+        },
+        {
+          "word": "em",
+          "lemma": "em",
+          "status": "drop"
+        },
+        {
+          "word": "cartório",
+          "lemma": "cartório",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "delegacias",
+          "lemma": "delegacia",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "policía",
+          "lemma": "policía",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "3",
+          "lemma": "3",
+          "status": "drop"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Investigador (1967)": {
+      "demo_text": "Investigações e recolhimento de elementos de convicção para esclarecimentos de fatos delituosos, manifestos ou presumíveis de mediana gravidade ou autoria definida; policiamento de locais publicos para prevenir ou reprimir a prática de crimes ou contravenções.",
+      "demo_steps": [
+        {
+          "word": "investigações",
+          "lemma": "investigação",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "recolhimento",
+          "lemma": "recolhimento",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "elementos",
+          "lemma": "elemento",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "convicção",
+          "lemma": "convicção",
+          "status": "keep"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "esclarecimentos",
+          "lemma": "esclarecimento",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "fatos",
+          "lemma": "fato",
+          "status": "keep"
+        },
+        {
+          "word": "delituosos",
+          "lemma": "delituoso",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "manifestos",
+          "lemma": "manifesto",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "presumíveis",
+          "lemma": "presumível",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "mediana",
+          "lemma": "mediano",
+          "status": "keep"
+        },
+        {
+          "word": "gravidade",
+          "lemma": "gravidade",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "autoria",
+          "lemma": "autoria",
+          "status": "keep"
+        },
+        {
+          "word": "definida",
+          "lemma": "definir",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "policiamento",
+          "lemma": "policiamento",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "locais",
+          "lemma": "local",
+          "status": "keep"
+        },
+        {
+          "word": "publicos",
+          "lemma": "publicos",
+          "status": "keep"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "prevenir",
+          "lemma": "prevenir",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "reprimir",
+          "lemma": "reprimir",
+          "status": "keep"
+        },
+        {
+          "word": "a",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "prática",
+          "lemma": "prática",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "crimes",
+          "lemma": "crime",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "contravenções",
+          "lemma": "contravenção",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Fiscal Diversões Públicas (1967)": {
+      "demo_text": "Fiscalização de locais de diversões públicas a fim de verificar respeito as condições legais de instalações e funcionamento; verificação da observância aos horários estabelecidos; fiscalização de programas de rádios, televisão, peças de teatro e similares para constatar a observância a censura prévi...",
+      "demo_steps": [
+        {
+          "word": "fiscalização",
+          "lemma": "fiscalização",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "locais",
+          "lemma": "local",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "diversões",
+          "lemma": "diversão",
+          "status": "keep"
+        },
+        {
+          "word": "públicas",
+          "lemma": "público",
+          "status": "keep"
+        },
+        {
+          "word": "a",
+          "lemma": "a",
+          "status": "drop"
+        },
+        {
+          "word": "fim",
+          "lemma": "fim",
+          "status": "drop"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "verificar",
+          "lemma": "verificar",
+          "status": "keep"
+        },
+        {
+          "word": "respeito",
+          "lemma": "respeito",
+          "status": "keep"
+        },
+        {
+          "word": "as",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "condições",
+          "lemma": "condição",
+          "status": "keep"
+        },
+        {
+          "word": "legais",
+          "lemma": "legal",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "instalações",
+          "lemma": "instalação",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "funcionamento",
+          "lemma": "funcionamento",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "verificação",
+          "lemma": "verificação",
+          "status": "keep"
+        },
+        {
+          "word": "da",
+          "lemma": "de o",
+          "status": "drop"
+        },
+        {
+          "word": "observância",
+          "lemma": "observância",
+          "status": "keep"
+        },
+        {
+          "word": "aos",
+          "lemma": "a o",
+          "status": "drop"
+        },
+        {
+          "word": "horários",
+          "lemma": "horário",
+          "status": "keep"
+        },
+        {
+          "word": "estabelecidos",
+          "lemma": "estabelecer",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "fiscalização",
+          "lemma": "fiscalização",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "programas",
+          "lemma": "programa",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "rádios",
+          "lemma": "rádio",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "televisão",
+          "lemma": "televisão",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "peças",
+          "lemma": "peça",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "teatro",
+          "lemma": "teatro",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "similares",
+          "lemma": "similar",
+          "status": "keep"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "constatar",
+          "lemma": "constatar",
+          "status": "keep"
+        },
+        {
+          "word": "a",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "observância",
+          "lemma": "observância",
+          "status": "keep"
+        },
+        {
+          "word": "a",
+          "lemma": "o",
+          "status": "drop"
+        },
+        {
+          "word": "censura",
+          "lemma": "censura",
+          "status": "keep"
+        },
+        {
+          "word": "prévi",
+          "lemma": "prévi",
+          "status": "keep"
+        },
+        {
+          "word": "...",
+          "lemma": "...",
+          "status": "drop"
+        }
+      ]
+    },
+    "Perito Criminal (1967)": {
+      "demo_text": "Exames de peças, documentos e evidencias relativas a crimes, acidentes, falsificações, fiscalização e vistoria de fábricas e depósilos de explosivos, armas, munições e produtos químicos agressivos, elaboração de laudos periciais; tarefas correlatas de escritório.",
+      "demo_steps": [
+        {
+          "word": "exames",
+          "lemma": "exame",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "peças",
+          "lemma": "peça",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "documentos",
+          "lemma": "documento",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "evidencias",
+          "lemma": "evidencia",
+          "status": "keep"
+        },
+        {
+          "word": "relativas",
+          "lemma": "relativo",
+          "status": "keep"
+        },
+        {
+          "word": "a",
+          "lemma": "a",
+          "status": "drop"
+        },
+        {
+          "word": "crimes",
+          "lemma": "crime",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "acidentes",
+          "lemma": "acidente",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "falsificações",
+          "lemma": "falsificação",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "fiscalização",
+          "lemma": "fiscalização",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "vistoria",
+          "lemma": "vistoria",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "fábricas",
+          "lemma": "fábrica",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "depósilos",
+          "lemma": "depósilo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "explosivos",
+          "lemma": "explosivo",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "armas",
+          "lemma": "arma",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "munições",
+          "lemma": "munição",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "produtos",
+          "lemma": "produto",
+          "status": "keep"
+        },
+        {
+          "word": "químicos",
+          "lemma": "químico",
+          "status": "keep"
+        },
+        {
+          "word": "agressivos",
+          "lemma": "agressivo",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "elaboração",
+          "lemma": "elaboração",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "laudos",
+          "lemma": "laudo",
+          "status": "keep"
+        },
+        {
+          "word": "periciais",
+          "lemma": "pericial",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "correlatas",
+          "lemma": "correlato",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "escritório",
+          "lemma": "escritório",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Medico Legista (1967)": {
+      "demo_text": "Realização de exames médico-legais para lavratura de auto de corpo delito em casos de violência, acidente e tentativa de suicidio.",
+      "demo_steps": [
+        {
+          "word": "realização",
+          "lemma": "realização",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "exames",
+          "lemma": "exame",
+          "status": "keep"
+        },
+        {
+          "word": "médico-legais",
+          "lemma": "médico-legal",
+          "status": "keep"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "lavratura",
+          "lemma": "lavratura",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "auto",
+          "lemma": "auto",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "corpo",
+          "lemma": "corpo",
+          "status": "keep"
+        },
+        {
+          "word": "delito",
+          "lemma": "delito",
+          "status": "keep"
+        },
+        {
+          "word": "em",
+          "lemma": "em",
+          "status": "drop"
+        },
+        {
+          "word": "casos",
+          "lemma": "caso",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "violência",
+          "lemma": "violência",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "acidente",
+          "lemma": "acidente",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "tentativa",
+          "lemma": "tentativa",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "suicidio",
+          "lemma": "suicidio",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Pesquisador Datiloscopico (1967)": {
+      "demo_text": "Classificação, pesquisa, arquivamento de fichas datiloscópicas, para fins de identificação civil e criminal.",
+      "demo_steps": [
+        {
+          "word": "classificação",
+          "lemma": "classificação",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "pesquisa",
+          "lemma": "pesquisa",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "arquivamento",
+          "lemma": "arquivamento",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "fichas",
+          "lemma": "ficha",
+          "status": "keep"
+        },
+        {
+          "word": "datiloscópicas",
+          "lemma": "datiloscópico",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "fins",
+          "lemma": "fim",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "identificação",
+          "lemma": "identificação",
+          "status": "keep"
+        },
+        {
+          "word": "civil",
+          "lemma": "civil",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "criminal",
+          "lemma": "criminal",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Datiloscopista (1967)": {
+      "demo_text": "Tomada de impressões digitais e registro em impressos próprios, dados qualificativos de pessoas.",
+      "demo_steps": [
+        {
+          "word": "tomada",
+          "lemma": "tomar",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "impressões",
+          "lemma": "impressão",
+          "status": "keep"
+        },
+        {
+          "word": "digitais",
+          "lemma": "digital",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "registro",
+          "lemma": "registro",
+          "status": "keep"
+        },
+        {
+          "word": "em",
+          "lemma": "em",
+          "status": "drop"
+        },
+        {
+          "word": "impressos",
+          "lemma": "impresso",
+          "status": "keep"
+        },
+        {
+          "word": "próprios",
+          "lemma": "próprio",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "dados",
+          "lemma": "dado",
+          "status": "keep"
+        },
+        {
+          "word": "qualificativos",
+          "lemma": "qualificativo",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "pessoas",
+          "lemma": "pessoa",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Radiotelegrafista (1967)": {
+      "demo_text": "Recepção e expedição de mensagens radiotelegráficas; tarefas de conservação e reparação de aparelhos; tarefas correlatas de escritório.",
+      "demo_steps": [
+        {
+          "word": "recepção",
+          "lemma": "recepção",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "expedição",
+          "lemma": "expedição",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "mensagens",
+          "lemma": "mensagem",
+          "status": "keep"
+        },
+        {
+          "word": "radiotelegráficas",
+          "lemma": "radiotelegráfico",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "conservação",
+          "lemma": "conservação",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "reparação",
+          "lemma": "reparação",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "aparelhos",
+          "lemma": "aparelho",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "correlatas",
+          "lemma": "correlato",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "escritório",
+          "lemma": "escritório",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Motorista (1967)": {
+      "demo_text": "Direção de veículos automotores para transporte de veículos ou cargas.",
+      "demo_steps": [
+        {
+          "word": "direção",
+          "lemma": "direção",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "veículos",
+          "lemma": "veículo",
+          "status": "keep"
+        },
+        {
+          "word": "automotores",
+          "lemma": "automotor",
+          "status": "keep"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "transporte",
+          "lemma": "transporte",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "veículos",
+          "lemma": "veículo",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "cargas",
+          "lemma": "carga",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Guarda de Presídio (1967)": {
+      "demo_text": "Guarda.",
+      "demo_steps": [
+        {
+          "word": "guarda",
+          "lemma": "guardar",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Fotógrafo (1967)": {
+      "demo_text": "Tiragem, revelação e reprodução de fotografias de diversos gêneros para fins didáticos, de reportagens, publicidade, policiais, divulgação e outros.",
+      "demo_steps": [
+        {
+          "word": "tiragem",
+          "lemma": "tiragem",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "revelação",
+          "lemma": "revelação",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "reprodução",
+          "lemma": "reprodução",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "fotografias",
+          "lemma": "fotografia",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "diversos",
+          "lemma": "diversos",
+          "status": "keep"
+        },
+        {
+          "word": "gêneros",
+          "lemma": "gênero",
+          "status": "keep"
+        },
+        {
+          "word": "para",
+          "lemma": "para",
+          "status": "drop"
+        },
+        {
+          "word": "fins",
+          "lemma": "fim",
+          "status": "keep"
+        },
+        {
+          "word": "didáticos",
+          "lemma": "didático",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "reportagens",
+          "lemma": "reportagem",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "publicidade",
+          "lemma": "publicidade",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "policiais",
+          "lemma": "policial",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "divulgação",
+          "lemma": "divulgação",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "outros",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Desenhista (1967)": {
+      "demo_text": "Desenho decorativo, ilustrativo, demonstrativo ou técnico; geográfico, arquitetônico ou de propaganda.",
+      "demo_steps": [
+        {
+          "word": "desenho",
+          "lemma": "desenho",
+          "status": "keep"
+        },
+        {
+          "word": "decorativo",
+          "lemma": "decorativo",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "ilustrativo",
+          "lemma": "ilustrativo",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "demonstrativo",
+          "lemma": "demonstrativo",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "técnico",
+          "lemma": "técnico",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "geográfico",
+          "lemma": "geográfico",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "arquitetônico",
+          "lemma": "arquitetônico",
+          "status": "keep"
+        },
+        {
+          "word": "ou",
+          "lemma": "ou",
+          "status": "drop"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "propaganda",
+          "lemma": "propaganda",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    },
+    "Auxiliar de Autópsia (1967)": {
+      "demo_text": "Auxilio em operação de dissecação, recomposição, sutura, transporte e pesagem de cadáveres humanos; limpeza e desfecção de locais e instrumentos de trabalho e outras tarefas simples de laboratório.",
+      "demo_steps": [
+        {
+          "word": "auxilio",
+          "lemma": "auxilio",
+          "status": "keep"
+        },
+        {
+          "word": "em",
+          "lemma": "em",
+          "status": "drop"
+        },
+        {
+          "word": "operação",
+          "lemma": "operação",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "dissecação",
+          "lemma": "dissecação",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "recomposição",
+          "lemma": "recomposição",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "sutura",
+          "lemma": "suturo",
+          "status": "keep"
+        },
+        {
+          "word": ",",
+          "lemma": ",",
+          "status": "drop"
+        },
+        {
+          "word": "transporte",
+          "lemma": "transporte",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "pesagem",
+          "lemma": "pesagem",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "cadáveres",
+          "lemma": "cadáver",
+          "status": "keep"
+        },
+        {
+          "word": "humanos",
+          "lemma": "humano",
+          "status": "keep"
+        },
+        {
+          "word": ";",
+          "lemma": ";",
+          "status": "drop"
+        },
+        {
+          "word": "limpeza",
+          "lemma": "limpeza",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "desfecção",
+          "lemma": "desfecção",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "locais",
+          "lemma": "local",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "instrumentos",
+          "lemma": "instrumento",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "trabalho",
+          "lemma": "trabalho",
+          "status": "keep"
+        },
+        {
+          "word": "e",
+          "lemma": "e",
+          "status": "drop"
+        },
+        {
+          "word": "outras",
+          "lemma": "outro",
+          "status": "drop"
+        },
+        {
+          "word": "tarefas",
+          "lemma": "tarefa",
+          "status": "keep"
+        },
+        {
+          "word": "simples",
+          "lemma": "simples",
+          "status": "keep"
+        },
+        {
+          "word": "de",
+          "lemma": "de",
+          "status": "drop"
+        },
+        {
+          "word": "laboratório",
+          "lemma": "laboratório",
+          "status": "keep"
+        },
+        {
+          "word": ".",
+          "lemma": ".",
+          "status": "drop"
+        }
+      ]
+    }
+  },
+  "top_global_words": {
+    "polícia": 0.7661596475811775,
+    "policial": 0.7635971542869043,
+    "edital atribuição": 0.7532864945780918,
+    "edital": 0.6956883823369775,
+    "tarefa": 0.6640503757236023,
+    "cadáver": 0.6472363661150761,
+    "atribuição": 0.6388667543964296,
+    "exame": 0.5442137138065837,
+    "escritório": 0.510091139046539,
+    "impressão": 0.5098689106674952,
+    "identificação": 0.4945982922420059,
+    "lei": 0.4763223895965444,
+    "crime": 0.4660958996219254,
+    "tarefa correlato": 0.4573070678136497,
+    "correlato": 0.4522502250959955,
+    "ou": 0.45198537672449335,
+    "correlato escritório": 0.4486795294130382,
+    "tarefa correlato escritório": 0.4486795294130382,
+    "local": 0.4267021847871897,
+    "realizar": 0.4239146721177825,
+    "atividade": 0.42184282093262016,
+    "criminal": 0.413405295960185,
+    "digital": 0.3896077914731798,
+    "veículo": 0.3827616657409792,
+    "limpeza": 0.3621368523673124,
+    "pessoa": 0.35287831736372277,
+    "cargo": 0.3516592624712371,
+    "civil": 0.3477400929241091,
+    "fim": 0.33958887001384497,
+    "pericial": 0.3354419831202982,
+    "impressão digital": 0.3334597837043513,
+    "determinar": 0.3329651895185087,
+    "de": 0.3328664334671749,
+    "arma": 0.3264078225635924,
+    "transporte": 0.3234086041388876,
+    "execução": 0.32251210166607747,
+    "conservação": 0.3212105391622827,
+    "humano": 0.32082774771220135,
+    "polícia judiciária": 0.31262098361475804,
+    "judiciária": 0.31262098361475804,
+    "legal": 0.3077791149250694,
+    "atender": 0.3023585806548875,
+    "técnico": 0.3010103787900848,
+    "pesquisa": 0.29986016112690816,
+    "relacionar": 0.29863150882406836,
+    "inerente": 0.2968611003535722,
+    "exercício": 0.28649422349465004,
+    "local crime": 0.28383097972183036,
+    "portaria": 0.28303418798224944,
+    "químico": 0.281495031143838,
+    "função": 0.28124062967419605,
+    "fotografia": 0.28086791938193223,
+    "prejuízo": 0.27816073040425077,
+    "fiscalização": 0.2760330655246257,
+    "trabalho": 0.27481384324979474,
+    "perícia": 0.27387836261549103,
+    "prever": 0.27324890689879744,
+    "ato": 0.2672288366853472,
+    "autoridade policial": 0.2614997088136315,
+    "autoridade": 0.2614997088136315,
+    "ocorrência": 0.2606807923840524,
+    "inerente exercício cargo": 0.2605631205660236,
+    "exercício cargo": 0.2605631205660236,
+    "inerente exercício": 0.2605631205660236,
+    "dado": 0.2590666615429032,
+    "agente": 0.25755532410761256,
+    "nº": 0.2565899873823025,
+    "viatura": 0.25497419748499994,
+    "elaboração": 0.25379342306216235,
+    "portar arma": 0.2518283211929646,
+    "portar": 0.2518283211929646,
+    "paulo": 0.2489489514235943,
+    "papiloscópico": 0.24805440685726082,
+    "manusear": 0.24794671006327917,
+    "acidente": 0.24737687159955385,
+    "laboratório": 0.24626636947714947,
+    "poder": 0.24062197101350646,
+    "complementar": 0.23701882775007985,
+    "realizar exame": 0.23623592632341917,
+    "penal": 0.23574700755965794,
+    "fim identificação": 0.2349807838168883,
+    "prejuízo tarefa": 0.23434075211776764,
+    "análogo poder determinar": 0.23434075211776764,
+    "análogo": 0.23434075211776764,
+    "tarefa análogo poder determinar": 0.23434075211776764,
+    "tarefa análogo": 0.23434075211776764,
+    "tarefa análogo poder": 0.23434075211776764,
+    "prejuízo tarefa análogo poder determinar": 0.23434075211776764,
+    "prejuízo tarefa análogo poder": 0.23434075211776764,
+    "poder determinar": 0.23434075211776764,
+    "prejuízo tarefa análogo": 0.23434075211776764,
+    "análogo poder": 0.23434075211776764,
+    "investigação": 0.23370896649515605,
+    "30": 0.2310499597760012,
+    "portaria dgp 30": 0.2310499597760012,
+    "portaria dgp": 0.2310499597760012,
+    "30 novembro": 0.2310499597760012,
+    "dgp": 0.2310499597760012,
+    "dgp 30": 0.2310499597760012,
+    "novembro": 0.2310499597760012,
+    "dgp 30 novembro": 0.2310499597760012,
+    "portaria dgp 30 novembro": 0.2310499597760012,
+    "delegado polícia": 0.23012906145558526,
+    "delegado": 0.23012906145558526,
+    "elaborar": 0.22881239596366054,
+    "aparelho": 0.2282999791696257,
+    "verificação": 0.22735646684023866,
+    "elemento": 0.22692471342624682,
+    "auxiliar": 0.22634081875606119,
+    "administrativo": 0.22593087239358275,
+    "proceder": 0.2257869329745648,
+    "processo": 0.2254123259141088,
+    "revelação": 0.22375823409751516,
+    "médico": 0.22066851156782602,
+    "público": 0.22064489365344364,
+    "registro": 0.21989714613297523,
+    "desenho": 0.21914780285705013,
+    "arma fogo": 0.21784046804194737,
+    "fogo": 0.21784046804194737,
+    "coleta": 0.21175865918061992,
+    "recepção": 0.21159641982501634,
+    "documento": 0.20690369226156008,
+    "natureza": 0.20657011026005606,
+    "instrumento": 0.20622631727256435,
+    "lei complementar": 0.20246477688586187,
+    "ficha": 0.20181711061462604,
+    "delegacia": 0.1991625040040413,
+    "executar": 0.19838457406208587,
+    "peça": 0.19474846984748212,
+    "material": 0.19018639397762538,
+    "conduzir": 0.1891261608712786,
+    "portar arma fogo": 0.188795677610358,
+    "orientação": 0.18818134350830615,
+    "análise": 0.18755337101135108,
+    "classificação": 0.18674237241982797,
+    "classificação pesquisa": 0.18674237241982797,
+    "decorrente": 0.18619291507525446,
+    "atuar": 0.18617719872048638,
+    "dentre": 0.18491849752379685,
+    "viatura policial": 0.18401128388196453,
+    "médico legal": 0.1838666994458633,
+    "polícia civil": 0.18155259353797276,
+    "reparo": 0.1799340754044686,
+    "pequeno reparo": 0.1799340754044686,
+    "pequeno": 0.1799340754044686,
+    "execução pequeno reparo": 0.1799340754044686,
+    "execução pequeno": 0.1799340754044686,
+    "busca": 0.17809227729109206,
+    "laudo pericial": 0.17761544564587856,
+    "laudo": 0.17761544564587856,
+    "30 novembro conforme anexo": 0.17715316717600887,
+    "anexo": 0.17715316717600887,
+    "anexo edital": 0.17715316717600887,
+    "portaria dgp 30 novembro conforme": 0.17715316717600887,
+    "30 novembro conforme anexo edital": 0.17715316717600887,
+    "novembro conforme": 0.17715316717600887,
+    "novembro conforme anexo": 0.17715316717600887,
+    "novembro conforme anexo edital": 0.17715316717600887,
+    "atividade inerente": 0.17715316717600887,
+    "dgp 30 novembro conforme anexo": 0.17715316717600887,
+    "dgp 30 novembro conforme": 0.17715316717600887,
+    "atividade inerente exercício cargo": 0.17715316717600887,
+    "atividade inerente exercício": 0.17715316717600887,
+    "conforme anexo": 0.17715316717600887,
+    "conforme": 0.17715316717600887,
+    "conforme anexo edital": 0.17715316717600887,
+    "30 novembro conforme": 0.17715316717600887,
+    "objeto": 0.17640054759756438,
+    "corpo": 0.17639475906775312,
+    "relacionar de": 0.17632482641187508,
+    "de ele decorrente": 0.17632482641187508,
+    "ele": 0.17632482641187508,
+    "de ele": 0.17632482641187508,
+    "ele decorrente": 0.17632482641187508,
+    "relacionar de ele": 0.17632482641187508,
+    "relacionar de ele decorrente": 0.17632482641187508,
+    "diligência": 0.17452915956774737,
+    "papiloscopista policial": 0.17211005214991004,
+    "papiloscopista": 0.17211005214991004,
+    "coleta impressão": 0.17098913812620695,
+    "ii": 0.1693014809921925,
+    "situação": 0.16924432553853458,
+    "diversos": 0.1690136314623472,
+    "auto": 0.1683940184916722,
+    "direto": 0.16735881600065924,
+    "arquivamento": 0.1669514627366396,
+    "identificação civil": 0.1669514627366396,
+    "pesquisa arquivamento": 0.1669514627366396,
+    "civil criminal": 0.1669514627366396,
+    "identificação civil criminal": 0.1669514627366396,
+    "datiloscópico": 0.1658305487129365,
+    "policial prejuízo tarefa": 0.1655836607761192,
+    "policial prejuízo tarefa análogo poder": 0.1655836607761192,
+    "policial prejuízo tarefa análogo": 0.1655836607761192,
+    "policial prejuízo": 0.1655836607761192,
+    "vítima": 0.16402674599848782,
+    "produto": 0.16250822708434987,
+    "ato polícia": 0.16208573731450668,
+    "polícia paulo": 0.16188074680767434,
+    "desempenho": 0.1615590091514411,
+    "informação": 0.16039598766382665,
+    "dirigir": 0.16035907179926973,
+    "dirigir viatura": 0.16035907179926973,
+    "cumprir": 0.16032592898319376,
+    "coletar": 0.15971319016937896,
+    "cadáver de": 0.1591766305586122,
+    "de eles": 0.1591766305586122,
+    "eles": 0.1591766305586122,
+    "cadáver de eles": 0.1591766305586122,
+    "atribuição inerente exercício": 0.15840327094306325,
+    "atribuição inerente": 0.15840327094306325,
+    "atribuição inerente exercício cargo": 0.15840327094306325,
+    "expedição mensagem radiotelegráfico tarefa": 0.158223446446841,
+    "expedição mensagem": 0.158223446446841,
+    "expedição mensagem radiotelegráfico tarefa conservação": 0.158223446446841,
+    "tarefa conservação reparação aparelho tarefa": 0.158223446446841,
+    "expedição": 0.158223446446841,
+    "tarefa conservação": 0.158223446446841,
+    "tarefa conservação reparação aparelho": 0.158223446446841,
+    "tarefa conservação reparação": 0.158223446446841,
+    "radiotelegráfico tarefa": 0.158223446446841,
+    "radiotelegráfico": 0.158223446446841,
+    "mensagem radiotelegráfico tarefa conservação": 0.158223446446841,
+    "expedição mensagem radiotelegráfico": 0.158223446446841,
+    "conservação reparação aparelho tarefa correlato": 0.158223446446841,
+    "reparação aparelho": 0.158223446446841,
+    "reparação aparelho tarefa correlato escritório": 0.158223446446841,
+    "reparação aparelho tarefa": 0.158223446446841,
+    "recepção expedição mensagem": 0.158223446446841,
+    "reparação aparelho tarefa correlato": 0.158223446446841,
+    "reparação": 0.158223446446841,
+    "recepção expedição": 0.158223446446841,
+    "recepção expedição mensagem radiotelegráfico tarefa": 0.158223446446841,
+    "recepção expedição mensagem radiotelegráfico": 0.158223446446841,
+    "radiotelegráfico tarefa conservação reparação aparelho": 0.158223446446841,
+    "radiotelegráfico tarefa conservação reparação": 0.158223446446841,
+    "aparelho tarefa correlato escritório": 0.158223446446841,
+    "aparelho tarefa correlato": 0.158223446446841,
+    "aparelho tarefa": 0.158223446446841,
+    "mensagem radiotelegráfico tarefa conservação reparação": 0.158223446446841,
+    "mensagem radiotelegráfico": 0.158223446446841,
+    "mensagem": 0.158223446446841,
+    "conservação reparação aparelho tarefa": 0.158223446446841,
+    "conservação reparação": 0.158223446446841,
+    "conservação reparação aparelho": 0.158223446446841,
+    "radiotelegráfico tarefa conservação": 0.158223446446841,
+    "mensagem radiotelegráfico tarefa": 0.158223446446841,
+    "papilar": 0.15822289275784332,
+    "desenho decorativo ilustrativo": 0.15697657538098486,
+    "decorativo ilustrativo demonstrativo técnico": 0.15697657538098486,
+    "técnico geográfico arquitetônico propaganda": 0.15697657538098486,
+    "técnico geográfico arquitetônico": 0.15697657538098486,
+    "técnico geográfico arquitetônico propaganda tarefa": 0.15697657538098486,
+    "propaganda": 0.15697657538098486,
+    "propaganda tarefa": 0.15697657538098486,
+    "propaganda tarefa correlato": 0.15697657538098486,
+    "propaganda tarefa correlato escritório": 0.15697657538098486,
+    "desenho decorativo ilustrativo demonstrativo técnico": 0.15697657538098486,
+    "arquitetônico propaganda": 0.15697657538098486,
+    "desenho decorativo": 0.15697657538098486,
+    "desenho decorativo ilustrativo demonstrativo": 0.15697657538098486,
+    "demonstrativo técnico geográfico": 0.15697657538098486,
+    "demonstrativo técnico geográfico arquitetônico propaganda": 0.15697657538098486,
+    "arquitetônico propaganda tarefa": 0.15697657538098486,
+    "geográfico arquitetônico": 0.15697657538098486,
+    "geográfico arquitetônico propaganda tarefa": 0.15697657538098486,
+    "ilustrativo demonstrativo técnico geográfico arquitetônico": 0.15697657538098486,
+    "arquitetônico propaganda tarefa correlato escritório": 0.15697657538098486,
+    "ilustrativo": 0.15697657538098486,
+    "ilustrativo demonstrativo": 0.15697657538098486,
+    "geográfico arquitetônico propaganda tarefa correlato": 0.15697657538098486,
+    "arquitetônico propaganda tarefa correlato": 0.15697657538098486,
+    "arquitetônico": 0.15697657538098486,
+    "geográfico arquitetônico propaganda": 0.15697657538098486,
+    "demonstrativo técnico": 0.15697657538098486,
+    "demonstrativo": 0.15697657538098486,
+    "demonstrativo técnico geográfico arquitetônico": 0.15697657538098486,
+    "geográfico": 0.15697657538098486,
+    "ilustrativo demonstrativo técnico geográfico": 0.15697657538098486,
+    "ilustrativo demonstrativo técnico": 0.15697657538098486,
+    "decorativo ilustrativo": 0.15697657538098486,
+    "decorativo ilustrativo demonstrativo técnico geográfico": 0.15697657538098486,
+    "decorativo": 0.15697657538098486,
+    "decorativo ilustrativo demonstrativo": 0.15697657538098486,
+    "técnico geográfico": 0.15697657538098486,
+    "pesquisa arquivamento ficha datiloscópico": 0.15580385579404737,
+    "pesquisa arquivamento ficha datiloscópico fim": 0.15580385579404737,
+    "pesquisa arquivamento ficha": 0.15580385579404737,
+    "datiloscópico fim identificação civil": 0.15580385579404737,
+    "datiloscópico fim": 0.15580385579404737,
+    "arquivamento ficha datiloscópico": 0.15580385579404737,
+    "arquivamento ficha": 0.15580385579404737,
+    "civil criminal tarefa correlato": 0.15580385579404737,
+    "criminal tarefa correlato": 0.15580385579404737,
+    "criminal tarefa correlato escritório": 0.15580385579404737,
+    "datiloscópico fim identificação": 0.15580385579404737,
+    "classificação pesquisa arquivamento ficha": 0.15580385579404737,
+    "classificação pesquisa arquivamento": 0.15580385579404737,
+    "identificação civil criminal tarefa": 0.15580385579404737,
+    "identificação civil criminal tarefa correlato": 0.15580385579404737,
+    "arquivamento ficha datiloscópico fim identificação": 0.15580385579404737,
+    "arquivamento ficha datiloscópico fim": 0.15580385579404737,
+    "ficha datiloscópico fim identificação": 0.15580385579404737,
+    "classificação pesquisa arquivamento ficha datiloscópico": 0.15580385579404737,
+    "civil criminal tarefa": 0.15580385579404737,
+    "civil criminal tarefa correlato escritório": 0.15580385579404737,
+    "datiloscópico fim identificação civil criminal": 0.15580385579404737,
+    "criminal tarefa": 0.15580385579404737,
+    "ficha datiloscópico fim identificação civil": 0.15580385579404737,
+    "ficha datiloscópico fim": 0.15580385579404737,
+    "fim identificação civil criminal": 0.15580385579404737,
+    "fim identificação civil criminal tarefa": 0.15580385579404737,
+    "ficha datiloscópico": 0.15580385579404737,
+    "fim identificação civil": 0.15580385579404737,
+    "unidade": 0.15494170705243437,
+    "providência": 0.15466122282990943,
+    "policiamento": 0.15465024429836727,
+    "guarda": 0.1545888252365456,
+    "distintivo": 0.15393484575067137,
+    "perito criminal": 0.15064596211174874,
+    "perito": 0.15064596211174874,
+    "contato": 0.15064596211174874,
+    "lesão": 0.1506397395822705,
+    "biológico": 0.15044289361538232,
+    "infração": 0.14990509259098175,
+    "possibilidade exposição situação risco": 0.14895606975151326,
+    "possibilidade": 0.14895606975151326,
+    "possibilidade exposição": 0.14895606975151326,
+    "possibilidade exposição situação": 0.14895606975151326,
+    "risco": 0.14895606975151326,
+    "exposição": 0.14895606975151326,
+    "exposição situação": 0.14895606975151326,
+    "exposição situação risco": 0.14895606975151326,
+    "situação risco": 0.14895606975151326,
+    "atuar possibilidade exposição situação risco": 0.14895606975151326,
+    "atuar possibilidade exposição situação": 0.14895606975151326,
+    "atuar possibilidade exposição": 0.14895606975151326,
+    "atuar possibilidade": 0.14895606975151326,
+    "crime acidente": 0.14894018648302856,
+    "fotográfico": 0.14839742103805725,
+    "necessário": 0.14701587051969572,
+    "preso": 0.14617806039626902,
+    "requisição": 0.14506141987826196,
+    "fragmento": 0.14466664316200045,
+    "físico": 0.1441552062267654,
+    "algema": 0.1440841755329848,
+    "complementar nº": 0.143677366212292,
+    "lei complementar nº": 0.143677366212292,
+    "ser": 0.14328609456838778,
+    "atividade polícia judiciária": 0.14297368630003596,
+    "atividade polícia": 0.14297368630003596,
+    "prisão": 0.1427001234152463,
+    "tomar": 0.1415815062691181,
+    "tomar impressão": 0.1415815062691181,
+    "tomar impressão digital": 0.1415815062691181,
+    "prever portaria": 0.14122398548273662,
+    "prever portaria dgp 30 novembro": 0.14122398548273662,
+    "função prever portaria dgp 30": 0.14122398548273662,
+    "função prever portaria": 0.14122398548273662,
+    "função prever portaria dgp": 0.14122398548273662,
+    "função prever": 0.14122398548273662,
+    "prever portaria dgp": 0.14122398548273662,
+    "prever portaria dgp 30": 0.14122398548273662,
+    "autoria": 0.14051257430135877,
+    "lavratura": 0.1404304663636296,
+    "lavratura auto": 0.1404304663636296,
+    "atender público": 0.1398363738614078,
+    "exame pericial": 0.13916162739532117,
+    "veículo automotor": 0.1390721428258558,
+    "automotor": 0.1390721428258558,
+    "tóxico": 0.1390474424922137,
+    "analisar": 0.13624038576090927,
+    "orgânico": 0.13610485264979466,
+    "exumação": 0.13390203496452474,
+    "peça documento": 0.1338436869734072,
+    "fotografar": 0.1336064076019553,
+    "inerente exercício cargo agente": 0.13340841466978856,
+    "exercício cargo agente": 0.13340841466978856,
+    "atividade inerente exercício cargo agente": 0.13340841466978856,
+    "cargo agente": 0.13340841466978856,
+    "policía": 0.13277500266936088,
+    "policía classe": 0.13277500266936088,
+    "classe": 0.13277500266936088,
+    "recolhimento": 0.1316959048095412,
+    "programa": 0.13147610286083425,
+    "observância": 0.13147610286083425,
+    "policial administrativo": 0.13102356541691498,
+    "substância": 0.1295371032844025,
+    "produto químico": 0.12947761406261796,
+    "realizar exame pericial": 0.1289987070846844,
+    "fato": 0.12833218355801815,
+    "exercer": 0.1282702212100781,
+    "presidir": 0.1282702212100781,
+    "dentre relacionar de ele": 0.12779638516437794,
+    "dentre relacionar": 0.12779638516437794,
+    "dentre relacionar de ele decorrente": 0.12779638516437794,
+    "dentre relacionar de": 0.12779638516437794,
+    "apreensão": 0.1277317399171884,
+    "catástrofe": 0.12772535378787814,
+    "sistema": 0.1270108786435506,
+    "impressão papilar": 0.12657831420627466,
+    "doença contagioso": 0.12647655999654409,
+    "contagioso": 0.12647655999654409,
+    "doença": 0.12647655999654409,
+    "observação": 0.12613451864054026,
+    "observação lesão": 0.12613451864054026,
+    "possibilitar": 0.12613451864054026,
+    "possibilitar observação": 0.12613451864054026,
+    "possibilitar observação lesão": 0.12613451864054026,
+    "procedimento": 0.12495315124170261,
+    "preparação": 0.12455928134313682,
+    "artigo": 0.1235466871819636,
+    "prática": 0.12336638972462424,
+    "coleta impressão digital": 0.12301389766793237,
+    "realização": 0.12263204505755122,
+    "execução tarefa": 0.12217818900035068,
+    "adiante": 0.12216867712280716,
+    "adiante listar prejuízo tarefa": 0.12216867712280716,
+    "atribuição adiante listar": 0.12216867712280716,
+    "atribuição adiante": 0.12216867712280716,
+    "adiante listar prejuízo tarefa análogo": 0.12216867712280716,
+    "adiante listar": 0.12216867712280716,
+    "atribuição adiante listar prejuízo": 0.12216867712280716,
+    "atribuição adiante listar prejuízo tarefa": 0.12216867712280716,
+    "adiante listar prejuízo": 0.12216867712280716,
+    "listar": 0.12216867712280716,
+    "listar prejuízo tarefa análogo": 0.12216867712280716,
+    "listar prejuízo tarefa": 0.12216867712280716,
+    "listar prejuízo": 0.12216867712280716,
+    "listar prejuízo tarefa análogo poder": 0.12216867712280716,
+    "impresso": 0.12159975465989088,
+    "assessoramento técnico": 0.12154419050744521,
+    "assessoramento": 0.12154419050744521,
+    "iirgd": 0.12154419050744521,
+    "funcionamento": 0.12128391787164772,
+    "unidade central recurso humano": 0.12118413589173554,
+    "funções atividade sicad": 0.12118413589173554,
+    "funções": 0.12118413589173554,
+    "unidade central recurso": 0.12118413589173554,
+    "único": 0.12118413589173554,
+    "atividade sicad unidade central recurso": 0.12118413589173554,
+    "atividade sicad unidade central": 0.12118413589173554,
+    "único cadastro cargo": 0.12118413589173554,
+    "atividade sicad": 0.12118413589173554,
+    "funções atividade sicad unidade": 0.12118413589173554,
+    "atividade sicad unidade": 0.12118413589173554,
+    "único cadastro": 0.12118413589173554,
+    "funções atividade sicad unidade central": 0.12118413589173554,
+    "humano paulo ucrh prejuízo": 0.12118413589173554,
+    "humano paulo ucrh prejuízo relacionar": 0.12118413589173554,
+    "sicad unidade central recurso humano": 0.12118413589173554,
+    "sicad unidade central": 0.12118413589173554,
+    "sicad unidade central recurso": 0.12118413589173554,
+    "humano paulo ucrh": 0.12118413589173554,
+    "ucrh": 0.12118413589173554,
+    "unidade central": 0.12118413589173554,
+    "unidade central recurso humano paulo": 0.12118413589173554,
+    "humano paulo": 0.12118413589173554,
+    "sicad": 0.12118413589173554,
+    "sicad unidade": 0.12118413589173554,
+    "paulo ucrh prejuízo relacionar": 0.12118413589173554,
+    "central": 0.12118413589173554,
+    "funções atividade": 0.12118413589173554,
+    "ucrh prejuízo relacionar": 0.12118413589173554,
+    "ucrh prejuízo": 0.12118413589173554,
+    "central recurso humano paulo ucrh": 0.12118413589173554,
+    "cargo funções": 0.12118413589173554,
+    "cargo funções atividade sicad": 0.12118413589173554,
+    "prever único cadastro cargo funções": 0.12118413589173554,
+    "prever único": 0.12118413589173554,
+    "prever único cadastro": 0.12118413589173554,
+    "prever único cadastro cargo": 0.12118413589173554,
+    "prejuízo relacionar": 0.12118413589173554,
+    "cargo funções atividade": 0.12118413589173554,
+    "central recurso humano": 0.12118413589173554,
+    "central recurso": 0.12118413589173554,
+    "cargo funções atividade sicad unidade": 0.12118413589173554,
+    "cadastro": 0.12118413589173554,
+    "único cadastro cargo funções": 0.12118413589173554,
+    "cadastro cargo funções": 0.12118413589173554,
+    "cadastro cargo funções atividade sicad": 0.12118413589173554,
+    "cadastro cargo funções atividade": 0.12118413589173554,
+    "recurso": 0.12118413589173554,
+    "recurso humano paulo ucrh": 0.12118413589173554,
+    "recurso humano": 0.12118413589173554,
+    "recurso humano paulo": 0.12118413589173554,
+    "único cadastro cargo funções atividade": 0.12118413589173554,
+    "cadastro cargo": 0.12118413589173554,
+    "recurso humano paulo ucrh prejuízo": 0.12118413589173554,
+    "paulo ucrh prejuízo": 0.12118413589173554,
+    "central recurso humano paulo": 0.12118413589173554,
+    "paulo ucrh": 0.12118413589173554,
+    "conduzir viatura policial": 0.12037257706662391,
+    "conduzir viatura": 0.12037257706662391,
+    "autópsia": 0.12017837457791034,
+    "levantamento": 0.11984538750715092,
+    "transporte pesagem cadáver humano limpeza": 0.11978116997484671,
+    "transporte pesagem cadáver": 0.11978116997484671,
+    "operação": 0.11978116997484671,
+    "operação dissecação": 0.11978116997484671
+  },
+  "top_noun_chunks": {
+    "impressão digital": 9,
+    "Polícia Judiciária": 6,
+    "tarefa análogo": 6,
+    "tarefa correlato": 6,
+    "polícia civil": 5,
+    "autoridade policial": 5,
+    "viatura policial": 5,
+    "unidade central": 4,
+    "recurso humano": 4,
+    "Paulo ucrh": 4,
+    "exame pericial": 4,
+    "assessoramento técnico": 4,
+    "ocorrência policial": 3,
+    "contato direto": 3,
+    "lei complementar": 3,
+    "impressão papilar": 3,
+    "laudo pericial": 3,
+    "perito criminal": 3,
+    "de eles": 3,
+    "ricardo Gumbleton daunt": 3,
+    "infração penal": 2,
+    "investigação criminal": 2,
+    "prejuízo relacionar de ele decorrente": 2,
+    "Paulo lei complementar nº": 2,
+    "veículo automotor": 2,
+    "natureza policial administrativo": 2,
+    "atividade policial": 2,
+    "atribuição inerente exercício cargo perito criminal": 2,
+    "exame complementar": 2,
+    "arma distintivo": 2,
+    "de aquele": 2,
+    "identificação civil criminal": 2,
+    "papiloscopista policial": 2,
+    "conforme anexo v": 2,
+    "lei orgânica": 2,
+    "unidade policial": 2,
+    "vítima fatal": 2,
+    "pequeno reparo": 2,
+    "atribuição comum": 1,
+    "carreira policial": 1,
+    "relatório respectivo": 1,
+    "pessoa suspeito prática ilícito": 1,
+    "busca pessoal": 1,
+    "atribuição inerente exercício cargo delegado polícia": 1,
+    "ato inerente gestão atividade Polícia Judiciária": 1,
+    "polícia administrativo": 1,
+    "policiamento preventivo": 1,
+    "processo penal": 1,
+    "atribuição inerente exercício cargo escrivão polícia": 1,
+    "inquérito policial processo sindicância apuração peça documento Polícia Judiciária físico digital e/ou sistema tecnologia informação": 1,
+    "segurança orgânico": 1,
+    "procedimento policial investigação": 1,
+    "atribuição inerente exercício cargo investigador polícia": 1,
+    "diligência investigatório policiamento preventivo especializar": 1,
+    "público interno externo": 1,
+    "natureza criminal": 1,
+    "ato compatível": 1,
+    "Polícia Judiciária administrativo": 1,
+    "perícia criminal": 1,
+    "conhecimento científico tecnológico": 1,
+    "elemento esclarecedor": 1,
+    "inquérito policial": 1,
+    "identificação criminal": 1,
+    "elemento indicativo": 1,
+    "requisição pericial": 1,
+    "correspondente laudo pericial": 1,
+    "prova objetivo": 1,
+    "infração penal administrativo": 1,
+    "elemento material": 1,
+    "cadáver presente": 1,
+    "posterior coleta": 1,
+    "elemento portador diversos doença contagioso agente tóxico agente físico químico e/ou biológico": 1,
+    "manusear coletar": 1,
+    "material biológico": 1,
+    "corpóreos humano": 1,
+    "contaminante ambiental": 1,
+    "exame genérico e/ou específico": 1,
+    "sangue humano": 1,
+    "droga psicoativo": 1,
+    "origem industrial": 1,
+    "análise físico e/ou química": 1,
+    "substância orgânico inorgânico": 1,
+    "exame perinecroscópico": 1,
+    "levantamento fotográfico": 1,
+    "tecnologia aplicável": 1,
+    "perícia criminal:2.1.1": 1,
+    "amostra biológico": 1,
+    "natureza antropológico": 1,
+    "lesão corporal": 1,
+    "pessoa portadoras": 1,
+    "doença contagioso": 1,
+    "agente físico químico e/ou biológico": 1,
+    "atividade inerente exercício cargo papiloscopista policial": 1,
+    "papila dérmico": 1,
+    "documento pertinente": 1,
+    "conforme anexo v edital": 1,
+    "fragmento papilar": 1,
+    "impressão papilar padrão": 1,
+    "acervo decadactilar": 1,
+    "organização sistemático": 1
+  },
+  "lemma_pos_map": {
+    "atribuição": "NOUN",
+    "comum": "ADJ",
+    "carreira": "NOUN",
+    "policial": "ADJ",
+    "polícia": "NOUN",
+    "civil": "ADJ",
+    "portar": "VERB",
+    "arma": "NOUN",
+    "distintivo": "ADJ",
+    "algema": "NOUN",
+    "b": "NOUN",
+    "atender": "VERB",
+    "urbanidade": "NOUN",
+    "eficiência": "NOUN",
+    "público": "NOUN",
+    "pessoalmente": "ADV",
+    "telefone": "NOUN",
+    "c": "PUNCT",
+    "elaborar": "VERB",
+    "orientação": "NOUN",
+    "autoridade": "NOUN",
+    "registro": "NOUN",
+    "ocorrência": "NOUN",
+    "d": "NOUN",
+    "conduzir": "VERB",
+    "viatura": "NOUN",
+    "cumprir": "VERB",
+    "diligência": "NOUN",
+    "e/ou": "CCONJ",
+    "requisição": "NOUN",
+    "determinar": "VERB",
+    "relatório": "NOUN",
+    "respectivo": "ADJ",
+    "f": "PUNCT",
+    "proceder": "VERB",
+    "abordagem": "NOUN",
+    "pessoa": "NOUN",
+    "suspeito": "ADJ",
+    "prática": "NOUN",
+    "ilícito": "NOUN",
+    "realizar": "VERB",
+    "busca": "NOUN",
+    "pessoal": "ADJ",
+    "necessário;g": "PROPN",
+    "identificar": "VERB",
+    "digital": "ADJ",
+    "hipótese": "NOUN",
+    "providência": "NOUN",
+    "fazer": "VERB",
+    "necessário": "ADJ",
+    "h": "NOUN",
+    "apresentar": "VERB",
+    "legalmente": "ADV",
+    "preso": "VERB",
+    "competente": "ADJ",
+    "i": "PROPN",
+    "auxiliar": "VERB",
+    "formalização": "NOUN",
+    "ato": "NOUN",
+    "Polícia": "NOUN",
+    "Judiciária": "PROPN",
+    "j": "NOUN",
+    "operar": "VERB",
+    "sistema": "NOUN",
+    "comunicação": "NOUN",
+    "dado": "NOUN",
+    "inerente": "ADJ",
+    "exercício": "NOUN",
+    "cargo": "NOUN",
+    "delegado": "NOUN",
+    "dentre": "ADP",
+    "relacionar": "VERB",
+    "de ele": "PRON",
+    "decorrente": "ADJ",
+    "exercer": "VERB",
+    "gestão": "NOUN",
+    "atividade": "NOUN",
+    "presidir": "VERB",
+    "apuração": "NOUN",
+    "infração": "NOUN",
+    "penal": "ADJ",
+    "praticar": "VERB",
+    "administrativo": "ADJ",
+    "policiamento": "NOUN",
+    "preventivo": "ADJ",
+    "especializar": "VERB",
+    "investigação": "NOUN",
+    "criminal": "ADJ",
+    "ação": "NOUN",
+    "prever": "VERB",
+    "código": "NOUN",
+    "processo": "NOUN",
+    "legislação": "NOUN",
+    "extravagante": "ADJ",
+    "fogo": "NOUN",
+    "atuar": "VERB",
+    "possibilidade": "NOUN",
+    "exposição": "NOUN",
+    "situação": "NOUN",
+    "risco": "NOUN",
+    "mediar": "VERB",
+    "conflito": "NOUN",
+    "escrivão": "NOUN",
+    "único": "ADJ",
+    "cadastro": "NOUN",
+    "funções-atividade": "NOUN",
+    "sicad": "ADJ",
+    "unidade": "NOUN",
+    "central": "ADJ",
+    "recurso": "NOUN",
+    "humano": "ADJ",
+    "Paulo": "PROPN",
+    "ucrh": "NOUN",
+    "prejuízo": "NOUN",
+    "secretariar": "VERB",
+    "elaboração": "NOUN",
+    "boletim": "NOUN",
+    "termo": "NOUN",
+    "circunstanciar": "VERB",
+    "auto": "NOUN",
+    "prisão": "NOUN",
+    "flagrante": "NOUN",
+    "inquérito": "NOUN",
+    "sindicância": "NOUN",
+    "peça": "NOUN",
+    "documento": "NOUN",
+    "físico": "ADJ",
+    "tecnologia": "NOUN",
+    "informação": "NOUN",
+    "presidência": "NOUN",
+    "função": "NOUN",
+    "portaria": "NOUN",
+    "dgp-30": "X",
+    "novembro": "NOUN",
+    "lei": "NOUN",
+    "orgânico": "ADJ",
+    "complementar": "ADJ",
+    "nº": "NOUN",
+    "responsabilizarr se": "VERB",
+    "fiança": "NOUN",
+    "receber": "VERB",
+    "objeto": "NOUN",
+    "apreensão": "NOUN",
+    "veículo": "NOUN",
+    "automotor": "ADJ",
+    "medida": "NOUN",
+    "segurança": "NOUN",
+    "procedimento": "NOUN",
+    "desempenhar": "VERB",
+    "natureza": "NOUN",
+    "executar": "VERB",
+    "tarefa": "NOUN",
+    "ser": "AUX",
+    "atribuir": "VERB",
+    "integrante": "ADJ",
+    "artigo": "NOUN",
+    "ii": "PROPN",
+    "investigador": "NOUN",
+    "investigatório": "ADJ",
+    "escritas": "VERB",
+    "verbal": "ADJ",
+    "atinente": "ADJ",
+    "trabalho": "NOUN",
+    "emanar": "VERB",
+    "mandado": "NOUN",
+    "escoltar": "VERB",
+    "captura": "NOUN",
+    "indivíduo": "NOUN",
+    "manter": "VERB",
+    "local": "NOUN",
+    "desenvolver": "VERB",
+    "interno": "ADJ",
+    "externo": "ADJ",
+    "desempenho": "NOUN",
+    "intervir": "VERB",
+    "transportar": "VERB",
+    "coisa": "NOUN",
+    "vincular": "VERB",
+    "conservar": "VERB",
+    "manusear": "NOUN",
+    "empregar": "VERB",
+    "equipamento": "NOUN",
+    "letal": "ADJ",
+    "compatível": "ADJ",
+    "perito": "NOUN",
+    "requisitar": "VERB",
+    "campo": "NOUN",
+    "perícia": "NOUN",
+    "exame": "NOUN",
+    "análise": "NOUN",
+    "âmbito": "NOUN",
+    "criminalística": "NOUN",
+    "física": "NOUN",
+    "química": "NOUN",
+    "biologia": "NOUN",
+    "forense": "NOUN",
+    "área": "NOUN",
+    "conhecimento": "NOUN",
+    "científico": "ADJ",
+    "tecnológico": "ADJ",
+    "analisar": "VERB",
+    "crime": "NOUN",
+    "apurar": "VERB",
+    "evidência": "NOUN",
+    "coletar": "VERB",
+    "vestígio": "NOUN",
+    "laboratório": "NOUN",
+    "visar": "VERB",
+    "fornecer": "VERB",
+    "elemento": "NOUN",
+    "esclarecedor": "ADJ",
+    "instrução": "NOUN",
+    "judicial": "ADJ",
+    "determinação": "NOUN",
+    "identificação": "NOUN",
+    "datiloscopia": "NOUN",
+    "quiroscopia": "ADV",
+    "podoscopia": "NOUN",
+    "técnica": "NOUN",
+    "finalidade": "NOUN",
+    "instruir": "VERB",
+    "formar": "VERB",
+    "indicativo": "ADJ",
+    "autoria": "NOUN",
+    "materialidade": "NOUN",
+    "pericial": "ADJ",
+    "pertinente": "ADJ",
+    "referir": "VERB",
+    "aplicação": "NOUN",
+    "oriunr": "VERB",
+    "sistematização": "NOUN",
+    "correspondente": "ADJ",
+    "laudo": "NOUN",
+    "viabilização": "NOUN",
+    "prova": "NOUN",
+    "objetivo": "ADJ",
+    "subsidiem": "NOUN",
+    "examinar": "VERB",
+    "prioridade": "NOUN",
+    "material": "ADJ",
+    "existente": "ADJ",
+    "constatar": "VERB",
+    "idoneidade": "NOUN",
+    "inviolabilidade": "NOUN",
+    "bem": "NOUN",
+    "submetir": "VERB",
+    "vítima": "NOUN",
+    "desabamento": "NOUN",
+    "desmoronamento": "NOUN",
+    "soterramento": "NOUN",
+    "incêndio": "NOUN",
+    "catástrofe": "NOUN",
+    "terrorismo": "NOUN",
+    "acidente": "NOUN",
+    "trânsito": "NOUN",
+    "agente": "NOUN",
+    "tóxico": "ADJ",
+    "sólido": "ADJ",
+    "líquido": "NOUN",
+    "gasoso": "NOUN",
+    "cadáver": "NOUN",
+    "presente": "ADJ",
+    "posterior": "ADJ",
+    "coleta": "NOUN",
+    "de este": "ADP",
+    "realização": "NOUN",
+    "característica": "NOUN",
+    "diversificar": "VERB",
+    "incluir": "VERB",
+    "contato": "NOUN",
+    "direto": "ADJ",
+    "portador": "ADJ",
+    "diversos": "ADJ",
+    "doença": "NOUN",
+    "contagioso": "ADJ",
+    "químico": "ADJ",
+    "biológico": "ADJ",
+    "in": "X",
+    "natura": "X",
+    "contaminar": "VERB",
+    "putrefeito": "ADJ",
+    "fluido": "NOUN",
+    "corpóreos": "ADJ",
+    "animal": "NOUN",
+    "contaminante": "NOUN",
+    "ambiental": "ADJ",
+    "diverso": "ADJ",
+    "genérico": "ADJ",
+    "específico": "ADJ",
+    "mancha": "NOUN",
+    "coágulo": "NOUN",
+    "sangue": "NOUN",
+    "crosta": "NOUN",
+    "seminal": "ADJ",
+    "urina": "NOUN",
+    "fez": "NOUN",
+    "salivo": "NOUN",
+    "etc.": "ADV",
+    "droga": "NOUN",
+    "psicoativo": "ADJ",
+    "entorpecente": "NOUN",
+    "produto": "NOUN",
+    "conhecir": "VERB",
+    "desconhecir": "VERB",
+    "origem": "NOUN",
+    "industrial": "ADJ",
+    "residual": "ADJ",
+    "metálico": "ADJ",
+    "substância": "NOUN",
+    "inorgânico": "ADJ",
+    "perinecroscópico": "ADJ",
+    "exumação": "NOUN",
+    "dirigir": "VERB",
+    "levantamento": "NOUN",
+    "croqui": "NOUN",
+    "desenho": "NOUN",
+    "esquemático": "ADJ",
+    "fotográfico": "ADJ",
+    "aparelho": "NOUN",
+    "aplicável": "ADJ",
+    "informática": "NOUN",
+    "criminal:2.1.1": "VERB",
+    "autópsia": "NOUN",
+    "necroscópico": "ADJ",
+    "parte": "NOUN",
+    "esqueletizar": "VERB",
+    "amostra": "NOUN",
+    "fim": "NOUN",
+    "antropológico": "ADJ",
+    "indireto": "ADJ",
+    "vivo": "NOUN",
+    "lesão": "NOUN",
+    "corporal": "ADJ",
+    "sexológico": "ADJ",
+    "embriaguez": "ADJ",
+    "toxicológico": "ADJ",
+    "especialidade": "NOUN",
+    "médico": "ADJ",
+    "acompanhar": "VERB",
+    "equipe": "NOUN",
+    "critério": "NOUN",
+    "requisitante": "ADJ",
+    "zelar": "VERB",
+    "cadeia": "NOUN",
+    "custódia": "NOUN",
+    "portadoras": "ADJ",
+    "papiloscopista": "NOUN",
+    "estudo": "NOUN",
+    "impressão": "NOUN",
+    "palma": "NOUN",
+    "mão": "NOUN",
+    "dedo": "NOUN",
+    "sola": "NOUN",
+    "pé": "NOUN",
+    "papila": "NOUN",
+    "dérmico": "ADJ",
+    "apto": "ADJ",
+    "cuidar": "VERB",
+    "pesquisa": "NOUN",
+    "arquivamento": "NOUN",
+    "assistir": "VERB",
+    "de aquele": "PRON",
+    "descritas": "VERB",
+    "n.º": "NOUN",
+    "janeiro": "NOUN",
+    "conforme": "SCONJ",
+    "anexo": "NOUN",
+    "v": "PROPN",
+    "edital": "NOUN",
+    "planejar": "VERB",
+    "coordenar": "VERB",
+    "controlar": "VERB",
+    "banco": "NOUN",
+    "automatizar": "VERB",
+    "leitura": "NOUN",
+    "comparação": "NOUN",
+    "papilar": "ADJ",
+    "inserção": "NOUN",
+    "fragmento": "NOUN",
+    "questionar": "VERB",
+    "processamento": "NOUN",
+    "imagem": "NOUN",
+    "padrão": "NOUN",
+    "acervo": "NOUN",
+    "decadactilar": "ADJ",
+    "monodactilar": "VERB",
+    "quiroscópico": "ADJ",
+    "podoscópico": "NOUN",
+    "organização": "NOUN",
+    "sistemático": "ADJ",
+    "mesmo": "NOUN",
+    "retrato": "NOUN",
+    "falar": "VERB",
+    "papiloscópico": "ADJ",
+    "desastr": "ADJ",
+    "correlato": "ADJ",
+    "judiciário": "ADJ",
+    "culminar": "VERB",
+    "aplicar": "VERB",
+    "tratamento": "NOUN",
+    "aproveitamento": "NOUN",
+    "tecido": "NOUN",
+    "epidérmico": "ADJ",
+    "reconstituir": "VERB",
+    "diferente": "DET",
+    "estado": "NOUN",
+    "necropapiloscópico": "ADJ",
+    "efetuar": "VERB",
+    "desaparecido": "VERB",
+    "comparecer": "VERB",
+    "localização": "NOUN",
+    "revelação": "NOUN",
+    "decalque": "NOUN",
+    "transporte": "NOUN",
+    "palmar": "NOUN",
+    "plantar": "NOUN",
+    "diferentes": "DET",
+    "superfície": "NOUN",
+    "projeção": "NOUN",
+    "envelhecimento": "NOUN",
+    "rejuvenescimento": "NOUN",
+    "facial": "ADJ",
+    "técnico": "ADJ",
+    "macro-fotográfico": "ADJ",
+    "análogo": "ADJ",
+    "poder": "VERB",
+    "registrar": "VERB",
+    "encaminhar": "VERB",
+    "classificação": "NOUN",
+    "viva": "ADJ",
+    "morto": "ADJ",
+    "colaborar": "VERB",
+    "obter": "VERB",
+    "fórmula": "NOUN",
+    "dactiloscópico": "ADJ",
+    "orgânica": "PROPN",
+    "telecomunicação": "NOUN",
+    "transmissão": "NOUN",
+    "recepção": "NOUN",
+    "fio": "NOUN",
+    "radio": "NOUN",
+    "eletricidade": "NOUN",
+    "meio": "NOUN",
+    "ótico": "ADJ",
+    "outro": "DET",
+    "eletromagnético": "ADJ",
+    "funcionamento": "NOUN",
+    "manutenção": "NOUN",
+    "limpeza": "NOUN",
+    "estabelecir": "VERB",
+    "tange": "VERB",
+    "cumprimento": "NOUN",
+    "fotógrafo": "NOUN",
+    "técnico-pericial": "ADJ",
+    "adiante": "ADV",
+    "listar": "VERB",
+    "fotografar": "VERB",
+    "contaminado": "VERB",
+    "roubo": "NOUN",
+    "furto": "NOUN",
+    "participar": "VERB",
+    "legista;-": "PROPN",
+    "diretamente": "ADV",
+    "condição": "NOUN",
+    "climático": "ADJ",
+    "desfavorável": "ADJ",
+    "período": "NOUN",
+    "dia": "NOUN",
+    "noite": "NOUN",
+    "seringa": "NOUN",
+    "estilete": "NOUN",
+    "faca": "NOUN",
+    "etc": "ADV",
+    "preparação": "NOUN",
+    "fotografia": "NOUN",
+    "ferimento": "NOUN",
+    "perfuração": "NOUN",
+    "sinal": "NOUN",
+    "agressão": "NOUN",
+    "putrefação": "NOUN",
+    "ampliação": "NOUN",
+    "utilização": "NOUN",
+    "arquivo": "NOUN",
+    "edição": "NOUN",
+    "foto": "NOUN",
+    "eletrônico": "ADJ",
+    "editar": "VERB",
+    "desenhista": "NOUN",
+    "fato": "NOUN",
+    "mediante": "ADP",
+    "uso": "NOUN",
+    "justificar": "VERB",
+    "salvaguardar": "VERB",
+    "vida": "NOUN",
+    "saúde": "NOUN",
+    "patrimônio": "NOUN",
+    "cidadão": "NOUN",
+    "demanda": "NOUN",
+    "alto": "NOUN",
+    "investigativo": "ADJ",
+    "propósito": "NOUN",
+    "recognição": "NOUN",
+    "visuográfico": "ADJ",
+    "alagado": "NOUN",
+    "esgoto": "NOUN",
+    "céu": "NOUN",
+    "aberto": "ADJ",
+    "favela": "NOUN",
+    "ocasionar": "VERB",
+    "planimétrico": "ADJ",
+    "entrar": "VERB",
+    "cadavérico": "ADJ",
+    "necropsia": "NOUN",
+    "manuseio": "NOUN",
+    "possibilitar": "VERB",
+    "observação": "NOUN",
+    "execução": "NOUN",
+    "acompanhamento": "NOUN",
+    "abertura": "NOUN",
+    "cavidade": "NOUN",
+    "craniano": "ADJ",
+    "toráxico": "ADJ",
+    "abdominal": "ADJ",
+    "colheita": "NOUN",
+    "visceral": "ADJ",
+    "reconstituição": "NOUN",
+    "costurar": "VERB",
+    "instrumento": "NOUN",
+    "utilizar": "VERB",
+    "necropsias": "NOUN",
+    "recolhimento": "NOUN",
+    "ossada": "VERB",
+    "resto": "NOUN",
+    "putrefado": "VERB",
+    "inteiro": "ADJ",
+    "exigência": "NOUN",
+    "legal": "ADJ",
+    "osso": "NOUN",
+    "atendente": "NOUN",
+    "necrotério": "NOUN",
+    "recolher": "VERB",
+    "de eles": "PRON",
+    "óbito": "NOUN",
+    "recente": "ADJ",
+    "corpo": "NOUN",
+    "ossar": "VERB",
+    "limpar": "VERB",
+    "encaminhá-los": "VERB",
+    "adotar": "VERB",
+    "reconhecimento": "NOUN",
+    "sepultamento": "NOUN",
+    "reclamar": "VERB",
+    "roupa": "NOUN",
+    "identidade": "NOUN",
+    "funcional": "ADJ",
+    "institucional": "ADJ",
+    "acionar": "VERB",
+    "instituto": "NOUN",
+    "ricardo": "PROPN",
+    "Gumbleton": "PROPN",
+    "daunt": "ADJ",
+    "iirgd": "AUX",
+    "prestar": "VERB",
+    "assessoramento": "NOUN",
+    "morte": "NOUN",
+    "violento": "ADJ",
+    "doloso": "ADJ",
+    "entendir": "VERB",
+    "intervenção": "NOUN",
+    "intencional": "ADJ",
+    "dotar": "VERB",
+    "força": "NOUN",
+    "causa": "NOUN",
+    "desencadeante": "ADJ",
+    "fatal": "ADJ",
+    "ter": "VERB",
+    "identificá-las": "VERB",
+    "rapidamente": "ADV",
+    "estar": "AUX",
+    "qualificar": "VERB",
+    "confirmar": "VERB",
+    "consistir": "VERB",
+    "seguir": "VERB",
+    "colocação": "NOUN",
+    "lacre": "NOUN",
+    "inscrição": "NOUN",
+    "nic": "ADV",
+    "numeração": "NOUN",
+    "sequencial": "ADJ",
+    "ano": "NOUN",
+    "delito": "NOUN",
+    "relevante": "ADJ",
+    "abranger": "VERB",
+    "dispositivo": "NOUN",
+    "anterior": "ADJ",
+    "assessoria": "NOUN",
+    "sítio": "NOUN",
+    "cabendo-lhe": "VERB",
+    "modo": "NOUN",
+    "procedar": "VERB",
+    "fotografação": "NOUN",
+    "apreendir": "VERB",
+    "arrecadar": "VERB",
+    "conter": "VERB",
+    "datiloscópico": "ADJ",
+    "observar se": "VERB",
+    "norma": "NOUN",
+    "relativo": "ADJ",
+    "emitir": "VERB",
+    "resultado": "NOUN",
+    "confronto": "NOUN",
+    "encaminhados": "VERB",
+    "circunscrição": "NOUN",
+    "ensejem": "ADJ",
+    "caso": "NOUN",
+    "95-h": "ADJ",
+    "cumulativamente": "ADV",
+    "observar": "VERB",
+    "seguinte": "ADJ",
+    "requisito": "NOUN",
+    "preservar": "VERB",
+    "possa(m": "ADJ",
+    "vestígio(s": "NOUN",
+    "papiloscópico(s": "PROPN",
+    "delitivo": "ADJ",
+    "incerto": "ADJ",
+    "inquerito": "ADJ",
+    "escritório": "NOUN",
+    "cartório": "NOUN",
+    "delegacia": "NOUN",
+    "policía": "NOUN",
+    "3.a": "NUM",
+    "4.a": "VERB",
+    "5.a": "ADJ",
+    "classe": "NOUN",
+    "adjunto": "ADJ",
+    "regional": "ADJ",
+    "2.a": "ADJ",
+    "participação": "NOUN",
+    "sôbre": "ADP",
+    "distúrbio": "NOUN",
+    "pericia": "NOUN",
+    "licenciamento": "NOUN",
+    "competêncie": "NOUN",
+    "guarda": "VERB",
+    "conservação": "NOUN",
+    "móvel": "NOUN",
+    "convicção": "NOUN",
+    "esclarecimento": "NOUN",
+    "delituoso": "ADJ",
+    "manifesto": "NOUN",
+    "presumível": "ADJ",
+    "mediano": "ADJ",
+    "gravidade": "NOUN",
+    "definir": "VERB",
+    "publicos": "VERB",
+    "prevenir": "VERB",
+    "reprimir": "VERB",
+    "contravenção": "NOUN",
+    "escolta": "NOUN",
+    "paradeiro": "NOUN",
+    "fiscalização": "NOUN",
+    "diversão": "NOUN",
+    "verificar": "VERB",
+    "respeito": "NOUN",
+    "instalação": "NOUN",
+    "verificação": "NOUN",
+    "observância": "NOUN",
+    "horário": "NOUN",
+    "estabelecer": "VERB",
+    "programa": "NOUN",
+    "rádio": "NOUN",
+    "televisão": "NOUN",
+    "teatro": "NOUN",
+    "similar": "ADJ",
+    "censura": "NOUN",
+    "prévio": "ADJ",
+    "anúncio": "NOUN",
+    "impresso": "ADJ",
+    "distico": "NOUN",
+    "eliminação": "NOUN",
+    "aspecto": "NOUN",
+    "inconveniênte": "ADJ",
+    "moral": "NOUN",
+    "bom": "ADJ",
+    "costume": "NOUN",
+    "contrário": "ADJ",
+    "prescrição": "NOUN",
+    "notificação": "NOUN",
+    "advertência": "NOUN",
+    "infrator": "NOUN",
+    "lavratura": "NOUN",
+    "evidencia": "NOUN",
+    "falsificação": "NOUN",
+    "vistoria": "NOUN",
+    "fábrica": "NOUN",
+    "depósilo": "NOUN",
+    "explosivo": "NOUN",
+    "munição": "NOUN",
+    "agressivo": "ADJ",
+    "médico-legal": "ADJ",
+    "violência": "NOUN",
+    "tentativa": "NOUN",
+    "suicidio": "NOUN",
+    "biópsia": "NOUN",
+    "histológico": "ADJ",
+    "anatomo-patológico": "NOUN",
+    "Determinaçãode": "PROPN",
+    "causa-mortis": "NOUN",
+    "ficha": "NOUN",
+    "tomar": "VERB",
+    "próprio": "ADJ",
+    "qualificativo": "ADJ",
+    "planilha": "NOUN",
+    "qualificação": "NOUN",
+    "cromático": "ADJ",
+    "somático": "ADJ",
+    "particular": "ADJ",
+    "pu": "PROPN",
+    "blico": "PROPN",
+    "presos": "VERB",
+    "deter": "VERB",
+    "demente": "NOUN",
+    "ferir": "VERB",
+    "indigente": "NOUN",
+    "preparo": "NOUN",
+    "tomada": "NOUN",
+    "afins": "ADJ",
+    "expedição": "NOUN",
+    "mensagem": "NOUN",
+    "radiotelegráfico": "ADJ",
+    "reparação": "NOUN",
+    "direção": "NOUN",
+    "carga": "NOUN",
+    "lavagem": "NOUN",
+    "librificação": "NOUN",
+    "abastecimento": "NOUN",
+    "combustível": "NOUN",
+    "água": "NOUN",
+    "óleo": "NOUN",
+    "pequeno": "ADJ",
+    "reparo": "NOUN",
+    "Guarda": "NOUN",
+    "vigilância": "NOUN",
+    "movimentação": "NOUN",
+    "presidiário": "NOUN",
+    "detento": "NOUN",
+    "assegurar": "VERB",
+    "disciplina": "NOUN",
+    "ordem": "NOUN",
+    "dependência": "NOUN",
+    "instituição": "NOUN",
+    "contrôle": "NOUN",
+    "entrada": "NOUN",
+    "saida": "NOUN",
+    "volume": "NOUN",
+    "tiragem": "NOUN",
+    "reprodução": "NOUN",
+    "gênero": "NOUN",
+    "didático": "ADJ",
+    "reportagem": "NOUN",
+    "publicidade": "NOUN",
+    "divulgação": "NOUN",
+    "solução": "NOUN",
+    "fixação": "NOUN",
+    "decorativo": "ADJ",
+    "ilustrativo": "ADJ",
+    "demonstrativo": "NOUN",
+    "geográfico": "ADJ",
+    "arquitetônico": "ADJ",
+    "propaganda": "NOUN",
+    "auxilio": "NOUN",
+    "operação": "NOUN",
+    "dissecação": "NOUN",
+    "recomposição": "NOUN",
+    "suturo": "ADJ",
+    "pesagem": "NOUN",
+    "desfecção": "NOUN",
+    "simples": "ADJ"
+  },
+  "silhouette_score": 0.003908643656092345,
+  "silhouette_samples_tfidf": {
+    "Atribuições Comuns (2012)": 0.02177359670959817,
+    "Delegado de Polícia (2023)": -0.00534503164818019,
+    "Escrivão de Polícia (2023)": 0.020408923120773515,
+    "Investigador de Polícia (2023)": 0.01589549429877816,
+    "Perito Criminal (2023)": 0.017167904625278264,
+    "Médico Legista (2023)": 0.026499062549383855,
+    "Papiloscopista Policial (2017)": -0.011010949850508734,
+    "Auxiliar de Papiloscopista Policial (2017)": -0.02227867322330742,
+    "Agente de Telecomunicações Policial (2017)": -0.010473217794256483,
+    "Agente Policial (2017)": -0.03032269668922383,
+    "Carcereiro Policial (2013)": 0.010299159496471687,
+    "Fotógrafo Técnico Pericial (2013)": 0.006986095087412346,
+    "Desenhista Técnico Pericial (2013)": 0.007579776745172115,
+    "Auxiliar de Necropsia (2013)": -0.002087712602485494,
+    "Atendente de Necrotério (2013)": 0.006115274218320288,
+    "Assessoramento Papiloscopico (2023)": -0.005552637537134311,
+    "Escrivão (1967)": -0.0008396374571568437,
+    "Investigador (1967)": -0.0007974184852085771,
+    "Fiscal Diversões Públicas (1967)": 0.003685084096736619,
+    "Perito Criminal (1967)": 0.00681261588859974,
+    "Medico Legista (1967)": 0.0005337090387168151,
+    "Pesquisador Datiloscopico (1967)": 0.019410857611674666,
+    "Datiloscopista (1967)": 0.006317289519584573,
+    "Radiotelegrafista (1967)": 0.010295566650665684,
+    "Motorista (1967)": 0.009617419863834261,
+    "Guarda de Presídio (1967)": 0.011604016840268115,
+    "Fotógrafo (1967)": -0.010567620100725084,
+    "Desenhista (1967)": 0.012166551329371854,
+    "Auxiliar de Autópsia (1967)": -0.0005421362757757316
+  },
+  "silhouette_score_spacy": 0.09850254654884338,
+  "silhouette_samples_spacy": {
+    "Atribuições Comuns (2012)": 0.1584378480911255,
+    "Delegado de Polícia (2023)": 0.2400754690170288,
+    "Escrivão de Polícia (2023)": 0.2680036723613739,
+    "Investigador de Polícia (2023)": 0.3074376881122589,
+    "Perito Criminal (2023)": 0.18629047274589539,
+    "Médico Legista (2023)": -0.08721566200256348,
+    "Papiloscopista Policial (2017)": 0.1803157925605774,
+    "Auxiliar de Papiloscopista Policial (2017)": -0.04712063819169998,
+    "Agente de Telecomunicações Policial (2017)": -0.03792838752269745,
+    "Agente Policial (2017)": 0.2822807729244232,
+    "Carcereiro Policial (2013)": 0.0,
+    "Fotógrafo Técnico Pericial (2013)": 0.22651168704032898,
+    "Desenhista Técnico Pericial (2013)": 0.13749900460243225,
+    "Auxiliar de Necropsia (2013)": 0.18123219907283783,
+    "Atendente de Necrotério (2013)": 0.14250387251377106,
+    "Assessoramento Papiloscopico (2023)": 0.13809771835803986,
+    "Escrivão (1967)": -0.06853090971708298,
+    "Investigador (1967)": -0.09791731089353561,
+    "Fiscal Diversões Públicas (1967)": -0.08573535084724426,
+    "Perito Criminal (1967)": 0.11326539516448975,
+    "Medico Legista (1967)": 0.10474822670221329,
+    "Pesquisador Datiloscopico (1967)": -0.04146064072847366,
+    "Datiloscopista (1967)": 0.10564891248941422,
+    "Radiotelegrafista (1967)": 0.1427251398563385,
+    "Motorista (1967)": 0.0,
+    "Guarda de Presídio (1967)": 0.17243678867816925,
+    "Fotógrafo (1967)": 0.0929621011018753,
+    "Desenhista (1967)": 0.16209104657173157,
+    "Auxiliar de Autópsia (1967)": -0.02008083090186119
+  },
+  "mantel_r": 0.37834234655571203,
+  "mantel_p": 0.000999000999000999,
+  "spearman_rho": 0.6164746038258757
+}

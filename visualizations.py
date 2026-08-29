@@ -850,3 +850,93 @@ def plot_upset_bar_chart(df: pd.DataFrame, title: str, dic_reverso: dict = None,
         autosize=True
     )
     return fig
+
+def plot_bipartite_network(G, title="Rede Bipartida"):
+    import networkx as nx
+    
+    roles = [n for n, d in G.nodes(data=True) if d.get('bipartite') == 0]
+    words = [n for n, d in G.nodes(data=True) if d.get('bipartite') == 1]
+    
+    # Layout especial bipartido
+    try:
+        pos = nx.bipartite_layout(G, roles)
+    except:
+        pos = nx.spring_layout(G, k=0.8, seed=42)
+        
+    edge_x = []
+    edge_y = []
+    
+    for edge in G.edges():
+        x0, y0 = pos[edge[0]]
+        x1, y1 = pos[edge[1]]
+        edge_x.extend([x0, x1, None])
+        edge_y.extend([y0, y1, None])
+        
+    edge_trace = go.Scatter(
+        x=edge_x, y=edge_y,
+        line=dict(width=0.5, color='#888'),
+        hoverinfo='none',
+        mode='lines')
+        
+    role_x = []
+    role_y = []
+    role_text = []
+    for node in roles:
+        x, y = pos[node]
+        role_x.append(x)
+        role_y.append(y)
+        role_text.append(node)
+        
+    role_trace = go.Scatter(
+        x=role_x, y=role_y,
+        mode='markers+text',
+        text=role_text,
+        textposition="top center",
+        hoverinfo='text',
+        marker=dict(
+            color='#FF4B4B',
+            size=20,
+            line=dict(width=2, color='white')
+        ))
+        
+    word_x = []
+    word_y = []
+    word_text = []
+    word_weights_list = []
+    for node in words:
+        x, y = pos[node]
+        word_x.append(x)
+        word_y.append(y)
+        word_text.append(node)
+        word_weights_list.append(G.nodes[node].get('weight', 0.1))
+        
+    max_w = max(word_weights_list) if word_weights_list else 1
+    min_w = min(word_weights_list) if word_weights_list else 0
+    range_w = max_w - min_w if max_w > min_w else 1
+    word_sizes = [10 + ((w - min_w) / range_w) * 25 for w in word_weights_list]
+        
+    word_trace = go.Scatter(
+        x=word_x, y=word_y,
+        mode='markers+text',
+        text=word_text,
+        textposition="bottom center",
+        hoverinfo='text',
+        marker=dict(
+            color=word_weights_list,
+            colorscale='Turbo',
+            showscale=True,
+            colorbar=dict(title="Relevância", len=0.5, y=0.5, thickness=15),
+            size=word_sizes,
+            line=dict(width=1, color='white')
+        ))
+        
+    fig = go.Figure(data=[edge_trace, role_trace, word_trace],
+             layout=go.Layout(
+                title=dict(text=title, font=dict(size=16)),
+                showlegend=False,
+                hovermode='closest',
+                margin=dict(b=20,l=5,r=5,t=40),
+                xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
+                )
+    return fig

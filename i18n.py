@@ -268,12 +268,17 @@ TRANSLATIONS = {
         "tut_sec_dendro": "O Dendrograma ilustra a hierarquia de similaridade. Cargos que se unem mais tarde (mais abaixo/esquerda) são funcionalmente mais parecidos, enquanto os que se unem mais cedo (mais acima/direita) são mais distantes.",
         "tut_sec_comp_delta": "O Delta Quantitativo mostra a variação absoluta no número de atribuições entre os cenários analisados.",
         "tut_sec_comp_trans": "A Matriz de Similaridade Comparativa mostra o quanto o cargo no cenário base manteve sua identidade no cenário alvo.",
-        "tut_sec_comp_dist": "O Histograma compara a distribuição geral das distâncias. Um pico mais próximo de 0 indica maior homogeneidade funcional no quadro geral.",
+    "tut_sec_comp_dist": "O Histograma compara a distribuição geral das distâncias. Um pico mais próximo de 0 indica maior homogeneidade funcional no quadro geral.",
         "tut_sec_comp_net": "A comparação de Redes destaca como os laços de similaridade mudaram. Observe quais conexões sumiram ou surgiram.",
         "tut_sec_comp_dendro": "A comparação de Dendrogramas permite visualizar se as famílias de cargos (clusters) se mantiveram intactas ou se agruparam de maneira diferente.",
         "tut_sec_comp_flow": "Detalha as adições e subtrações de atribuições do cargo analisado entre os cenários, permitindo entender de onde vieram as novas atribuições e para onde foram as perdidas.",
+        "tut_sec_nlp": "O módulo de PLN utiliza modelos vetoriais para analisar a semântica dos textos das atribuições, permitindo buscas inteligentes e comparações baseadas no significado, não apenas em palavras-chave exatas.",
         
         "title": "Painel Interativo: Estudo de Atribuições da PCSP",
+        "badge_mode_5": "📌 Modo: **Comparação Global (Macro)**",
+        "badge_mode_6": "📌 Modo: **Rastreamento Longitudinal (Micro)**",
+        "badge_mode_7": "📌 Modo: **Criativo / Interativo**",
+        "badge_mode_8": "📌 Modo: **Processamento de Linguagem Natural**",
         "modes_and_explanations": "⚙️ Modos de Visão e Explicações",
         "view_modes": "Modos de Visão:",
         "nav_analytic": "Navegação Analítica:",
@@ -284,6 +289,21 @@ TRANSLATIONS = {
         "mode_5": "5. Comparação Global (Macro)",
         "mode_6": "6. Rastreamento Longitudinal (Micro)",
         "mode_7": "7. Modo Criativo / Interativo",
+        "mode_8": "8. Processamento de Linguagem Natural (PLN)",
+
+        "sub_nlp_raw_title": "8.1. Textos Normativos Brutos",
+        "sub_nlp_proc_title": "8.2. Processamento e Limpeza Inicial (PLN)",
+        "sub_nlp_heat_title": "8.3. Matrizes de Distância Semântica",
+        "sub_nlp_cloud_title": "8.4. Nuvens de Palavras (TF-IDF)",
+        "sub_nlp_network_title": "8.5. Rede de Discurso Institucional",
+        "sub_nlp_wordnet_title": "8.6. Grafo de Rede de Palavras (Bipartido)",
+        "nlp_processing_message": "Processando...",
+        "m8_title": "8. Análise Semântica (PLN)",
+        "m8_desc": "Explore a similaridade semântica entre atribuições utilizando Word Embeddings e busca vetorial.",
+        "m8_query": "Digite um termo ou conceito para buscar atribuições semanticamente próximas:",
+        "m8_btn": "Buscar Atribuições",
+        "m8_results": "Resultados da Busca:",
+        "m8_score": "Score de Similaridade",
         
         "Decreto de 1967": "Decreto de 1967",
         "m5_sub_tree_title": "7.1 Árvore Taxonômica",
@@ -624,7 +644,7 @@ TRANSLATIONS = {
         "modal_community": "Painel da Comunidade",
         "modal_no_comments": "Nenhum comentário no ambiente analítico ainda. Seja o primeiro a relatar algo!",
         "modal_report": "**Relatar / Comentar...**",
-        "modal_privacy": "🔒 Dados de conexão armazenados. Ao enviar, você concorda com a moderação.",
+        "modal_privacy": "🔒 Dados de conexão armazenados. Ao enviar, você corcorda com a moderação.",
         "modal_current_mode": "📍 Modo atual: {global_topic}. As opções foram filtradas para esta área.",
         "modal_select_topic": "Comentar sobre:",
         "modal_your_report": "Seu relato",
@@ -707,7 +727,15 @@ TRANSLATIONS = {
         "akinator_eliminated": "Eliminados",
         "akinator_questions_count": "Perguntas Realizadas",
         "m5_tree_title": "🌳 Árvore Taxonômica das Carreiras",
-        "m5_tree_desc": "Aqui visualizamos as carreiras da PCSP como se fossem espécies biológicas. Cargos na base da árvore compartilham as atribuições mais fundamentais e universais da polícia, sendo considerados mais 'basais' (primitivos). Conforme a árvore se ramifica, encontramos as funções mais especializadas e exclusivas, que formam os ramos mais 'derivados' e complexos."
+        "m5_tree_desc": "Aqui visualizamos as carreiras da PCSP como se fossem espécies biológicas. Cargos na base da árvore compartilham as atribuições mais fundamentais e universais da polícia, sendo considerados mais 'basais' (primitivos). Conforme a árvore se ramifica, encontramos as funções mais especializadas e exclusivas, que formam os ramos mais 'derivados' e complexos.",
+        "sub_nlp_raw_title": "8.1 Textos Brutos",
+        "sub_nlp_proc_title": "8.2 Processamento NLP",
+        "sub_nlp_heat_title": "8.3 Matriz Semântica",
+        "sub_nlp_cloud_title": "8.4 Nuvens de Palavras",
+        "sub_nlp_network_title": "8.5 Rede Discursiva",
+        "sub_nlp_wordnet_title": "8.6 Grafo de Palavras",
+        "sub_nlp_comparative_title": "8.7 Comparação e Tópicos",
+        "sub_nlp_stats_title": "8.8 Validação Estatística"
     },
     "EN": {
         "welcome_p1": "This is a <b>Data Science project</b> focused on data mining, cleaning, processing, and visualization. The scope encompasses the modeling of various analytical scenarios, including hierarchical trees, distance metrics, matrices, tables, and interactive visualizations, associated with visual comparison methods (Computer Vision) and textual analysis (Natural Language Processing - NLP). This is a strictly personal and academic initiative, without any institutional link to the Civil Police or its representative bodies, and it does not intend to issue official statements on behalf of the institution. Therefore, it configures as an educational portfolio project in the field of Data Science.",
@@ -717,6 +745,8 @@ TRANSLATIONS = {
         "welcome_p5": "📊 <b>Data and Engineering:</b><br>All data used comes from public sources, institutional rules, legal texts, academic documents, or documented customs of police activity (listed in the detailed system data section). The application was entirely built in <b>Python</b> (using <b>Streamlit</b> for the front-end). The architecture also features a Database focused on system security, Git versioning, and had the advanced orchestration of Google Antigravity, Harness integration, Autonomous Agents / Skills, and MCP Servers for speed and scalability of production.",
         "welcome_p6": "This study represents a fundamental milestone in my <b>transition and deepening into the data and computing fields</b>. I hope that this tool provides valuable insights for structural analyses and reflections, ultimately contributing to Brazilian society, the improvement of legislation and its applicability, as well as the strengthening of police institutions in our country.",
         "welcome_btn": "I Agree to the Terms of Use",
+
+        "tut_sec_nlp": "The NLP module uses vector models to analyze the semantics of assignment texts, allowing for intelligent searches and comparisons based on meaning, not just exact keywords.",
 
         "tour_m_step4_desc": "Analyze how assignments have changed over the years, from old edicts to restructuring scenarios.",
         "tour_m_step5_title": "Mode 5: Creative Views",
@@ -751,6 +781,15 @@ TRANSLATIONS = {
         "mode_5": "5. Global Comparison (Macro)",
         "mode_6": "6. Longitudinal Tracking (Micro)",
         "mode_7": "7. Creative / Interactive Mode",
+        "mode_8": "8. Natural Language Processing (NLP)",
+
+        "sub_nlp_raw_title": "8.1. Raw Normative Texts",
+        "sub_nlp_proc_title": "8.2. Initial Processing and Cleaning (NLP)",
+        "sub_nlp_heat_title": "8.3. Semantic Distance Matrices",
+        "sub_nlp_cloud_title": "8.4. Word Clouds (TF-IDF)",
+        "sub_nlp_network_title": "8.5. Institutional Discourse Network",
+        "sub_nlp_wordnet_title": "8.6. Word Network Graph (Bipartite)",
+        "nlp_processing_message": "Processing...",
 
         "Decreto de 1967": "1967 Decree (Historical)",
         "m5_sub_tree_title": "7.1 Taxonomic Tree",
@@ -1175,8 +1214,16 @@ TRANSLATIONS = {
         "mascot_cao": "🐶 Detective Dog",
         "mascot_capivara": "🦦 Expert Capybara",
         "mascot_coruja": "🦉 Analyst Owl",
-        "mascot_lobo": "🐺 Secret Maned Wolf",
-        "mascot_aleatorio": "🎲 Random"
+        "mascot_misterio": "❓ Mystery",
+        "mascot_aleatorio": "🎲 Random",
+        "sub_nlp_raw_title": "8.1 Raw Texts",
+        "sub_nlp_proc_title": "8.2 NLP Processing",
+        "sub_nlp_heat_title": "8.3 Semantic Matrix",
+        "sub_nlp_cloud_title": "8.4 Word Clouds",
+        "sub_nlp_network_title": "8.5 Discourse Network",
+        "sub_nlp_wordnet_title": "8.6 Word Graph",
+        "sub_nlp_comparative_title": "8.7 Comparison & Topics",
+        "sub_nlp_stats_title": "8.8 Statistical Validation"
     }
 }
 

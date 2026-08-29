@@ -1,0 +1,7358 @@
+# Lista de Todos os N-Grams Gerados pelo TF-IDF
+
+Este arquivo contém todas as expressões matemáticas geradas para identificar possíveis falsos negativos que deveriam ser adicionados às stopwords.
+
+## 1-grams
+
+- 30
+- 95
+- abastecimento
+- abdominal
+- aberto
+- abertura
+- abordagem
+- abranger
+- acervo
+- acidente
+- acionar
+- acompanhamento
+- acompanhar
+- adiante
+- adjunto
+- administrativo
+- adotar
+- advertência
+- afins
+- agente
+- agressivo
+- agressão
+- alagado
+- algema
+- alto
+- ambiental
+- amostra
+- ampliação
+- analisar
+- anatomo
+- anexo
+- animal
+- ano
+- anterior
+- antropológico
+- análise
+- análogo
+- anúncio
+- aparelho
+- aplicar
+- aplicação
+- aplicável
+- apreendir
+- apreensão
+- apresentar
+- aproveitamento
+- apto
+- apurar
+- apuração
+- aquele
+- arma
+- arquitetônico
+- arquivamento
+- arquivo
+- arrecadar
+- artigo
+- aspecto
+- assegurar
+- assessoramento
+- assessoria
+- assistir
+- atendente
+- atender
+- atinente
+- atividade
+- ato
+- atribuir
+- atribuição
+- atuar
+- auto
+- automatizar
+- automotor
+- autoria
+- autoridade
+- autópsia
+- auxiliar
+- auxilio
+- ação
+- banco
+- bem
+- biologia
+- biológico
+- biópsia
+- blico
+- boletim
+- bom
+- busca
+- cabendo
+- cadastro
+- cadavérico
+- cadeia
+- cadáver
+- campo
+- captura
+- característica
+- carga
+- cargo
+- carreira
+- cartório
+- caso
+- catástrofe
+- causa
+- cavidade
+- censura
+- central
+- cidadão
+- científico
+- circunscrição
+- circunstanciar
+- civil
+- classe
+- classificação
+- climático
+- coisa
+- colaborar
+- coleta
+- coletar
+- colheita
+- colocação
+- combustível
+- comparação
+- comparecer
+- compatível
+- competente
+- competêncie
+- complementar
+- comum
+- comunicação
+- condição
+- conduzir
+- confirmar
+- conflito
+- conforme
+- confronto
+- conhecimento
+- conhecir
+- conservar
+- conservação
+- consistir
+- constatar
+- contagioso
+- contaminado
+- contaminante
+- contaminar
+- contato
+- conter
+- contravenção
+- controlar
+- contrário
+- contrôle
+- convicção
+- coordenar
+- corpo
+- corporal
+- corpóreos
+- correlato
+- correspondente
+- costume
+- costurar
+- coágulo
+- craniano
+- crime
+- criminal
+- criminalística
+- critério
+- cromático
+- croqui
+- crosta
+- cuidar
+- culminar
+- cumprimento
+- cumprir
+- cumulativamente
+- custódia
+- céu
+- código
+- dactiloscópico
+- dado
+- datiloscopia
+- datiloscópico
+- daunt
+- de
+- decadactilar
+- decalque
+- decorativo
+- decorrente
+- dedo
+- definir
+- delegacia
+- delegado
+- delitivo
+- delito
+- delituoso
+- demanda
+- demente
+- demonstrativo
+- dentre
+- dependência
+- depósilo
+- desabamento
+- desaparecido
+- desastr
+- desconhecir
+- descritas
+- desempenhar
+- desempenho
+- desencadeante
+- desenhista
+- desenho
+- desenvolver
+- desfavorável
+- desfecção
+- desmoronamento
+- detento
+- deter
+- determinar
+- determinação
+- determinaçãode
+- dgp
+- dia
+- didático
+- diferente
+- diferentes
+- digital
+- diligência
+- diretamente
+- direto
+- direção
+- dirigir
+- disciplina
+- dispositivo
+- dissecação
+- distico
+- distintivo
+- distúrbio
+- diversificar
+- diverso
+- diversos
+- diversão
+- divulgação
+- documento
+- doença
+- doloso
+- dotar
+- droga
+- dérmico
+- edital
+- editar
+- edição
+- efetuar
+- eficiência
+- elaborar
+- elaboração
+- ele
+- elemento
+- eles
+- eletricidade
+- eletromagnético
+- eletrônico
+- eliminação
+- emanar
+- embriaguez
+- emitir
+- empregar
+- encaminhados
+- encaminhar
+- encaminhá
+- ensejem
+- entendir
+- entorpecente
+- entrada
+- entrar
+- envelhecimento
+- epidérmico
+- equipamento
+- equipe
+- esclarecedor
+- esclarecimento
+- escolta
+- escoltar
+- escritas
+- escritório
+- escrivão
+- esgoto
+- especialidade
+- especializar
+- específico
+- esqueletizar
+- esquemático
+- estabelecer
+- estabelecir
+- estado
+- estar
+- este
+- estilete
+- estudo
+- etc
+- evidencia
+- evidência
+- exame
+- examinar
+- executar
+- execução
+- exercer
+- exercício
+- exigência
+- existente
+- expedição
+- explosivo
+- exposição
+- externo
+- extravagante
+- exumação
+- faca
+- facial
+- falar
+- falsificação
+- fatal
+- fato
+- favela
+- fazer
+- ferimento
+- ferir
+- fez
+- fiança
+- ficha
+- fim
+- finalidade
+- fio
+- fiscalização
+- fixação
+- flagrante
+- fluido
+- fogo
+- forense
+- formalização
+- formar
+- fornecer
+- força
+- foto
+- fotografar
+- fotografação
+- fotografia
+- fotográfico
+- fotógrafo
+- fragmento
+- funcional
+- funcionamento
+- função
+- funções
+- furto
+- fábrica
+- física
+- físico
+- fórmula
+- gasoso
+- genérico
+- geográfico
+- gestão
+- gravidade
+- guarda
+- gumbleton
+- gênero
+- hipótese
+- histológico
+- horário
+- humano
+- identidade
+- identificar
+- identificação
+- identificá
+- idoneidade
+- ii
+- iirgd
+- ilustrativo
+- ilícito
+- imagem
+- impresso
+- impressão
+- in
+- incerto
+- incluir
+- inconveniênte
+- incêndio
+- indicativo
+- indigente
+- indireto
+- indivíduo
+- industrial
+- inerente
+- informação
+- informática
+- infrator
+- infração
+- inorgânico
+- inquerito
+- inquérito
+- inscrição
+- inserção
+- instalação
+- institucional
+- instituição
+- instituto
+- instruir
+- instrumento
+- instrução
+- integrante
+- inteiro
+- intencional
+- interno
+- intervenção
+- intervir
+- investigador
+- investigativo
+- investigatório
+- investigação
+- inviolabilidade
+- janeiro
+- judicial
+- judiciária
+- judiciário
+- justificar
+- laboratório
+- lacre
+- las
+- laudo
+- lavagem
+- lavratura
+- legal
+- legalmente
+- legislação
+- legista
+- lei
+- leitura
+- lesão
+- letal
+- levantamento
+- lhe
+- librificação
+- licenciamento
+- limpar
+- limpeza
+- listar
+- local
+- localização
+- los
+- líquido
+- macro
+- mancha
+- mandado
+- manifesto
+- manter
+- manusear
+- manuseio
+- manutenção
+- material
+- materialidade
+- mediano
+- mediante
+- mediar
+- medida
+- meio
+- mensagem
+- mesmo
+- metálico
+- modo
+- monodactilar
+- moral
+- morte
+- mortis
+- morto
+- movimentação
+- munição
+- mão
+- médico
+- móvel
+- natura
+- natureza
+- necessário
+- necropapiloscópico
+- necropsia
+- necropsias
+- necroscópico
+- necrotério
+- nic
+- noite
+- norma
+- notificação
+- novembro
+- numeração
+- nº
+- objetivo
+- objeto
+- observar
+- observação
+- observância
+- obter
+- ocasionar
+- ocorrência
+- operar
+- operação
+- ordem
+- organização
+- orgânica
+- orgânico
+- orientação
+- origem
+- oriunr
+- ossada
+- ossar
+- osso
+- ou
+- outro
+- padrão
+- palma
+- palmar
+- papila
+- papilar
+- papiloscopista
+- papiloscópico
+- paradeiro
+- parte
+- participar
+- participação
+- particular
+- patológico
+- patrimônio
+- paulo
+- penal
+- pequeno
+- perfuração
+- pericia
+- pericial
+- perinecroscópico
+- perito
+- pertinente
+- perícia
+- período
+- pesagem
+- pesquisa
+- pessoa
+- pessoal
+- pessoalmente
+- peça
+- planejar
+- planilha
+- planimétrico
+- plantar
+- poder
+- podoscopia
+- podoscópico
+- policial
+- policiamento
+- policía
+- polícia
+- portador
+- portadoras
+- portar
+- portaria
+- possa
+- possibilidade
+- possibilitar
+- posterior
+- praticar
+- prejuízo
+- preparação
+- preparo
+- prescrição
+- presente
+- preservar
+- presidir
+- presidiário
+- presidência
+- preso
+- presos
+- prestar
+- presumível
+- prevenir
+- preventivo
+- prever
+- prioridade
+- prisão
+- procedar
+- proceder
+- procedimento
+- processamento
+- processo
+- produto
+- programa
+- projeção
+- propaganda
+- propósito
+- prova
+- providência
+- prática
+- prévio
+- próprio
+- psicoativo
+- pu
+- publicidade
+- publicos
+- putrefado
+- putrefação
+- putrefeito
+- pé
+- público
+- qualificar
+- qualificativo
+- qualificação
+- questionar
+- quiroscopia
+- quiroscópico
+- química
+- químico
+- radio
+- radiotelegráfico
+- rapidamente
+- realizar
+- realização
+- receber
+- recente
+- recepção
+- reclamar
+- recognição
+- recolher
+- recolhimento
+- recomposição
+- reconhecimento
+- reconstituir
+- reconstituição
+- recurso
+- referir
+- regional
+- registrar
+- registro
+- rejuvenescimento
+- relacionar
+- relativo
+- relatório
+- relevante
+- reparação
+- reparo
+- reportagem
+- reprimir
+- reprodução
+- requisitante
+- requisitar
+- requisito
+- requisição
+- residual
+- respectivo
+- respeito
+- responsabilizarr
+- resto
+- resultado
+- retrato
+- revelação
+- ricardo
+- risco
+- roubo
+- roupa
+- rádio
+- saida
+- salivo
+- salvaguardar
+- sangue
+- saúde
+- se
+- secretariar
+- seguinte
+- seguir
+- segurança
+- seminal
+- sepultamento
+- sequencial
+- ser
+- seringa
+- sexológico
+- sicad
+- similar
+- simples
+- sinal
+- sindicância
+- sistema
+- sistematização
+- sistemático
+- situação
+- sola
+- solução
+- somático
+- soterramento
+- submetir
+- subsidiem
+- substância
+- suicidio
+- superfície
+- suspeito
+- suturo
+- sítio
+- sólido
+- sôbre
+- tange
+- tarefa
+- teatro
+- tecido
+- tecnologia
+- tecnológico
+- telecomunicação
+- telefone
+- televisão
+- tentativa
+- ter
+- termo
+- terrorismo
+- tiragem
+- tomada
+- tomar
+- toráxico
+- toxicológico
+- trabalho
+- transmissão
+- transportar
+- transporte
+- tratamento
+- trânsito
+- técnica
+- técnico
+- tóxico
+- ucrh
+- unidade
+- urbanidade
+- urina
+- uso
+- utilizar
+- utilização
+- verbal
+- verificar
+- verificação
+- vestígio
+- veículo
+- viabilização
+- viatura
+- vida
+- vigilância
+- vincular
+- violento
+- violência
+- visar
+- visceral
+- vistoria
+- visuográfico
+- viva
+- vivo
+- volume
+- vítima
+- zelar
+- água
+- área
+- âmbito
+- óbito
+- óleo
+- ótico
+- único
+
+## 2-grams
+
+- 30 novembro
+- 95 requisitar
+- abastecimento combustível
+- abdominal possibilitar
+- aberto favela
+- abertura cavidade
+- abordagem pessoa
+- abranger dispositivo
+- acervo decadactilar
+- acidente distúrbio
+- acidente falsificação
+- acidente tentativa
+- acidente trânsito
+- acionar delegado
+- acompanhamento exumação
+- acompanhar equipe
+- adiante listar
+- adjunto delegacia
+- administrativo examinar
+- administrativo executar
+- administrativo exercer
+- administrativo ou
+- administrativo presidência
+- administrativo zelar
+- adotar providência
+- advertência infrator
+- agente físico
+- agente policial
+- agente realização
+- agente telecomunicação
+- agente tóxico
+- agressivo elaboração
+- agressão etc
+- alagado esgoto
+- algema atender
+- alto cidadão
+- ambiental diverso
+- amostra biológico
+- amostra visceral
+- ampliação fotografia
+- analisar documento
+- analisar droga
+- analisar material
+- analisar produto
+- analisar vestígio
+- anatomo patológico
+- anexo edital
+- animal contaminante
+- ano boletim
+- anterior instituto
+- antropológico realizar
+- análise anúncio
+- análise confronto
+- análise físico
+- análise informação
+- análise objeto
+- análise pesquisa
+- análise âmbito
+- análogo poder
+- anúncio programa
+- aparelho laboratório
+- aparelho tarefa
+- aparelho tecnologia
+- aplicar desenvolver
+- aplicação conhecimento
+- aplicável forense
+- apreendir arrecadar
+- apreensão conduzir
+- apreensão manter
+- apreensão reconstituição
+- apresentar alto
+- apresentar pessoa
+- aproveitamento tecido
+- apto identificar
+- apurar evidência
+- apuração infração
+- apuração peça
+- aquele descritas
+- arma dirigir
+- arma distintivo
+- arma etc
+- arma fogo
+- arma munição
+- arquitetônico propaganda
+- arquivamento documento
+- arquivamento ficha
+- arquivo eletrônico
+- arquivo fotográfico
+- arrecadar autoridade
+- artigo 95
+- artigo ii
+- aspecto inconveniênte
+- assegurar disciplina
+- assessoramento técnico
+- assessoria sítio
+- assistir delegado
+- atendente necrotério
+- atender exigência
+- atender local
+- atender ocorrência
+- atender público
+- atender urbanidade
+- atinente trabalho
+- atividade inerente
+- atividade natureza
+- atividade policial
+- atividade polícia
+- atividade sicad
+- ato compatível
+- ato documento
+- ato inerente
+- ato polícia
+- atribuir função
+- atribuir portar
+- atribuição adiante
+- atribuição auxiliar
+- atribuição comum
+- atribuição inerente
+- atuar possibilidade
+- atuar procedimento
+- auto corpo
+- auto infração
+- auto prisão
+- automatizar leitura
+- automatizar processamento
+- automotor cumprir
+- automotor transporte
+- autoria definir
+- autoria delitivo
+- autoria desconhecir
+- autoria ou
+- autoridade policial
+- autópsia biópsia
+- autópsia exame
+- auxiliar autoridade
+- auxiliar elaboração
+- auxiliar necropsia
+- auxiliar papiloscopista
+- auxilio operação
+- ação relacionar
+- banco dado
+- bem objeto
+- biologia forense
+- biológico atender
+- biológico humano
+- biológico in
+- biológico manusear
+- biológico ou
+- biópsia exame
+- blico presos
+- boletim ocorrência
+- bom costume
+- busca apreensão
+- busca escolta
+- busca impressão
+- busca pessoal
+- cabendo lhe
+- cadastro cargo
+- cadavérico elemento
+- cadeia custódia
+- cadáver adotar
+- cadáver costurar
+- cadáver de
+- cadáver diferente
+- cadáver ferimento
+- cadáver humano
+- cadáver inteiro
+- cadáver lacre
+- cadáver limpeza
+- cadáver manuseio
+- cadáver numeração
+- cadáver ocorrência
+- cadáver portar
+- cadáver possibilitar
+- cadáver presente
+- cadáver putrefação
+- cadáver putrefeito
+- cadáver realizar
+- cadáver reclamar
+- cadáver reconstituir
+- campo papiloscópico
+- campo perícia
+- captura indivíduo
+- captura pesquisa
+- característica diversificar
+- característica natureza
+- carga conservação
+- cargo agente
+- cargo auxiliar
+- cargo delegado
+- cargo escrivão
+- cargo funções
+- cargo investigador
+- cargo papiloscopista
+- cargo perito
+- carreira policial
+- cartório delegacia
+- caso artigo
+- caso violência
+- catástrofe acidente
+- catástrofe putrefação
+- catástrofe terrorismo
+- causa desencadeante
+- causa mortis
+- cavidade craniano
+- censura prévio
+- central recurso
+- cidadão encaminhar
+- cidadão unidade
+- científico procedimento
+- científico tecnológico
+- circunscrição fato
+- circunstanciar auto
+- civil atender
+- civil coleta
+- civil criminal
+- civil lei
+- civil ou
+- civil portar
+- classe desempenho
+- classe participação
+- classificação pesquisa
+- climático desfavorável
+- coisa vincular
+- colaborar papiloscopista
+- coleta análise
+- coleta de
+- coleta fragmento
+- coleta impressão
+- coletar amostra
+- coletar analisar
+- coletar classificação
+- coletar impressão
+- coletar modo
+- coletar vestígio
+- colheita amostra
+- colocação cadáver
+- combustível água
+- comparação identificação
+- comparecer local
+- compatível atividade
+- competente determinar
+- competêncie delegacia
+- complementar atender
+- complementar janeiro
+- complementar nº
+- complementar realizar
+- comum carreira
+- comunicação dado
+- comunicação institucional
+- condição climático
+- condição legal
+- conduzir apresentar
+- conduzir veículo
+- conduzir viatura
+- confirmar identidade
+- conflito justificar
+- conforme anexo
+- confronto pesquisa
+- conhecimento científico
+- conhecimento oriunr
+- conhecir ou
+- conservar manusear
+- conservação aparelho
+- conservação móvel
+- conservação reparação
+- conservação veículo
+- consistir coleta
+- constatar idoneidade
+- constatar observância
+- contagioso agente
+- contagioso portar
+- contagioso substância
+- contaminado agente
+- contaminante ambiental
+- contaminante elaborar
+- contaminar ou
+- contaminar seringa
+- contato direto
+- contato material
+- contato vítima
+- conter vestígio
+- contravenção execução
+- controlar realização
+- contrário prescrição
+- contrôle verificação
+- convicção esclarecimento
+- coordenar controlar
+- corpo adotar
+- corpo delito
+- corpo putrefação
+- corporal sexológico
+- corpóreos humano
+- correlato desempenho
+- correlato escritório
+- correlato requisitar
+- correspondente laudo
+- costume contrário
+- costurar parte
+- coágulo sangue
+- craniano toráxico
+- crime acidente
+- crime alagado
+- crime característica
+- crime catástrofe
+- crime colaborar
+- crime constatar
+- crime contravenção
+- crime desabamento
+- crime desastr
+- crime efetuar
+- crime exame
+- crime modo
+- crime natureza
+- crime necessário
+- crime orientação
+- crime proceder
+- crime vítima
+- criminal analisar
+- criminal atender
+- criminal ação
+- criminal civil
+- criminal conduzir
+- criminal datiloscopia
+- criminal elaborar
+- criminal executar
+- criminal exercício
+- criminal indivíduo
+- criminal médico
+- criminal prever
+- criminal realizar
+- criminal retrato
+- criminal tarefa
+- criminalística elaboração
+- criminalística relacionar
+- critério delegado
+- cromático somático
+- croqui desenho
+- croqui local
+- croqui vítima
+- crosta líquido
+- cuidar trabalho
+- culminar elaboração
+- cumprimento diligência
+- cumprir diligência
+- cumprir mandado
+- cumprir medida
+- cumprir requisição
+- cumulativamente observar
+- custódia dirigir
+- custódia ii
+- céu aberto
+- código processo
+- dactiloscópico fim
+- dactiloscópico função
+- dado automatizar
+- dado civil
+- dado coletar
+- dado cromático
+- dado polícia
+- dado qualificativo
+- datiloscopia quiroscopia
+- datiloscópico fim
+- datiloscópico observar
+- daunt iirgd
+- de aquele
+- de ele
+- de eles
+- de este
+- decadactilar monodactilar
+- decalque transporte
+- decorativo ilustrativo
+- decorrente de
+- decorrente exercer
+- decorrente intervenção
+- decorrente realizar
+- decorrente secretariar
+- dedo sola
+- definir policiamento
+- delegacia guarda
+- delegacia policía
+- delegacia regional
+- delegado polícia
+- delitivo incerto
+- delito caso
+- delito relevante
+- delituoso manifesto
+- demanda ser
+- demente ferir
+- demonstrativo técnico
+- dentre prever
+- dentre relacionar
+- dependência instituição
+- depósilo explosivo
+- desabamento desmoronamento
+- desaparecido comparecer
+- desastr veículo
+- desconhecir abranger
+- desconhecir origem
+- desconhecir ter
+- descritas lei
+- desempenhar atendente
+- desempenhar atividade
+- desempenho atividade
+- desempenho atribuição
+- desempenho função
+- desempenho mesmo
+- desencadeante coletar
+- desenhista técnico
+- desenho decorativo
+- desenho esquemático
+- desenvolver atividade
+- desenvolver técnica
+- desfavorável período
+- desfecção local
+- desmoronamento soterramento
+- detento assegurar
+- deter demente
+- determinar autoridade
+- determinar auxiliar
+- determinar dirigir
+- determinar executar
+- determinar fotografar
+- determinar identificação
+- determinar intervir
+- determinar tarefa
+- determinação identificação
+- determinaçãode causa
+- dgp 30
+- dia noite
+- didático reportagem
+- diferente estado
+- diferentes superfície
+- digital edição
+- digital execução
+- digital ficha
+- digital hipótese
+- digital identificação
+- digital ou
+- digital palma
+- digital palmar
+- digital pessoa
+- digital registro
+- digital vítima
+- diligência investigatório
+- diligência ou
+- diligência sôbre
+- diretamente perícia
+- direto delegado
+- direto elemento
+- direto indireto
+- direto pessoa
+- direção veículo
+- dirigir viatura
+- disciplina ordem
+- dispositivo anterior
+- dissecação recomposição
+- distico eliminação
+- distintivo algema
+- distintivo dirigir
+- distintivo identidade
+- distúrbio busca
+- diversificar incluir
+- diverso desabamento
+- diverso realizar
+- diverso trabalho
+- diversos doença
+- diversos gênero
+- diversão público
+- divulgação preparação
+- documento correlato
+- documento evidencia
+- documento objeto
+- documento pertinente
+- documento polícia
+- documento técnico
+- doença contagioso
+- doloso entendir
+- dotar força
+- droga psicoativo
+- dérmico apto
+- dérmico epidérmico
+- edital atribuição
+- edital lei
+- edital planejar
+- edital tange
+- editar laudo
+- edição foto
+- efetuar análise
+- efetuar busca
+- efetuar trabalho
+- efetuar transporte
+- eficiência público
+- elaborar boletim
+- elaborar croqui
+- elaborar desenho
+- elaborar levantamento
+- elaborar orientação
+- elaborar recognição
+- elaborar relatório
+- elaboração boletim
+- elaboração fórmula
+- elaboração laudo
+- elaboração organização
+- elaboração processo
+- elaboração sistematização
+- ele decorrente
+- elemento convicção
+- elemento esclarecedor
+- elemento indicativo
+- elemento material
+- elemento portador
+- eles encaminhá
+- eles necrotério
+- eles óbito
+- eletricidade meio
+- eletromagnético dentre
+- eletrônico editar
+- eliminação aspecto
+- emanar delegado
+- embriaguez toxicológico
+- emitir relatório
+- empregar arma
+- encaminhados unidade
+- encaminhar dado
+- encaminhar demanda
+- encaminhá los
+- ensejem necessário
+- entendir característica
+- entendir decorrente
+- entorpecente analisar
+- entorpecente produto
+- entrada saida
+- entrar contato
+- envelhecimento rejuvenescimento
+- epidérmico cadáver
+- equipamento letal
+- equipe perícia
+- esclarecedor instrução
+- esclarecimento fato
+- escolta preso
+- escoltar preso
+- escritas verbal
+- escritório cartório
+- escrivão adjunto
+- escrivão polícia
+- esgoto céu
+- especialidade médico
+- especializar cumprir
+- especializar presidir
+- específico mancha
+- esqueletizar realizar
+- esquemático croqui
+- esquemático ocorrência
+- esquemático realizar
+- estabelecer fiscalização
+- estabelecir lei
+- estado perícia
+- estar qualificar
+- este agente
+- estilete faca
+- estudo impressão
+- etc cadáver
+- etc manusear
+- etc preparação
+- evidencia relativo
+- evidência coletar
+- exame análise
+- exame complementar
+- exame genérico
+- exame histológico
+- exame informática
+- exame laboratório
+- exame local
+- exame manter
+- exame médico
+- exame necroscópico
+- exame pericial
+- exame perinecroscópico
+- exame peça
+- exame relacionar
+- examinar prioridade
+- executar ato
+- executar autópsia
+- executar tarefa
+- executar trabalho
+- execução acompanhamento
+- execução mandado
+- execução pequeno
+- execução tarefa
+- exercer ato
+- exercer policiamento
+- exercício cargo
+- exercício função
+- exercício polícia
+- exigência legal
+- existente local
+- expedição mensagem
+- explosivo arma
+- exposição situação
+- externo causa
+- externo desempenho
+- externo execução
+- extravagante portar
+- exumação abertura
+- exumação cadáver
+- exumação coletar
+- exumação manusear
+- faca arma
+- facial humano
+- falar perícia
+- falsificação fiscalização
+- fatal desconhecir
+- fatal procedimento
+- fato delituoso
+- fato ensejem
+- fato mediante
+- favela ocasionar
+- fazer necessário
+- ferimento perfuração
+- ferir indigente
+- fez salivo
+- fiança receber
+- ficha dactiloscópico
+- ficha datiloscópico
+- fim didático
+- fim exame
+- fim identificação
+- fim perícia
+- finalidade instruir
+- fio radio
+- fiscalização local
+- fiscalização portaria
+- fiscalização programa
+- fiscalização vistoria
+- fixação transporte
+- flagrante inquérito
+- fluido corpóreos
+- fogo atuar
+- fogo distintivo
+- fogo equipamento
+- fogo integrante
+- forense realizar
+- forense área
+- formalização ato
+- formar elemento
+- fornecer elemento
+- força externo
+- foto respectivo
+- fotografar cadáver
+- fotografar ocorrência
+- fotografar substância
+- fotografação coleta
+- fotografia conservação
+- fotografia distico
+- fotografia diversos
+- fotografia fotografar
+- fotografia utilização
+- fotográfico digital
+- fotográfico instruir
+- fotográfico macro
+- fotográfico operar
+- fotográfico organização
+- fotográfico vítima
+- fotógrafo técnico
+- fragmento coletar
+- fragmento digital
+- fragmento impressão
+- fragmento papilar
+- funcional algema
+- funcionamento manutenção
+- funcionamento verificação
+- função desempenhar
+- função escrivão
+- função estabelecir
+- função investigativo
+- função prever
+- funções atividade
+- furto ou
+- fábrica depósilo
+- física química
+- físico digital
+- físico ou
+- físico químico
+- fórmula dactiloscópico
+- gasoso cadáver
+- gasoso manusear
+- genérico ou
+- geográfico arquitetônico
+- gestão atividade
+- gravidade autoria
+- guarda conservação
+- guarda vigilância
+- gumbleton daunt
+- gênero fim
+- hipótese providência
+- histológico anatomo
+- horário estabelecer
+- humano crosta
+- humano cuidar
+- humano fim
+- humano limpeza
+- humano ou
+- humano parte
+- humano paulo
+- identidade assessoramento
+- identidade funcional
+- identificar humano
+- identificar pessoa
+- identificação cadáver
+- identificação civil
+- identificação criminal
+- identificação efetuar
+- identificação elaboração
+- identificação impressão
+- identificação pessoal
+- identificação proceder
+- identificação pu
+- identificação ricardo
+- identificá las
+- idoneidade ou
+- ii atuar
+- ii autoria
+- ii efetuar
+- ii emitir
+- iirgd consistir
+- iirgd nic
+- iirgd prestar
+- ilustrativo demonstrativo
+- ilícito realizar
+- imagem pesquisa
+- impresso fotografia
+- impresso próprio
+- impressão digital
+- impressão local
+- impressão palmar
+- impressão papilar
+- in natura
+- incluir contato
+- inconveniênte moral
+- incêndio catástrofe
+- indicativo autoria
+- indigente cadáver
+- indireto vivo
+- indivíduo apreensão
+- indivíduo realizar
+- industrial produto
+- inerente exercício
+- inerente gestão
+- informação documento
+- informação natureza
+- informação obter
+- informação presidência
+- infrator lavratura
+- infração penal
+- infração tarefa
+- inorgânico realizar
+- inquerito processo
+- inquérito policial
+- inscrição iirgd
+- inserção fragmento
+- instalação funcionamento
+- institucional executar
+- instituição penal
+- instituto identificação
+- instruir laudo
+- instruir procedimento
+- instrumento tomada
+- instrumento trabalho
+- instrumento utilizar
+- instrução inquérito
+- integrante polícia
+- inteiro atender
+- intencional dotar
+- interno colheita
+- interno externo
+- intervenção intencional
+- intervir ocorrência
+- intervir situação
+- investigador polícia
+- investigativo técnica
+- investigatório policiamento
+- investigação criminal
+- investigação desempenhar
+- investigação paradeiro
+- investigação recolhimento
+- inviolabilidade bem
+- janeiro portaria
+- judicial criminal
+- judiciária administrativo
+- judiciária apuração
+- judiciária assessoramento
+- judiciária elaborar
+- judiciária emanar
+- judiciária escoltar
+- judiciária físico
+- judiciária operar
+- judiciária portar
+- judiciária presidir
+- judiciária referir
+- judiciário culminar
+- justificar salvaguardar
+- laboratório execução
+- laboratório orientação
+- laboratório reconstituição
+- laboratório visar
+- lacre inscrição
+- las rapidamente
+- laudo pericial
+- lavagem librificação
+- lavratura auto
+- legal determinaçãode
+- legal instalação
+- legal lavratura
+- legal limpeza
+- legal notificação
+- legal relativo
+- legalmente preso
+- legislação extravagante
+- legista participar
+- lei complementar
+- lei lei
+- lei nº
+- lei orgânica
+- lei orgânico
+- leitura comparação
+- lesão corporal
+- lesão externo
+- lesão interno
+- letal executar
+- levantamento elaborar
+- levantamento fotográfico
+- levantamento papiloscópico
+- levantamento planimétrico
+- levantamento revelação
+- lhe realizar
+- librificação verificação
+- licenciamento registro
+- limpar cadáver
+- limpeza desfecção
+- limpeza função
+- limpeza instrumento
+- limpeza lavagem
+- limpeza osso
+- limpeza preparo
+- limpeza viatura
+- listar prejuízo
+- local crime
+- local desenvolver
+- local diversão
+- local instrumento
+- local morte
+- local pericia
+- local publicos
+- localização revelação
+- los exame
+- líquido gasoso
+- líquido seminal
+- macro fotográfico
+- mancha coágulo
+- mancha sangue
+- mandado elaborar
+- mandado prisão
+- manifesto presumível
+- manter limpeza
+- manter segurança
+- manusear analisar
+- manusear arquivo
+- manusear cadáver
+- manusear coletar
+- manusear empregar
+- manusear fotografar
+- manusear material
+- manusear roupa
+- manuseio cadáver
+- manutenção limpeza
+- material biológico
+- material contaminado
+- material contaminante
+- material contaminar
+- material escritório
+- material existente
+- materialidade infração
+- mediano gravidade
+- mediante uso
+- mediar conflito
+- medida segurança
+- meio ótico
+- mensagem radiotelegráfico
+- mesmo função
+- mesmo proceder
+- metálico metálico
+- metálico realizar
+- modo encaminhados
+- modo procedar
+- monodactilar quiroscópico
+- moral bom
+- morte violento
+- morto fragmento
+- movimentação presidiário
+- munição produto
+- mão dedo
+- médico acompanhar
+- médico legal
+- médico legista
+- móvel material
+- natura contaminar
+- natureza antropológico
+- natureza apurar
+- natureza criminal
+- natureza fio
+- natureza policial
+- natureza superfície
+- necessário conduzir
+- necessário critério
+- necessário identificar
+- necessário providência
+- necropapiloscópico efetuar
+- necropsia atribuição
+- necropsias recolhimento
+- necroscópico humano
+- necrotério limpar
+- necrotério recolher
+- nic nº
+- noite manusear
+- norma legal
+- notificação advertência
+- novembro conforme
+- novembro lei
+- numeração sequencial
+- nº artigo
+- nº identificação
+- nº lei
+- nº portar
+- nº responsabilizarr
+- objetivo identificá
+- objetivo subsidiem
+- objeto apreendir
+- objeto apreensão
+- objeto cadáver
+- objeto diferentes
+- objeto documento
+- objeto local
+- objeto submetir
+- observar se
+- observar seguinte
+- observação lesão
+- observância censura
+- observância horário
+- obter fim
+- obter tratamento
+- ocasionar contato
+- ocorrência ato
+- ocorrência conduzir
+- ocorrência delito
+- ocorrência diverso
+- ocorrência natureza
+- ocorrência policial
+- ocorrência termo
+- ocorrência vítima
+- operar aparelho
+- operar sistema
+- operação dissecação
+- ordem dependência
+- organização inquerito
+- organização sistemático
+- orgânica polícia
+- orgânico atuar
+- orgânico inorgânico
+- orgânico polícia
+- orientação autoridade
+- orientação direto
+- orientação perito
+- origem industrial
+- oriunr criminalística
+- ossada resto
+- ossar local
+- ou animal
+- ou biológico
+- ou cadáver
+- ou corpo
+- ou criminal
+- ou desconhecir
+- ou específico
+- ou inviolabilidade
+- ou materialidade
+- ou ossar
+- ou participar
+- ou processo
+- ou putrefeito
+- ou química
+- ou requisição
+- ou sistema
+- ou técnica
+- ou tóxico
+- outro processo
+- padrão realizar
+- palma mão
+- palmar plantar
+- papila dérmico
+- papilar padrão
+- papilar pessoa
+- papilar questionar
+- papilar realizar
+- papilar visar
+- papiloscopista policial
+- papiloscópico aplicar
+- papiloscópico entendir
+- papiloscópico ii
+- papiloscópico instituto
+- papiloscópico local
+- papiloscópico necropapiloscópico
+- papiloscópico posterior
+- paradeiro pessoa
+- parte cadáver
+- parte limpeza
+- participar diretamente
+- participar perícia
+- participação diligência
+- particular tomar
+- patológico fim
+- patrimônio cidadão
+- paulo lei
+- paulo portaria
+- paulo ucrh
+- penal administrativo
+- penal contrôle
+- penal cumprir
+- penal legislação
+- penal praticar
+- pequeno reparo
+- perfuração mancha
+- pericia trabalho
+- pericial atender
+- pericial atribuição
+- pericial direto
+- pericial dirigir
+- pericial exumação
+- pericial natureza
+- pericial papiloscópico
+- pericial pertinente
+- pericial tarefa
+- pericial viabilização
+- perinecroscópico manusear
+- perito criminal
+- pertinente assistir
+- pertinente investigação
+- perícia condição
+- perícia crime
+- perícia criminal
+- perícia laboratório
+- perícia médico
+- perícia necropapiloscópico
+- perícia papiloscópico
+- perícia projeção
+- período dia
+- pesagem cadáver
+- pesquisa acervo
+- pesquisa arquivamento
+- pesquisa auxiliar
+- pesquisa banco
+- pesquisa fragmento
+- pesquisa leitura
+- pessoa coisa
+- pessoa desaparecido
+- pessoa digital
+- pessoa legalmente
+- pessoa portadoras
+- pessoa registro
+- pessoa suspeito
+- pessoa veículo
+- pessoa viva
+- pessoal necessário
+- pessoal registrar
+- pessoalmente telefone
+- peça documento
+- peça exame
+- peça teatro
+- planejar coordenar
+- planilha qualificação
+- planimétrico entrar
+- plantar coleta
+- plantar ii
+- plantar objeto
+- poder conter
+- poder determinar
+- podoscopia ou
+- podoscópico fotográfico
+- policial administrativo
+- policial análise
+- policial atender
+- policial circunscrição
+- policial civil
+- policial competente
+- policial conservar
+- policial crime
+- policial cumprir
+- policial desempenho
+- policial diverso
+- policial divulgação
+- policial elaborar
+- policial estudo
+- policial exercício
+- policial formalização
+- policial intervir
+- policial investigação
+- policial judiciário
+- policial operar
+- policial orientação
+- policial peça
+- policial poder
+- policial polícia
+- policial prejuízo
+- policial procedimento
+- policial processo
+- policial registro
+- policial transportar
+- policial âmbito
+- policiamento local
+- policiamento preventivo
+- policía classe
+- polícia administrativo
+- polícia civil
+- polícia conflito
+- polícia cumprir
+- polícia de
+- polícia dentre
+- polícia desempenhar
+- polícia execução
+- polícia função
+- polícia instituto
+- polícia judiciária
+- polícia paulo
+- polícia prever
+- polícia requisitante
+- portador diversos
+- portadoras doença
+- portar arma
+- portaria dgp
+- portaria entrada
+- possa conter
+- possibilidade exposição
+- possibilitar observação
+- posterior coleta
+- posterior localização
+- praticar ato
+- prejuízo relacionar
+- prejuízo tarefa
+- preparação fotografia
+- preparação solução
+- preparo instrumento
+- prescrição legal
+- presente posterior
+- preservar campo
+- presidir ato
+- presidir investigação
+- presidiário detento
+- presidência delegado
+- preso autoridade
+- preso investigação
+- preso realizar
+- presos deter
+- prestar assessoramento
+- prestar assessoria
+- presumível mediano
+- prevenir reprimir
+- preventivo especializar
+- prever código
+- prever portaria
+- prever único
+- prioridade elemento
+- prisão busca
+- prisão captura
+- prisão flagrante
+- procedar levantamento
+- proceder abordagem
+- proceder identificação
+- proceder limpeza
+- proceder revelação
+- proceder técnica
+- procedimento administrativo
+- procedimento formar
+- procedimento policial
+- procedimento seguir
+- procedimento tratamento
+- processamento imagem
+- processo eletromagnético
+- processo judicial
+- processo penal
+- processo policial
+- processo relacionar
+- processo sindicância
+- produto conhecir
+- produto químico
+- produto residual
+- programa impresso
+- programa rádio
+- projeção envelhecimento
+- propaganda tarefa
+- propósito croqui
+- prova objetivo
+- providência fazer
+- providência reconhecimento
+- providência sepultamento
+- providência âmbito
+- prática crime
+- prática ilícito
+- prévio análise
+- próprio dado
+- psicoativo entorpecente
+- psicoativo ou
+- pu blico
+- publicidade policial
+- publicos prevenir
+- putrefado cadáver
+- putrefação cadavérico
+- putrefação exumação
+- putrefação ou
+- putrefeito esqueletizar
+- putrefeito fluido
+- pé papila
+- público conduzir
+- público interno
+- público pessoalmente
+- público portar
+- público realizar
+- público verificar
+- qualificar confirmar
+- qualificativo pessoa
+- qualificação dado
+- questionar banco
+- quiroscopia podoscopia
+- quiroscópico podoscópico
+- química biologia
+- química substância
+- químico agressivo
+- químico biológico
+- químico manusear
+- químico ou
+- químico proceder
+- químico revelação
+- radio eletricidade
+- radiotelegráfico tarefa
+- rapidamente estar
+- realizar análise
+- realizar assessoramento
+- realizar busca
+- realizar diligência
+- realizar exame
+- realizar inserção
+- realizar levantamento
+- realizar perícia
+- realizar pesquisa
+- realizar prisão
+- realização captura
+- realização exame
+- receber objeto
+- recente ou
+- recepção expedição
+- recepção informação
+- reclamar manusear
+- recognição visuográfico
+- recolher cadáver
+- recolhimento elemento
+- recolhimento ossada
+- recomposição suturo
+- reconhecimento cadáver
+- reconstituir desenho
+- reconstituir impressão
+- reconstituição cadáver
+- reconstituição crime
+- recurso humano
+- referir aplicação
+- regional policía
+- registrar encaminhar
+- registro competêncie
+- registro fotográfico
+- registro impresso
+- registro ocorrência
+- registro planilha
+- rejuvenescimento facial
+- relacionar de
+- relacionar dentre
+- relacionar exumação
+- relacionar física
+- relacionar identificação
+- relacionar ser
+- relativo cadeia
+- relativo crime
+- relatório informação
+- relatório respectivo
+- relevante autoria
+- reparação aparelho
+- reportagem publicidade
+- reprimir prática
+- reprodução fotografia
+- requisitante zelar
+- requisitar autoridade
+- requisitar campo
+- requisitar cumulativamente
+- requisito preservar
+- requisição determinar
+- requisição escritas
+- requisição pericial
+- residual metálico
+- respectivo arquivo
+- respectivo proceder
+- respeito condição
+- responsabilizarr se
+- resto putrefado
+- resultado obter
+- retrato falar
+- revelação ampliação
+- revelação decalque
+- revelação fixação
+- revelação fotografação
+- revelação reprodução
+- ricardo gumbleton
+- risco função
+- risco mediar
+- roubo furto
+- roupa objeto
+- rádio televisão
+- saida pessoa
+- salivo etc
+- salvaguardar vida
+- sangue humano
+- sangue sinal
+- saúde patrimônio
+- se fiança
+- se norma
+- secretariar elaboração
+- seguinte requisito
+- seguir colocação
+- segurança local
+- segurança orgânico
+- seminal urina
+- sepultamento cadáver
+- sequencial vincular
+- ser apresentar
+- ser atribuir
+- ser requisitar
+- seringa estilete
+- sexológico embriaguez
+- sicad unidade
+- similar constatar
+- simples laboratório
+- sinal agressão
+- sinal particular
+- sindicância apuração
+- sistema comunicação
+- sistema tecnologia
+- sistematização correspondente
+- sistemático mesmo
+- situação fato
+- situação risco
+- sola pé
+- solução químico
+- somático sinal
+- soterramento incêndio
+- submetir exame
+- subsidiem apuração
+- substância orgânico
+- substância psicoativo
+- substância químico
+- substância tóxico
+- suicidio autópsia
+- superfície possa
+- superfície realizar
+- suspeito prática
+- suturo transporte
+- sítio cabendo
+- sólido líquido
+- sôbre crime
+- tange cumprimento
+- tarefa afins
+- tarefa análogo
+- tarefa conservação
+- tarefa correlato
+- tarefa escritório
+- tarefa ser
+- tarefa simples
+- tarefa transmissão
+- teatro similar
+- tecido dérmico
+- tecnologia aplicável
+- tecnologia informação
+- tecnológico analisar
+- telecomunicação policial
+- telefone elaborar
+- televisão peça
+- tentativa suicidio
+- ter objetivo
+- termo circunstanciar
+- terrorismo acidente
+- tiragem revelação
+- tomada impressão
+- tomar impressão
+- toráxico abdominal
+- toxicológico especialidade
+- trabalho coleta
+- trabalho licenciamento
+- trabalho policial
+- trabalho polícia
+- trabalho tarefa
+- trabalho técnico
+- transmissão recepção
+- transportar pessoa
+- transporte cadáver
+- transporte corpo
+- transporte fotografia
+- transporte fragmento
+- transporte pesagem
+- transporte veículo
+- tratamento análise
+- tratamento aproveitamento
+- trânsito agente
+- trânsito propósito
+- trânsito roubo
+- técnica científico
+- técnica finalidade
+- técnica levantamento
+- técnica polícia
+- técnico caso
+- técnico fotográfico
+- técnico geográfico
+- técnico papiloscópico
+- técnico pericial
+- técnico resultado
+- tóxico agente
+- tóxico entorpecente
+- tóxico sólido
+- ucrh prejuízo
+- unidade central
+- unidade policial
+- urbanidade eficiência
+- urina fez
+- uso polícia
+- utilizar necropsias
+- utilização substância
+- verbal atinente
+- verificar respeito
+- verificação abastecimento
+- verificação fiscalização
+- verificação observância
+- vestígio datiloscópico
+- vestígio determinação
+- vestígio laboratório
+- vestígio papiloscópico
+- veículo automotor
+- veículo carga
+- veículo objeto
+- veículo proceder
+- veículo volume
+- viabilização prova
+- viatura atender
+- viatura policial
+- viatura transporte
+- vida saúde
+- vigilância movimentação
+- vincular ano
+- vincular ocorrência
+- violento doloso
+- violência acidente
+- visar fornecer
+- visar identificação
+- visceral exame
+- vistoria fábrica
+- visuográfico reconstituir
+- viva morto
+- vivo lesão
+- vítima crime
+- vítima desabamento
+- vítima fatal
+- vítima incluir
+- vítima orientação
+- zelar cadeia
+- zelar funcionamento
+- água óleo
+- área conhecimento
+- âmbito atividade
+- âmbito criminalística
+- âmbito polícia
+- óbito recente
+- óleo execução
+- ótico outro
+- único cadastro
+
+## 3-grams
+
+- 30 novembro conforme
+- 30 novembro lei
+- 95 requisitar cumulativamente
+- abastecimento combustível água
+- abdominal possibilitar observação
+- aberto favela ocasionar
+- abertura cavidade craniano
+- abordagem pessoa suspeito
+- abranger dispositivo anterior
+- acervo decadactilar monodactilar
+- acidente distúrbio busca
+- acidente falsificação fiscalização
+- acidente tentativa suicidio
+- acidente trânsito agente
+- acidente trânsito propósito
+- acidente trânsito roubo
+- acionar delegado polícia
+- acompanhamento exumação abertura
+- acompanhar equipe perícia
+- adiante listar prejuízo
+- adjunto delegacia regional
+- administrativo examinar prioridade
+- administrativo executar tarefa
+- administrativo exercer policiamento
+- administrativo ou processo
+- administrativo presidência delegado
+- administrativo zelar funcionamento
+- adotar providência reconhecimento
+- adotar providência sepultamento
+- advertência infrator lavratura
+- agente físico químico
+- agente policial prejuízo
+- agente realização exame
+- agente telecomunicação policial
+- agente tóxico agente
+- agente tóxico sólido
+- agressivo elaboração laudo
+- agressão etc cadáver
+- alagado esgoto céu
+- algema atender urbanidade
+- alto cidadão unidade
+- ambiental diverso realizar
+- amostra biológico humano
+- amostra visceral exame
+- ampliação fotografia utilização
+- analisar documento objeto
+- analisar droga psicoativo
+- analisar material biológico
+- analisar produto conhecir
+- analisar vestígio determinação
+- anatomo patológico fim
+- anexo edital lei
+- anexo edital planejar
+- anexo edital tange
+- animal contaminante ambiental
+- ano boletim ocorrência
+- anterior instituto identificação
+- antropológico realizar exame
+- análise anúncio programa
+- análise confronto pesquisa
+- análise físico ou
+- análise informação obter
+- análise objeto apreendir
+- análise pesquisa arquivamento
+- análise âmbito criminalística
+- análogo poder determinar
+- anúncio programa impresso
+- aparelho laboratório execução
+- aparelho tarefa correlato
+- aparelho tecnologia aplicável
+- aplicar desenvolver técnica
+- aplicação conhecimento oriunr
+- aplicável forense realizar
+- apreendir arrecadar autoridade
+- apreensão conduzir veículo
+- apreensão manter segurança
+- apreensão reconstituição crime
+- apresentar alto cidadão
+- apresentar pessoa legalmente
+- aproveitamento tecido dérmico
+- apto identificar humano
+- apurar evidência coletar
+- apuração infração penal
+- apuração peça documento
+- aquele descritas lei
+- arma dirigir viatura
+- arma distintivo algema
+- arma distintivo dirigir
+- arma distintivo identidade
+- arma etc preparação
+- arma fogo atuar
+- arma fogo distintivo
+- arma fogo equipamento
+- arma fogo integrante
+- arma munição produto
+- arquitetônico propaganda tarefa
+- arquivamento documento pertinente
+- arquivamento ficha datiloscópico
+- arquivo eletrônico editar
+- arquivo fotográfico digital
+- arrecadar autoridade policial
+- artigo 95 requisitar
+- artigo ii atuar
+- aspecto inconveniênte moral
+- assegurar disciplina ordem
+- assessoramento técnico caso
+- assessoramento técnico papiloscópico
+- assessoria sítio cabendo
+- assistir delegado polícia
+- atendente necrotério recolher
+- atender exigência legal
+- atender local crime
+- atender ocorrência vítima
+- atender público interno
+- atender público portar
+- atender público realizar
+- atender urbanidade eficiência
+- atinente trabalho polícia
+- atividade inerente exercício
+- atividade natureza policial
+- atividade policial civil
+- atividade policial intervir
+- atividade polícia judiciária
+- atividade sicad unidade
+- ato compatível atividade
+- ato documento polícia
+- ato inerente gestão
+- ato polícia administrativo
+- ato polícia judiciária
+- atribuir função prever
+- atribuir portar arma
+- atribuição adiante listar
+- atribuição auxiliar elaboração
+- atribuição comum carreira
+- atribuição inerente exercício
+- atuar possibilidade exposição
+- atuar procedimento policial
+- auto corpo delito
+- auto infração tarefa
+- auto prisão flagrante
+- automatizar leitura comparação
+- automatizar processamento imagem
+- automotor cumprir medida
+- automotor transporte veículo
+- autoria definir policiamento
+- autoria delitivo incerto
+- autoria desconhecir abranger
+- autoria ou materialidade
+- autoridade policial competente
+- autoridade policial elaborar
+- autoridade policial formalização
+- autoridade policial judiciário
+- autoridade policial poder
+- autoridade policial registro
+- autoridade policial âmbito
+- autópsia biópsia exame
+- autópsia exame necroscópico
+- auxiliar autoridade policial
+- auxiliar elaboração processo
+- auxiliar necropsia atribuição
+- auxiliar papiloscopista policial
+- auxilio operação dissecação
+- ação relacionar dentre
+- banco dado automatizar
+- banco dado civil
+- bem objeto submetir
+- biologia forense área
+- biológico atender público
+- biológico humano fim
+- biológico in natura
+- biológico manusear coletar
+- biológico ou cadáver
+- biópsia exame histológico
+- blico presos deter
+- boletim ocorrência ato
+- boletim ocorrência delito
+- boletim ocorrência termo
+- bom costume contrário
+- busca apreensão reconstituição
+- busca escolta preso
+- busca impressão papilar
+- busca pessoal necessário
+- cabendo lhe realizar
+- cadastro cargo funções
+- cadavérico elemento portador
+- cadeia custódia dirigir
+- cadeia custódia ii
+- cadáver adotar providência
+- cadáver costurar parte
+- cadáver de eles
+- cadáver diferente estado
+- cadáver ferimento perfuração
+- cadáver humano limpeza
+- cadáver inteiro atender
+- cadáver lacre inscrição
+- cadáver limpeza preparo
+- cadáver manuseio cadáver
+- cadáver numeração sequencial
+- cadáver ocorrência diverso
+- cadáver portar arma
+- cadáver possibilitar observação
+- cadáver presente posterior
+- cadáver putrefação exumação
+- cadáver putrefeito esqueletizar
+- cadáver realizar exame
+- cadáver reclamar manusear
+- cadáver reconstituir impressão
+- campo papiloscópico entendir
+- campo perícia criminal
+- captura indivíduo apreensão
+- captura pesquisa banco
+- característica diversificar incluir
+- característica natureza superfície
+- carga conservação veículo
+- cargo agente policial
+- cargo agente telecomunicação
+- cargo auxiliar papiloscopista
+- cargo delegado polícia
+- cargo escrivão polícia
+- cargo funções atividade
+- cargo investigador polícia
+- cargo papiloscopista policial
+- cargo perito criminal
+- carreira policial polícia
+- cartório delegacia policía
+- caso artigo 95
+- caso violência acidente
+- catástrofe acidente trânsito
+- catástrofe putrefação cadavérico
+- catástrofe terrorismo acidente
+- causa desencadeante coletar
+- cavidade craniano toráxico
+- censura prévio análise
+- central recurso humano
+- cidadão encaminhar demanda
+- cidadão unidade policial
+- científico procedimento tratamento
+- científico tecnológico analisar
+- circunscrição fato ensejem
+- circunstanciar auto prisão
+- civil atender público
+- civil coleta impressão
+- civil criminal indivíduo
+- civil criminal tarefa
+- civil lei nº
+- civil ou criminal
+- civil portar arma
+- classe desempenho mesmo
+- classe participação diligência
+- classificação pesquisa arquivamento
+- classificação pesquisa auxiliar
+- climático desfavorável período
+- coisa vincular ocorrência
+- colaborar papiloscopista policial
+- coleta análise pesquisa
+- coleta de este
+- coleta fragmento impressão
+- coleta impressão digital
+- coleta impressão local
+- coletar amostra biológico
+- coletar analisar material
+- coletar classificação pesquisa
+- coletar impressão digital
+- coletar modo encaminhados
+- coletar vestígio laboratório
+- colheita amostra visceral
+- colocação cadáver lacre
+- combustível água óleo
+- comparação identificação impressão
+- comparecer local crime
+- compatível atividade polícia
+- competente determinar auxiliar
+- competêncie delegacia guarda
+- complementar atender local
+- complementar janeiro portaria
+- complementar nº lei
+- complementar nº portar
+- complementar nº responsabilizarr
+- complementar realizar exame
+- comum carreira policial
+- comunicação dado polícia
+- comunicação institucional executar
+- condição climático desfavorável
+- condição legal instalação
+- conduzir apresentar pessoa
+- conduzir veículo automotor
+- conduzir viatura policial
+- confirmar identidade assessoramento
+- conflito justificar salvaguardar
+- conforme anexo edital
+- confronto pesquisa fragmento
+- conhecimento científico tecnológico
+- conhecimento oriunr criminalística
+- conhecir ou desconhecir
+- conservar manusear empregar
+- conservação aparelho laboratório
+- conservação móvel material
+- conservação reparação aparelho
+- conservação veículo proceder
+- consistir coleta impressão
+- constatar idoneidade ou
+- constatar observância censura
+- contagioso agente tóxico
+- contagioso portar arma
+- contagioso substância tóxico
+- contaminado agente físico
+- contaminante ambiental diverso
+- contaminante elaborar levantamento
+- contaminar ou putrefeito
+- contaminar seringa estilete
+- contato direto elemento
+- contato direto pessoa
+- contato material contaminado
+- contato vítima crime
+- conter vestígio datiloscópico
+- conter vestígio papiloscópico
+- contravenção execução mandado
+- controlar realização captura
+- contrário prescrição legal
+- contrôle verificação fiscalização
+- convicção esclarecimento fato
+- coordenar controlar realização
+- corpo adotar providência
+- corpo delito caso
+- corpo putrefação ou
+- corporal sexológico embriaguez
+- corpóreos humano ou
+- correlato desempenho função
+- correlato requisitar autoridade
+- correspondente laudo pericial
+- costume contrário prescrição
+- costurar parte limpeza
+- coágulo sangue humano
+- craniano toráxico abdominal
+- crime acidente distúrbio
+- crime acidente falsificação
+- crime alagado esgoto
+- crime característica diversificar
+- crime catástrofe putrefação
+- crime colaborar papiloscopista
+- crime constatar idoneidade
+- crime contravenção execução
+- crime desabamento desmoronamento
+- crime desastr veículo
+- crime efetuar transporte
+- crime exame local
+- crime modo procedar
+- crime natureza apurar
+- crime necessário critério
+- crime orientação perito
+- crime proceder técnica
+- crime vítima incluir
+- criminal analisar vestígio
+- criminal atender local
+- criminal ação relacionar
+- criminal civil coleta
+- criminal conduzir viatura
+- criminal datiloscopia quiroscopia
+- criminal elaborar recognição
+- criminal executar autópsia
+- criminal exercício polícia
+- criminal indivíduo realizar
+- criminal médico legista
+- criminal prever único
+- criminal realizar exame
+- criminal retrato falar
+- criminal tarefa correlato
+- criminalística elaboração sistematização
+- criminalística relacionar física
+- critério delegado polícia
+- cromático somático sinal
+- croqui desenho esquemático
+- croqui local crime
+- croqui vítima orientação
+- crosta líquido seminal
+- cuidar trabalho coleta
+- culminar elaboração laudo
+- cumprimento diligência ou
+- cumprir diligência ou
+- cumprir mandado elaborar
+- cumprir medida segurança
+- cumprir requisição escritas
+- cumprir requisição pericial
+- cumulativamente observar seguinte
+- custódia dirigir viatura
+- custódia ii emitir
+- céu aberto favela
+- código processo penal
+- dactiloscópico fim identificação
+- dactiloscópico função prever
+- dado automatizar leitura
+- dado automatizar processamento
+- dado civil ou
+- dado coletar classificação
+- dado cromático somático
+- dado polícia civil
+- dado qualificativo pessoa
+- datiloscopia quiroscopia podoscopia
+- datiloscópico fim identificação
+- datiloscópico observar se
+- daunt iirgd consistir
+- daunt iirgd prestar
+- de aquele descritas
+- de ele decorrente
+- de eles encaminhá
+- de eles necrotério
+- de eles óbito
+- de este agente
+- decadactilar monodactilar quiroscópico
+- decalque transporte fragmento
+- decorativo ilustrativo demonstrativo
+- decorrente de aquele
+- decorrente exercer ato
+- decorrente intervenção intencional
+- decorrente realizar diligência
+- decorrente secretariar elaboração
+- dedo sola pé
+- definir policiamento local
+- delegacia guarda conservação
+- delegacia policía classe
+- delegacia regional policía
+- delegado polícia cumprir
+- delegado polícia de
+- delegado polícia dentre
+- delegado polícia desempenhar
+- delegado polícia execução
+- delegado polícia função
+- delegado polícia instituto
+- delegado polícia requisitante
+- delito caso violência
+- delito relevante autoria
+- delituoso manifesto presumível
+- demanda ser apresentar
+- demente ferir indigente
+- demonstrativo técnico geográfico
+- dentre prever código
+- dentre relacionar de
+- dependência instituição penal
+- depósilo explosivo arma
+- desabamento desmoronamento soterramento
+- desaparecido comparecer local
+- desastr veículo objeto
+- desconhecir abranger dispositivo
+- desconhecir origem industrial
+- desconhecir ter objetivo
+- descritas lei complementar
+- desempenhar atendente necrotério
+- desempenhar atividade natureza
+- desempenho atividade policial
+- desempenho atribuição auxiliar
+- desempenho mesmo função
+- desencadeante coletar impressão
+- desenhista técnico pericial
+- desenho decorativo ilustrativo
+- desenho esquemático croqui
+- desenho esquemático ocorrência
+- desenho esquemático realizar
+- desenvolver atividade policial
+- desenvolver técnica científico
+- desfavorável período dia
+- desfecção local instrumento
+- desmoronamento soterramento incêndio
+- detento assegurar disciplina
+- deter demente ferir
+- determinar autoridade policial
+- determinar auxiliar autoridade
+- determinar dirigir viatura
+- determinar executar trabalho
+- determinar fotografar ocorrência
+- determinar identificação cadáver
+- determinar intervir situação
+- determinar tarefa transmissão
+- determinação identificação criminal
+- determinaçãode causa mortis
+- dgp 30 novembro
+- dia noite manusear
+- didático reportagem publicidade
+- diferente estado perícia
+- diferentes superfície realizar
+- digital edição foto
+- digital execução tarefa
+- digital ficha dactiloscópico
+- digital hipótese providência
+- digital identificação pessoal
+- digital ou sistema
+- digital palma mão
+- digital palmar plantar
+- digital pessoa viva
+- digital registro fotográfico
+- digital registro impresso
+- digital vítima fatal
+- diligência investigatório policiamento
+- diligência ou requisição
+- diligência sôbre crime
+- diretamente perícia condição
+- direto delegado polícia
+- direto elemento portador
+- direto indireto vivo
+- direto pessoa portadoras
+- direção veículo automotor
+- dirigir viatura atender
+- dirigir viatura policial
+- disciplina ordem dependência
+- dispositivo anterior instituto
+- dissecação recomposição suturo
+- distico eliminação aspecto
+- distintivo algema atender
+- distintivo dirigir viatura
+- distintivo identidade funcional
+- distúrbio busca apreensão
+- diversificar incluir contato
+- diverso desabamento desmoronamento
+- diverso realizar exame
+- diverso trabalho policial
+- diversos doença contagioso
+- diversos gênero fim
+- diversão público verificar
+- divulgação preparação solução
+- documento correlato requisitar
+- documento evidencia relativo
+- documento objeto local
+- documento pertinente assistir
+- documento polícia judiciária
+- documento técnico resultado
+- doença contagioso agente
+- doença contagioso portar
+- doença contagioso substância
+- doloso entendir decorrente
+- dotar força externo
+- droga psicoativo entorpecente
+- dérmico apto identificar
+- dérmico epidérmico cadáver
+- edital lei lei
+- edital planejar coordenar
+- edital tange cumprimento
+- editar laudo pericial
+- edição foto respectivo
+- efetuar análise objeto
+- efetuar busca impressão
+- efetuar trabalho técnico
+- efetuar transporte cadáver
+- eficiência público conduzir
+- eficiência público pessoalmente
+- elaborar boletim ocorrência
+- elaborar croqui desenho
+- elaborar desenho esquemático
+- elaborar levantamento planimétrico
+- elaborar orientação autoridade
+- elaborar recognição visuográfico
+- elaborar relatório respectivo
+- elaboração boletim ocorrência
+- elaboração fórmula dactiloscópico
+- elaboração laudo pericial
+- elaboração organização inquerito
+- elaboração processo relacionar
+- elaboração sistematização correspondente
+- ele decorrente de
+- ele decorrente exercer
+- ele decorrente realizar
+- ele decorrente secretariar
+- elemento convicção esclarecimento
+- elemento esclarecedor instrução
+- elemento indicativo autoria
+- elemento material existente
+- elemento portador diversos
+- eles encaminhá los
+- eles necrotério limpar
+- eles óbito recente
+- eletricidade meio ótico
+- eletromagnético dentre relacionar
+- eletrônico editar laudo
+- eliminação aspecto inconveniênte
+- emanar delegado polícia
+- embriaguez toxicológico especialidade
+- emitir relatório informação
+- empregar arma fogo
+- encaminhados unidade policial
+- encaminhar dado coletar
+- encaminhar demanda ser
+- encaminhá los exame
+- ensejem necessário providência
+- entendir característica natureza
+- entendir decorrente intervenção
+- entorpecente analisar produto
+- entorpecente produto químico
+- entrada saida pessoa
+- entrar contato vítima
+- envelhecimento rejuvenescimento facial
+- epidérmico cadáver reconstituir
+- equipamento letal executar
+- equipe perícia crime
+- esclarecedor instrução inquérito
+- esclarecimento fato delituoso
+- escolta preso investigação
+- escoltar preso realizar
+- escritas verbal atinente
+- escritório cartório delegacia
+- escrivão adjunto delegacia
+- escrivão polícia prever
+- esgoto céu aberto
+- especialidade médico acompanhar
+- especializar cumprir requisição
+- especializar presidir investigação
+- específico mancha coágulo
+- esqueletizar realizar exame
+- esquemático croqui local
+- esquemático ocorrência policial
+- esquemático realizar levantamento
+- estabelecer fiscalização programa
+- estabelecir lei lei
+- estado perícia necropapiloscópico
+- estar qualificar confirmar
+- este agente realização
+- estilete faca arma
+- estudo impressão digital
+- etc cadáver putrefação
+- etc manusear analisar
+- etc preparação fotografia
+- evidencia relativo crime
+- evidência coletar vestígio
+- exame análise âmbito
+- exame complementar atender
+- exame complementar realizar
+- exame genérico ou
+- exame histológico anatomo
+- exame laboratório reconstituição
+- exame local crime
+- exame local pericia
+- exame manter limpeza
+- exame médico legal
+- exame necroscópico humano
+- exame pericial atender
+- exame pericial direto
+- exame pericial exumação
+- exame pericial natureza
+- exame perinecroscópico manusear
+- exame peça documento
+- exame relacionar exumação
+- examinar prioridade elemento
+- executar ato compatível
+- executar autópsia exame
+- executar tarefa correlato
+- executar tarefa ser
+- executar trabalho coleta
+- execução acompanhamento exumação
+- execução mandado prisão
+- execução pequeno reparo
+- execução tarefa afins
+- execução tarefa escritório
+- exercer ato inerente
+- exercer policiamento preventivo
+- exercício cargo agente
+- exercício cargo auxiliar
+- exercício cargo delegado
+- exercício cargo escrivão
+- exercício cargo investigador
+- exercício cargo papiloscopista
+- exercício cargo perito
+- exercício função investigativo
+- exercício polícia judiciária
+- exigência legal limpeza
+- existente local crime
+- expedição mensagem radiotelegráfico
+- explosivo arma munição
+- exposição situação risco
+- externo causa desencadeante
+- externo desempenho atividade
+- externo execução acompanhamento
+- extravagante portar arma
+- exumação abertura cavidade
+- exumação cadáver portar
+- exumação coletar amostra
+- exumação manusear fotografar
+- faca arma etc
+- facial humano fim
+- falar perícia papiloscópico
+- falsificação fiscalização vistoria
+- fatal desconhecir ter
+- fatal procedimento seguir
+- fato delituoso manifesto
+- fato ensejem necessário
+- fato mediante uso
+- favela ocasionar contato
+- fazer necessário conduzir
+- ferimento perfuração mancha
+- ferir indigente cadáver
+- fez salivo etc
+- fiança receber objeto
+- ficha dactiloscópico fim
+- ficha datiloscópico fim
+- fim didático reportagem
+- fim exame complementar
+- fim identificação civil
+- fim identificação efetuar
+- fim identificação elaboração
+- fim identificação pu
+- fim perícia médico
+- finalidade instruir procedimento
+- fio radio eletricidade
+- fiscalização local diversão
+- fiscalização portaria entrada
+- fiscalização programa rádio
+- fiscalização vistoria fábrica
+- fixação transporte fotografia
+- flagrante inquérito policial
+- fluido corpóreos humano
+- fogo atuar possibilidade
+- fogo distintivo algema
+- fogo equipamento letal
+- fogo integrante polícia
+- forense realizar exame
+- forense área conhecimento
+- formalização ato polícia
+- formar elemento indicativo
+- fornecer elemento esclarecedor
+- força externo causa
+- foto respectivo arquivo
+- fotografar cadáver ferimento
+- fotografar ocorrência policial
+- fotografar substância psicoativo
+- fotografação coleta fragmento
+- fotografia conservação aparelho
+- fotografia distico eliminação
+- fotografia diversos gênero
+- fotografia fotografar cadáver
+- fotografia utilização substância
+- fotográfico digital edição
+- fotográfico instruir laudo
+- fotográfico macro fotográfico
+- fotográfico operar aparelho
+- fotográfico organização sistemático
+- fotográfico vítima fatal
+- fotógrafo técnico pericial
+- fragmento coletar modo
+- fragmento digital palmar
+- fragmento impressão digital
+- fragmento impressão palmar
+- fragmento papilar questionar
+- funcional algema atender
+- funcionamento manutenção limpeza
+- funcionamento verificação observância
+- função desempenhar atendente
+- função escrivão adjunto
+- função estabelecir lei
+- função investigativo técnica
+- função prever portaria
+- funções atividade sicad
+- furto ou participar
+- fábrica depósilo explosivo
+- física química biologia
+- físico digital ou
+- físico ou química
+- físico químico biológico
+- físico químico ou
+- fórmula dactiloscópico função
+- gasoso cadáver presente
+- gasoso manusear material
+- genérico ou específico
+- geográfico arquitetônico propaganda
+- gestão atividade polícia
+- gravidade autoria definir
+- guarda conservação móvel
+- guarda vigilância movimentação
+- gumbleton daunt iirgd
+- gênero fim didático
+- hipótese providência fazer
+- histológico anatomo patológico
+- horário estabelecer fiscalização
+- humano crosta líquido
+- humano cuidar trabalho
+- humano fim exame
+- humano fim identificação
+- humano limpeza desfecção
+- humano ou animal
+- humano parte cadáver
+- humano paulo ucrh
+- identidade assessoramento técnico
+- identidade funcional algema
+- identificar humano cuidar
+- identificar pessoa digital
+- identificação cadáver diferente
+- identificação cadáver manuseio
+- identificação cadáver numeração
+- identificação civil criminal
+- identificação criminal civil
+- identificação criminal datiloscopia
+- identificação efetuar trabalho
+- identificação elaboração fórmula
+- identificação impressão papilar
+- identificação pessoal registrar
+- identificação proceder identificação
+- identificação pu blico
+- identificação ricardo gumbleton
+- identificá las rapidamente
+- idoneidade ou inviolabilidade
+- ii atuar possibilidade
+- ii autoria delitivo
+- ii efetuar análise
+- ii emitir relatório
+- iirgd consistir coleta
+- iirgd nic nº
+- iirgd prestar assessoramento
+- iirgd prestar assessoria
+- ilustrativo demonstrativo técnico
+- ilícito realizar busca
+- imagem pesquisa leitura
+- impresso fotografia distico
+- impresso próprio dado
+- impressão digital execução
+- impressão digital ficha
+- impressão digital identificação
+- impressão digital palma
+- impressão digital palmar
+- impressão digital pessoa
+- impressão digital registro
+- impressão digital vítima
+- impressão local crime
+- impressão palmar plantar
+- impressão papilar padrão
+- impressão papilar pessoa
+- impressão papilar realizar
+- impressão papilar visar
+- in natura contaminar
+- incluir contato direto
+- incluir contato material
+- inconveniênte moral bom
+- incêndio catástrofe acidente
+- incêndio catástrofe terrorismo
+- indicativo autoria ou
+- indigente cadáver limpeza
+- indireto vivo lesão
+- indivíduo apreensão manter
+- indivíduo realizar pesquisa
+- industrial produto residual
+- inerente exercício cargo
+- inerente gestão atividade
+- informação documento técnico
+- informação natureza fio
+- informação obter fim
+- informação presidência delegado
+- infrator lavratura auto
+- infração penal administrativo
+- infração penal cumprir
+- infração penal praticar
+- infração tarefa correlato
+- inorgânico realizar exame
+- inquerito processo policial
+- inquérito policial procedimento
+- inquérito policial processo
+- inscrição iirgd nic
+- inserção fragmento papilar
+- instalação funcionamento verificação
+- institucional executar tarefa
+- instituição penal contrôle
+- instituto identificação ricardo
+- instruir laudo pericial
+- instruir procedimento formar
+- instrumento tomada impressão
+- instrumento trabalho tarefa
+- instrumento utilizar necropsias
+- instrução inquérito policial
+- integrante polícia civil
+- inteiro atender exigência
+- intencional dotar força
+- interno colheita amostra
+- interno externo desempenho
+- intervenção intencional dotar
+- intervir ocorrência natureza
+- intervir situação fato
+- investigador polícia prever
+- investigativo técnica polícia
+- investigatório policiamento preventivo
+- investigação criminal ação
+- investigação criminal exercício
+- investigação desempenhar atividade
+- investigação paradeiro pessoa
+- investigação recolhimento elemento
+- inviolabilidade bem objeto
+- janeiro portaria dgp
+- judicial criminal analisar
+- judiciária administrativo presidência
+- judiciária apuração infração
+- judiciária assessoramento técnico
+- judiciária elaborar desenho
+- judiciária emanar delegado
+- judiciária escoltar preso
+- judiciária físico digital
+- judiciária operar sistema
+- judiciária portar arma
+- judiciária presidir ato
+- judiciária referir aplicação
+- judiciário culminar elaboração
+- justificar salvaguardar vida
+- laboratório execução pequeno
+- laboratório orientação perito
+- laboratório reconstituição cadáver
+- laboratório visar fornecer
+- lacre inscrição iirgd
+- las rapidamente estar
+- laudo pericial dirigir
+- laudo pericial papiloscópico
+- laudo pericial tarefa
+- laudo pericial viabilização
+- lavagem librificação verificação
+- lavratura auto corpo
+- lavratura auto infração
+- legal determinaçãode causa
+- legal instalação funcionamento
+- legal lavratura auto
+- legal limpeza osso
+- legal notificação advertência
+- legal relativo cadeia
+- legalmente preso autoridade
+- legislação extravagante portar
+- legista participar diretamente
+- lei complementar janeiro
+- lei complementar nº
+- lei lei orgânica
+- lei nº artigo
+- lei orgânica polícia
+- lei orgânico polícia
+- leitura comparação identificação
+- lesão corporal sexológico
+- lesão externo execução
+- lesão interno colheita
+- letal executar ato
+- levantamento elaborar croqui
+- levantamento fotográfico operar
+- levantamento papiloscópico posterior
+- levantamento planimétrico entrar
+- levantamento revelação fotografação
+- lhe realizar assessoramento
+- librificação verificação abastecimento
+- licenciamento registro competêncie
+- limpar cadáver de
+- limpeza desfecção local
+- limpeza função estabelecir
+- limpeza instrumento utilizar
+- limpeza lavagem librificação
+- limpeza preparo instrumento
+- limpeza viatura transporte
+- listar prejuízo tarefa
+- local crime alagado
+- local crime característica
+- local crime colaborar
+- local crime constatar
+- local crime desabamento
+- local crime desastr
+- local crime efetuar
+- local crime modo
+- local crime natureza
+- local crime orientação
+- local crime proceder
+- local desenvolver atividade
+- local diversão público
+- local instrumento trabalho
+- local morte violento
+- local pericia trabalho
+- local publicos prevenir
+- localização revelação decalque
+- los exame manter
+- líquido gasoso cadáver
+- líquido gasoso manusear
+- líquido seminal urina
+- macro fotográfico instruir
+- mancha coágulo sangue
+- mancha sangue sinal
+- mandado elaborar boletim
+- mandado prisão busca
+- manifesto presumível mediano
+- manter limpeza viatura
+- manter segurança local
+- manusear analisar droga
+- manusear arquivo fotográfico
+- manusear cadáver realizar
+- manusear coletar analisar
+- manusear empregar arma
+- manusear fotografar substância
+- manusear material contaminante
+- manusear material contaminar
+- manusear roupa objeto
+- manuseio cadáver possibilitar
+- manutenção limpeza função
+- material biológico in
+- material contaminado agente
+- material contaminante elaborar
+- material contaminar seringa
+- material existente local
+- materialidade infração penal
+- mediano gravidade autoria
+- mediante uso polícia
+- medida segurança orgânico
+- meio ótico outro
+- mensagem radiotelegráfico tarefa
+- mesmo função escrivão
+- mesmo proceder identificação
+- metálico metálico realizar
+- metálico realizar análise
+- modo encaminhados unidade
+- modo procedar levantamento
+- monodactilar quiroscópico podoscópico
+- moral bom costume
+- morte violento doloso
+- morto fragmento impressão
+- movimentação presidiário detento
+- munição produto químico
+- mão dedo sola
+- médico acompanhar equipe
+- médico legal determinaçãode
+- médico legal lavratura
+- médico legista participar
+- móvel material escritório
+- natura contaminar ou
+- natureza antropológico realizar
+- natureza apurar evidência
+- natureza criminal conduzir
+- natureza fio radio
+- natureza policial administrativo
+- natureza superfície possa
+- necessário conduzir apresentar
+- necessário critério delegado
+- necessário identificar pessoa
+- necessário providência âmbito
+- necropapiloscópico efetuar busca
+- necropsia atribuição adiante
+- necropsias recolhimento ossada
+- necroscópico humano parte
+- necrotério limpar cadáver
+- necrotério recolher cadáver
+- nic nº identificação
+- noite manusear material
+- norma legal relativo
+- notificação advertência infrator
+- novembro conforme anexo
+- novembro lei complementar
+- novembro lei orgânico
+- numeração sequencial vincular
+- nº artigo ii
+- nº identificação cadáver
+- nº lei complementar
+- nº portar arma
+- nº responsabilizarr se
+- objetivo identificá las
+- objetivo subsidiem apuração
+- objeto apreendir arrecadar
+- objeto apreensão conduzir
+- objeto cadáver portar
+- objeto diferentes superfície
+- objeto documento correlato
+- objeto local crime
+- objeto submetir exame
+- observar se norma
+- observar seguinte requisito
+- observação lesão externo
+- observação lesão interno
+- observância censura prévio
+- observância horário estabelecer
+- obter fim identificação
+- obter tratamento análise
+- ocasionar contato direto
+- ocorrência ato documento
+- ocorrência conduzir viatura
+- ocorrência delito relevante
+- ocorrência diverso desabamento
+- ocorrência natureza criminal
+- ocorrência policial conservar
+- ocorrência policial crime
+- ocorrência policial peça
+- ocorrência termo circunstanciar
+- ocorrência vítima desabamento
+- operar aparelho tecnologia
+- operar sistema comunicação
+- operação dissecação recomposição
+- ordem dependência instituição
+- organização inquerito processo
+- organização sistemático mesmo
+- orgânica polícia paulo
+- orgânico atuar procedimento
+- orgânico inorgânico realizar
+- orgânico polícia paulo
+- orientação autoridade policial
+- orientação direto delegado
+- orientação perito criminal
+- origem industrial produto
+- oriunr criminalística elaboração
+- ossada resto putrefado
+- ossar local crime
+- ou animal contaminante
+- ou biológico atender
+- ou biológico manusear
+- ou cadáver ocorrência
+- ou corpo putrefação
+- ou criminal retrato
+- ou desconhecir origem
+- ou específico mancha
+- ou inviolabilidade bem
+- ou materialidade infração
+- ou ossar local
+- ou participar perícia
+- ou processo judicial
+- ou putrefeito fluido
+- ou química substância
+- ou requisição determinar
+- ou sistema tecnologia
+- ou técnica finalidade
+- ou tóxico entorpecente
+- outro processo eletromagnético
+- padrão realizar pesquisa
+- palma mão dedo
+- palmar plantar coleta
+- palmar plantar ii
+- palmar plantar objeto
+- papila dérmico apto
+- papilar padrão realizar
+- papilar pessoa desaparecido
+- papilar questionar banco
+- papilar realizar inserção
+- papilar visar identificação
+- papiloscopista policial análise
+- papiloscopista policial desempenho
+- papiloscopista policial estudo
+- papiloscopista policial prejuízo
+- papiloscópico aplicar desenvolver
+- papiloscópico entendir característica
+- papiloscópico ii autoria
+- papiloscópico instituto identificação
+- papiloscópico local crime
+- papiloscópico local morte
+- papiloscópico posterior localização
+- paradeiro pessoa desaparecido
+- parte cadáver putrefeito
+- parte limpeza instrumento
+- participar diretamente perícia
+- participar perícia laboratório
+- participação diligência sôbre
+- particular tomar impressão
+- patológico fim perícia
+- patrimônio cidadão encaminhar
+- paulo lei complementar
+- paulo portaria dgp
+- paulo ucrh prejuízo
+- penal administrativo examinar
+- penal contrôle verificação
+- penal cumprir requisição
+- penal legislação extravagante
+- penal praticar ato
+- perfuração mancha sangue
+- pericia trabalho licenciamento
+- pericial atender ocorrência
+- pericial atribuição adiante
+- pericial direto indireto
+- pericial dirigir viatura
+- pericial exumação coletar
+- pericial natureza antropológico
+- pericial papiloscópico aplicar
+- pericial papiloscópico necropapiloscópico
+- pericial pertinente investigação
+- pericial tarefa correlato
+- pericial viabilização prova
+- perinecroscópico manusear cadáver
+- perito criminal atender
+- perito criminal elaborar
+- perito criminal médico
+- perito criminal prever
+- pertinente assistir delegado
+- pertinente investigação criminal
+- perícia condição climático
+- perícia crime necessário
+- perícia criminal executar
+- perícia criminal realizar
+- perícia laboratório orientação
+- perícia médico legal
+- perícia necropapiloscópico efetuar
+- perícia papiloscópico local
+- perícia projeção envelhecimento
+- período dia noite
+- pesagem cadáver humano
+- pesquisa acervo decadactilar
+- pesquisa arquivamento documento
+- pesquisa arquivamento ficha
+- pesquisa auxiliar papiloscopista
+- pesquisa banco dado
+- pesquisa fragmento coletar
+- pesquisa leitura comparação
+- pessoa coisa vincular
+- pessoa desaparecido comparecer
+- pessoa digital hipótese
+- pessoa legalmente preso
+- pessoa portadoras doença
+- pessoa registro planilha
+- pessoa suspeito prática
+- pessoa veículo volume
+- pessoa viva morto
+- pessoal necessário identificar
+- pessoal registrar encaminhar
+- pessoalmente telefone elaborar
+- peça documento evidencia
+- peça documento polícia
+- peça exame local
+- peça teatro similar
+- planejar coordenar controlar
+- planilha qualificação dado
+- planimétrico entrar contato
+- plantar coleta impressão
+- plantar ii efetuar
+- plantar objeto diferentes
+- poder conter vestígio
+- poder determinar dirigir
+- poder determinar executar
+- poder determinar fotografar
+- poder determinar identificação
+- poder determinar intervir
+- poder determinar tarefa
+- podoscopia ou técnica
+- podoscópico fotográfico organização
+- policial administrativo executar
+- policial administrativo zelar
+- policial análise informação
+- policial atender local
+- policial circunscrição fato
+- policial civil atender
+- policial competente determinar
+- policial conservar manusear
+- policial crime vítima
+- policial cumprir diligência
+- policial desempenho atribuição
+- policial diverso trabalho
+- policial divulgação preparação
+- policial elaborar relatório
+- policial estudo impressão
+- policial exercício função
+- policial formalização ato
+- policial intervir ocorrência
+- policial investigação desempenhar
+- policial judiciário culminar
+- policial operar sistema
+- policial orientação direto
+- policial peça exame
+- policial poder conter
+- policial polícia civil
+- policial prejuízo tarefa
+- policial procedimento administrativo
+- policial processo sindicância
+- policial registro ocorrência
+- policial transportar pessoa
+- policial âmbito atividade
+- policiamento local publicos
+- policiamento preventivo especializar
+- policía classe desempenho
+- policía classe participação
+- polícia administrativo exercer
+- polícia civil lei
+- polícia civil portar
+- polícia conflito justificar
+- polícia cumprir mandado
+- polícia de aquele
+- polícia dentre relacionar
+- polícia desempenhar atividade
+- polícia execução tarefa
+- polícia função prever
+- polícia instituto identificação
+- polícia judiciária administrativo
+- polícia judiciária apuração
+- polícia judiciária assessoramento
+- polícia judiciária elaborar
+- polícia judiciária emanar
+- polícia judiciária escoltar
+- polícia judiciária físico
+- polícia judiciária operar
+- polícia judiciária portar
+- polícia judiciária presidir
+- polícia judiciária referir
+- polícia paulo lei
+- polícia paulo portaria
+- polícia prever único
+- polícia requisitante zelar
+- portador diversos doença
+- portadoras doença contagioso
+- portar arma dirigir
+- portar arma distintivo
+- portar arma fogo
+- portaria dgp 30
+- portaria entrada saida
+- possa conter vestígio
+- possibilidade exposição situação
+- possibilitar observação lesão
+- posterior coleta de
+- posterior localização revelação
+- praticar ato polícia
+- prejuízo relacionar de
+- prejuízo relacionar ser
+- prejuízo tarefa análogo
+- preparação fotografia fotografar
+- preparação solução químico
+- preparo instrumento tomada
+- prescrição legal notificação
+- presente posterior coleta
+- preservar campo papiloscópico
+- presidir ato polícia
+- presidir investigação criminal
+- presidiário detento assegurar
+- presidência delegado polícia
+- preso autoridade policial
+- preso investigação paradeiro
+- preso realizar prisão
+- presos deter demente
+- prestar assessoramento técnico
+- prestar assessoria sítio
+- presumível mediano gravidade
+- prevenir reprimir prática
+- preventivo especializar cumprir
+- preventivo especializar presidir
+- prever código processo
+- prever portaria dgp
+- prever único cadastro
+- prioridade elemento material
+- prisão busca escolta
+- prisão captura indivíduo
+- prisão flagrante inquérito
+- procedar levantamento revelação
+- proceder abordagem pessoa
+- proceder identificação cadáver
+- proceder identificação civil
+- proceder limpeza lavagem
+- proceder revelação ampliação
+- proceder técnica levantamento
+- procedimento administrativo ou
+- procedimento formar elemento
+- procedimento policial investigação
+- procedimento seguir colocação
+- procedimento tratamento aproveitamento
+- processamento imagem pesquisa
+- processo eletromagnético dentre
+- processo judicial criminal
+- processo penal legislação
+- processo policial orientação
+- processo relacionar identificação
+- processo sindicância apuração
+- produto conhecir ou
+- produto químico agressivo
+- produto químico proceder
+- produto residual metálico
+- programa impresso fotografia
+- programa rádio televisão
+- projeção envelhecimento rejuvenescimento
+- propaganda tarefa correlato
+- propósito croqui vítima
+- prova objetivo subsidiem
+- providência fazer necessário
+- providência reconhecimento cadáver
+- providência sepultamento cadáver
+- providência âmbito polícia
+- prática crime contravenção
+- prática ilícito realizar
+- prévio análise anúncio
+- próprio dado qualificativo
+- psicoativo entorpecente analisar
+- psicoativo ou tóxico
+- pu blico presos
+- publicidade policial divulgação
+- publicos prevenir reprimir
+- putrefado cadáver inteiro
+- putrefação cadavérico elemento
+- putrefação exumação manusear
+- putrefação ou ossar
+- putrefeito esqueletizar realizar
+- putrefeito fluido corpóreos
+- pé papila dérmico
+- público conduzir viatura
+- público interno externo
+- público pessoalmente telefone
+- público portar arma
+- público realizar levantamento
+- público verificar respeito
+- qualificar confirmar identidade
+- qualificativo pessoa registro
+- qualificação dado cromático
+- questionar banco dado
+- quiroscopia podoscopia ou
+- quiroscópico podoscópico fotográfico
+- química biologia forense
+- química substância orgânico
+- químico agressivo elaboração
+- químico biológico ou
+- químico manusear arquivo
+- químico ou biológico
+- químico proceder revelação
+- químico revelação fixação
+- radio eletricidade meio
+- radiotelegráfico tarefa conservação
+- rapidamente estar qualificar
+- realizar análise físico
+- realizar assessoramento técnico
+- realizar busca pessoal
+- realizar diligência investigatório
+- realizar exame análise
+- realizar exame genérico
+- realizar exame informática
+- realizar exame pericial
+- realizar exame perinecroscópico
+- realizar exame relacionar
+- realizar inserção fragmento
+- realizar levantamento elaborar
+- realizar levantamento fotográfico
+- realizar perícia projeção
+- realizar pesquisa acervo
+- realizar pesquisa banco
+- realizar prisão captura
+- realização captura pesquisa
+- realização exame complementar
+- realização exame médico
+- receber objeto apreensão
+- recente ou corpo
+- recepção expedição mensagem
+- recepção informação natureza
+- reclamar manusear roupa
+- recognição visuográfico reconstituir
+- recolher cadáver de
+- recolhimento elemento convicção
+- recolhimento ossada resto
+- recomposição suturo transporte
+- reconhecimento cadáver adotar
+- reconstituir desenho esquemático
+- reconstituir impressão papilar
+- reconstituição cadáver costurar
+- reconstituição crime exame
+- recurso humano paulo
+- referir aplicação conhecimento
+- regional policía classe
+- registrar encaminhar dado
+- registro competêncie delegacia
+- registro fotográfico vítima
+- registro impresso próprio
+- registro ocorrência conduzir
+- registro planilha qualificação
+- rejuvenescimento facial humano
+- relacionar de ele
+- relacionar dentre prever
+- relacionar exumação cadáver
+- relacionar física química
+- relacionar identificação criminal
+- relacionar ser requisitar
+- relativo cadeia custódia
+- relativo crime acidente
+- relatório informação documento
+- relatório respectivo proceder
+- relevante autoria desconhecir
+- reparação aparelho tarefa
+- reportagem publicidade policial
+- reprimir prática crime
+- reprodução fotografia diversos
+- requisitante zelar cadeia
+- requisitar autoridade policial
+- requisitar campo perícia
+- requisitar cumulativamente observar
+- requisito preservar campo
+- requisição determinar autoridade
+- requisição escritas verbal
+- requisição pericial pertinente
+- residual metálico metálico
+- respectivo arquivo eletrônico
+- respectivo proceder abordagem
+- respeito condição legal
+- responsabilizarr se fiança
+- resto putrefado cadáver
+- resultado obter tratamento
+- retrato falar perícia
+- revelação ampliação fotografia
+- revelação decalque transporte
+- revelação fixação transporte
+- revelação fotografação coleta
+- revelação reprodução fotografia
+- ricardo gumbleton daunt
+- risco função prever
+- risco mediar conflito
+- roubo furto ou
+- roupa objeto cadáver
+- rádio televisão peça
+- saida pessoa veículo
+- salivo etc manusear
+- salvaguardar vida saúde
+- sangue humano crosta
+- sangue sinal agressão
+- saúde patrimônio cidadão
+- se fiança receber
+- se norma legal
+- secretariar elaboração boletim
+- seguinte requisito preservar
+- seguir colocação cadáver
+- segurança local desenvolver
+- segurança orgânico atuar
+- seminal urina fez
+- sepultamento cadáver reclamar
+- sequencial vincular ano
+- ser apresentar alto
+- ser atribuir função
+- ser atribuir portar
+- ser requisitar campo
+- seringa estilete faca
+- sexológico embriaguez toxicológico
+- sicad unidade central
+- similar constatar observância
+- sinal agressão etc
+- sinal particular tomar
+- sindicância apuração peça
+- sistema comunicação dado
+- sistema comunicação institucional
+- sistema tecnologia informação
+- sistematização correspondente laudo
+- sistemático mesmo proceder
+- situação fato mediante
+- situação risco função
+- situação risco mediar
+- sola pé papila
+- solução químico revelação
+- somático sinal particular
+- soterramento incêndio catástrofe
+- submetir exame pericial
+- subsidiem apuração infração
+- substância orgânico inorgânico
+- substância psicoativo ou
+- substância químico manusear
+- substância tóxico agente
+- suicidio autópsia biópsia
+- superfície possa conter
+- superfície realizar perícia
+- suspeito prática ilícito
+- suturo transporte pesagem
+- sítio cabendo lhe
+- sólido líquido gasoso
+- sôbre crime acidente
+- tange cumprimento diligência
+- tarefa análogo poder
+- tarefa conservação reparação
+- tarefa correlato desempenho
+- tarefa correlato escritório
+- tarefa escritório cartório
+- tarefa ser atribuir
+- tarefa simples laboratório
+- tarefa transmissão recepção
+- teatro similar constatar
+- tecido dérmico epidérmico
+- tecnologia aplicável forense
+- tecnologia informação presidência
+- tecnológico analisar documento
+- telecomunicação policial prejuízo
+- telefone elaborar orientação
+- televisão peça teatro
+- tentativa suicidio autópsia
+- ter objetivo identificá
+- termo circunstanciar auto
+- terrorismo acidente trânsito
+- tiragem revelação reprodução
+- tomada impressão digital
+- tomar impressão digital
+- toráxico abdominal possibilitar
+- toxicológico especialidade médico
+- trabalho coleta análise
+- trabalho coleta impressão
+- trabalho licenciamento registro
+- trabalho policial administrativo
+- trabalho polícia judiciária
+- trabalho tarefa simples
+- trabalho técnico fotográfico
+- transmissão recepção informação
+- transportar pessoa coisa
+- transporte cadáver de
+- transporte corpo adotar
+- transporte fotografia conservação
+- transporte fragmento digital
+- transporte pesagem cadáver
+- transporte veículo carga
+- tratamento análise confronto
+- tratamento aproveitamento tecido
+- trânsito agente tóxico
+- trânsito propósito croqui
+- trânsito roubo furto
+- técnica científico procedimento
+- técnica finalidade instruir
+- técnica levantamento papiloscópico
+- técnica polícia judiciária
+- técnico caso artigo
+- técnico fotográfico macro
+- técnico geográfico arquitetônico
+- técnico papiloscópico instituto
+- técnico papiloscópico local
+- técnico pericial atribuição
+- técnico resultado obter
+- tóxico agente físico
+- tóxico entorpecente produto
+- tóxico sólido líquido
+- ucrh prejuízo relacionar
+- unidade central recurso
+- unidade policial circunscrição
+- unidade policial exercício
+- urbanidade eficiência público
+- urina fez salivo
+- uso polícia conflito
+- utilizar necropsias recolhimento
+- utilização substância químico
+- verbal atinente trabalho
+- verificar respeito condição
+- verificação abastecimento combustível
+- verificação fiscalização portaria
+- verificação observância horário
+- vestígio datiloscópico observar
+- vestígio determinação identificação
+- vestígio laboratório visar
+- vestígio papiloscópico ii
+- veículo automotor cumprir
+- veículo automotor transporte
+- veículo carga conservação
+- veículo objeto documento
+- veículo proceder limpeza
+- viabilização prova objetivo
+- viatura atender público
+- viatura policial atender
+- viatura policial cumprir
+- viatura policial diverso
+- viatura policial operar
+- viatura policial transportar
+- viatura transporte corpo
+- vida saúde patrimônio
+- vigilância movimentação presidiário
+- vincular ano boletim
+- vincular ocorrência policial
+- violento doloso entendir
+- violência acidente tentativa
+- visar fornecer elemento
+- visar identificação proceder
+- visceral exame laboratório
+- vistoria fábrica depósilo
+- visuográfico reconstituir desenho
+- viva morto fragmento
+- vivo lesão corporal
+- vítima crime catástrofe
+- vítima desabamento desmoronamento
+- vítima fatal desconhecir
+- vítima fatal procedimento
+- vítima incluir contato
+- vítima orientação perito
+- zelar cadeia custódia
+- zelar funcionamento manutenção
+- água óleo execução
+- área conhecimento científico
+- âmbito atividade polícia
+- âmbito criminalística relacionar
+- âmbito polícia judiciária
+- óbito recente ou
+- óleo execução pequeno
+- ótico outro processo
+- único cadastro cargo
+
+## 4-grams
+
+- 30 novembro conforme anexo
+- 30 novembro lei complementar
+- 30 novembro lei orgânico
+- 95 requisitar cumulativamente observar
+- abastecimento combustível água óleo
+- abdominal possibilitar observação lesão
+- aberto favela ocasionar contato
+- abertura cavidade craniano toráxico
+- abordagem pessoa suspeito prática
+- abranger dispositivo anterior instituto
+- acervo decadactilar monodactilar quiroscópico
+- acidente distúrbio busca apreensão
+- acidente falsificação fiscalização vistoria
+- acidente tentativa suicidio autópsia
+- acidente trânsito agente tóxico
+- acidente trânsito propósito croqui
+- acidente trânsito roubo furto
+- acionar delegado polícia instituto
+- acompanhamento exumação abertura cavidade
+- acompanhar equipe perícia crime
+- adiante listar prejuízo tarefa
+- adjunto delegacia regional policía
+- administrativo examinar prioridade elemento
+- administrativo executar tarefa ser
+- administrativo exercer policiamento preventivo
+- administrativo ou processo judicial
+- administrativo presidência delegado polícia
+- administrativo zelar funcionamento manutenção
+- adotar providência reconhecimento cadáver
+- adotar providência sepultamento cadáver
+- advertência infrator lavratura auto
+- agente físico químico biológico
+- agente físico químico ou
+- agente policial prejuízo tarefa
+- agente realização exame complementar
+- agente telecomunicação policial prejuízo
+- agente tóxico agente físico
+- agente tóxico sólido líquido
+- agressivo elaboração laudo pericial
+- agressão etc cadáver putrefação
+- alagado esgoto céu aberto
+- algema atender urbanidade eficiência
+- alto cidadão unidade policial
+- ambiental diverso realizar exame
+- amostra biológico humano fim
+- amostra visceral exame laboratório
+- ampliação fotografia utilização substância
+- analisar documento objeto local
+- analisar droga psicoativo entorpecente
+- analisar material biológico in
+- analisar produto conhecir ou
+- analisar vestígio determinação identificação
+- anatomo patológico fim perícia
+- anexo edital lei lei
+- anexo edital planejar coordenar
+- anexo edital tange cumprimento
+- animal contaminante ambiental diverso
+- ano boletim ocorrência delito
+- anterior instituto identificação ricardo
+- antropológico realizar exame pericial
+- análise anúncio programa impresso
+- análise confronto pesquisa fragmento
+- análise físico ou química
+- análise informação obter fim
+- análise objeto apreendir arrecadar
+- análise pesquisa arquivamento documento
+- análise âmbito criminalística relacionar
+- análogo poder determinar dirigir
+- análogo poder determinar executar
+- análogo poder determinar fotografar
+- análogo poder determinar identificação
+- análogo poder determinar intervir
+- análogo poder determinar tarefa
+- anúncio programa impresso fotografia
+- aparelho laboratório execução pequeno
+- aparelho tarefa correlato escritório
+- aparelho tecnologia aplicável forense
+- aplicar desenvolver técnica científico
+- aplicação conhecimento oriunr criminalística
+- aplicável forense realizar exame
+- apreendir arrecadar autoridade policial
+- apreensão conduzir veículo automotor
+- apreensão manter segurança local
+- apreensão reconstituição crime exame
+- apresentar alto cidadão unidade
+- apresentar pessoa legalmente preso
+- aproveitamento tecido dérmico epidérmico
+- apto identificar humano cuidar
+- apurar evidência coletar vestígio
+- apuração infração penal administrativo
+- apuração infração penal praticar
+- apuração peça documento polícia
+- aquele descritas lei complementar
+- arma dirigir viatura atender
+- arma distintivo algema atender
+- arma distintivo dirigir viatura
+- arma distintivo identidade funcional
+- arma etc preparação fotografia
+- arma fogo atuar possibilidade
+- arma fogo distintivo algema
+- arma fogo equipamento letal
+- arma fogo integrante polícia
+- arma munição produto químico
+- arquitetônico propaganda tarefa correlato
+- arquivamento documento pertinente assistir
+- arquivamento ficha datiloscópico fim
+- arquivo eletrônico editar laudo
+- arquivo fotográfico digital edição
+- arrecadar autoridade policial poder
+- artigo 95 requisitar cumulativamente
+- artigo ii atuar possibilidade
+- aspecto inconveniênte moral bom
+- assegurar disciplina ordem dependência
+- assessoramento técnico caso artigo
+- assessoramento técnico papiloscópico instituto
+- assessoramento técnico papiloscópico local
+- assessoria sítio cabendo lhe
+- assistir delegado polícia de
+- atendente necrotério recolher cadáver
+- atender exigência legal limpeza
+- atender local crime alagado
+- atender local crime característica
+- atender ocorrência vítima desabamento
+- atender público interno externo
+- atender público portar arma
+- atender público realizar levantamento
+- atender urbanidade eficiência público
+- atinente trabalho polícia judiciária
+- atividade inerente exercício cargo
+- atividade natureza policial administrativo
+- atividade policial civil atender
+- atividade policial intervir ocorrência
+- atividade polícia judiciária administrativo
+- atividade polícia judiciária portar
+- atividade polícia judiciária presidir
+- atividade sicad unidade central
+- ato compatível atividade polícia
+- ato documento polícia judiciária
+- ato inerente gestão atividade
+- ato polícia administrativo exercer
+- ato polícia judiciária apuração
+- ato polícia judiciária operar
+- atribuir função prever portaria
+- atribuir portar arma fogo
+- atribuição adiante listar prejuízo
+- atribuição auxiliar elaboração processo
+- atribuição comum carreira policial
+- atribuição inerente exercício cargo
+- atuar possibilidade exposição situação
+- atuar procedimento policial investigação
+- auto corpo delito caso
+- auto infração tarefa correlato
+- auto prisão flagrante inquérito
+- automatizar leitura comparação identificação
+- automatizar processamento imagem pesquisa
+- automotor cumprir medida segurança
+- automotor transporte veículo carga
+- autoria definir policiamento local
+- autoria desconhecir abranger dispositivo
+- autoria ou materialidade infração
+- autoridade policial competente determinar
+- autoridade policial elaborar relatório
+- autoridade policial formalização ato
+- autoridade policial judiciário culminar
+- autoridade policial poder conter
+- autoridade policial registro ocorrência
+- autoridade policial âmbito atividade
+- autópsia biópsia exame histológico
+- autópsia exame necroscópico humano
+- auxiliar autoridade policial formalização
+- auxiliar elaboração processo relacionar
+- auxiliar necropsia atribuição adiante
+- auxiliar papiloscopista policial desempenho
+- auxiliar papiloscopista policial prejuízo
+- auxilio operação dissecação recomposição
+- ação relacionar dentre prever
+- banco dado automatizar leitura
+- banco dado automatizar processamento
+- banco dado civil ou
+- bem objeto submetir exame
+- biologia forense área conhecimento
+- biológico atender público portar
+- biológico humano fim exame
+- biológico in natura contaminar
+- biológico manusear coletar analisar
+- biológico ou cadáver ocorrência
+- biópsia exame histológico anatomo
+- blico presos deter demente
+- boletim ocorrência ato documento
+- boletim ocorrência delito relevante
+- boletim ocorrência termo circunstanciar
+- bom costume contrário prescrição
+- busca apreensão reconstituição crime
+- busca escolta preso investigação
+- busca impressão papilar pessoa
+- busca pessoal necessário identificar
+- cabendo lhe realizar assessoramento
+- cadastro cargo funções atividade
+- cadavérico elemento portador diversos
+- cadeia custódia dirigir viatura
+- cadeia custódia ii emitir
+- cadáver adotar providência sepultamento
+- cadáver costurar parte limpeza
+- cadáver de eles encaminhá
+- cadáver de eles necrotério
+- cadáver de eles óbito
+- cadáver diferente estado perícia
+- cadáver ferimento perfuração mancha
+- cadáver humano limpeza desfecção
+- cadáver inteiro atender exigência
+- cadáver lacre inscrição iirgd
+- cadáver limpeza preparo instrumento
+- cadáver manuseio cadáver possibilitar
+- cadáver numeração sequencial vincular
+- cadáver ocorrência diverso desabamento
+- cadáver portar arma distintivo
+- cadáver possibilitar observação lesão
+- cadáver presente posterior coleta
+- cadáver putrefação exumação manusear
+- cadáver putrefeito esqueletizar realizar
+- cadáver realizar exame relacionar
+- cadáver reclamar manusear roupa
+- cadáver reconstituir impressão papilar
+- campo papiloscópico entendir característica
+- campo perícia criminal executar
+- campo perícia criminal realizar
+- captura indivíduo apreensão manter
+- captura pesquisa banco dado
+- característica diversificar incluir contato
+- característica natureza superfície possa
+- carga conservação veículo proceder
+- cargo agente policial prejuízo
+- cargo agente telecomunicação policial
+- cargo auxiliar papiloscopista policial
+- cargo delegado polícia dentre
+- cargo escrivão polícia prever
+- cargo funções atividade sicad
+- cargo investigador polícia prever
+- cargo papiloscopista policial estudo
+- cargo perito criminal prever
+- carreira policial polícia civil
+- cartório delegacia policía classe
+- caso artigo 95 requisitar
+- caso violência acidente tentativa
+- catástrofe acidente trânsito propósito
+- catástrofe acidente trânsito roubo
+- catástrofe putrefação cadavérico elemento
+- catástrofe terrorismo acidente trânsito
+- causa desencadeante coletar impressão
+- cavidade craniano toráxico abdominal
+- censura prévio análise anúncio
+- central recurso humano paulo
+- cidadão encaminhar demanda ser
+- cidadão unidade policial exercício
+- científico procedimento tratamento aproveitamento
+- científico tecnológico analisar documento
+- circunscrição fato ensejem necessário
+- circunstanciar auto prisão flagrante
+- civil atender público interno
+- civil coleta impressão digital
+- civil criminal indivíduo realizar
+- civil criminal tarefa correlato
+- civil lei nº artigo
+- civil ou criminal retrato
+- civil portar arma distintivo
+- classe desempenho mesmo função
+- classe participação diligência sôbre
+- classificação pesquisa arquivamento ficha
+- classificação pesquisa auxiliar papiloscopista
+- climático desfavorável período dia
+- coisa vincular ocorrência policial
+- colaborar papiloscopista policial análise
+- coleta análise pesquisa arquivamento
+- coleta de este agente
+- coleta fragmento impressão digital
+- coleta impressão digital identificação
+- coleta impressão digital pessoa
+- coleta impressão digital registro
+- coleta impressão local crime
+- coletar amostra biológico humano
+- coletar analisar material biológico
+- coletar classificação pesquisa auxiliar
+- coletar impressão digital vítima
+- coletar modo encaminhados unidade
+- coletar vestígio laboratório visar
+- colheita amostra visceral exame
+- colocação cadáver lacre inscrição
+- combustível água óleo execução
+- comparação identificação impressão papilar
+- comparecer local crime proceder
+- compatível atividade polícia judiciária
+- competente determinar auxiliar autoridade
+- competêncie delegacia guarda conservação
+- complementar atender local crime
+- complementar janeiro portaria dgp
+- complementar nº lei complementar
+- complementar nº portar arma
+- complementar nº responsabilizarr se
+- complementar realizar exame pericial
+- comum carreira policial polícia
+- comunicação dado polícia civil
+- comunicação institucional executar tarefa
+- condição climático desfavorável período
+- condição legal instalação funcionamento
+- conduzir apresentar pessoa legalmente
+- conduzir veículo automotor cumprir
+- conduzir viatura policial cumprir
+- conduzir viatura policial operar
+- conduzir viatura policial transportar
+- confirmar identidade assessoramento técnico
+- conflito justificar salvaguardar vida
+- conforme anexo edital lei
+- conforme anexo edital planejar
+- conforme anexo edital tange
+- confronto pesquisa fragmento coletar
+- conhecimento científico tecnológico analisar
+- conhecimento oriunr criminalística elaboração
+- conhecir ou desconhecir origem
+- conservar manusear empregar arma
+- conservação aparelho laboratório execução
+- conservação móvel material escritório
+- conservação reparação aparelho tarefa
+- conservação veículo proceder limpeza
+- consistir coleta impressão digital
+- constatar idoneidade ou inviolabilidade
+- constatar observância censura prévio
+- contagioso agente tóxico agente
+- contagioso agente tóxico sólido
+- contagioso portar arma dirigir
+- contagioso substância tóxico agente
+- contaminado agente físico químico
+- contaminante ambiental diverso realizar
+- contaminante elaborar levantamento planimétrico
+- contaminar ou putrefeito fluido
+- contaminar seringa estilete faca
+- contato direto elemento portador
+- contato direto pessoa portadoras
+- contato material contaminado agente
+- contato vítima crime catástrofe
+- conter vestígio datiloscópico observar
+- conter vestígio papiloscópico ii
+- contravenção execução mandado prisão
+- controlar realização captura pesquisa
+- contrário prescrição legal notificação
+- contrôle verificação fiscalização portaria
+- convicção esclarecimento fato delituoso
+- coordenar controlar realização captura
+- corpo adotar providência reconhecimento
+- corpo delito caso violência
+- corpo putrefação ou ossar
+- corporal sexológico embriaguez toxicológico
+- corpóreos humano ou animal
+- correlato requisitar autoridade policial
+- correspondente laudo pericial viabilização
+- costume contrário prescrição legal
+- costurar parte limpeza instrumento
+- coágulo sangue humano crosta
+- craniano toráxico abdominal possibilitar
+- crime acidente distúrbio busca
+- crime acidente falsificação fiscalização
+- crime alagado esgoto céu
+- crime característica diversificar incluir
+- crime catástrofe putrefação cadavérico
+- crime colaborar papiloscopista policial
+- crime constatar idoneidade ou
+- crime contravenção execução mandado
+- crime desabamento desmoronamento soterramento
+- crime desastr veículo objeto
+- crime efetuar transporte cadáver
+- crime exame local pericia
+- crime modo procedar levantamento
+- crime natureza apurar evidência
+- crime necessário critério delegado
+- crime orientação perito criminal
+- crime proceder técnica levantamento
+- crime vítima incluir contato
+- criminal analisar vestígio determinação
+- criminal atender local crime
+- criminal ação relacionar dentre
+- criminal civil coleta impressão
+- criminal conduzir viatura policial
+- criminal datiloscopia quiroscopia podoscopia
+- criminal elaborar recognição visuográfico
+- criminal executar autópsia exame
+- criminal exercício polícia judiciária
+- criminal indivíduo realizar pesquisa
+- criminal médico legista participar
+- criminal prever único cadastro
+- criminal realizar exame análise
+- criminal retrato falar perícia
+- criminal tarefa correlato escritório
+- criminalística elaboração sistematização correspondente
+- criminalística relacionar física química
+- critério delegado polícia requisitante
+- cromático somático sinal particular
+- croqui desenho esquemático realizar
+- croqui local crime orientação
+- croqui vítima orientação perito
+- crosta líquido seminal urina
+- cuidar trabalho coleta análise
+- culminar elaboração laudo pericial
+- cumprimento diligência ou requisição
+- cumprir diligência ou requisição
+- cumprir mandado elaborar boletim
+- cumprir medida segurança orgânico
+- cumprir requisição escritas verbal
+- cumprir requisição pericial pertinente
+- cumulativamente observar seguinte requisito
+- custódia dirigir viatura policial
+- custódia ii emitir relatório
+- céu aberto favela ocasionar
+- código processo penal legislação
+- dactiloscópico fim identificação pu
+- dactiloscópico função prever portaria
+- dado automatizar leitura comparação
+- dado automatizar processamento imagem
+- dado civil ou criminal
+- dado coletar classificação pesquisa
+- dado cromático somático sinal
+- dado qualificativo pessoa registro
+- datiloscopia quiroscopia podoscopia ou
+- datiloscópico fim identificação civil
+- datiloscópico observar se norma
+- daunt iirgd consistir coleta
+- daunt iirgd prestar assessoramento
+- daunt iirgd prestar assessoria
+- de aquele descritas lei
+- de ele decorrente de
+- de ele decorrente exercer
+- de ele decorrente realizar
+- de ele decorrente secretariar
+- de eles encaminhá los
+- de eles necrotério limpar
+- de eles óbito recente
+- de este agente realização
+- decadactilar monodactilar quiroscópico podoscópico
+- decalque transporte fragmento digital
+- decorativo ilustrativo demonstrativo técnico
+- decorrente de aquele descritas
+- decorrente exercer ato inerente
+- decorrente intervenção intencional dotar
+- decorrente realizar diligência investigatório
+- decorrente secretariar elaboração boletim
+- dedo sola pé papila
+- definir policiamento local publicos
+- delegacia guarda conservação móvel
+- delegacia policía classe desempenho
+- delegacia regional policía classe
+- delegado polícia cumprir mandado
+- delegado polícia de aquele
+- delegado polícia dentre relacionar
+- delegado polícia desempenhar atividade
+- delegado polícia execução tarefa
+- delegado polícia função prever
+- delegado polícia instituto identificação
+- delegado polícia requisitante zelar
+- delito caso violência acidente
+- delito relevante autoria desconhecir
+- delituoso manifesto presumível mediano
+- demanda ser apresentar alto
+- demente ferir indigente cadáver
+- demonstrativo técnico geográfico arquitetônico
+- dentre prever código processo
+- dentre relacionar de ele
+- dependência instituição penal contrôle
+- depósilo explosivo arma munição
+- desabamento desmoronamento soterramento incêndio
+- desaparecido comparecer local crime
+- desastr veículo objeto documento
+- desconhecir abranger dispositivo anterior
+- desconhecir origem industrial produto
+- desconhecir ter objetivo identificá
+- descritas lei complementar janeiro
+- desempenhar atendente necrotério recolher
+- desempenhar atividade natureza policial
+- desempenho atividade policial intervir
+- desempenho atribuição auxiliar elaboração
+- desempenho mesmo função escrivão
+- desencadeante coletar impressão digital
+- desenhista técnico pericial atribuição
+- desenho decorativo ilustrativo demonstrativo
+- desenho esquemático croqui local
+- desenho esquemático ocorrência policial
+- desenho esquemático realizar levantamento
+- desenvolver atividade policial civil
+- desenvolver técnica científico procedimento
+- desfavorável período dia noite
+- desfecção local instrumento trabalho
+- desmoronamento soterramento incêndio catástrofe
+- detento assegurar disciplina ordem
+- deter demente ferir indigente
+- determinar autoridade policial elaborar
+- determinar autoridade policial âmbito
+- determinar auxiliar autoridade policial
+- determinar dirigir viatura policial
+- determinar executar trabalho coleta
+- determinar fotografar ocorrência policial
+- determinar identificação cadáver manuseio
+- determinar intervir situação fato
+- determinar tarefa transmissão recepção
+- determinação identificação criminal datiloscopia
+- dgp 30 novembro conforme
+- dgp 30 novembro lei
+- dia noite manusear material
+- didático reportagem publicidade policial
+- diferente estado perícia necropapiloscópico
+- diferentes superfície realizar perícia
+- digital edição foto respectivo
+- digital execução tarefa afins
+- digital ficha dactiloscópico fim
+- digital hipótese providência fazer
+- digital identificação pessoal registrar
+- digital ou sistema tecnologia
+- digital palma mão dedo
+- digital palmar plantar ii
+- digital palmar plantar objeto
+- digital pessoa viva morto
+- digital registro fotográfico vítima
+- digital registro impresso próprio
+- digital vítima fatal desconhecir
+- diligência investigatório policiamento preventivo
+- diligência ou requisição determinar
+- diligência sôbre crime acidente
+- diretamente perícia condição climático
+- direto delegado polícia execução
+- direto elemento portador diversos
+- direto indireto vivo lesão
+- direto pessoa portadoras doença
+- direção veículo automotor transporte
+- dirigir viatura atender público
+- dirigir viatura policial atender
+- dirigir viatura policial diverso
+- disciplina ordem dependência instituição
+- dispositivo anterior instituto identificação
+- dissecação recomposição suturo transporte
+- distico eliminação aspecto inconveniênte
+- distintivo algema atender urbanidade
+- distintivo dirigir viatura atender
+- distintivo identidade funcional algema
+- distúrbio busca apreensão reconstituição
+- diversificar incluir contato direto
+- diverso desabamento desmoronamento soterramento
+- diverso realizar exame genérico
+- diverso trabalho policial administrativo
+- diversos doença contagioso agente
+- diversos doença contagioso portar
+- diversos gênero fim didático
+- diversão público verificar respeito
+- divulgação preparação solução químico
+- documento correlato requisitar autoridade
+- documento evidencia relativo crime
+- documento objeto local crime
+- documento pertinente assistir delegado
+- documento polícia judiciária escoltar
+- documento polícia judiciária físico
+- documento técnico resultado obter
+- doença contagioso agente tóxico
+- doença contagioso portar arma
+- doença contagioso substância tóxico
+- doloso entendir decorrente intervenção
+- dotar força externo causa
+- droga psicoativo entorpecente analisar
+- dérmico apto identificar humano
+- dérmico epidérmico cadáver reconstituir
+- edital lei lei orgânica
+- edital planejar coordenar controlar
+- edital tange cumprimento diligência
+- editar laudo pericial dirigir
+- edição foto respectivo arquivo
+- efetuar análise objeto apreendir
+- efetuar busca impressão papilar
+- efetuar trabalho técnico fotográfico
+- efetuar transporte cadáver de
+- eficiência público conduzir viatura
+- eficiência público pessoalmente telefone
+- elaborar boletim ocorrência ato
+- elaborar croqui desenho esquemático
+- elaborar desenho esquemático ocorrência
+- elaborar levantamento planimétrico entrar
+- elaborar orientação autoridade policial
+- elaborar recognição visuográfico reconstituir
+- elaborar relatório respectivo proceder
+- elaboração boletim ocorrência termo
+- elaboração fórmula dactiloscópico função
+- elaboração laudo pericial papiloscópico
+- elaboração laudo pericial tarefa
+- elaboração organização inquerito processo
+- elaboração processo relacionar identificação
+- elaboração sistematização correspondente laudo
+- ele decorrente de aquele
+- ele decorrente exercer ato
+- ele decorrente realizar diligência
+- ele decorrente secretariar elaboração
+- elemento convicção esclarecimento fato
+- elemento esclarecedor instrução inquérito
+- elemento indicativo autoria ou
+- elemento material existente local
+- elemento portador diversos doença
+- eles encaminhá los exame
+- eles necrotério limpar cadáver
+- eles óbito recente ou
+- eletricidade meio ótico outro
+- eletromagnético dentre relacionar de
+- eletrônico editar laudo pericial
+- eliminação aspecto inconveniênte moral
+- emanar delegado polícia cumprir
+- embriaguez toxicológico especialidade médico
+- emitir relatório informação documento
+- empregar arma fogo equipamento
+- encaminhados unidade policial circunscrição
+- encaminhar dado coletar classificação
+- encaminhar demanda ser apresentar
+- encaminhá los exame manter
+- ensejem necessário providência âmbito
+- entendir característica natureza superfície
+- entendir decorrente intervenção intencional
+- entorpecente analisar produto conhecir
+- entorpecente produto químico proceder
+- entrada saida pessoa veículo
+- entrar contato vítima crime
+- envelhecimento rejuvenescimento facial humano
+- epidérmico cadáver reconstituir impressão
+- equipamento letal executar ato
+- equipe perícia crime necessário
+- esclarecedor instrução inquérito policial
+- esclarecimento fato delituoso manifesto
+- escolta preso investigação paradeiro
+- escoltar preso realizar prisão
+- escritas verbal atinente trabalho
+- escritório cartório delegacia policía
+- escrivão adjunto delegacia regional
+- escrivão polícia prever único
+- esgoto céu aberto favela
+- especialidade médico acompanhar equipe
+- especializar cumprir requisição escritas
+- especializar presidir investigação criminal
+- específico mancha coágulo sangue
+- esqueletizar realizar exame pericial
+- esquemático croqui local crime
+- esquemático ocorrência policial peça
+- esquemático realizar levantamento fotográfico
+- estabelecer fiscalização programa rádio
+- estabelecir lei lei orgânica
+- estado perícia necropapiloscópico efetuar
+- estar qualificar confirmar identidade
+- este agente realização exame
+- estilete faca arma etc
+- estudo impressão digital palma
+- etc cadáver putrefação exumação
+- etc manusear analisar droga
+- etc preparação fotografia fotografar
+- evidencia relativo crime acidente
+- evidência coletar vestígio laboratório
+- exame análise âmbito criminalística
+- exame complementar atender local
+- exame complementar realizar exame
+- exame genérico ou específico
+- exame histológico anatomo patológico
+- exame laboratório reconstituição cadáver
+- exame local crime desabamento
+- exame local pericia trabalho
+- exame manter limpeza viatura
+- exame médico legal lavratura
+- exame necroscópico humano parte
+- exame pericial atender ocorrência
+- exame pericial direto indireto
+- exame pericial exumação coletar
+- exame pericial natureza antropológico
+- exame perinecroscópico manusear cadáver
+- exame peça documento evidencia
+- exame relacionar exumação cadáver
+- examinar prioridade elemento material
+- executar ato compatível atividade
+- executar autópsia exame necroscópico
+- executar tarefa correlato desempenho
+- executar tarefa ser atribuir
+- executar trabalho coleta impressão
+- execução acompanhamento exumação abertura
+- execução mandado prisão busca
+- execução tarefa escritório cartório
+- exercer ato inerente gestão
+- exercer policiamento preventivo especializar
+- exercício cargo agente policial
+- exercício cargo agente telecomunicação
+- exercício cargo auxiliar papiloscopista
+- exercício cargo delegado polícia
+- exercício cargo escrivão polícia
+- exercício cargo investigador polícia
+- exercício cargo papiloscopista policial
+- exercício cargo perito criminal
+- exercício função investigativo técnica
+- exercício polícia judiciária referir
+- exigência legal limpeza osso
+- existente local crime constatar
+- expedição mensagem radiotelegráfico tarefa
+- explosivo arma munição produto
+- exposição situação risco função
+- exposição situação risco mediar
+- externo causa desencadeante coletar
+- externo desempenho atividade policial
+- externo execução acompanhamento exumação
+- extravagante portar arma fogo
+- exumação abertura cavidade craniano
+- exumação cadáver portar arma
+- exumação coletar amostra biológico
+- exumação manusear fotografar substância
+- faca arma etc preparação
+- facial humano fim identificação
+- falar perícia papiloscópico local
+- falsificação fiscalização vistoria fábrica
+- fatal desconhecir ter objetivo
+- fatal procedimento seguir colocação
+- fato delituoso manifesto presumível
+- fato ensejem necessário providência
+- fato mediante uso polícia
+- favela ocasionar contato direto
+- fazer necessário conduzir apresentar
+- ferimento perfuração mancha sangue
+- ferir indigente cadáver limpeza
+- fez salivo etc manusear
+- fiança receber objeto apreensão
+- ficha dactiloscópico fim identificação
+- ficha datiloscópico fim identificação
+- fim didático reportagem publicidade
+- fim exame complementar realizar
+- fim identificação civil criminal
+- fim identificação efetuar trabalho
+- fim identificação elaboração fórmula
+- fim identificação pu blico
+- fim perícia médico legal
+- finalidade instruir procedimento formar
+- fio radio eletricidade meio
+- fiscalização local diversão público
+- fiscalização portaria entrada saida
+- fiscalização programa rádio televisão
+- fiscalização vistoria fábrica depósilo
+- fixação transporte fotografia conservação
+- flagrante inquérito policial processo
+- fluido corpóreos humano ou
+- fogo atuar possibilidade exposição
+- fogo equipamento letal executar
+- fogo integrante polícia civil
+- forense realizar exame informática
+- forense área conhecimento científico
+- formalização ato polícia judiciária
+- formar elemento indicativo autoria
+- fornecer elemento esclarecedor instrução
+- força externo causa desencadeante
+- foto respectivo arquivo eletrônico
+- fotografar cadáver ferimento perfuração
+- fotografar ocorrência policial crime
+- fotografar substância psicoativo ou
+- fotografação coleta fragmento impressão
+- fotografia conservação aparelho laboratório
+- fotografia distico eliminação aspecto
+- fotografia diversos gênero fim
+- fotografia fotografar cadáver ferimento
+- fotografia utilização substância químico
+- fotográfico digital edição foto
+- fotográfico instruir laudo pericial
+- fotográfico macro fotográfico instruir
+- fotográfico operar aparelho tecnologia
+- fotográfico organização sistemático mesmo
+- fotográfico vítima fatal procedimento
+- fotógrafo técnico pericial atribuição
+- fragmento coletar modo encaminhados
+- fragmento digital palmar plantar
+- fragmento impressão digital palmar
+- fragmento impressão palmar plantar
+- fragmento papilar questionar banco
+- funcional algema atender urbanidade
+- funcionamento manutenção limpeza função
+- funcionamento verificação observância horário
+- função desempenhar atendente necrotério
+- função escrivão adjunto delegacia
+- função estabelecir lei lei
+- função investigativo técnica polícia
+- função prever portaria dgp
+- funções atividade sicad unidade
+- furto ou participar perícia
+- fábrica depósilo explosivo arma
+- física química biologia forense
+- físico digital ou sistema
+- físico ou química substância
+- físico químico biológico ou
+- físico químico ou biológico
+- fórmula dactiloscópico função prever
+- gasoso cadáver presente posterior
+- gasoso manusear material contaminante
+- genérico ou específico mancha
+- geográfico arquitetônico propaganda tarefa
+- gestão atividade polícia judiciária
+- gravidade autoria definir policiamento
+- guarda conservação móvel material
+- guarda vigilância movimentação presidiário
+- gumbleton daunt iirgd consistir
+- gumbleton daunt iirgd prestar
+- gênero fim didático reportagem
+- hipótese providência fazer necessário
+- histológico anatomo patológico fim
+- horário estabelecer fiscalização programa
+- humano crosta líquido seminal
+- humano cuidar trabalho coleta
+- humano fim exame complementar
+- humano fim identificação efetuar
+- humano limpeza desfecção local
+- humano ou animal contaminante
+- humano parte cadáver putrefeito
+- humano paulo ucrh prejuízo
+- identidade assessoramento técnico papiloscópico
+- identidade funcional algema atender
+- identificar humano cuidar trabalho
+- identificar pessoa digital hipótese
+- identificação cadáver diferente estado
+- identificação cadáver manuseio cadáver
+- identificação cadáver numeração sequencial
+- identificação civil criminal indivíduo
+- identificação civil criminal tarefa
+- identificação criminal civil coleta
+- identificação criminal datiloscopia quiroscopia
+- identificação efetuar trabalho técnico
+- identificação elaboração fórmula dactiloscópico
+- identificação impressão papilar padrão
+- identificação impressão papilar realizar
+- identificação pessoal registrar encaminhar
+- identificação proceder identificação cadáver
+- identificação pu blico presos
+- identificação ricardo gumbleton daunt
+- identificá las rapidamente estar
+- idoneidade ou inviolabilidade bem
+- ii atuar possibilidade exposição
+- ii autoria delitivo incerto
+- ii efetuar análise objeto
+- ii emitir relatório informação
+- iirgd consistir coleta impressão
+- iirgd nic nº identificação
+- iirgd prestar assessoramento técnico
+- iirgd prestar assessoria sítio
+- ilustrativo demonstrativo técnico geográfico
+- ilícito realizar busca pessoal
+- imagem pesquisa leitura comparação
+- impresso fotografia distico eliminação
+- impresso próprio dado qualificativo
+- impressão digital execução tarefa
+- impressão digital ficha dactiloscópico
+- impressão digital identificação pessoal
+- impressão digital palma mão
+- impressão digital palmar plantar
+- impressão digital pessoa viva
+- impressão digital registro fotográfico
+- impressão digital registro impresso
+- impressão digital vítima fatal
+- impressão local crime colaborar
+- impressão palmar plantar coleta
+- impressão papilar padrão realizar
+- impressão papilar pessoa desaparecido
+- impressão papilar realizar inserção
+- impressão papilar visar identificação
+- in natura contaminar ou
+- incluir contato direto elemento
+- incluir contato direto pessoa
+- incluir contato material contaminado
+- inconveniênte moral bom costume
+- incêndio catástrofe acidente trânsito
+- incêndio catástrofe terrorismo acidente
+- indicativo autoria ou materialidade
+- indigente cadáver limpeza preparo
+- indireto vivo lesão corporal
+- indivíduo apreensão manter segurança
+- indivíduo realizar pesquisa banco
+- industrial produto residual metálico
+- inerente exercício cargo agente
+- inerente exercício cargo auxiliar
+- inerente exercício cargo delegado
+- inerente exercício cargo escrivão
+- inerente exercício cargo investigador
+- inerente exercício cargo papiloscopista
+- inerente exercício cargo perito
+- inerente gestão atividade polícia
+- informação documento técnico resultado
+- informação natureza fio radio
+- informação obter fim identificação
+- informação presidência delegado polícia
+- infrator lavratura auto infração
+- infração penal administrativo examinar
+- infração penal cumprir requisição
+- infração penal praticar ato
+- infração tarefa correlato escritório
+- inorgânico realizar exame perinecroscópico
+- inquerito processo policial orientação
+- inquérito policial procedimento administrativo
+- inquérito policial processo sindicância
+- inscrição iirgd nic nº
+- inserção fragmento papilar questionar
+- instalação funcionamento verificação observância
+- institucional executar tarefa correlato
+- instituição penal contrôle verificação
+- instituto identificação ricardo gumbleton
+- instruir laudo pericial papiloscópico
+- instruir procedimento formar elemento
+- instrumento tomada impressão digital
+- instrumento trabalho tarefa simples
+- instrumento utilizar necropsias recolhimento
+- instrução inquérito policial procedimento
+- integrante polícia civil lei
+- inteiro atender exigência legal
+- intencional dotar força externo
+- interno colheita amostra visceral
+- interno externo desempenho atividade
+- intervenção intencional dotar força
+- intervir ocorrência natureza criminal
+- intervir situação fato mediante
+- investigador polícia prever único
+- investigativo técnica polícia judiciária
+- investigatório policiamento preventivo especializar
+- investigação criminal ação relacionar
+- investigação criminal exercício polícia
+- investigação desempenhar atividade natureza
+- investigação paradeiro pessoa desaparecido
+- investigação recolhimento elemento convicção
+- inviolabilidade bem objeto submetir
+- janeiro portaria dgp 30
+- judicial criminal analisar vestígio
+- judiciária administrativo presidência delegado
+- judiciária apuração infração penal
+- judiciária assessoramento técnico caso
+- judiciária elaborar desenho esquemático
+- judiciária emanar delegado polícia
+- judiciária escoltar preso realizar
+- judiciária físico digital ou
+- judiciária operar sistema comunicação
+- judiciária portar arma fogo
+- judiciária presidir ato polícia
+- judiciária referir aplicação conhecimento
+- judiciário culminar elaboração laudo
+- justificar salvaguardar vida saúde
+- laboratório execução pequeno reparo
+- laboratório orientação perito criminal
+- laboratório reconstituição cadáver costurar
+- laboratório visar fornecer elemento
+- lacre inscrição iirgd nic
+- las rapidamente estar qualificar
+- laudo pericial dirigir viatura
+- laudo pericial papiloscópico aplicar
+- laudo pericial papiloscópico necropapiloscópico
+- laudo pericial tarefa correlato
+- laudo pericial viabilização prova
+- lavagem librificação verificação abastecimento
+- lavratura auto corpo delito
+- lavratura auto infração tarefa
+- legal determinaçãode causa mortis
+- legal instalação funcionamento verificação
+- legal lavratura auto corpo
+- legal notificação advertência infrator
+- legal relativo cadeia custódia
+- legalmente preso autoridade policial
+- legislação extravagante portar arma
+- legista participar diretamente perícia
+- lei complementar janeiro portaria
+- lei complementar nº lei
+- lei complementar nº portar
+- lei complementar nº responsabilizarr
+- lei lei orgânica polícia
+- lei nº artigo ii
+- lei orgânica polícia paulo
+- lei orgânico polícia paulo
+- leitura comparação identificação impressão
+- lesão corporal sexológico embriaguez
+- lesão externo execução acompanhamento
+- lesão interno colheita amostra
+- letal executar ato compatível
+- levantamento elaborar croqui desenho
+- levantamento fotográfico operar aparelho
+- levantamento papiloscópico posterior localização
+- levantamento planimétrico entrar contato
+- levantamento revelação fotografação coleta
+- lhe realizar assessoramento técnico
+- librificação verificação abastecimento combustível
+- licenciamento registro competêncie delegacia
+- limpar cadáver de eles
+- limpeza desfecção local instrumento
+- limpeza função estabelecir lei
+- limpeza instrumento utilizar necropsias
+- limpeza lavagem librificação verificação
+- limpeza preparo instrumento tomada
+- limpeza viatura transporte corpo
+- listar prejuízo tarefa análogo
+- local crime alagado esgoto
+- local crime característica diversificar
+- local crime colaborar papiloscopista
+- local crime constatar idoneidade
+- local crime desabamento desmoronamento
+- local crime desastr veículo
+- local crime efetuar transporte
+- local crime modo procedar
+- local crime natureza apurar
+- local crime orientação perito
+- local crime proceder técnica
+- local desenvolver atividade policial
+- local diversão público verificar
+- local instrumento trabalho tarefa
+- local morte violento doloso
+- local pericia trabalho licenciamento
+- local publicos prevenir reprimir
+- localização revelação decalque transporte
+- los exame manter limpeza
+- líquido gasoso cadáver presente
+- líquido gasoso manusear material
+- líquido seminal urina fez
+- macro fotográfico instruir laudo
+- mancha coágulo sangue humano
+- mancha sangue sinal agressão
+- mandado elaborar boletim ocorrência
+- mandado prisão busca escolta
+- manifesto presumível mediano gravidade
+- manter limpeza viatura transporte
+- manter segurança local desenvolver
+- manusear analisar droga psicoativo
+- manusear arquivo fotográfico digital
+- manusear cadáver realizar exame
+- manusear coletar analisar material
+- manusear empregar arma fogo
+- manusear fotografar substância psicoativo
+- manusear material contaminante elaborar
+- manusear material contaminar seringa
+- manusear roupa objeto cadáver
+- manuseio cadáver possibilitar observação
+- manutenção limpeza função estabelecir
+- material biológico in natura
+- material contaminado agente físico
+- material contaminante elaborar levantamento
+- material contaminar seringa estilete
+- material existente local crime
+- materialidade infração penal cumprir
+- mediano gravidade autoria definir
+- mediante uso polícia conflito
+- medida segurança orgânico atuar
+- meio ótico outro processo
+- mensagem radiotelegráfico tarefa conservação
+- mesmo função escrivão adjunto
+- mesmo proceder identificação civil
+- metálico metálico realizar análise
+- metálico realizar análise físico
+- modo encaminhados unidade policial
+- modo procedar levantamento revelação
+- monodactilar quiroscópico podoscópico fotográfico
+- moral bom costume contrário
+- morte violento doloso entendir
+- morto fragmento impressão palmar
+- movimentação presidiário detento assegurar
+- munição produto químico agressivo
+- mão dedo sola pé
+- médico acompanhar equipe perícia
+- médico legal determinaçãode causa
+- médico legal lavratura auto
+- médico legista participar diretamente
+- natura contaminar ou putrefeito
+- natureza antropológico realizar exame
+- natureza apurar evidência coletar
+- natureza criminal conduzir viatura
+- natureza fio radio eletricidade
+- natureza policial administrativo executar
+- natureza superfície possa conter
+- necessário conduzir apresentar pessoa
+- necessário critério delegado polícia
+- necessário identificar pessoa digital
+- necessário providência âmbito polícia
+- necropapiloscópico efetuar busca impressão
+- necropsia atribuição adiante listar
+- necropsias recolhimento ossada resto
+- necroscópico humano parte cadáver
+- necrotério limpar cadáver de
+- necrotério recolher cadáver de
+- nic nº identificação cadáver
+- noite manusear material contaminar
+- norma legal relativo cadeia
+- notificação advertência infrator lavratura
+- novembro conforme anexo edital
+- novembro lei complementar nº
+- novembro lei orgânico polícia
+- numeração sequencial vincular ano
+- nº artigo ii atuar
+- nº identificação cadáver numeração
+- nº lei complementar nº
+- nº portar arma fogo
+- nº responsabilizarr se fiança
+- objetivo identificá las rapidamente
+- objetivo subsidiem apuração infração
+- objeto apreendir arrecadar autoridade
+- objeto apreensão conduzir veículo
+- objeto cadáver portar arma
+- objeto diferentes superfície realizar
+- objeto documento correlato requisitar
+- objeto local crime natureza
+- objeto submetir exame pericial
+- observar se norma legal
+- observar seguinte requisito preservar
+- observação lesão externo execução
+- observação lesão interno colheita
+- observância censura prévio análise
+- observância horário estabelecer fiscalização
+- obter fim identificação elaboração
+- obter tratamento análise confronto
+- ocasionar contato direto elemento
+- ocorrência ato documento polícia
+- ocorrência conduzir viatura policial
+- ocorrência delito relevante autoria
+- ocorrência diverso desabamento desmoronamento
+- ocorrência natureza criminal conduzir
+- ocorrência policial conservar manusear
+- ocorrência policial crime vítima
+- ocorrência policial peça exame
+- ocorrência termo circunstanciar auto
+- ocorrência vítima desabamento desmoronamento
+- operar aparelho tecnologia aplicável
+- operar sistema comunicação dado
+- operar sistema comunicação institucional
+- operação dissecação recomposição suturo
+- ordem dependência instituição penal
+- organização inquerito processo policial
+- organização sistemático mesmo proceder
+- orgânica polícia paulo portaria
+- orgânico atuar procedimento policial
+- orgânico inorgânico realizar exame
+- orgânico polícia paulo lei
+- orientação autoridade policial registro
+- orientação direto delegado polícia
+- orientação perito criminal atender
+- orientação perito criminal elaborar
+- orientação perito criminal médico
+- origem industrial produto residual
+- oriunr criminalística elaboração sistematização
+- ossada resto putrefado cadáver
+- ossar local crime efetuar
+- ou animal contaminante ambiental
+- ou biológico atender público
+- ou biológico manusear coletar
+- ou cadáver ocorrência diverso
+- ou corpo putrefação ou
+- ou criminal retrato falar
+- ou desconhecir origem industrial
+- ou específico mancha coágulo
+- ou inviolabilidade bem objeto
+- ou materialidade infração penal
+- ou ossar local crime
+- ou participar perícia laboratório
+- ou processo judicial criminal
+- ou putrefeito fluido corpóreos
+- ou química substância orgânico
+- ou requisição determinar autoridade
+- ou sistema tecnologia informação
+- ou técnica finalidade instruir
+- ou tóxico entorpecente produto
+- outro processo eletromagnético dentre
+- padrão realizar pesquisa acervo
+- palma mão dedo sola
+- palmar plantar coleta impressão
+- palmar plantar ii efetuar
+- palmar plantar objeto diferentes
+- papila dérmico apto identificar
+- papilar padrão realizar pesquisa
+- papilar pessoa desaparecido comparecer
+- papilar questionar banco dado
+- papilar realizar inserção fragmento
+- papilar visar identificação proceder
+- papiloscopista policial análise informação
+- papiloscopista policial desempenho atribuição
+- papiloscopista policial estudo impressão
+- papiloscopista policial prejuízo tarefa
+- papiloscópico aplicar desenvolver técnica
+- papiloscópico entendir característica natureza
+- papiloscópico ii autoria delitivo
+- papiloscópico instituto identificação ricardo
+- papiloscópico local crime desastr
+- papiloscópico local crime modo
+- papiloscópico local morte violento
+- papiloscópico posterior localização revelação
+- parte cadáver putrefeito esqueletizar
+- parte limpeza instrumento utilizar
+- participar diretamente perícia condição
+- participar perícia laboratório orientação
+- participação diligência sôbre crime
+- particular tomar impressão digital
+- patológico fim perícia médico
+- patrimônio cidadão encaminhar demanda
+- paulo lei complementar nº
+- paulo portaria dgp 30
+- paulo ucrh prejuízo relacionar
+- penal administrativo examinar prioridade
+- penal contrôle verificação fiscalização
+- penal cumprir requisição pericial
+- penal legislação extravagante portar
+- penal praticar ato polícia
+- perfuração mancha sangue sinal
+- pericia trabalho licenciamento registro
+- pericial atender ocorrência vítima
+- pericial atribuição adiante listar
+- pericial direto indireto vivo
+- pericial dirigir viatura atender
+- pericial exumação coletar amostra
+- pericial natureza antropológico realizar
+- pericial papiloscópico aplicar desenvolver
+- pericial pertinente investigação criminal
+- pericial tarefa correlato escritório
+- pericial viabilização prova objetivo
+- perinecroscópico manusear cadáver realizar
+- perito criminal atender local
+- perito criminal elaborar recognição
+- perito criminal médico legista
+- perito criminal prever único
+- pertinente assistir delegado polícia
+- pertinente investigação criminal exercício
+- perícia condição climático desfavorável
+- perícia crime necessário critério
+- perícia criminal executar autópsia
+- perícia criminal realizar exame
+- perícia laboratório orientação perito
+- perícia médico legal determinaçãode
+- perícia necropapiloscópico efetuar busca
+- perícia papiloscópico local crime
+- perícia projeção envelhecimento rejuvenescimento
+- período dia noite manusear
+- pesagem cadáver humano limpeza
+- pesquisa acervo decadactilar monodactilar
+- pesquisa arquivamento documento pertinente
+- pesquisa arquivamento ficha datiloscópico
+- pesquisa auxiliar papiloscopista policial
+- pesquisa banco dado automatizar
+- pesquisa banco dado civil
+- pesquisa fragmento coletar modo
+- pesquisa leitura comparação identificação
+- pessoa coisa vincular ocorrência
+- pessoa desaparecido comparecer local
+- pessoa digital hipótese providência
+- pessoa legalmente preso autoridade
+- pessoa portadoras doença contagioso
+- pessoa registro planilha qualificação
+- pessoa suspeito prática ilícito
+- pessoa viva morto fragmento
+- pessoal necessário identificar pessoa
+- pessoal registrar encaminhar dado
+- pessoalmente telefone elaborar orientação
+- peça documento evidencia relativo
+- peça documento polícia judiciária
+- peça exame local crime
+- peça teatro similar constatar
+- planejar coordenar controlar realização
+- planilha qualificação dado cromático
+- planimétrico entrar contato vítima
+- plantar coleta impressão local
+- plantar ii efetuar análise
+- plantar objeto diferentes superfície
+- poder conter vestígio datiloscópico
+- poder determinar dirigir viatura
+- poder determinar executar trabalho
+- poder determinar fotografar ocorrência
+- poder determinar identificação cadáver
+- poder determinar intervir situação
+- poder determinar tarefa transmissão
+- podoscopia ou técnica finalidade
+- podoscópico fotográfico organização sistemático
+- policial administrativo executar tarefa
+- policial administrativo zelar funcionamento
+- policial análise informação obter
+- policial atender local crime
+- policial circunscrição fato ensejem
+- policial civil atender público
+- policial competente determinar auxiliar
+- policial conservar manusear empregar
+- policial crime vítima incluir
+- policial cumprir diligência ou
+- policial desempenho atribuição auxiliar
+- policial diverso trabalho policial
+- policial divulgação preparação solução
+- policial elaborar relatório respectivo
+- policial estudo impressão digital
+- policial exercício função investigativo
+- policial formalização ato polícia
+- policial intervir ocorrência natureza
+- policial investigação desempenhar atividade
+- policial judiciário culminar elaboração
+- policial operar sistema comunicação
+- policial orientação direto delegado
+- policial peça exame local
+- policial poder conter vestígio
+- policial polícia civil portar
+- policial prejuízo tarefa análogo
+- policial procedimento administrativo ou
+- policial processo sindicância apuração
+- policial registro ocorrência conduzir
+- policial transportar pessoa coisa
+- policial âmbito atividade polícia
+- policiamento local publicos prevenir
+- policiamento preventivo especializar cumprir
+- policiamento preventivo especializar presidir
+- policía classe desempenho mesmo
+- policía classe participação diligência
+- polícia administrativo exercer policiamento
+- polícia civil lei nº
+- polícia civil portar arma
+- polícia conflito justificar salvaguardar
+- polícia cumprir mandado elaborar
+- polícia de aquele descritas
+- polícia dentre relacionar de
+- polícia desempenhar atividade natureza
+- polícia execução tarefa escritório
+- polícia função prever portaria
+- polícia instituto identificação ricardo
+- polícia judiciária administrativo presidência
+- polícia judiciária apuração infração
+- polícia judiciária assessoramento técnico
+- polícia judiciária elaborar desenho
+- polícia judiciária emanar delegado
+- polícia judiciária escoltar preso
+- polícia judiciária físico digital
+- polícia judiciária operar sistema
+- polícia judiciária portar arma
+- polícia judiciária presidir ato
+- polícia judiciária referir aplicação
+- polícia paulo lei complementar
+- polícia paulo portaria dgp
+- polícia prever único cadastro
+- polícia requisitante zelar cadeia
+- portador diversos doença contagioso
+- portadoras doença contagioso substância
+- portar arma dirigir viatura
+- portar arma distintivo algema
+- portar arma distintivo dirigir
+- portar arma distintivo identidade
+- portar arma fogo atuar
+- portar arma fogo distintivo
+- portar arma fogo integrante
+- portaria dgp 30 novembro
+- portaria entrada saida pessoa
+- possa conter vestígio papiloscópico
+- possibilidade exposição situação risco
+- possibilitar observação lesão externo
+- possibilitar observação lesão interno
+- posterior coleta de este
+- posterior localização revelação decalque
+- praticar ato polícia administrativo
+- prejuízo relacionar de ele
+- prejuízo relacionar ser requisitar
+- prejuízo tarefa análogo poder
+- preparação fotografia fotografar cadáver
+- preparação solução químico revelação
+- preparo instrumento tomada impressão
+- prescrição legal notificação advertência
+- presente posterior coleta de
+- preservar campo papiloscópico entendir
+- presidir ato polícia judiciária
+- presidir investigação criminal ação
+- presidiário detento assegurar disciplina
+- presidência delegado polícia desempenhar
+- presidência delegado polícia função
+- preso autoridade policial competente
+- preso investigação paradeiro pessoa
+- preso realizar prisão captura
+- presos deter demente ferir
+- prestar assessoramento técnico papiloscópico
+- prestar assessoria sítio cabendo
+- presumível mediano gravidade autoria
+- prevenir reprimir prática crime
+- preventivo especializar cumprir requisição
+- preventivo especializar presidir investigação
+- prever código processo penal
+- prever portaria dgp 30
+- prever único cadastro cargo
+- prioridade elemento material existente
+- prisão busca escolta preso
+- prisão captura indivíduo apreensão
+- prisão flagrante inquérito policial
+- procedar levantamento revelação fotografação
+- proceder abordagem pessoa suspeito
+- proceder identificação cadáver diferente
+- proceder identificação civil criminal
+- proceder limpeza lavagem librificação
+- proceder revelação ampliação fotografia
+- proceder técnica levantamento papiloscópico
+- procedimento administrativo ou processo
+- procedimento formar elemento indicativo
+- procedimento policial investigação desempenhar
+- procedimento seguir colocação cadáver
+- procedimento tratamento aproveitamento tecido
+- processamento imagem pesquisa leitura
+- processo eletromagnético dentre relacionar
+- processo judicial criminal analisar
+- processo penal legislação extravagante
+- processo policial orientação direto
+- processo relacionar identificação criminal
+- processo sindicância apuração peça
+- produto conhecir ou desconhecir
+- produto químico agressivo elaboração
+- produto químico proceder revelação
+- produto residual metálico metálico
+- programa impresso fotografia distico
+- programa rádio televisão peça
+- projeção envelhecimento rejuvenescimento facial
+- propaganda tarefa correlato escritório
+- propósito croqui vítima orientação
+- prova objetivo subsidiem apuração
+- providência fazer necessário conduzir
+- providência reconhecimento cadáver adotar
+- providência sepultamento cadáver reclamar
+- providência âmbito polícia judiciária
+- prática crime contravenção execução
+- prática ilícito realizar busca
+- prévio análise anúncio programa
+- próprio dado qualificativo pessoa
+- psicoativo entorpecente analisar produto
+- psicoativo ou tóxico entorpecente
+- pu blico presos deter
+- publicidade policial divulgação preparação
+- publicos prevenir reprimir prática
+- putrefado cadáver inteiro atender
+- putrefação cadavérico elemento portador
+- putrefação exumação manusear fotografar
+- putrefação ou ossar local
+- putrefeito esqueletizar realizar exame
+- putrefeito fluido corpóreos humano
+- pé papila dérmico apto
+- público conduzir viatura policial
+- público interno externo desempenho
+- público pessoalmente telefone elaborar
+- público portar arma fogo
+- público realizar levantamento elaborar
+- público verificar respeito condição
+- qualificar confirmar identidade assessoramento
+- qualificativo pessoa registro planilha
+- qualificação dado cromático somático
+- questionar banco dado automatizar
+- quiroscopia podoscopia ou técnica
+- quiroscópico podoscópico fotográfico organização
+- química biologia forense área
+- química substância orgânico inorgânico
+- químico agressivo elaboração laudo
+- químico biológico ou cadáver
+- químico manusear arquivo fotográfico
+- químico ou biológico atender
+- químico ou biológico manusear
+- químico proceder revelação ampliação
+- químico revelação fixação transporte
+- radio eletricidade meio ótico
+- radiotelegráfico tarefa conservação reparação
+- rapidamente estar qualificar confirmar
+- realizar análise físico ou
+- realizar assessoramento técnico papiloscópico
+- realizar busca pessoal necessário
+- realizar diligência investigatório policiamento
+- realizar exame análise âmbito
+- realizar exame genérico ou
+- realizar exame pericial direto
+- realizar exame pericial exumação
+- realizar exame pericial natureza
+- realizar exame perinecroscópico manusear
+- realizar exame relacionar exumação
+- realizar inserção fragmento papilar
+- realizar levantamento elaborar croqui
+- realizar levantamento fotográfico operar
+- realizar perícia projeção envelhecimento
+- realizar pesquisa acervo decadactilar
+- realizar pesquisa banco dado
+- realizar prisão captura indivíduo
+- realização captura pesquisa banco
+- realização exame complementar atender
+- realização exame médico legal
+- receber objeto apreensão conduzir
+- recente ou corpo putrefação
+- recepção expedição mensagem radiotelegráfico
+- recepção informação natureza fio
+- reclamar manusear roupa objeto
+- recognição visuográfico reconstituir desenho
+- recolher cadáver de eles
+- recolhimento elemento convicção esclarecimento
+- recolhimento ossada resto putrefado
+- recomposição suturo transporte pesagem
+- reconhecimento cadáver adotar providência
+- reconstituir desenho esquemático croqui
+- reconstituir impressão papilar visar
+- reconstituição cadáver costurar parte
+- reconstituição crime exame local
+- recurso humano paulo ucrh
+- referir aplicação conhecimento oriunr
+- regional policía classe participação
+- registrar encaminhar dado coletar
+- registro competêncie delegacia guarda
+- registro fotográfico vítima fatal
+- registro impresso próprio dado
+- registro ocorrência conduzir viatura
+- registro planilha qualificação dado
+- rejuvenescimento facial humano fim
+- relacionar de ele decorrente
+- relacionar dentre prever código
+- relacionar exumação cadáver portar
+- relacionar física química biologia
+- relacionar identificação criminal civil
+- relacionar ser requisitar campo
+- relativo cadeia custódia ii
+- relativo crime acidente falsificação
+- relatório informação documento técnico
+- relatório respectivo proceder abordagem
+- relevante autoria desconhecir abranger
+- reparação aparelho tarefa correlato
+- reportagem publicidade policial divulgação
+- reprimir prática crime contravenção
+- reprodução fotografia diversos gênero
+- requisitante zelar cadeia custódia
+- requisitar autoridade policial judiciário
+- requisitar campo perícia criminal
+- requisitar cumulativamente observar seguinte
+- requisito preservar campo papiloscópico
+- requisição determinar autoridade policial
+- requisição escritas verbal atinente
+- requisição pericial pertinente investigação
+- residual metálico metálico realizar
+- respectivo arquivo eletrônico editar
+- respectivo proceder abordagem pessoa
+- respeito condição legal instalação
+- responsabilizarr se fiança receber
+- resto putrefado cadáver inteiro
+- resultado obter tratamento análise
+- retrato falar perícia papiloscópico
+- revelação ampliação fotografia utilização
+- revelação decalque transporte fragmento
+- revelação fixação transporte fotografia
+- revelação fotografação coleta fragmento
+- revelação reprodução fotografia diversos
+- ricardo gumbleton daunt iirgd
+- risco função prever portaria
+- roubo furto ou participar
+- roupa objeto cadáver portar
+- rádio televisão peça teatro
+- saida pessoa veículo volume
+- salivo etc manusear analisar
+- salvaguardar vida saúde patrimônio
+- sangue humano crosta líquido
+- sangue sinal agressão etc
+- saúde patrimônio cidadão encaminhar
+- se fiança receber objeto
+- se norma legal relativo
+- secretariar elaboração boletim ocorrência
+- seguinte requisito preservar campo
+- seguir colocação cadáver lacre
+- segurança local desenvolver atividade
+- segurança orgânico atuar procedimento
+- seminal urina fez salivo
+- sepultamento cadáver reclamar manusear
+- sequencial vincular ano boletim
+- ser apresentar alto cidadão
+- ser atribuir função prever
+- ser atribuir portar arma
+- ser requisitar campo perícia
+- seringa estilete faca arma
+- sexológico embriaguez toxicológico especialidade
+- sicad unidade central recurso
+- similar constatar observância censura
+- sinal agressão etc cadáver
+- sinal particular tomar impressão
+- sindicância apuração peça documento
+- sistema comunicação dado polícia
+- sistema comunicação institucional executar
+- sistema tecnologia informação presidência
+- sistematização correspondente laudo pericial
+- sistemático mesmo proceder identificação
+- situação fato mediante uso
+- situação risco função prever
+- situação risco mediar conflito
+- sola pé papila dérmico
+- solução químico revelação fixação
+- somático sinal particular tomar
+- soterramento incêndio catástrofe acidente
+- soterramento incêndio catástrofe terrorismo
+- submetir exame pericial atender
+- subsidiem apuração infração penal
+- substância orgânico inorgânico realizar
+- substância psicoativo ou tóxico
+- substância químico manusear arquivo
+- substância tóxico agente físico
+- suicidio autópsia biópsia exame
+- superfície possa conter vestígio
+- superfície realizar perícia projeção
+- suspeito prática ilícito realizar
+- suturo transporte pesagem cadáver
+- sítio cabendo lhe realizar
+- sólido líquido gasoso cadáver
+- sólido líquido gasoso manusear
+- sôbre crime acidente distúrbio
+- tange cumprimento diligência ou
+- tarefa análogo poder determinar
+- tarefa conservação reparação aparelho
+- tarefa correlato desempenho função
+- tarefa escritório cartório delegacia
+- tarefa ser atribuir função
+- tarefa ser atribuir portar
+- tarefa transmissão recepção informação
+- teatro similar constatar observância
+- tecido dérmico epidérmico cadáver
+- tecnologia aplicável forense realizar
+- tecnologia informação presidência delegado
+- tecnológico analisar documento objeto
+- telecomunicação policial prejuízo tarefa
+- telefone elaborar orientação autoridade
+- televisão peça teatro similar
+- tentativa suicidio autópsia biópsia
+- ter objetivo identificá las
+- termo circunstanciar auto prisão
+- terrorismo acidente trânsito agente
+- tiragem revelação reprodução fotografia
+- tomada impressão digital execução
+- tomar impressão digital ficha
+- tomar impressão digital registro
+- toráxico abdominal possibilitar observação
+- toxicológico especialidade médico acompanhar
+- trabalho coleta análise pesquisa
+- trabalho coleta impressão digital
+- trabalho licenciamento registro competêncie
+- trabalho policial administrativo zelar
+- trabalho polícia judiciária emanar
+- trabalho tarefa simples laboratório
+- trabalho técnico fotográfico macro
+- transmissão recepção informação natureza
+- transportar pessoa coisa vincular
+- transporte cadáver de eles
+- transporte corpo adotar providência
+- transporte fotografia conservação aparelho
+- transporte fragmento digital palmar
+- transporte pesagem cadáver humano
+- transporte veículo carga conservação
+- tratamento análise confronto pesquisa
+- tratamento aproveitamento tecido dérmico
+- trânsito agente tóxico sólido
+- trânsito propósito croqui vítima
+- trânsito roubo furto ou
+- técnica científico procedimento tratamento
+- técnica finalidade instruir procedimento
+- técnica levantamento papiloscópico posterior
+- técnica polícia judiciária elaborar
+- técnico caso artigo 95
+- técnico fotográfico macro fotográfico
+- técnico geográfico arquitetônico propaganda
+- técnico papiloscópico instituto identificação
+- técnico papiloscópico local crime
+- técnico papiloscópico local morte
+- técnico pericial atribuição adiante
+- técnico resultado obter tratamento
+- tóxico agente físico químico
+- tóxico entorpecente produto químico
+- tóxico sólido líquido gasoso
+- ucrh prejuízo relacionar de
+- ucrh prejuízo relacionar ser
+- unidade central recurso humano
+- unidade policial circunscrição fato
+- unidade policial exercício função
+- urbanidade eficiência público conduzir
+- urbanidade eficiência público pessoalmente
+- urina fez salivo etc
+- uso polícia conflito justificar
+- utilizar necropsias recolhimento ossada
+- utilização substância químico manusear
+- verbal atinente trabalho polícia
+- verificar respeito condição legal
+- verificação abastecimento combustível água
+- verificação fiscalização portaria entrada
+- verificação observância horário estabelecer
+- vestígio datiloscópico observar se
+- vestígio determinação identificação criminal
+- vestígio laboratório visar fornecer
+- vestígio papiloscópico ii autoria
+- veículo automotor cumprir medida
+- veículo automotor transporte veículo
+- veículo carga conservação veículo
+- veículo objeto documento correlato
+- veículo proceder limpeza lavagem
+- viabilização prova objetivo subsidiem
+- viatura atender público realizar
+- viatura policial atender local
+- viatura policial cumprir diligência
+- viatura policial diverso trabalho
+- viatura policial operar sistema
+- viatura policial transportar pessoa
+- viatura transporte corpo adotar
+- vida saúde patrimônio cidadão
+- vigilância movimentação presidiário detento
+- vincular ano boletim ocorrência
+- vincular ocorrência policial conservar
+- violento doloso entendir decorrente
+- violência acidente tentativa suicidio
+- visar fornecer elemento esclarecedor
+- visar identificação proceder identificação
+- visceral exame laboratório reconstituição
+- vistoria fábrica depósilo explosivo
+- visuográfico reconstituir desenho esquemático
+- viva morto fragmento impressão
+- vivo lesão corporal sexológico
+- vítima crime catástrofe putrefação
+- vítima desabamento desmoronamento soterramento
+- vítima fatal desconhecir ter
+- vítima fatal procedimento seguir
+- vítima incluir contato material
+- vítima orientação perito criminal
+- zelar cadeia custódia dirigir
+- zelar funcionamento manutenção limpeza
+- água óleo execução pequeno
+- área conhecimento científico tecnológico
+- âmbito atividade polícia judiciária
+- âmbito criminalística relacionar física
+- âmbito polícia judiciária assessoramento
+- óbito recente ou corpo
+- óleo execução pequeno reparo
+- ótico outro processo eletromagnético
+- único cadastro cargo funções
+
+## 5-grams
+
+- 30 novembro conforme anexo edital
+- 30 novembro lei complementar nº
+- 30 novembro lei orgânico polícia
+- 95 requisitar cumulativamente observar seguinte
+- abastecimento combustível água óleo execução
+- abdominal possibilitar observação lesão interno
+- aberto favela ocasionar contato direto
+- abertura cavidade craniano toráxico abdominal
+- abordagem pessoa suspeito prática ilícito
+- abranger dispositivo anterior instituto identificação
+- acervo decadactilar monodactilar quiroscópico podoscópico
+- acidente distúrbio busca apreensão reconstituição
+- acidente falsificação fiscalização vistoria fábrica
+- acidente tentativa suicidio autópsia biópsia
+- acidente trânsito agente tóxico sólido
+- acidente trânsito propósito croqui vítima
+- acidente trânsito roubo furto ou
+- acionar delegado polícia instituto identificação
+- acompanhamento exumação abertura cavidade craniano
+- acompanhar equipe perícia crime necessário
+- adiante listar prejuízo tarefa análogo
+- adjunto delegacia regional policía classe
+- administrativo examinar prioridade elemento material
+- administrativo executar tarefa ser atribuir
+- administrativo exercer policiamento preventivo especializar
+- administrativo ou processo judicial criminal
+- administrativo presidência delegado polícia desempenhar
+- administrativo zelar funcionamento manutenção limpeza
+- adotar providência reconhecimento cadáver adotar
+- adotar providência sepultamento cadáver reclamar
+- advertência infrator lavratura auto infração
+- agente físico químico biológico ou
+- agente físico químico ou biológico
+- agente policial prejuízo tarefa análogo
+- agente realização exame complementar atender
+- agente telecomunicação policial prejuízo tarefa
+- agente tóxico agente físico químico
+- agente tóxico sólido líquido gasoso
+- agressivo elaboração laudo pericial tarefa
+- agressão etc cadáver putrefação exumação
+- alagado esgoto céu aberto favela
+- algema atender urbanidade eficiência público
+- alto cidadão unidade policial exercício
+- ambiental diverso realizar exame genérico
+- amostra biológico humano fim exame
+- amostra visceral exame laboratório reconstituição
+- ampliação fotografia utilização substância químico
+- analisar documento objeto local crime
+- analisar droga psicoativo entorpecente analisar
+- analisar material biológico in natura
+- analisar produto conhecir ou desconhecir
+- analisar vestígio determinação identificação criminal
+- anatomo patológico fim perícia médico
+- anexo edital lei lei orgânica
+- anexo edital planejar coordenar controlar
+- anexo edital tange cumprimento diligência
+- animal contaminante ambiental diverso realizar
+- ano boletim ocorrência delito relevante
+- anterior instituto identificação ricardo gumbleton
+- antropológico realizar exame pericial direto
+- análise anúncio programa impresso fotografia
+- análise confronto pesquisa fragmento coletar
+- análise físico ou química substância
+- análise informação obter fim identificação
+- análise objeto apreendir arrecadar autoridade
+- análise pesquisa arquivamento documento pertinente
+- análise âmbito criminalística relacionar física
+- análogo poder determinar dirigir viatura
+- análogo poder determinar executar trabalho
+- análogo poder determinar fotografar ocorrência
+- análogo poder determinar identificação cadáver
+- análogo poder determinar intervir situação
+- análogo poder determinar tarefa transmissão
+- anúncio programa impresso fotografia distico
+- aparelho laboratório execução pequeno reparo
+- aparelho tecnologia aplicável forense realizar
+- aplicar desenvolver técnica científico procedimento
+- aplicação conhecimento oriunr criminalística elaboração
+- aplicável forense realizar exame informática
+- apreendir arrecadar autoridade policial poder
+- apreensão conduzir veículo automotor cumprir
+- apreensão manter segurança local desenvolver
+- apreensão reconstituição crime exame local
+- apresentar alto cidadão unidade policial
+- apresentar pessoa legalmente preso autoridade
+- aproveitamento tecido dérmico epidérmico cadáver
+- apto identificar humano cuidar trabalho
+- apurar evidência coletar vestígio laboratório
+- apuração infração penal administrativo examinar
+- apuração infração penal praticar ato
+- apuração peça documento polícia judiciária
+- aquele descritas lei complementar janeiro
+- arma dirigir viatura atender público
+- arma distintivo algema atender urbanidade
+- arma distintivo dirigir viatura atender
+- arma distintivo identidade funcional algema
+- arma etc preparação fotografia fotografar
+- arma fogo atuar possibilidade exposição
+- arma fogo equipamento letal executar
+- arma fogo integrante polícia civil
+- arma munição produto químico agressivo
+- arquitetônico propaganda tarefa correlato escritório
+- arquivamento documento pertinente assistir delegado
+- arquivamento ficha datiloscópico fim identificação
+- arquivo eletrônico editar laudo pericial
+- arquivo fotográfico digital edição foto
+- arrecadar autoridade policial poder conter
+- artigo 95 requisitar cumulativamente observar
+- artigo ii atuar possibilidade exposição
+- aspecto inconveniênte moral bom costume
+- assegurar disciplina ordem dependência instituição
+- assessoramento técnico caso artigo 95
+- assessoramento técnico papiloscópico instituto identificação
+- assessoramento técnico papiloscópico local crime
+- assessoramento técnico papiloscópico local morte
+- assessoria sítio cabendo lhe realizar
+- assistir delegado polícia de aquele
+- atendente necrotério recolher cadáver de
+- atender exigência legal limpeza osso
+- atender local crime alagado esgoto
+- atender local crime característica diversificar
+- atender ocorrência vítima desabamento desmoronamento
+- atender público interno externo desempenho
+- atender público portar arma fogo
+- atender público realizar levantamento elaborar
+- atender urbanidade eficiência público conduzir
+- atender urbanidade eficiência público pessoalmente
+- atinente trabalho polícia judiciária emanar
+- atividade inerente exercício cargo agente
+- atividade inerente exercício cargo auxiliar
+- atividade inerente exercício cargo papiloscopista
+- atividade natureza policial administrativo executar
+- atividade policial civil atender público
+- atividade policial intervir ocorrência natureza
+- atividade polícia judiciária administrativo presidência
+- atividade polícia judiciária portar arma
+- atividade polícia judiciária presidir ato
+- atividade sicad unidade central recurso
+- ato compatível atividade polícia judiciária
+- ato documento polícia judiciária escoltar
+- ato inerente gestão atividade polícia
+- ato polícia administrativo exercer policiamento
+- ato polícia judiciária apuração infração
+- ato polícia judiciária operar sistema
+- atribuir função prever portaria dgp
+- atribuir portar arma fogo integrante
+- atribuição adiante listar prejuízo tarefa
+- atribuição auxiliar elaboração processo relacionar
+- atribuição comum carreira policial polícia
+- atribuição inerente exercício cargo delegado
+- atribuição inerente exercício cargo escrivão
+- atribuição inerente exercício cargo investigador
+- atribuição inerente exercício cargo perito
+- atuar possibilidade exposição situação risco
+- atuar procedimento policial investigação desempenhar
+- auto corpo delito caso violência
+- auto infração tarefa correlato escritório
+- auto prisão flagrante inquérito policial
+- automatizar leitura comparação identificação impressão
+- automatizar processamento imagem pesquisa leitura
+- automotor cumprir medida segurança orgânico
+- automotor transporte veículo carga conservação
+- autoria definir policiamento local publicos
+- autoria desconhecir abranger dispositivo anterior
+- autoria ou materialidade infração penal
+- autoridade policial competente determinar auxiliar
+- autoridade policial elaborar relatório respectivo
+- autoridade policial formalização ato polícia
+- autoridade policial judiciário culminar elaboração
+- autoridade policial poder conter vestígio
+- autoridade policial registro ocorrência conduzir
+- autoridade policial âmbito atividade polícia
+- autópsia biópsia exame histológico anatomo
+- autópsia exame necroscópico humano parte
+- auxiliar autoridade policial formalização ato
+- auxiliar elaboração processo relacionar identificação
+- auxiliar necropsia atribuição adiante listar
+- auxiliar papiloscopista policial desempenho atribuição
+- auxiliar papiloscopista policial prejuízo tarefa
+- auxilio operação dissecação recomposição suturo
+- ação relacionar dentre prever código
+- banco dado automatizar leitura comparação
+- banco dado automatizar processamento imagem
+- banco dado civil ou criminal
+- bem objeto submetir exame pericial
+- biologia forense área conhecimento científico
+- biológico atender público portar arma
+- biológico humano fim exame complementar
+- biológico in natura contaminar ou
+- biológico manusear coletar analisar material
+- biológico ou cadáver ocorrência diverso
+- biópsia exame histológico anatomo patológico
+- blico presos deter demente ferir
+- boletim ocorrência ato documento polícia
+- boletim ocorrência delito relevante autoria
+- boletim ocorrência termo circunstanciar auto
+- bom costume contrário prescrição legal
+- busca apreensão reconstituição crime exame
+- busca escolta preso investigação paradeiro
+- busca impressão papilar pessoa desaparecido
+- busca pessoal necessário identificar pessoa
+- cabendo lhe realizar assessoramento técnico
+- cadastro cargo funções atividade sicad
+- cadavérico elemento portador diversos doença
+- cadeia custódia dirigir viatura policial
+- cadeia custódia ii emitir relatório
+- cadáver adotar providência sepultamento cadáver
+- cadáver costurar parte limpeza instrumento
+- cadáver de eles encaminhá los
+- cadáver de eles necrotério limpar
+- cadáver de eles óbito recente
+- cadáver diferente estado perícia necropapiloscópico
+- cadáver ferimento perfuração mancha sangue
+- cadáver humano limpeza desfecção local
+- cadáver inteiro atender exigência legal
+- cadáver lacre inscrição iirgd nic
+- cadáver limpeza preparo instrumento tomada
+- cadáver manuseio cadáver possibilitar observação
+- cadáver numeração sequencial vincular ano
+- cadáver ocorrência diverso desabamento desmoronamento
+- cadáver portar arma distintivo dirigir
+- cadáver portar arma distintivo identidade
+- cadáver possibilitar observação lesão externo
+- cadáver presente posterior coleta de
+- cadáver putrefação exumação manusear fotografar
+- cadáver putrefeito esqueletizar realizar exame
+- cadáver realizar exame relacionar exumação
+- cadáver reclamar manusear roupa objeto
+- cadáver reconstituir impressão papilar visar
+- campo papiloscópico entendir característica natureza
+- campo perícia criminal executar autópsia
+- campo perícia criminal realizar exame
+- captura indivíduo apreensão manter segurança
+- captura pesquisa banco dado automatizar
+- característica diversificar incluir contato direto
+- característica natureza superfície possa conter
+- carga conservação veículo proceder limpeza
+- cargo agente policial prejuízo tarefa
+- cargo agente telecomunicação policial prejuízo
+- cargo auxiliar papiloscopista policial prejuízo
+- cargo delegado polícia dentre relacionar
+- cargo escrivão polícia prever único
+- cargo funções atividade sicad unidade
+- cargo investigador polícia prever único
+- cargo papiloscopista policial estudo impressão
+- cargo perito criminal prever único
+- carreira policial polícia civil portar
+- cartório delegacia policía classe desempenho
+- caso artigo 95 requisitar cumulativamente
+- caso violência acidente tentativa suicidio
+- catástrofe acidente trânsito propósito croqui
+- catástrofe acidente trânsito roubo furto
+- catástrofe putrefação cadavérico elemento portador
+- catástrofe terrorismo acidente trânsito agente
+- causa desencadeante coletar impressão digital
+- cavidade craniano toráxico abdominal possibilitar
+- censura prévio análise anúncio programa
+- central recurso humano paulo ucrh
+- cidadão encaminhar demanda ser apresentar
+- cidadão unidade policial exercício função
+- científico procedimento tratamento aproveitamento tecido
+- científico tecnológico analisar documento objeto
+- circunscrição fato ensejem necessário providência
+- circunstanciar auto prisão flagrante inquérito
+- civil atender público interno externo
+- civil coleta impressão digital pessoa
+- civil criminal indivíduo realizar pesquisa
+- civil criminal tarefa correlato escritório
+- civil lei nº artigo ii
+- civil ou criminal retrato falar
+- civil portar arma distintivo algema
+- classe desempenho mesmo função escrivão
+- classe participação diligência sôbre crime
+- classificação pesquisa arquivamento ficha datiloscópico
+- classificação pesquisa auxiliar papiloscopista policial
+- climático desfavorável período dia noite
+- coisa vincular ocorrência policial conservar
+- colaborar papiloscopista policial análise informação
+- coleta análise pesquisa arquivamento documento
+- coleta de este agente realização
+- coleta fragmento impressão digital palmar
+- coleta impressão digital identificação pessoal
+- coleta impressão digital pessoa viva
+- coleta impressão digital registro fotográfico
+- coleta impressão local crime colaborar
+- coletar amostra biológico humano fim
+- coletar analisar material biológico in
+- coletar classificação pesquisa auxiliar papiloscopista
+- coletar impressão digital vítima fatal
+- coletar modo encaminhados unidade policial
+- coletar vestígio laboratório visar fornecer
+- colheita amostra visceral exame laboratório
+- colocação cadáver lacre inscrição iirgd
+- combustível água óleo execução pequeno
+- comparação identificação impressão papilar padrão
+- comparação identificação impressão papilar realizar
+- comparecer local crime proceder técnica
+- compatível atividade polícia judiciária administrativo
+- competente determinar auxiliar autoridade policial
+- competêncie delegacia guarda conservação móvel
+- complementar atender local crime característica
+- complementar janeiro portaria dgp 30
+- complementar nº lei complementar nº
+- complementar nº portar arma fogo
+- complementar nº responsabilizarr se fiança
+- complementar realizar exame pericial natureza
+- comum carreira policial polícia civil
+- comunicação institucional executar tarefa correlato
+- condição climático desfavorável período dia
+- condição legal instalação funcionamento verificação
+- conduzir apresentar pessoa legalmente preso
+- conduzir veículo automotor cumprir medida
+- conduzir viatura policial cumprir diligência
+- conduzir viatura policial operar sistema
+- conduzir viatura policial transportar pessoa
+- confirmar identidade assessoramento técnico papiloscópico
+- conflito justificar salvaguardar vida saúde
+- conforme anexo edital lei lei
+- conforme anexo edital planejar coordenar
+- conforme anexo edital tange cumprimento
+- confronto pesquisa fragmento coletar modo
+- conhecimento científico tecnológico analisar documento
+- conhecimento oriunr criminalística elaboração sistematização
+- conhecir ou desconhecir origem industrial
+- conservar manusear empregar arma fogo
+- conservação aparelho laboratório execução pequeno
+- conservação reparação aparelho tarefa correlato
+- conservação veículo proceder limpeza lavagem
+- consistir coleta impressão digital registro
+- constatar idoneidade ou inviolabilidade bem
+- constatar observância censura prévio análise
+- contagioso agente tóxico agente físico
+- contagioso agente tóxico sólido líquido
+- contagioso portar arma dirigir viatura
+- contagioso substância tóxico agente físico
+- contaminado agente físico químico biológico
+- contaminante ambiental diverso realizar exame
+- contaminante elaborar levantamento planimétrico entrar
+- contaminar ou putrefeito fluido corpóreos
+- contaminar seringa estilete faca arma
+- contato direto elemento portador diversos
+- contato direto pessoa portadoras doença
+- contato material contaminado agente físico
+- contato vítima crime catástrofe putrefação
+- conter vestígio datiloscópico observar se
+- conter vestígio papiloscópico ii autoria
+- contravenção execução mandado prisão busca
+- controlar realização captura pesquisa banco
+- contrário prescrição legal notificação advertência
+- contrôle verificação fiscalização portaria entrada
+- convicção esclarecimento fato delituoso manifesto
+- coordenar controlar realização captura pesquisa
+- corpo adotar providência reconhecimento cadáver
+- corpo delito caso violência acidente
+- corpo putrefação ou ossar local
+- corporal sexológico embriaguez toxicológico especialidade
+- corpóreos humano ou animal contaminante
+- correlato requisitar autoridade policial judiciário
+- correspondente laudo pericial viabilização prova
+- costume contrário prescrição legal notificação
+- costurar parte limpeza instrumento utilizar
+- coágulo sangue humano crosta líquido
+- craniano toráxico abdominal possibilitar observação
+- crime acidente distúrbio busca apreensão
+- crime acidente falsificação fiscalização vistoria
+- crime alagado esgoto céu aberto
+- crime característica diversificar incluir contato
+- crime catástrofe putrefação cadavérico elemento
+- crime colaborar papiloscopista policial análise
+- crime constatar idoneidade ou inviolabilidade
+- crime contravenção execução mandado prisão
+- crime desabamento desmoronamento soterramento incêndio
+- crime desastr veículo objeto documento
+- crime efetuar transporte cadáver de
+- crime exame local pericia trabalho
+- crime modo procedar levantamento revelação
+- crime natureza apurar evidência coletar
+- crime necessário critério delegado polícia
+- crime orientação perito criminal atender
+- crime proceder técnica levantamento papiloscópico
+- crime vítima incluir contato material
+- criminal analisar vestígio determinação identificação
+- criminal atender local crime alagado
+- criminal ação relacionar dentre prever
+- criminal civil coleta impressão digital
+- criminal conduzir viatura policial transportar
+- criminal datiloscopia quiroscopia podoscopia ou
+- criminal elaborar recognição visuográfico reconstituir
+- criminal executar autópsia exame necroscópico
+- criminal exercício polícia judiciária referir
+- criminal indivíduo realizar pesquisa banco
+- criminal médico legista participar diretamente
+- criminal prever único cadastro cargo
+- criminal realizar exame análise âmbito
+- criminal retrato falar perícia papiloscópico
+- criminalística elaboração sistematização correspondente laudo
+- criminalística relacionar física química biologia
+- critério delegado polícia requisitante zelar
+- cromático somático sinal particular tomar
+- croqui desenho esquemático realizar levantamento
+- croqui local crime orientação perito
+- croqui vítima orientação perito criminal
+- crosta líquido seminal urina fez
+- cuidar trabalho coleta análise pesquisa
+- culminar elaboração laudo pericial papiloscópico
+- cumprimento diligência ou requisição determinar
+- cumprir diligência ou requisição determinar
+- cumprir mandado elaborar boletim ocorrência
+- cumprir medida segurança orgânico atuar
+- cumprir requisição escritas verbal atinente
+- cumprir requisição pericial pertinente investigação
+- cumulativamente observar seguinte requisito preservar
+- custódia dirigir viatura policial atender
+- custódia ii emitir relatório informação
+- céu aberto favela ocasionar contato
+- código processo penal legislação extravagante
+- dactiloscópico fim identificação pu blico
+- dactiloscópico função prever portaria dgp
+- dado automatizar leitura comparação identificação
+- dado automatizar processamento imagem pesquisa
+- dado civil ou criminal retrato
+- dado coletar classificação pesquisa auxiliar
+- dado cromático somático sinal particular
+- dado qualificativo pessoa registro planilha
+- datiloscopia quiroscopia podoscopia ou técnica
+- datiloscópico fim identificação civil criminal
+- datiloscópico observar se norma legal
+- daunt iirgd consistir coleta impressão
+- daunt iirgd prestar assessoramento técnico
+- daunt iirgd prestar assessoria sítio
+- de aquele descritas lei complementar
+- de ele decorrente de aquele
+- de ele decorrente exercer ato
+- de ele decorrente realizar diligência
+- de ele decorrente secretariar elaboração
+- de eles encaminhá los exame
+- de eles necrotério limpar cadáver
+- de eles óbito recente ou
+- de este agente realização exame
+- decadactilar monodactilar quiroscópico podoscópico fotográfico
+- decalque transporte fragmento digital palmar
+- decorativo ilustrativo demonstrativo técnico geográfico
+- decorrente de aquele descritas lei
+- decorrente exercer ato inerente gestão
+- decorrente intervenção intencional dotar força
+- decorrente realizar diligência investigatório policiamento
+- decorrente secretariar elaboração boletim ocorrência
+- dedo sola pé papila dérmico
+- definir policiamento local publicos prevenir
+- delegacia guarda conservação móvel material
+- delegacia policía classe desempenho mesmo
+- delegacia regional policía classe participação
+- delegado polícia cumprir mandado elaborar
+- delegado polícia de aquele descritas
+- delegado polícia dentre relacionar de
+- delegado polícia desempenhar atividade natureza
+- delegado polícia execução tarefa escritório
+- delegado polícia função prever portaria
+- delegado polícia instituto identificação ricardo
+- delegado polícia requisitante zelar cadeia
+- delito caso violência acidente tentativa
+- delito relevante autoria desconhecir abranger
+- delituoso manifesto presumível mediano gravidade
+- demanda ser apresentar alto cidadão
+- demente ferir indigente cadáver limpeza
+- demonstrativo técnico geográfico arquitetônico propaganda
+- dentre prever código processo penal
+- dentre relacionar de ele decorrente
+- dependência instituição penal contrôle verificação
+- depósilo explosivo arma munição produto
+- desabamento desmoronamento soterramento incêndio catástrofe
+- desaparecido comparecer local crime proceder
+- desastr veículo objeto documento correlato
+- desconhecir abranger dispositivo anterior instituto
+- desconhecir origem industrial produto residual
+- desconhecir ter objetivo identificá las
+- descritas lei complementar janeiro portaria
+- desempenhar atendente necrotério recolher cadáver
+- desempenhar atividade natureza policial administrativo
+- desempenho atividade policial intervir ocorrência
+- desempenho atribuição auxiliar elaboração processo
+- desempenho mesmo função escrivão adjunto
+- desencadeante coletar impressão digital vítima
+- desenhista técnico pericial atribuição adiante
+- desenho decorativo ilustrativo demonstrativo técnico
+- desenho esquemático croqui local crime
+- desenho esquemático ocorrência policial peça
+- desenho esquemático realizar levantamento fotográfico
+- desenvolver atividade policial civil atender
+- desenvolver técnica científico procedimento tratamento
+- desfavorável período dia noite manusear
+- desfecção local instrumento trabalho tarefa
+- desmoronamento soterramento incêndio catástrofe acidente
+- desmoronamento soterramento incêndio catástrofe terrorismo
+- detento assegurar disciplina ordem dependência
+- deter demente ferir indigente cadáver
+- determinar autoridade policial elaborar relatório
+- determinar autoridade policial âmbito atividade
+- determinar auxiliar autoridade policial formalização
+- determinar dirigir viatura policial diverso
+- determinar executar trabalho coleta impressão
+- determinar fotografar ocorrência policial crime
+- determinar identificação cadáver manuseio cadáver
+- determinar intervir situação fato mediante
+- determinar tarefa transmissão recepção informação
+- determinação identificação criminal datiloscopia quiroscopia
+- dgp 30 novembro conforme anexo
+- dgp 30 novembro lei complementar
+- dgp 30 novembro lei orgânico
+- dia noite manusear material contaminar
+- didático reportagem publicidade policial divulgação
+- diferente estado perícia necropapiloscópico efetuar
+- diferentes superfície realizar perícia projeção
+- digital edição foto respectivo arquivo
+- digital ficha dactiloscópico fim identificação
+- digital hipótese providência fazer necessário
+- digital identificação pessoal registrar encaminhar
+- digital ou sistema tecnologia informação
+- digital palma mão dedo sola
+- digital palmar plantar ii efetuar
+- digital palmar plantar objeto diferentes
+- digital pessoa viva morto fragmento
+- digital registro fotográfico vítima fatal
+- digital registro impresso próprio dado
+- digital vítima fatal desconhecir ter
+- diligência investigatório policiamento preventivo especializar
+- diligência ou requisição determinar autoridade
+- diligência sôbre crime acidente distúrbio
+- diretamente perícia condição climático desfavorável
+- direto delegado polícia execução tarefa
+- direto elemento portador diversos doença
+- direto indireto vivo lesão corporal
+- direto pessoa portadoras doença contagioso
+- direção veículo automotor transporte veículo
+- dirigir viatura atender público realizar
+- dirigir viatura policial atender local
+- dirigir viatura policial diverso trabalho
+- disciplina ordem dependência instituição penal
+- dispositivo anterior instituto identificação ricardo
+- dissecação recomposição suturo transporte pesagem
+- distico eliminação aspecto inconveniênte moral
+- distintivo algema atender urbanidade eficiência
+- distintivo dirigir viatura atender público
+- distintivo identidade funcional algema atender
+- distúrbio busca apreensão reconstituição crime
+- diversificar incluir contato direto elemento
+- diversificar incluir contato direto pessoa
+- diverso desabamento desmoronamento soterramento incêndio
+- diverso realizar exame genérico ou
+- diverso trabalho policial administrativo zelar
+- diversos doença contagioso agente tóxico
+- diversos doença contagioso portar arma
+- diversos gênero fim didático reportagem
+- diversão público verificar respeito condição
+- divulgação preparação solução químico revelação
+- documento correlato requisitar autoridade policial
+- documento evidencia relativo crime acidente
+- documento objeto local crime natureza
+- documento pertinente assistir delegado polícia
+- documento polícia judiciária escoltar preso
+- documento polícia judiciária físico digital
+- documento técnico resultado obter tratamento
+- doença contagioso agente tóxico agente
+- doença contagioso agente tóxico sólido
+- doença contagioso portar arma dirigir
+- doença contagioso substância tóxico agente
+- doloso entendir decorrente intervenção intencional
+- dotar força externo causa desencadeante
+- droga psicoativo entorpecente analisar produto
+- dérmico apto identificar humano cuidar
+- dérmico epidérmico cadáver reconstituir impressão
+- edital lei lei orgânica polícia
+- edital planejar coordenar controlar realização
+- edital tange cumprimento diligência ou
+- editar laudo pericial dirigir viatura
+- edição foto respectivo arquivo eletrônico
+- efetuar análise objeto apreendir arrecadar
+- efetuar busca impressão papilar pessoa
+- efetuar trabalho técnico fotográfico macro
+- efetuar transporte cadáver de eles
+- eficiência público conduzir viatura policial
+- eficiência público pessoalmente telefone elaborar
+- elaborar boletim ocorrência ato documento
+- elaborar croqui desenho esquemático realizar
+- elaborar desenho esquemático ocorrência policial
+- elaborar levantamento planimétrico entrar contato
+- elaborar orientação autoridade policial registro
+- elaborar recognição visuográfico reconstituir desenho
+- elaborar relatório respectivo proceder abordagem
+- elaboração boletim ocorrência termo circunstanciar
+- elaboração fórmula dactiloscópico função prever
+- elaboração laudo pericial papiloscópico aplicar
+- elaboração laudo pericial tarefa correlato
+- elaboração organização inquerito processo policial
+- elaboração processo relacionar identificação criminal
+- elaboração sistematização correspondente laudo pericial
+- ele decorrente de aquele descritas
+- ele decorrente exercer ato inerente
+- ele decorrente realizar diligência investigatório
+- ele decorrente secretariar elaboração boletim
+- elemento convicção esclarecimento fato delituoso
+- elemento esclarecedor instrução inquérito policial
+- elemento indicativo autoria ou materialidade
+- elemento material existente local crime
+- elemento portador diversos doença contagioso
+- eles encaminhá los exame manter
+- eles necrotério limpar cadáver de
+- eles óbito recente ou corpo
+- eletricidade meio ótico outro processo
+- eletromagnético dentre relacionar de ele
+- eletrônico editar laudo pericial dirigir
+- eliminação aspecto inconveniênte moral bom
+- emanar delegado polícia cumprir mandado
+- embriaguez toxicológico especialidade médico acompanhar
+- emitir relatório informação documento técnico
+- empregar arma fogo equipamento letal
+- encaminhados unidade policial circunscrição fato
+- encaminhar dado coletar classificação pesquisa
+- encaminhar demanda ser apresentar alto
+- encaminhá los exame manter limpeza
+- ensejem necessário providência âmbito polícia
+- entendir característica natureza superfície possa
+- entendir decorrente intervenção intencional dotar
+- entorpecente analisar produto conhecir ou
+- entorpecente produto químico proceder revelação
+- entrada saida pessoa veículo volume
+- entrar contato vítima crime catástrofe
+- envelhecimento rejuvenescimento facial humano fim
+- epidérmico cadáver reconstituir impressão papilar
+- equipamento letal executar ato compatível
+- equipe perícia crime necessário critério
+- esclarecedor instrução inquérito policial procedimento
+- esclarecimento fato delituoso manifesto presumível
+- escolta preso investigação paradeiro pessoa
+- escoltar preso realizar prisão captura
+- escritas verbal atinente trabalho polícia
+- escritório cartório delegacia policía classe
+- escrivão adjunto delegacia regional policía
+- escrivão polícia prever único cadastro
+- esgoto céu aberto favela ocasionar
+- especialidade médico acompanhar equipe perícia
+- especializar cumprir requisição escritas verbal
+- especializar presidir investigação criminal ação
+- específico mancha coágulo sangue humano
+- esqueletizar realizar exame pericial exumação
+- esquemático croqui local crime orientação
+- esquemático ocorrência policial peça exame
+- esquemático realizar levantamento fotográfico operar
+- estabelecer fiscalização programa rádio televisão
+- estabelecir lei lei orgânica polícia
+- estado perícia necropapiloscópico efetuar busca
+- estar qualificar confirmar identidade assessoramento
+- este agente realização exame complementar
+- estilete faca arma etc preparação
+- estudo impressão digital palma mão
+- etc cadáver putrefação exumação manusear
+- etc manusear analisar droga psicoativo
+- etc preparação fotografia fotografar cadáver
+- evidencia relativo crime acidente falsificação
+- evidência coletar vestígio laboratório visar
+- exame análise âmbito criminalística relacionar
+- exame complementar atender local crime
+- exame complementar realizar exame pericial
+- exame genérico ou específico mancha
+- exame histológico anatomo patológico fim
+- exame laboratório reconstituição cadáver costurar
+- exame local crime desabamento desmoronamento
+- exame local pericia trabalho licenciamento
+- exame manter limpeza viatura transporte
+- exame médico legal lavratura auto
+- exame necroscópico humano parte cadáver
+- exame pericial atender ocorrência vítima
+- exame pericial direto indireto vivo
+- exame pericial exumação coletar amostra
+- exame pericial natureza antropológico realizar
+- exame perinecroscópico manusear cadáver realizar
+- exame peça documento evidencia relativo
+- exame relacionar exumação cadáver portar
+- examinar prioridade elemento material existente
+- executar ato compatível atividade polícia
+- executar autópsia exame necroscópico humano
+- executar tarefa correlato desempenho função
+- executar tarefa ser atribuir função
+- executar tarefa ser atribuir portar
+- executar trabalho coleta impressão digital
+- execução acompanhamento exumação abertura cavidade
+- execução mandado prisão busca escolta
+- execução tarefa escritório cartório delegacia
+- exercer ato inerente gestão atividade
+- exercer policiamento preventivo especializar presidir
+- exercício cargo agente policial prejuízo
+- exercício cargo agente telecomunicação policial
+- exercício cargo auxiliar papiloscopista policial
+- exercício cargo delegado polícia dentre
+- exercício cargo escrivão polícia prever
+- exercício cargo investigador polícia prever
+- exercício cargo papiloscopista policial estudo
+- exercício cargo perito criminal prever
+- exercício função investigativo técnica polícia
+- exercício polícia judiciária referir aplicação
+- existente local crime constatar idoneidade
+- expedição mensagem radiotelegráfico tarefa conservação
+- explosivo arma munição produto químico
+- exposição situação risco função prever
+- exposição situação risco mediar conflito
+- externo causa desencadeante coletar impressão
+- externo desempenho atividade policial intervir
+- externo execução acompanhamento exumação abertura
+- extravagante portar arma fogo atuar
+- exumação abertura cavidade craniano toráxico
+- exumação cadáver portar arma distintivo
+- exumação coletar amostra biológico humano
+- exumação manusear fotografar substância psicoativo
+- faca arma etc preparação fotografia
+- facial humano fim identificação efetuar
+- falar perícia papiloscópico local crime
+- falsificação fiscalização vistoria fábrica depósilo
+- fatal desconhecir ter objetivo identificá
+- fatal procedimento seguir colocação cadáver
+- fato delituoso manifesto presumível mediano
+- fato ensejem necessário providência âmbito
+- fato mediante uso polícia conflito
+- favela ocasionar contato direto elemento
+- fazer necessário conduzir apresentar pessoa
+- ferimento perfuração mancha sangue sinal
+- ferir indigente cadáver limpeza preparo
+- fez salivo etc manusear analisar
+- fiança receber objeto apreensão conduzir
+- ficha dactiloscópico fim identificação pu
+- ficha datiloscópico fim identificação civil
+- fim didático reportagem publicidade policial
+- fim exame complementar realizar exame
+- fim identificação civil criminal tarefa
+- fim identificação efetuar trabalho técnico
+- fim identificação elaboração fórmula dactiloscópico
+- fim identificação pu blico presos
+- fim perícia médico legal determinaçãode
+- finalidade instruir procedimento formar elemento
+- fio radio eletricidade meio ótico
+- fiscalização local diversão público verificar
+- fiscalização portaria entrada saida pessoa
+- fiscalização programa rádio televisão peça
+- fiscalização vistoria fábrica depósilo explosivo
+- fixação transporte fotografia conservação aparelho
+- flagrante inquérito policial processo sindicância
+- fluido corpóreos humano ou animal
+- fogo atuar possibilidade exposição situação
+- fogo equipamento letal executar ato
+- fogo integrante polícia civil lei
+- forense área conhecimento científico tecnológico
+- formalização ato polícia judiciária operar
+- formar elemento indicativo autoria ou
+- fornecer elemento esclarecedor instrução inquérito
+- força externo causa desencadeante coletar
+- foto respectivo arquivo eletrônico editar
+- fotografar cadáver ferimento perfuração mancha
+- fotografar ocorrência policial crime vítima
+- fotografar substância psicoativo ou tóxico
+- fotografação coleta fragmento impressão digital
+- fotografia conservação aparelho laboratório execução
+- fotografia distico eliminação aspecto inconveniênte
+- fotografia diversos gênero fim didático
+- fotografia fotografar cadáver ferimento perfuração
+- fotografia utilização substância químico manusear
+- fotográfico digital edição foto respectivo
+- fotográfico instruir laudo pericial papiloscópico
+- fotográfico macro fotográfico instruir laudo
+- fotográfico operar aparelho tecnologia aplicável
+- fotográfico organização sistemático mesmo proceder
+- fotográfico vítima fatal procedimento seguir
+- fotógrafo técnico pericial atribuição adiante
+- fragmento coletar modo encaminhados unidade
+- fragmento digital palmar plantar objeto
+- fragmento impressão digital palmar plantar
+- fragmento impressão palmar plantar coleta
+- fragmento papilar questionar banco dado
+- funcional algema atender urbanidade eficiência
+- funcionamento manutenção limpeza função estabelecir
+- funcionamento verificação observância horário estabelecer
+- função desempenhar atendente necrotério recolher
+- função escrivão adjunto delegacia regional
+- função estabelecir lei lei orgânica
+- função investigativo técnica polícia judiciária
+- função prever portaria dgp 30
+- funções atividade sicad unidade central
+- furto ou participar perícia laboratório
+- fábrica depósilo explosivo arma munição
+- física química biologia forense área
+- físico digital ou sistema tecnologia
+- físico ou química substância orgânico
+- físico químico biológico ou cadáver
+- físico químico ou biológico atender
+- físico químico ou biológico manusear
+- fórmula dactiloscópico função prever portaria
+- gasoso cadáver presente posterior coleta
+- gasoso manusear material contaminante elaborar
+- genérico ou específico mancha coágulo
+- geográfico arquitetônico propaganda tarefa correlato
+- gestão atividade polícia judiciária presidir
+- gravidade autoria definir policiamento local
+- guarda conservação móvel material escritório
+- guarda vigilância movimentação presidiário detento
+- gumbleton daunt iirgd consistir coleta
+- gumbleton daunt iirgd prestar assessoramento
+- gumbleton daunt iirgd prestar assessoria
+- gênero fim didático reportagem publicidade
+- hipótese providência fazer necessário conduzir
+- histológico anatomo patológico fim perícia
+- horário estabelecer fiscalização programa rádio
+- humano crosta líquido seminal urina
+- humano cuidar trabalho coleta análise
+- humano fim exame complementar realizar
+- humano fim identificação efetuar trabalho
+- humano limpeza desfecção local instrumento
+- humano ou animal contaminante ambiental
+- humano parte cadáver putrefeito esqueletizar
+- humano paulo ucrh prejuízo relacionar
+- identidade assessoramento técnico papiloscópico instituto
+- identidade funcional algema atender urbanidade
+- identificar humano cuidar trabalho coleta
+- identificar pessoa digital hipótese providência
+- identificação cadáver diferente estado perícia
+- identificação cadáver manuseio cadáver possibilitar
+- identificação cadáver numeração sequencial vincular
+- identificação civil criminal indivíduo realizar
+- identificação civil criminal tarefa correlato
+- identificação criminal civil coleta impressão
+- identificação criminal datiloscopia quiroscopia podoscopia
+- identificação efetuar trabalho técnico fotográfico
+- identificação elaboração fórmula dactiloscópico função
+- identificação impressão papilar padrão realizar
+- identificação impressão papilar realizar inserção
+- identificação pessoal registrar encaminhar dado
+- identificação proceder identificação cadáver diferente
+- identificação pu blico presos deter
+- identificação ricardo gumbleton daunt iirgd
+- identificá las rapidamente estar qualificar
+- idoneidade ou inviolabilidade bem objeto
+- ii atuar possibilidade exposição situação
+- ii efetuar análise objeto apreendir
+- ii emitir relatório informação documento
+- iirgd consistir coleta impressão digital
+- iirgd nic nº identificação cadáver
+- iirgd prestar assessoramento técnico papiloscópico
+- iirgd prestar assessoria sítio cabendo
+- ilustrativo demonstrativo técnico geográfico arquitetônico
+- ilícito realizar busca pessoal necessário
+- imagem pesquisa leitura comparação identificação
+- impresso fotografia distico eliminação aspecto
+- impresso próprio dado qualificativo pessoa
+- impressão digital execução tarefa afins
+- impressão digital ficha dactiloscópico fim
+- impressão digital identificação pessoal registrar
+- impressão digital palma mão dedo
+- impressão digital palmar plantar ii
+- impressão digital pessoa viva morto
+- impressão digital registro fotográfico vítima
+- impressão digital registro impresso próprio
+- impressão digital vítima fatal desconhecir
+- impressão local crime colaborar papiloscopista
+- impressão palmar plantar coleta impressão
+- impressão papilar padrão realizar pesquisa
+- impressão papilar pessoa desaparecido comparecer
+- impressão papilar realizar inserção fragmento
+- impressão papilar visar identificação proceder
+- in natura contaminar ou putrefeito
+- incluir contato direto elemento portador
+- incluir contato direto pessoa portadoras
+- incluir contato material contaminado agente
+- inconveniênte moral bom costume contrário
+- incêndio catástrofe acidente trânsito propósito
+- incêndio catástrofe acidente trânsito roubo
+- incêndio catástrofe terrorismo acidente trânsito
+- indicativo autoria ou materialidade infração
+- indigente cadáver limpeza preparo instrumento
+- indireto vivo lesão corporal sexológico
+- indivíduo apreensão manter segurança local
+- indivíduo realizar pesquisa banco dado
+- industrial produto residual metálico metálico
+- inerente exercício cargo agente policial
+- inerente exercício cargo agente telecomunicação
+- inerente exercício cargo auxiliar papiloscopista
+- inerente exercício cargo delegado polícia
+- inerente exercício cargo escrivão polícia
+- inerente exercício cargo investigador polícia
+- inerente exercício cargo papiloscopista policial
+- inerente exercício cargo perito criminal
+- inerente gestão atividade polícia judiciária
+- informação documento técnico resultado obter
+- informação natureza fio radio eletricidade
+- informação obter fim identificação elaboração
+- informação presidência delegado polícia função
+- infrator lavratura auto infração tarefa
+- infração penal administrativo examinar prioridade
+- infração penal cumprir requisição pericial
+- infração penal praticar ato polícia
+- inorgânico realizar exame perinecroscópico manusear
+- inquerito processo policial orientação direto
+- inquérito policial procedimento administrativo ou
+- inquérito policial processo sindicância apuração
+- inscrição iirgd nic nº identificação
+- inserção fragmento papilar questionar banco
+- instalação funcionamento verificação observância horário
+- institucional executar tarefa correlato desempenho
+- instituição penal contrôle verificação fiscalização
+- instituto identificação ricardo gumbleton daunt
+- instruir laudo pericial papiloscópico necropapiloscópico
+- instruir procedimento formar elemento indicativo
+- instrumento tomada impressão digital execução
+- instrumento trabalho tarefa simples laboratório
+- instrumento utilizar necropsias recolhimento ossada
+- instrução inquérito policial procedimento administrativo
+- integrante polícia civil lei nº
+- inteiro atender exigência legal limpeza
+- intencional dotar força externo causa
+- interno colheita amostra visceral exame
+- interno externo desempenho atividade policial
+- intervenção intencional dotar força externo
+- intervir ocorrência natureza criminal conduzir
+- intervir situação fato mediante uso
+- investigador polícia prever único cadastro
+- investigativo técnica polícia judiciária elaborar
+- investigatório policiamento preventivo especializar cumprir
+- investigação criminal ação relacionar dentre
+- investigação criminal exercício polícia judiciária
+- investigação desempenhar atividade natureza policial
+- investigação recolhimento elemento convicção esclarecimento
+- inviolabilidade bem objeto submetir exame
+- janeiro portaria dgp 30 novembro
+- judicial criminal analisar vestígio determinação
+- judiciária administrativo presidência delegado polícia
+- judiciária apuração infração penal praticar
+- judiciária assessoramento técnico caso artigo
+- judiciária elaborar desenho esquemático ocorrência
+- judiciária emanar delegado polícia cumprir
+- judiciária escoltar preso realizar prisão
+- judiciária físico digital ou sistema
+- judiciária operar sistema comunicação dado
+- judiciária portar arma fogo distintivo
+- judiciária presidir ato polícia judiciária
+- judiciária referir aplicação conhecimento oriunr
+- judiciário culminar elaboração laudo pericial
+- justificar salvaguardar vida saúde patrimônio
+- laboratório orientação perito criminal médico
+- laboratório reconstituição cadáver costurar parte
+- laboratório visar fornecer elemento esclarecedor
+- lacre inscrição iirgd nic nº
+- las rapidamente estar qualificar confirmar
+- laudo pericial dirigir viatura atender
+- laudo pericial papiloscópico aplicar desenvolver
+- laudo pericial tarefa correlato escritório
+- laudo pericial viabilização prova objetivo
+- lavagem librificação verificação abastecimento combustível
+- lavratura auto corpo delito caso
+- lavratura auto infração tarefa correlato
+- legal instalação funcionamento verificação observância
+- legal lavratura auto corpo delito
+- legal notificação advertência infrator lavratura
+- legal relativo cadeia custódia ii
+- legalmente preso autoridade policial competente
+- legislação extravagante portar arma fogo
+- legista participar diretamente perícia condição
+- lei complementar janeiro portaria dgp
+- lei complementar nº lei complementar
+- lei complementar nº portar arma
+- lei complementar nº responsabilizarr se
+- lei lei orgânica polícia paulo
+- lei nº artigo ii atuar
+- lei orgânica polícia paulo portaria
+- lei orgânico polícia paulo lei
+- leitura comparação identificação impressão papilar
+- lesão corporal sexológico embriaguez toxicológico
+- lesão externo execução acompanhamento exumação
+- lesão interno colheita amostra visceral
+- letal executar ato compatível atividade
+- levantamento elaborar croqui desenho esquemático
+- levantamento fotográfico operar aparelho tecnologia
+- levantamento papiloscópico posterior localização revelação
+- levantamento planimétrico entrar contato vítima
+- levantamento revelação fotografação coleta fragmento
+- lhe realizar assessoramento técnico papiloscópico
+- librificação verificação abastecimento combustível água
+- licenciamento registro competêncie delegacia guarda
+- limpar cadáver de eles encaminhá
+- limpeza desfecção local instrumento trabalho
+- limpeza função estabelecir lei lei
+- limpeza instrumento utilizar necropsias recolhimento
+- limpeza lavagem librificação verificação abastecimento
+- limpeza preparo instrumento tomada impressão
+- limpeza viatura transporte corpo adotar
+- listar prejuízo tarefa análogo poder
+- local crime alagado esgoto céu
+- local crime característica diversificar incluir
+- local crime colaborar papiloscopista policial
+- local crime constatar idoneidade ou
+- local crime desabamento desmoronamento soterramento
+- local crime desastr veículo objeto
+- local crime efetuar transporte cadáver
+- local crime modo procedar levantamento
+- local crime natureza apurar evidência
+- local crime orientação perito criminal
+- local crime proceder técnica levantamento
+- local desenvolver atividade policial civil
+- local diversão público verificar respeito
+- local instrumento trabalho tarefa simples
+- local morte violento doloso entendir
+- local pericia trabalho licenciamento registro
+- local publicos prevenir reprimir prática
+- localização revelação decalque transporte fragmento
+- los exame manter limpeza viatura
+- líquido gasoso cadáver presente posterior
+- líquido gasoso manusear material contaminante
+- líquido seminal urina fez salivo
+- macro fotográfico instruir laudo pericial
+- mancha coágulo sangue humano crosta
+- mancha sangue sinal agressão etc
+- mandado elaborar boletim ocorrência ato
+- mandado prisão busca escolta preso
+- manifesto presumível mediano gravidade autoria
+- manter limpeza viatura transporte corpo
+- manter segurança local desenvolver atividade
+- manusear analisar droga psicoativo entorpecente
+- manusear arquivo fotográfico digital edição
+- manusear cadáver realizar exame relacionar
+- manusear coletar analisar material biológico
+- manusear empregar arma fogo equipamento
+- manusear fotografar substância psicoativo ou
+- manusear material contaminante elaborar levantamento
+- manusear material contaminar seringa estilete
+- manusear roupa objeto cadáver portar
+- manuseio cadáver possibilitar observação lesão
+- manutenção limpeza função estabelecir lei
+- material biológico in natura contaminar
+- material contaminado agente físico químico
+- material contaminante elaborar levantamento planimétrico
+- material contaminar seringa estilete faca
+- material existente local crime constatar
+- materialidade infração penal cumprir requisição
+- mediano gravidade autoria definir policiamento
+- mediante uso polícia conflito justificar
+- medida segurança orgânico atuar procedimento
+- meio ótico outro processo eletromagnético
+- mensagem radiotelegráfico tarefa conservação reparação
+- mesmo função escrivão adjunto delegacia
+- mesmo proceder identificação civil criminal
+- metálico metálico realizar análise físico
+- metálico realizar análise físico ou
+- modo encaminhados unidade policial circunscrição
+- modo procedar levantamento revelação fotografação
+- monodactilar quiroscópico podoscópico fotográfico organização
+- moral bom costume contrário prescrição
+- morte violento doloso entendir decorrente
+- morto fragmento impressão palmar plantar
+- movimentação presidiário detento assegurar disciplina
+- munição produto químico agressivo elaboração
+- mão dedo sola pé papila
+- médico acompanhar equipe perícia crime
+- médico legal determinaçãode causa mortis
+- médico legal lavratura auto corpo
+- médico legista participar diretamente perícia
+- natura contaminar ou putrefeito fluido
+- natureza antropológico realizar exame pericial
+- natureza apurar evidência coletar vestígio
+- natureza criminal conduzir viatura policial
+- natureza fio radio eletricidade meio
+- natureza policial administrativo executar tarefa
+- natureza superfície possa conter vestígio
+- necessário conduzir apresentar pessoa legalmente
+- necessário critério delegado polícia requisitante
+- necessário identificar pessoa digital hipótese
+- necessário providência âmbito polícia judiciária
+- necropapiloscópico efetuar busca impressão papilar
+- necropsia atribuição adiante listar prejuízo
+- necropsias recolhimento ossada resto putrefado
+- necroscópico humano parte cadáver putrefeito
+- necrotério limpar cadáver de eles
+- necrotério recolher cadáver de eles
+- nic nº identificação cadáver numeração
+- noite manusear material contaminar seringa
+- norma legal relativo cadeia custódia
+- notificação advertência infrator lavratura auto
+- novembro conforme anexo edital lei
+- novembro conforme anexo edital planejar
+- novembro conforme anexo edital tange
+- novembro lei complementar nº lei
+- novembro lei orgânico polícia paulo
+- numeração sequencial vincular ano boletim
+- nº artigo ii atuar possibilidade
+- nº identificação cadáver numeração sequencial
+- nº portar arma fogo integrante
+- nº responsabilizarr se fiança receber
+- objetivo identificá las rapidamente estar
+- objetivo subsidiem apuração infração penal
+- objeto apreendir arrecadar autoridade policial
+- objeto apreensão conduzir veículo automotor
+- objeto cadáver portar arma distintivo
+- objeto diferentes superfície realizar perícia
+- objeto documento correlato requisitar autoridade
+- objeto local crime natureza apurar
+- objeto submetir exame pericial atender
+- observar se norma legal relativo
+- observar seguinte requisito preservar campo
+- observação lesão externo execução acompanhamento
+- observação lesão interno colheita amostra
+- observância censura prévio análise anúncio
+- observância horário estabelecer fiscalização programa
+- obter fim identificação elaboração fórmula
+- obter tratamento análise confronto pesquisa
+- ocasionar contato direto elemento portador
+- ocorrência ato documento polícia judiciária
+- ocorrência conduzir viatura policial cumprir
+- ocorrência delito relevante autoria desconhecir
+- ocorrência diverso desabamento desmoronamento soterramento
+- ocorrência natureza criminal conduzir viatura
+- ocorrência policial conservar manusear empregar
+- ocorrência policial crime vítima incluir
+- ocorrência policial peça exame local
+- ocorrência termo circunstanciar auto prisão
+- ocorrência vítima desabamento desmoronamento soterramento
+- operar aparelho tecnologia aplicável forense
+- operar sistema comunicação dado polícia
+- operar sistema comunicação institucional executar
+- operação dissecação recomposição suturo transporte
+- ordem dependência instituição penal contrôle
+- organização inquerito processo policial orientação
+- organização sistemático mesmo proceder identificação
+- orgânica polícia paulo portaria dgp
+- orgânico atuar procedimento policial investigação
+- orgânico inorgânico realizar exame perinecroscópico
+- orgânico polícia paulo lei complementar
+- orientação autoridade policial registro ocorrência
+- orientação direto delegado polícia execução
+- orientação perito criminal atender local
+- orientação perito criminal elaborar recognição
+- orientação perito criminal médico legista
+- origem industrial produto residual metálico
+- oriunr criminalística elaboração sistematização correspondente
+- ossada resto putrefado cadáver inteiro
+- ossar local crime efetuar transporte
+- ou animal contaminante ambiental diverso
+- ou biológico atender público portar
+- ou biológico manusear coletar analisar
+- ou cadáver ocorrência diverso desabamento
+- ou corpo putrefação ou ossar
+- ou criminal retrato falar perícia
+- ou desconhecir origem industrial produto
+- ou específico mancha coágulo sangue
+- ou inviolabilidade bem objeto submetir
+- ou materialidade infração penal cumprir
+- ou ossar local crime efetuar
+- ou participar perícia laboratório orientação
+- ou processo judicial criminal analisar
+- ou putrefeito fluido corpóreos humano
+- ou química substância orgânico inorgânico
+- ou requisição determinar autoridade policial
+- ou sistema tecnologia informação presidência
+- ou técnica finalidade instruir procedimento
+- ou tóxico entorpecente produto químico
+- outro processo eletromagnético dentre relacionar
+- padrão realizar pesquisa acervo decadactilar
+- palma mão dedo sola pé
+- palmar plantar coleta impressão local
+- palmar plantar ii efetuar análise
+- palmar plantar objeto diferentes superfície
+- papila dérmico apto identificar humano
+- papilar padrão realizar pesquisa acervo
+- papilar pessoa desaparecido comparecer local
+- papilar questionar banco dado automatizar
+- papilar realizar inserção fragmento papilar
+- papilar visar identificação proceder identificação
+- papiloscopista policial análise informação obter
+- papiloscopista policial desempenho atribuição auxiliar
+- papiloscopista policial estudo impressão digital
+- papiloscopista policial prejuízo tarefa análogo
+- papiloscópico aplicar desenvolver técnica científico
+- papiloscópico entendir característica natureza superfície
+- papiloscópico ii autoria delitivo incerto
+- papiloscópico instituto identificação ricardo gumbleton
+- papiloscópico local crime desastr veículo
+- papiloscópico local crime modo procedar
+- papiloscópico local morte violento doloso
+- papiloscópico posterior localização revelação decalque
+- parte cadáver putrefeito esqueletizar realizar
+- parte limpeza instrumento utilizar necropsias
+- participar diretamente perícia condição climático
+- participar perícia laboratório orientação perito
+- participação diligência sôbre crime acidente
+- particular tomar impressão digital ficha
+- patológico fim perícia médico legal
+- patrimônio cidadão encaminhar demanda ser
+- paulo lei complementar nº portar
+- paulo lei complementar nº responsabilizarr
+- paulo portaria dgp 30 novembro
+- paulo ucrh prejuízo relacionar de
+- paulo ucrh prejuízo relacionar ser
+- penal administrativo examinar prioridade elemento
+- penal contrôle verificação fiscalização portaria
+- penal cumprir requisição pericial pertinente
+- penal legislação extravagante portar arma
+- penal praticar ato polícia administrativo
+- perfuração mancha sangue sinal agressão
+- pericia trabalho licenciamento registro competêncie
+- pericial atender ocorrência vítima desabamento
+- pericial atribuição adiante listar prejuízo
+- pericial direto indireto vivo lesão
+- pericial dirigir viatura atender público
+- pericial exumação coletar amostra biológico
+- pericial natureza antropológico realizar exame
+- pericial papiloscópico aplicar desenvolver técnica
+- pericial pertinente investigação criminal exercício
+- pericial viabilização prova objetivo subsidiem
+- perinecroscópico manusear cadáver realizar exame
+- perito criminal atender local crime
+- perito criminal elaborar recognição visuográfico
+- perito criminal médico legista participar
+- perito criminal prever único cadastro
+- pertinente assistir delegado polícia de
+- pertinente investigação criminal exercício polícia
+- perícia condição climático desfavorável período
+- perícia crime necessário critério delegado
+- perícia criminal executar autópsia exame
+- perícia criminal realizar exame análise
+- perícia laboratório orientação perito criminal
+- perícia médico legal determinaçãode causa
+- perícia necropapiloscópico efetuar busca impressão
+- perícia papiloscópico local crime desastr
+- perícia projeção envelhecimento rejuvenescimento facial
+- período dia noite manusear material
+- pesagem cadáver humano limpeza desfecção
+- pesquisa acervo decadactilar monodactilar quiroscópico
+- pesquisa arquivamento documento pertinente assistir
+- pesquisa arquivamento ficha datiloscópico fim
+- pesquisa auxiliar papiloscopista policial desempenho
+- pesquisa banco dado automatizar leitura
+- pesquisa banco dado civil ou
+- pesquisa fragmento coletar modo encaminhados
+- pesquisa leitura comparação identificação impressão
+- pessoa coisa vincular ocorrência policial
+- pessoa desaparecido comparecer local crime
+- pessoa digital hipótese providência fazer
+- pessoa legalmente preso autoridade policial
+- pessoa portadoras doença contagioso substância
+- pessoa registro planilha qualificação dado
+- pessoa suspeito prática ilícito realizar
+- pessoa viva morto fragmento impressão
+- pessoal necessário identificar pessoa digital
+- pessoal registrar encaminhar dado coletar
+- pessoalmente telefone elaborar orientação autoridade
+- peça documento evidencia relativo crime
+- peça documento polícia judiciária físico
+- peça exame local crime desabamento
+- peça teatro similar constatar observância
+- planejar coordenar controlar realização captura
+- planilha qualificação dado cromático somático
+- planimétrico entrar contato vítima crime
+- plantar coleta impressão local crime
+- plantar ii efetuar análise objeto
+- plantar objeto diferentes superfície realizar
+- poder conter vestígio datiloscópico observar
+- poder determinar dirigir viatura policial
+- poder determinar executar trabalho coleta
+- poder determinar fotografar ocorrência policial
+- poder determinar identificação cadáver manuseio
+- poder determinar intervir situação fato
+- poder determinar tarefa transmissão recepção
+- podoscopia ou técnica finalidade instruir
+- podoscópico fotográfico organização sistemático mesmo
+- policial administrativo executar tarefa ser
+- policial administrativo zelar funcionamento manutenção
+- policial análise informação obter fim
+- policial atender local crime característica
+- policial circunscrição fato ensejem necessário
+- policial civil atender público interno
+- policial competente determinar auxiliar autoridade
+- policial conservar manusear empregar arma
+- policial crime vítima incluir contato
+- policial cumprir diligência ou requisição
+- policial desempenho atribuição auxiliar elaboração
+- policial diverso trabalho policial administrativo
+- policial divulgação preparação solução químico
+- policial elaborar relatório respectivo proceder
+- policial estudo impressão digital palma
+- policial exercício função investigativo técnica
+- policial formalização ato polícia judiciária
+- policial intervir ocorrência natureza criminal
+- policial investigação desempenhar atividade natureza
+- policial judiciário culminar elaboração laudo
+- policial operar sistema comunicação institucional
+- policial orientação direto delegado polícia
+- policial peça exame local crime
+- policial poder conter vestígio datiloscópico
+- policial polícia civil portar arma
+- policial prejuízo tarefa análogo poder
+- policial procedimento administrativo ou processo
+- policial processo sindicância apuração peça
+- policial registro ocorrência conduzir viatura
+- policial transportar pessoa coisa vincular
+- policial âmbito atividade polícia judiciária
+- policiamento local publicos prevenir reprimir
+- policiamento preventivo especializar cumprir requisição
+- policiamento preventivo especializar presidir investigação
+- policía classe desempenho mesmo função
+- policía classe participação diligência sôbre
+- polícia administrativo exercer policiamento preventivo
+- polícia civil lei nº artigo
+- polícia civil portar arma distintivo
+- polícia conflito justificar salvaguardar vida
+- polícia cumprir mandado elaborar boletim
+- polícia de aquele descritas lei
+- polícia dentre relacionar de ele
+- polícia desempenhar atividade natureza policial
+- polícia execução tarefa escritório cartório
+- polícia função prever portaria dgp
+- polícia instituto identificação ricardo gumbleton
+- polícia judiciária administrativo presidência delegado
+- polícia judiciária apuração infração penal
+- polícia judiciária assessoramento técnico caso
+- polícia judiciária elaborar desenho esquemático
+- polícia judiciária emanar delegado polícia
+- polícia judiciária escoltar preso realizar
+- polícia judiciária físico digital ou
+- polícia judiciária operar sistema comunicação
+- polícia judiciária portar arma fogo
+- polícia judiciária presidir ato polícia
+- polícia judiciária referir aplicação conhecimento
+- polícia paulo lei complementar nº
+- polícia paulo portaria dgp 30
+- polícia prever único cadastro cargo
+- polícia requisitante zelar cadeia custódia
+- portador diversos doença contagioso agente
+- portador diversos doença contagioso portar
+- portadoras doença contagioso substância tóxico
+- portar arma dirigir viatura atender
+- portar arma distintivo algema atender
+- portar arma distintivo dirigir viatura
+- portar arma distintivo identidade funcional
+- portar arma fogo atuar possibilidade
+- portar arma fogo distintivo algema
+- portar arma fogo integrante polícia
+- portaria dgp 30 novembro conforme
+- portaria dgp 30 novembro lei
+- portaria entrada saida pessoa veículo
+- possa conter vestígio papiloscópico ii
+- possibilidade exposição situação risco função
+- possibilidade exposição situação risco mediar
+- possibilitar observação lesão externo execução
+- possibilitar observação lesão interno colheita
+- posterior coleta de este agente
+- posterior localização revelação decalque transporte
+- praticar ato polícia administrativo exercer
+- prejuízo relacionar de ele decorrente
+- prejuízo relacionar ser requisitar campo
+- prejuízo tarefa análogo poder determinar
+- preparação fotografia fotografar cadáver ferimento
+- preparação solução químico revelação fixação
+- preparo instrumento tomada impressão digital
+- prescrição legal notificação advertência infrator
+- presente posterior coleta de este
+- preservar campo papiloscópico entendir característica
+- presidir ato polícia judiciária apuração
+- presidir investigação criminal ação relacionar
+- presidiário detento assegurar disciplina ordem
+- presidência delegado polícia desempenhar atividade
+- presidência delegado polícia função prever
+- preso autoridade policial competente determinar
+- preso investigação paradeiro pessoa desaparecido
+- preso realizar prisão captura indivíduo
+- presos deter demente ferir indigente
+- prestar assessoramento técnico papiloscópico local
+- prestar assessoria sítio cabendo lhe
+- presumível mediano gravidade autoria definir
+- prevenir reprimir prática crime contravenção
+- preventivo especializar cumprir requisição escritas
+- preventivo especializar presidir investigação criminal
+- prever código processo penal legislação
+- prever portaria dgp 30 novembro
+- prever único cadastro cargo funções
+- prioridade elemento material existente local
+- prisão busca escolta preso investigação
+- prisão captura indivíduo apreensão manter
+- prisão flagrante inquérito policial processo
+- procedar levantamento revelação fotografação coleta
+- proceder abordagem pessoa suspeito prática
+- proceder identificação cadáver diferente estado
+- proceder identificação civil criminal indivíduo
+- proceder limpeza lavagem librificação verificação
+- proceder revelação ampliação fotografia utilização
+- proceder técnica levantamento papiloscópico posterior
+- procedimento administrativo ou processo judicial
+- procedimento formar elemento indicativo autoria
+- procedimento policial investigação desempenhar atividade
+- procedimento seguir colocação cadáver lacre
+- procedimento tratamento aproveitamento tecido dérmico
+- processamento imagem pesquisa leitura comparação
+- processo eletromagnético dentre relacionar de
+- processo judicial criminal analisar vestígio
+- processo penal legislação extravagante portar
+- processo policial orientação direto delegado
+- processo relacionar identificação criminal civil
+- processo sindicância apuração peça documento
+- produto conhecir ou desconhecir origem
+- produto químico agressivo elaboração laudo
+- produto químico proceder revelação ampliação
+- produto residual metálico metálico realizar
+- programa impresso fotografia distico eliminação
+- programa rádio televisão peça teatro
+- projeção envelhecimento rejuvenescimento facial humano
+- propósito croqui vítima orientação perito
+- prova objetivo subsidiem apuração infração
+- providência fazer necessário conduzir apresentar
+- providência reconhecimento cadáver adotar providência
+- providência sepultamento cadáver reclamar manusear
+- providência âmbito polícia judiciária assessoramento
+- prática crime contravenção execução mandado
+- prática ilícito realizar busca pessoal
+- prévio análise anúncio programa impresso
+- próprio dado qualificativo pessoa registro
+- psicoativo entorpecente analisar produto conhecir
+- psicoativo ou tóxico entorpecente produto
+- pu blico presos deter demente
+- publicidade policial divulgação preparação solução
+- publicos prevenir reprimir prática crime
+- putrefado cadáver inteiro atender exigência
+- putrefação cadavérico elemento portador diversos
+- putrefação exumação manusear fotografar substância
+- putrefação ou ossar local crime
+- putrefeito esqueletizar realizar exame pericial
+- putrefeito fluido corpóreos humano ou
+- pé papila dérmico apto identificar
+- público conduzir viatura policial operar
+- público interno externo desempenho atividade
+- público pessoalmente telefone elaborar orientação
+- público portar arma fogo integrante
+- público realizar levantamento elaborar croqui
+- público verificar respeito condição legal
+- qualificar confirmar identidade assessoramento técnico
+- qualificativo pessoa registro planilha qualificação
+- qualificação dado cromático somático sinal
+- questionar banco dado automatizar processamento
+- quiroscopia podoscopia ou técnica finalidade
+- quiroscópico podoscópico fotográfico organização sistemático
+- química biologia forense área conhecimento
+- química substância orgânico inorgânico realizar
+- químico agressivo elaboração laudo pericial
+- químico biológico ou cadáver ocorrência
+- químico manusear arquivo fotográfico digital
+- químico ou biológico atender público
+- químico ou biológico manusear coletar
+- químico proceder revelação ampliação fotografia
+- químico revelação fixação transporte fotografia
+- radio eletricidade meio ótico outro
+- radiotelegráfico tarefa conservação reparação aparelho
+- rapidamente estar qualificar confirmar identidade
+- realizar análise físico ou química
+- realizar assessoramento técnico papiloscópico local
+- realizar busca pessoal necessário identificar
+- realizar diligência investigatório policiamento preventivo
+- realizar exame análise âmbito criminalística
+- realizar exame genérico ou específico
+- realizar exame pericial direto indireto
+- realizar exame pericial exumação coletar
+- realizar exame pericial natureza antropológico
+- realizar exame perinecroscópico manusear cadáver
+- realizar exame relacionar exumação cadáver
+- realizar inserção fragmento papilar questionar
+- realizar levantamento elaborar croqui desenho
+- realizar levantamento fotográfico operar aparelho
+- realizar perícia projeção envelhecimento rejuvenescimento
+- realizar pesquisa acervo decadactilar monodactilar
+- realizar pesquisa banco dado civil
+- realizar prisão captura indivíduo apreensão
+- realização captura pesquisa banco dado
+- realização exame complementar atender local
+- realização exame médico legal lavratura
+- receber objeto apreensão conduzir veículo
+- recente ou corpo putrefação ou
+- recepção expedição mensagem radiotelegráfico tarefa
+- recepção informação natureza fio radio
+- reclamar manusear roupa objeto cadáver
+- recognição visuográfico reconstituir desenho esquemático
+- recolher cadáver de eles óbito
+- recolhimento elemento convicção esclarecimento fato
+- recolhimento ossada resto putrefado cadáver
+- recomposição suturo transporte pesagem cadáver
+- reconhecimento cadáver adotar providência sepultamento
+- reconstituir desenho esquemático croqui local
+- reconstituir impressão papilar visar identificação
+- reconstituição cadáver costurar parte limpeza
+- reconstituição crime exame local pericia
+- recurso humano paulo ucrh prejuízo
+- referir aplicação conhecimento oriunr criminalística
+- regional policía classe participação diligência
+- registrar encaminhar dado coletar classificação
+- registro competêncie delegacia guarda conservação
+- registro fotográfico vítima fatal procedimento
+- registro impresso próprio dado qualificativo
+- registro ocorrência conduzir viatura policial
+- registro planilha qualificação dado cromático
+- rejuvenescimento facial humano fim identificação
+- relacionar de ele decorrente de
+- relacionar de ele decorrente exercer
+- relacionar de ele decorrente realizar
+- relacionar de ele decorrente secretariar
+- relacionar dentre prever código processo
+- relacionar exumação cadáver portar arma
+- relacionar física química biologia forense
+- relacionar identificação criminal civil coleta
+- relacionar ser requisitar campo perícia
+- relativo cadeia custódia ii emitir
+- relativo crime acidente falsificação fiscalização
+- relatório informação documento técnico resultado
+- relatório respectivo proceder abordagem pessoa
+- relevante autoria desconhecir abranger dispositivo
+- reparação aparelho tarefa correlato escritório
+- reportagem publicidade policial divulgação preparação
+- reprimir prática crime contravenção execução
+- reprodução fotografia diversos gênero fim
+- requisitante zelar cadeia custódia dirigir
+- requisitar autoridade policial judiciário culminar
+- requisitar campo perícia criminal executar
+- requisitar campo perícia criminal realizar
+- requisitar cumulativamente observar seguinte requisito
+- requisito preservar campo papiloscópico entendir
+- requisição determinar autoridade policial elaborar
+- requisição determinar autoridade policial âmbito
+- requisição escritas verbal atinente trabalho
+- requisição pericial pertinente investigação criminal
+- residual metálico metálico realizar análise
+- respectivo arquivo eletrônico editar laudo
+- respectivo proceder abordagem pessoa suspeito
+- respeito condição legal instalação funcionamento
+- responsabilizarr se fiança receber objeto
+- resto putrefado cadáver inteiro atender
+- resultado obter tratamento análise confronto
+- retrato falar perícia papiloscópico local
+- revelação ampliação fotografia utilização substância
+- revelação decalque transporte fragmento digital
+- revelação fixação transporte fotografia conservação
+- revelação fotografação coleta fragmento impressão
+- revelação reprodução fotografia diversos gênero
+- ricardo gumbleton daunt iirgd consistir
+- ricardo gumbleton daunt iirgd prestar
+- risco função prever portaria dgp
+- roubo furto ou participar perícia
+- roupa objeto cadáver portar arma
+- rádio televisão peça teatro similar
+- salivo etc manusear analisar droga
+- salvaguardar vida saúde patrimônio cidadão
+- sangue humano crosta líquido seminal
+- sangue sinal agressão etc cadáver
+- saúde patrimônio cidadão encaminhar demanda
+- se fiança receber objeto apreensão
+- se norma legal relativo cadeia
+- secretariar elaboração boletim ocorrência termo
+- seguinte requisito preservar campo papiloscópico
+- seguir colocação cadáver lacre inscrição
+- segurança local desenvolver atividade policial
+- segurança orgânico atuar procedimento policial
+- seminal urina fez salivo etc
+- sepultamento cadáver reclamar manusear roupa
+- sequencial vincular ano boletim ocorrência
+- ser apresentar alto cidadão unidade
+- ser atribuir função prever portaria
+- ser atribuir portar arma fogo
+- ser requisitar campo perícia criminal
+- seringa estilete faca arma etc
+- sexológico embriaguez toxicológico especialidade médico
+- sicad unidade central recurso humano
+- similar constatar observância censura prévio
+- sinal agressão etc cadáver putrefação
+- sinal particular tomar impressão digital
+- sindicância apuração peça documento polícia
+- sistema comunicação dado polícia civil
+- sistema comunicação institucional executar tarefa
+- sistema tecnologia informação presidência delegado
+- sistematização correspondente laudo pericial viabilização
+- sistemático mesmo proceder identificação civil
+- situação fato mediante uso polícia
+- situação risco função prever portaria
+- sola pé papila dérmico apto
+- solução químico revelação fixação transporte
+- somático sinal particular tomar impressão
+- soterramento incêndio catástrofe acidente trânsito
+- soterramento incêndio catástrofe terrorismo acidente
+- submetir exame pericial atender ocorrência
+- subsidiem apuração infração penal administrativo
+- substância orgânico inorgânico realizar exame
+- substância psicoativo ou tóxico entorpecente
+- substância químico manusear arquivo fotográfico
+- substância tóxico agente físico químico
+- suicidio autópsia biópsia exame histológico
+- superfície possa conter vestígio papiloscópico
+- superfície realizar perícia projeção envelhecimento
+- suspeito prática ilícito realizar busca
+- suturo transporte pesagem cadáver humano
+- sítio cabendo lhe realizar assessoramento
+- sólido líquido gasoso cadáver presente
+- sólido líquido gasoso manusear material
+- sôbre crime acidente distúrbio busca
+- tange cumprimento diligência ou requisição
+- tarefa análogo poder determinar dirigir
+- tarefa análogo poder determinar executar
+- tarefa análogo poder determinar fotografar
+- tarefa análogo poder determinar identificação
+- tarefa análogo poder determinar intervir
+- tarefa análogo poder determinar tarefa
+- tarefa conservação reparação aparelho tarefa
+- tarefa escritório cartório delegacia policía
+- tarefa ser atribuir função prever
+- tarefa ser atribuir portar arma
+- tarefa transmissão recepção informação natureza
+- teatro similar constatar observância censura
+- tecido dérmico epidérmico cadáver reconstituir
+- tecnologia aplicável forense realizar exame
+- tecnologia informação presidência delegado polícia
+- tecnológico analisar documento objeto local
+- telecomunicação policial prejuízo tarefa análogo
+- telefone elaborar orientação autoridade policial
+- televisão peça teatro similar constatar
+- tentativa suicidio autópsia biópsia exame
+- ter objetivo identificá las rapidamente
+- termo circunstanciar auto prisão flagrante
+- terrorismo acidente trânsito agente tóxico
+- tiragem revelação reprodução fotografia diversos
+- tomada impressão digital execução tarefa
+- tomar impressão digital ficha dactiloscópico
+- tomar impressão digital registro impresso
+- toráxico abdominal possibilitar observação lesão
+- toxicológico especialidade médico acompanhar equipe
+- trabalho coleta análise pesquisa arquivamento
+- trabalho coleta impressão digital identificação
+- trabalho licenciamento registro competêncie delegacia
+- trabalho policial administrativo zelar funcionamento
+- trabalho polícia judiciária emanar delegado
+- trabalho técnico fotográfico macro fotográfico
+- transmissão recepção informação natureza fio
+- transportar pessoa coisa vincular ocorrência
+- transporte cadáver de eles necrotério
+- transporte corpo adotar providência reconhecimento
+- transporte fotografia conservação aparelho laboratório
+- transporte fragmento digital palmar plantar
+- transporte pesagem cadáver humano limpeza
+- transporte veículo carga conservação veículo
+- tratamento análise confronto pesquisa fragmento
+- tratamento aproveitamento tecido dérmico epidérmico
+- trânsito agente tóxico sólido líquido
+- trânsito propósito croqui vítima orientação
+- trânsito roubo furto ou participar
+- técnica científico procedimento tratamento aproveitamento
+- técnica finalidade instruir procedimento formar
+- técnica levantamento papiloscópico posterior localização
+- técnica polícia judiciária elaborar desenho
+- técnico caso artigo 95 requisitar
+- técnico fotográfico macro fotográfico instruir
+- técnico geográfico arquitetônico propaganda tarefa
+- técnico papiloscópico instituto identificação ricardo
+- técnico papiloscópico local crime modo
+- técnico papiloscópico local morte violento
+- técnico pericial atribuição adiante listar
+- técnico resultado obter tratamento análise
+- tóxico agente físico químico ou
+- tóxico entorpecente produto químico proceder
+- tóxico sólido líquido gasoso cadáver
+- tóxico sólido líquido gasoso manusear
+- ucrh prejuízo relacionar de ele
+- ucrh prejuízo relacionar ser requisitar
+- unidade central recurso humano paulo
+- unidade policial circunscrição fato ensejem
+- unidade policial exercício função investigativo
+- urbanidade eficiência público conduzir viatura
+- urbanidade eficiência público pessoalmente telefone
+- urina fez salivo etc manusear
+- uso polícia conflito justificar salvaguardar
+- utilizar necropsias recolhimento ossada resto
+- utilização substância químico manusear arquivo
+- verbal atinente trabalho polícia judiciária
+- verificar respeito condição legal instalação
+- verificação abastecimento combustível água óleo
+- verificação fiscalização portaria entrada saida
+- verificação observância horário estabelecer fiscalização
+- vestígio datiloscópico observar se norma
+- vestígio determinação identificação criminal datiloscopia
+- vestígio laboratório visar fornecer elemento
+- vestígio papiloscópico ii autoria delitivo
+- veículo automotor cumprir medida segurança
+- veículo automotor transporte veículo carga
+- veículo carga conservação veículo proceder
+- veículo objeto documento correlato requisitar
+- veículo proceder limpeza lavagem librificação
+- viabilização prova objetivo subsidiem apuração
+- viatura atender público realizar levantamento
+- viatura policial atender local crime
+- viatura policial cumprir diligência ou
+- viatura policial diverso trabalho policial
+- viatura policial operar sistema comunicação
+- viatura policial transportar pessoa coisa
+- viatura transporte corpo adotar providência
+- vida saúde patrimônio cidadão encaminhar
+- vigilância movimentação presidiário detento assegurar
+- vincular ano boletim ocorrência delito
+- vincular ocorrência policial conservar manusear
+- violento doloso entendir decorrente intervenção
+- violência acidente tentativa suicidio autópsia
+- visar fornecer elemento esclarecedor instrução
+- visar identificação proceder identificação cadáver
+- visceral exame laboratório reconstituição cadáver
+- vistoria fábrica depósilo explosivo arma
+- visuográfico reconstituir desenho esquemático croqui
+- viva morto fragmento impressão palmar
+- vivo lesão corporal sexológico embriaguez
+- vítima crime catástrofe putrefação cadavérico
+- vítima desabamento desmoronamento soterramento incêndio
+- vítima fatal desconhecir ter objetivo
+- vítima fatal procedimento seguir colocação
+- vítima incluir contato material contaminado
+- vítima orientação perito criminal elaborar
+- zelar cadeia custódia dirigir viatura
+- zelar funcionamento manutenção limpeza função
+- água óleo execução pequeno reparo
+- área conhecimento científico tecnológico analisar
+- âmbito atividade polícia judiciária portar
+- âmbito criminalística relacionar física química
+- âmbito polícia judiciária assessoramento técnico
+- óbito recente ou corpo putrefação
+- ótico outro processo eletromagnético dentre
+- único cadastro cargo funções atividade
+

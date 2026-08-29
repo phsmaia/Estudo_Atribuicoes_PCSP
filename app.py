@@ -44,7 +44,7 @@ if "language" not in st.session_state:
 
 # Sincroniza modo e seção a partir da URL (para links compartilhados)
 if "last_modo_visao" not in st.session_state and "mode" in st.query_params:
-    _valid_modes = ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]
+    _valid_modes = ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7", "mode_8"]
     _qs_mode = st.query_params.get("mode", "mode_1")
     if _qs_mode in _valid_modes:
         st.session_state.last_modo_visao = _qs_mode
@@ -1679,8 +1679,8 @@ with st.container():
         st.session_state.last_modo_visao = "mode_1"
     else:
         # Fallback caso last_modo_visao seja uma string traduzida em vez de key
-        if st.session_state.last_modo_visao not in ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]:
-            for k in ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]:
+        if st.session_state.last_modo_visao not in ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7", "mode_8"]:
+            for k in ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7", "mode_8"]:
                 if st.session_state.last_modo_visao == i18n.t(k):
                     st.session_state.last_modo_visao = k
                     break
@@ -1688,7 +1688,7 @@ with st.container():
     # Se o widget de rádio existe na sessão, confiamos nele. 
     # Se o usuário trocou o modo, a chave 'modo_visao_radio' já estará atualizada antes desta linha rodar.
     if "modo_visao_radio" in st.session_state:
-        if st.session_state.modo_visao_radio in ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]:
+        if st.session_state.modo_visao_radio in ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7", "mode_8"]:
             st.session_state.last_modo_visao = st.session_state.modo_visao_radio
     else:
         # Se não existe, o Streamlit perdeu o estado (bug do unmount do popover). Restauramos do backup.
@@ -1774,7 +1774,7 @@ with st.container():
         with col_menu_global.popover(i18n.t('modes_and_explanations'), use_container_width=True):
             st.markdown(f"<div style='margin-bottom:5px; font-size:1.1rem; font-weight:bold;'>{i18n.t('view_modes')}</div>", unsafe_allow_html=True)
 
-            opcoes_modos_keys = ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7"]
+            opcoes_modos_keys = ["mode_1", "mode_2", "mode_3", "mode_4", "mode_5", "mode_6", "mode_7", "mode_8"]
             
             modo_visao_key = st.radio(
                 i18n.t("nav_analytic"),
@@ -2174,6 +2174,17 @@ with st.container():
             </div>
         </div>
         """, unsafe_allow_html=True)
+        
+    elif modo_visao == i18n.t("mode_8"):
+        status_bar_placeholder.markdown(f"""
+        <div style='display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;'>
+            <div style='display: flex; gap: 5px; flex-wrap: wrap;'>
+{_build_config_badges()}
+                <div style="flex-grow: 1; min-width: 20px;"></div>
+                <div class='status-badge'>📌 {i18n.t("mode_8").split(". ", 1)[-1]}</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
     elif modo_visao in [i18n.t("mode_1"), i18n.t("mode_2")]:
         _mod_label = i18n.t("mode_1") if modo_visao == i18n.t("mode_1") else i18n.t("mode_2")
@@ -2201,6 +2212,8 @@ with st.container():
         nav_options = ["m4_sub_volume_title", "m4_sub_exclusive_title", "m4_sub_shared_title", "m4_sub_adj_title", "m4_sub_gower_title", "m4_sub_neighbor_title"]
     elif modo_visao == i18n.t("mode_7"):
         nav_options = ["m5_sub_tree_title", "m5_sub_akinator_title"]
+    elif modo_visao == i18n.t("mode_8"):
+        nav_options = ["sub_nlp_raw_title", "sub_nlp_proc_title", "sub_nlp_heat_title", "sub_nlp_cloud_title", "sub_nlp_network_title", "sub_nlp_wordnet_title", "sub_nlp_comparative_title", "sub_nlp_stats_title"]
     elif modo_visao == i18n.t("mode_2"):
         nav_options = ["m6_sub_sources_title", "m6_sub_principles_title", "m6_sub_faq_title", "m6_sub_tech_list_title"]
     elif modo_visao == i18n.t("mode_1"):
@@ -3365,6 +3378,11 @@ elif modo_visao == i18n.t("mode_3"):
 
 elif modo_visao == i18n.t("mode_7"):
     creative_view.render_creative_view(mapa_cenarios, cenario_sel, current_section)
+
+elif modo_visao == i18n.t("mode_8"):
+    import nlp_view
+    importlib.reload(nlp_view)
+    nlp_view.render_nlp_view(current_section)
 
 elif modo_visao == i18n.t("mode_2"):
     import sources_view

@@ -1,0 +1,3062 @@
+{
+  "2": {
+    "document_topics": {
+      "Atribuições Comuns (2012)": {
+        "Tópico 1": 0.11773670947215484,
+        "Tópico 2": 0.8822632901706601
+      },
+      "Delegado de Polícia (2023)": {
+        "Tópico 1": 0.9786395639926159,
+        "Tópico 2": 0.021360435625185435
+      },
+      "Escrivão de Polícia (2023)": {
+        "Tópico 1": 0.9999999998255742,
+        "Tópico 2": 0.0
+      },
+      "Investigador de Polícia (2023)": {
+        "Tópico 1": 0.9999999998251478,
+        "Tópico 2": 0.0
+      },
+      "Perito Criminal (2023)": {
+        "Tópico 1": 0.8522820861398217,
+        "Tópico 2": 0.14771791357937877
+      },
+      "Médico Legista (2023)": {
+        "Tópico 1": 0.9999999998001328,
+        "Tópico 2": 0.0
+      },
+      "Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999997614608
+      },
+      "Auxiliar de Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999998122178
+      },
+      "Agente de Telecomunicações Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999997933865
+      },
+      "Agente Policial (2017)": {
+        "Tópico 1": 0.02359035777432765,
+        "Tópico 2": 0.9764096420384726
+      },
+      "Carcereiro Policial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999992117401
+      },
+      "Fotógrafo Técnico Pericial (2013)": {
+        "Tópico 1": 0.022686207291875073,
+        "Tópico 2": 0.9773137923064938
+      },
+      "Desenhista Técnico Pericial (2013)": {
+        "Tópico 1": 0.21880995942734882,
+        "Tópico 2": 0.7811900402098515
+      },
+      "Auxiliar de Necropsia (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999995301806
+      },
+      "Atendente de Necrotério (2013)": {
+        "Tópico 1": 0.08623166673310081,
+        "Tópico 2": 0.9137683327004857
+      },
+      "Assessoramento Papiloscopico (2023)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999995371441
+      },
+      "Escrivão (1967)": {
+        "Tópico 1": 0.16544799370691834,
+        "Tópico 2": 0.8345520053954046
+      },
+      "Investigador (1967)": {
+        "Tópico 1": 0.4577240639699173,
+        "Tópico 2": 0.5422759338079454
+      },
+      "Fiscal Diversões Públicas (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999983571893
+      },
+      "Perito Criminal (1967)": {
+        "Tópico 1": 0.01821025147510289,
+        "Tópico 2": 0.9817897475814248
+      },
+      "Medico Legista (1967)": {
+        "Tópico 1": 0.4567969841739224,
+        "Tópico 2": 0.5432030136561343
+      },
+      "Pesquisador Datiloscopico (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999994428298
+      },
+      "Datiloscopista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999994608676
+      },
+      "Radiotelegrafista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999989485091
+      },
+      "Motorista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999976822896
+      },
+      "Guarda de Presídio (1967)": {
+        "Tópico 1": 0.19215984476259035,
+        "Tópico 2": 0.8078401515697567
+      },
+      "Fotógrafo (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999985205207
+      },
+      "Desenhista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999987808569
+      },
+      "Auxiliar de Autópsia (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999986512311
+      }
+    },
+    "topic_words": {
+      "Tópico 1": {
+        "polícia": 0.2103082527898644,
+        "lei": 0.12621264811404156,
+        "nº": 0.11849967549574643,
+        "atividade": 0.11489695860620153,
+        "realizar": 0.10942116344043473,
+        "prever": 0.10567036177187614,
+        "policial": 0.09780114101187855,
+        "exame": 0.09558785829033609,
+        "cargo": 0.09338930635149562,
+        "realizar exame": 0.088067329673631,
+        "humano": 0.08666496834265627,
+        "atuar": 0.08317536345310213,
+        "paulo": 0.08186094075172842,
+        "polícia judiciária": 0.07954439745937467,
+        "judiciária": 0.07954439745937467
+      },
+      "Tópico 2": {
+        "policial": 0.1363252028495072,
+        "impressão": 0.13023684964071305,
+        "identificação": 0.11178617009012444,
+        "edital": 0.10779330849129516,
+        "determinar": 0.09043405067437402,
+        "tarefa": 0.08674580249363531,
+        "cadáver": 0.08209460481000376,
+        "lei": 0.07759004999915935,
+        "digital": 0.07483024121282963,
+        "impressão digital": 0.07034843835456653,
+        "pesquisa": 0.07025143546557995,
+        "edital atribuição": 0.06883333486187253,
+        "auxiliar": 0.06602962176830031,
+        "tarefa análogo": 0.06547169678806589,
+        "tarefa análogo poder": 0.06547169678806589
+      }
+    }
+  },
+  "3": {
+    "document_topics": {
+      "Atribuições Comuns (2012)": {
+        "Tópico 1": 0.15587808302206094,
+        "Tópico 2": 0.7657551779267354,
+        "Tópico 3": 0.07836673869317515
+      },
+      "Delegado de Polícia (2023)": {
+        "Tópico 1": 0.9037025431444264,
+        "Tópico 2": 0.09629745649339813,
+        "Tópico 3": 0.0
+      },
+      "Escrivão de Polícia (2023)": {
+        "Tópico 1": 0.9999999998240945,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0
+      },
+      "Investigador de Polícia (2023)": {
+        "Tópico 1": 0.9999999998236978,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0
+      },
+      "Perito Criminal (2023)": {
+        "Tópico 1": 0.27398036665951464,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.7260196331648227
+      },
+      "Médico Legista (2023)": {
+        "Tópico 1": 0.8770673235180568,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.12293267628556427
+      },
+      "Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9806117176462539,
+        "Tópico 3": 0.019388282118833672
+      },
+      "Auxiliar de Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999998204459,
+        "Tópico 3": 0.0
+      },
+      "Agente de Telecomunicações Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999998072356,
+        "Tópico 3": 0.0
+      },
+      "Agente Policial (2017)": {
+        "Tópico 1": 0.035839462806679837,
+        "Tópico 2": 0.9641605370142917,
+        "Tópico 3": 0.0
+      },
+      "Carcereiro Policial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999992582378,
+        "Tópico 3": 0.0
+      },
+      "Fotógrafo Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999998246628
+      },
+      "Desenhista Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999998300583
+      },
+      "Auxiliar de Necropsia (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.08927426928731236,
+        "Tópico 3": 0.9107257304111271
+      },
+      "Atendente de Necrotério (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.07327413652885112,
+        "Tópico 3": 0.9267258631007963
+      },
+      "Assessoramento Papiloscopico (2023)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.868288491729469,
+        "Tópico 3": 0.13171150782463267
+      },
+      "Escrivão (1967)": {
+        "Tópico 1": 0.019724094169465255,
+        "Tópico 2": 0.02523705407735969,
+        "Tópico 3": 0.9550388511880515
+      },
+      "Investigador (1967)": {
+        "Tópico 1": 0.04823112688921634,
+        "Tópico 2": 0.0010394223181399668,
+        "Tópico 3": 0.950729449464017
+      },
+      "Fiscal Diversões Públicas (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999993579078
+      },
+      "Perito Criminal (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999996188793
+      },
+      "Medico Legista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999991985339
+      },
+      "Pesquisador Datiloscopico (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.3964732770893332,
+        "Tópico 3": 0.6035267224684562
+      },
+      "Datiloscopista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999994428819,
+        "Tópico 3": 0.0
+      },
+      "Radiotelegrafista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999994798188
+      },
+      "Motorista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999986868907
+      },
+      "Guarda de Presídio (1967)": {
+        "Tópico 1": 0.06243634172611988,
+        "Tópico 2": 0.3005364310141419,
+        "Tópico 3": 0.6370272244210504
+      },
+      "Fotógrafo (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999993538643
+      },
+      "Desenhista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999994847443
+      },
+      "Auxiliar de Autópsia (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0036921227107108846,
+        "Tópico 3": 0.9963078764941946
+      }
+    },
+    "topic_words": {
+      "Tópico 1": {
+        "polícia": 0.2326584297052788,
+        "lei": 0.1414440073570941,
+        "nº": 0.12956903032278907,
+        "atividade": 0.12857671445152505,
+        "prever": 0.11428472316867992,
+        "policial": 0.10759839802647886,
+        "cargo": 0.09952489296913426,
+        "realizar": 0.09439149710817782,
+        "atuar": 0.09263234418277785,
+        "paulo": 0.08971088947182766,
+        "judiciária": 0.0862563378579365,
+        "polícia judiciária": 0.0862563378579365,
+        "ato": 0.08438101658826634,
+        "humano": 0.08379294536377857,
+        "arma fogo": 0.08348690486942771
+      },
+      "Tópico 2": {
+        "impressão": 0.15334088911504762,
+        "policial": 0.1411078221039117,
+        "edital": 0.13262933809781394,
+        "identificação": 0.11591662061186796,
+        "lei": 0.09709696216073821,
+        "determinar": 0.08948951151812147,
+        "edital atribuição": 0.08549785480139781,
+        "impressão digital": 0.08181799473923976,
+        "digital": 0.08030876929087755,
+        "30 novembro conforme anexo edital": 0.0775255486043398,
+        "dgp 30 novembro conforme": 0.0775255486043398,
+        "novembro conforme anexo": 0.0775255486043398,
+        "novembro conforme anexo edital": 0.0775255486043398,
+        "novembro conforme": 0.0775255486043398,
+        "anexo": 0.0775255486043398
+      },
+      "Tópico 3": {
+        "cadáver": 0.1248013688032278,
+        "ou": 0.09719051979701795,
+        "crime": 0.09235038233974312,
+        "exame": 0.09222362611990251,
+        "manusear": 0.07996116156654608,
+        "tarefa": 0.07915299771335402,
+        "escritório": 0.07273159988610788,
+        "químico": 0.07127817480920727,
+        "pericial": 0.07121805423015426,
+        "tarefa correlato": 0.06799014934044682,
+        "atender": 0.06545082979569553,
+        "criminal": 0.06531483278818424,
+        "correlato escritório": 0.0649887386204671,
+        "tarefa correlato escritório": 0.0649887386204671,
+        "material": 0.06429606466226855
+      }
+    }
+  },
+  "4": {
+    "document_topics": {
+      "Atribuições Comuns (2012)": {
+        "Tópico 1": 0.10895767978390407,
+        "Tópico 2": 0.7227514874695607,
+        "Tópico 3": 0.16829083240620263,
+        "Tópico 4": 0.0
+      },
+      "Delegado de Polícia (2023)": {
+        "Tópico 1": 0.8944343746904078,
+        "Tópico 2": 0.10556562494001184,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0
+      },
+      "Escrivão de Polícia (2023)": {
+        "Tópico 1": 0.9999999998184812,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0
+      },
+      "Investigador de Polícia (2023)": {
+        "Tópico 1": 0.9999999998179576,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0
+      },
+      "Perito Criminal (2023)": {
+        "Tópico 1": 0.17286511163438284,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.8271348882051177,
+        "Tópico 4": 0.0
+      },
+      "Médico Legista (2023)": {
+        "Tópico 1": 0.8010996228435278,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.1989003769621304,
+        "Tópico 4": 0.0
+      },
+      "Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.8990029158924464,
+        "Tópico 3": 0.005281972993615017,
+        "Tópico 4": 0.09571511088808005
+      },
+      "Auxiliar de Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.999999999817109,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0
+      },
+      "Agente de Telecomunicações Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.999999999806779,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0
+      },
+      "Agente Policial (2017)": {
+        "Tópico 1": 0.029954611422639905,
+        "Tópico 2": 0.970045388397928,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0
+      },
+      "Carcereiro Policial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.999999999260729,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0
+      },
+      "Fotógrafo Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999998404749,
+        "Tópico 4": 0.0
+      },
+      "Desenhista Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999998492063,
+        "Tópico 4": 0.0
+      },
+      "Auxiliar de Necropsia (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.08238126773392233,
+        "Tópico 3": 0.9176187319878385,
+        "Tópico 4": 0.0
+      },
+      "Atendente de Necrotério (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0855982847533743,
+        "Tópico 3": 0.8945629289529913,
+        "Tópico 4": 0.01983878594412432
+      },
+      "Assessoramento Papiloscopico (2023)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.824229733489259,
+        "Tópico 3": 0.15216313881700597,
+        "Tópico 4": 0.02360712725136431
+      },
+      "Escrivão (1967)": {
+        "Tópico 1": 0.10400229741774901,
+        "Tópico 2": 0.019212850259596945,
+        "Tópico 3": 0.17443875848898593,
+        "Tópico 4": 0.7023460934165326
+      },
+      "Investigador (1967)": {
+        "Tópico 1": 0.03156475575395344,
+        "Tópico 2": 0.0015449482841529503,
+        "Tópico 3": 0.966890294703899,
+        "Tópico 4": 0.0
+      },
+      "Fiscal Diversões Públicas (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9999999996863028
+      },
+      "Perito Criminal (1967)": {
+        "Tópico 1": 0.009068499948383575,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.04103383821758349,
+        "Tópico 4": 0.9498976616088775
+      },
+      "Medico Legista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.6217672722816682,
+        "Tópico 4": 0.3782327270314513
+      },
+      "Pesquisador Datiloscopico (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.03953302265542039,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9604669771593216
+      },
+      "Datiloscopista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.8434717045940039,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.15652829489389655
+      },
+      "Radiotelegrafista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9999999998179965
+      },
+      "Motorista (1967)": {
+        "Tópico 1": 0.07604649947333207,
+        "Tópico 2": 0.0014554238550921837,
+        "Tópico 3": 0.1433348015809697,
+        "Tópico 4": 0.7791632740435515
+      },
+      "Guarda de Presídio (1967)": {
+        "Tópico 1": 0.16095526692707607,
+        "Tópico 2": 0.022967149038767454,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.8160775825506814
+      },
+      "Fotógrafo (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.5222508535482552,
+        "Tópico 4": 0.4777491458990838
+      },
+      "Desenhista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9999999998067374
+      },
+      "Auxiliar de Autópsia (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.01115830867470856,
+        "Tópico 3": 0.9056774092061199,
+        "Tópico 4": 0.08316428133728973
+      }
+    },
+    "topic_words": {
+      "Tópico 1": {
+        "polícia": 0.24609716552524735,
+        "lei": 0.1489433787979567,
+        "nº": 0.1358905445163201,
+        "atividade": 0.13574223882886136,
+        "prever": 0.11945588473594647,
+        "policial": 0.11220051055521915,
+        "cargo": 0.10306019113950934,
+        "atuar": 0.0980711239425533,
+        "paulo": 0.0939149239065,
+        "polícia judiciária": 0.09035339066997901,
+        "judiciária": 0.09035339066997901,
+        "ato": 0.08955368952675057,
+        "realizar": 0.08892803502537361,
+        "fogo": 0.08823942240490684,
+        "arma fogo": 0.08823942240490684
+      },
+      "Tópico 2": {
+        "impressão": 0.1528446872710582,
+        "policial": 0.14548116062009914,
+        "edital": 0.1370489506170975,
+        "identificação": 0.10936521271752289,
+        "lei": 0.10018272966739399,
+        "determinar": 0.09257332326160017,
+        "edital atribuição": 0.08895081874312849,
+        "impressão digital": 0.08105636833413948,
+        "digital": 0.07980469546820984,
+        "novembro conforme": 0.079654252476894,
+        "anexo edital": 0.079654252476894,
+        "30 novembro conforme": 0.079654252476894,
+        "portaria dgp 30 novembro conforme": 0.079654252476894,
+        "30 novembro conforme anexo": 0.079654252476894,
+        "novembro conforme anexo": 0.079654252476894
+      },
+      "Tópico 3": {
+        "cadáver": 0.13202218448834246,
+        "ou": 0.11210701021172105,
+        "manusear": 0.08787108939915317,
+        "exame": 0.08573057291384156,
+        "crime": 0.08334994137350515,
+        "atender": 0.07423994879963862,
+        "elemento": 0.07294578181494422,
+        "local crime": 0.06741844596109155,
+        "pericial": 0.06675126547222333,
+        "material": 0.0651839254978814,
+        "criminal": 0.0644952727214714,
+        "fotografar": 0.06318958212578879,
+        "local": 0.06100137828090521,
+        "catástrofe": 0.06044366709753695,
+        "químico": 0.0585403292765606
+      },
+      "Tópico 4": {
+        "escritório": 0.1897323541007272,
+        "tarefa correlato escritório": 0.18818731495283858,
+        "correlato escritório": 0.18818731495283858,
+        "tarefa correlato": 0.177147052247782,
+        "correlato": 0.168108676440969,
+        "tarefa": 0.1419897592624785,
+        "tarefa conservação": 0.07440856938856305,
+        "conservação reparação aparelho": 0.07440856938856305,
+        "aparelho tarefa correlato": 0.07440856938856305,
+        "mensagem radiotelegráfico tarefa conservação reparação": 0.07440856938856305,
+        "mensagem radiotelegráfico tarefa": 0.07440856938856305,
+        "mensagem radiotelegráfico": 0.07440856938856305,
+        "reparação aparelho": 0.07440856938856305,
+        "mensagem": 0.07440856938856305,
+        "mensagem radiotelegráfico tarefa conservação": 0.07440856938856305
+      }
+    }
+  },
+  "5": {
+    "document_topics": {
+      "Atribuições Comuns (2012)": {
+        "Tópico 1": 0.1288050214435043,
+        "Tópico 2": 0.7198462995468735,
+        "Tópico 3": 0.14725809299053413,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.004090585605961301
+      },
+      "Delegado de Polícia (2023)": {
+        "Tópico 1": 0.9091102807603297,
+        "Tópico 2": 0.09088971883453789,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0
+      },
+      "Escrivão de Polícia (2023)": {
+        "Tópico 1": 0.9884621342722393,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.01153786553366516
+      },
+      "Investigador de Polícia (2023)": {
+        "Tópico 1": 0.9999999998032726,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0
+      },
+      "Perito Criminal (2023)": {
+        "Tópico 1": 0.1713479633202784,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.8286520364946525,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0
+      },
+      "Médico Legista (2023)": {
+        "Tópico 1": 0.8010410786529514,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.1989589211347295,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0
+      },
+      "Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.8642108821644179,
+        "Tópico 3": 0.004747222011840974,
+        "Tópico 4": 0.10135750547717254,
+        "Tópico 5": 0.02968439007964934
+      },
+      "Auxiliar de Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999997753013,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0
+      },
+      "Agente de Telecomunicações Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999997626595,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0
+      },
+      "Agente Policial (2017)": {
+        "Tópico 1": 0.03373355545321573,
+        "Tópico 2": 0.9662664443273693,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0
+      },
+      "Carcereiro Policial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999990923751,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0
+      },
+      "Fotógrafo Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999998102054,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0
+      },
+      "Desenhista Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999998227255,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0
+      },
+      "Auxiliar de Necropsia (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.09088479535639572,
+        "Tópico 3": 0.8970031965848365,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.012112007725598783
+      },
+      "Atendente de Necrotério (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.09434052537946067,
+        "Tópico 3": 0.8399190633827548,
+        "Tópico 4": 0.028699201198341438,
+        "Tópico 5": 0.03704120963100924
+      },
+      "Assessoramento Papiloscopico (2023)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.8181026959732766,
+        "Tópico 3": 0.15448340437991137,
+        "Tópico 4": 0.027413899107617608,
+        "Tópico 5": 0.0
+      },
+      "Escrivão (1967)": {
+        "Tópico 1": 0.10027314874398308,
+        "Tópico 2": 0.013801063531653363,
+        "Tópico 3": 0.09103886725453678,
+        "Tópico 4": 0.5467855630512307,
+        "Tópico 5": 0.24810135704014855
+      },
+      "Investigador (1967)": {
+        "Tópico 1": 0.02942156219559613,
+        "Tópico 2": 0.0009808993759833663,
+        "Tópico 3": 0.4349906457076224,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.5346068918277646
+      },
+      "Fiscal Diversões Públicas (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9842648814681719,
+        "Tópico 5": 0.015735118201449228
+      },
+      "Perito Criminal (1967)": {
+        "Tópico 1": 0.004853247470117337,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.07065251696312011,
+        "Tópico 4": 0.9244942353346596,
+        "Tópico 5": 0.0
+      },
+      "Medico Legista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.5904258735837645,
+        "Tópico 4": 0.4095741256651141,
+        "Tópico 5": 0.0
+      },
+      "Pesquisador Datiloscopico (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.03960236541493136,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9603976343913563,
+        "Tópico 5": 0.0
+      },
+      "Datiloscopista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.6300864112321092,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.06335624902934134,
+        "Tópico 5": 0.30655733925754014
+      },
+      "Radiotelegrafista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9918418494918291,
+        "Tópico 5": 0.00815815031709564
+      },
+      "Motorista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9999999998555045
+      },
+      "Guarda de Presídio (1967)": {
+        "Tópico 1": 0.00708007951520344,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9929199201406008
+      },
+      "Fotógrafo (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9999999998391172
+      },
+      "Desenhista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9999999997999105,
+        "Tópico 5": 0.0
+      },
+      "Auxiliar de Autópsia (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.007212956727397119,
+        "Tópico 3": 0.18236152142363873,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.8104255214573988
+      }
+    },
+    "topic_words": {
+      "Tópico 1": {
+        "polícia": 0.26763682500390007,
+        "lei": 0.16145442631034954,
+        "atividade": 0.14732417851107432,
+        "nº": 0.14720205992681365,
+        "prever": 0.12933685596101455,
+        "policial": 0.12250871927589294,
+        "cargo": 0.11139315180176591,
+        "atuar": 0.10646710930023617,
+        "paulo": 0.10170672750365879,
+        "polícia judiciária": 0.09818126985427554,
+        "judiciária": 0.09818126985427554,
+        "ato": 0.09760528734916168,
+        "arma fogo": 0.09580354229921649,
+        "fogo": 0.09580354229921649,
+        "realizar": 0.0945250086236863
+      },
+      "Tópico 2": {
+        "impressão": 0.18696552502255862,
+        "policial": 0.17883364013107747,
+        "edital": 0.16838030045085894,
+        "identificação": 0.13471237123270383,
+        "lei": 0.12303604115946816,
+        "determinar": 0.11403553376953474,
+        "edital atribuição": 0.10931282648968466,
+        "impressão digital": 0.09882521183132785,
+        "anexo": 0.09784434277542758,
+        "novembro conforme anexo": 0.09784434277542758,
+        "atividade inerente exercício cargo": 0.09784434277542758,
+        "30 novembro conforme anexo edital": 0.09784434277542758,
+        "30 novembro conforme": 0.09784434277542758,
+        "portaria dgp 30 novembro conforme": 0.09784434277542758,
+        "30 novembro conforme anexo": 0.09784434277542758
+      },
+      "Tópico 3": {
+        "cadáver": 0.15131171754791134,
+        "ou": 0.1357056705131932,
+        "exame": 0.10562001828733064,
+        "manusear": 0.10556899434624874,
+        "crime": 0.10010875930135986,
+        "atender": 0.08925547888624331,
+        "elemento": 0.08772916091154667,
+        "pericial": 0.0826025034719002,
+        "local crime": 0.08170487120204206,
+        "criminal": 0.07903675892649706,
+        "material": 0.0780108264503544,
+        "fotografar": 0.07535565211816017,
+        "catástrofe": 0.07292484751261609,
+        "realizar": 0.07081592943474178,
+        "contato": 0.06976689673412516
+      },
+      "Tópico 4": {
+        "escritório": 0.20201320310414037,
+        "tarefa correlato escritório": 0.20175173937154597,
+        "correlato escritório": 0.20175173937154597,
+        "tarefa correlato": 0.1899564770939597,
+        "correlato": 0.18020869398725725,
+        "tarefa": 0.15079171392690902,
+        "reparação aparelho tarefa correlato escritório": 0.07912641560709678,
+        "reparação aparelho tarefa correlato": 0.07912641560709678,
+        "reparação aparelho tarefa": 0.07912641560709678,
+        "reparação aparelho": 0.07912641560709678,
+        "reparação": 0.07912641560709678,
+        "tarefa conservação": 0.07912641560709678,
+        "radiotelegráfico tarefa conservação reparação aparelho": 0.07912641560709678,
+        "radiotelegráfico tarefa conservação reparação": 0.07912641560709678,
+        "expedição mensagem radiotelegráfico tarefa": 0.07912641560709678
+      },
+      "Tópico 5": {
+        "veículo": 0.1896622704039091,
+        "pequeno": 0.11811662158380548,
+        "execução pequeno": 0.11811662158380548,
+        "execução pequeno reparo": 0.11811662158380548,
+        "reparo": 0.11811662158380548,
+        "pequeno reparo": 0.11811662158380548,
+        "transporte": 0.11119542106081703,
+        "conservação": 0.10267913684304399,
+        "execução": 0.09675520154612574,
+        "fotografia": 0.0954018898089356,
+        "revelação": 0.08869013348796487,
+        "verificação": 0.08492855066136072,
+        "transporte veículo carga conservação": 0.07358455389053398,
+        "lavagem librificação verificação abastecimento": 0.07358455389053398,
+        "lavagem librificação verificação": 0.07358455389053398
+      }
+    }
+  },
+  "6": {
+    "document_topics": {
+      "Atribuições Comuns (2012)": {
+        "Tópico 1": 0.014682054933175849,
+        "Tópico 2": 0.001315607908509702,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9840023369795773,
+        "Tópico 6": 0.0
+      },
+      "Delegado de Polícia (2023)": {
+        "Tópico 1": 0.9106936390836725,
+        "Tópico 2": 0.07854609369239504,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.01076026682876397,
+        "Tópico 6": 0.0
+      },
+      "Escrivão de Polícia (2023)": {
+        "Tópico 1": 0.9852364941527815,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.01476350565828198
+      },
+      "Investigador de Polícia (2023)": {
+        "Tópico 1": 0.9796486769656826,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.020351322845412908,
+        "Tópico 6": 0.0
+      },
+      "Perito Criminal (2023)": {
+        "Tópico 1": 0.1642432604708502,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.8305903711361079,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.005166368217468071,
+        "Tópico 6": 0.0
+      },
+      "Médico Legista (2023)": {
+        "Tópico 1": 0.7900100248319989,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.2099899749628956,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0
+      },
+      "Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.8897246843117763,
+        "Tópico 3": 0.007860613074526615,
+        "Tópico 4": 0.0742272684832798,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.028187433866100568
+      },
+      "Auxiliar de Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999997800891,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0
+      },
+      "Agente de Telecomunicações Policial (2017)": {
+        "Tópico 1": 0.0037139418151779366,
+        "Tópico 2": 0.9962860579554608,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0
+      },
+      "Agente Policial (2017)": {
+        "Tópico 1": 0.05126141051341277,
+        "Tópico 2": 0.8037829653424231,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.1449556239398439,
+        "Tópico 6": 0.0
+      },
+      "Carcereiro Policial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999991142766,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0
+      },
+      "Fotógrafo Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9901348595798648,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.00986514024406902
+      },
+      "Desenhista Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999998355941,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0
+      },
+      "Auxiliar de Necropsia (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.1381563634806746,
+        "Tópico 3": 0.8133590010457387,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0064791732522948755,
+        "Tópico 6": 0.042005461910925065
+      },
+      "Atendente de Necrotério (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.007526925322992824,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9924730744882194,
+        "Tópico 6": 0.0
+      },
+      "Assessoramento Papiloscopico (2023)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.7981808718272231,
+        "Tópico 3": 0.16653922474023225,
+        "Tópico 4": 0.01962007264437013,
+        "Tópico 5": 0.01565983027136112,
+        "Tópico 6": 0.0
+      },
+      "Escrivão (1967)": {
+        "Tópico 1": 0.07444829161207435,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.05676359390843227,
+        "Tópico 4": 0.521620664863072,
+        "Tópico 5": 0.2444349204527572,
+        "Tópico 6": 0.1027325287938401
+      },
+      "Investigador (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.22453957671655297,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.7422287325539667,
+        "Tópico 6": 0.03323168989689089
+      },
+      "Fiscal Diversões Públicas (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9376820472245485,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.062317952455814625
+      },
+      "Perito Criminal (1967)": {
+        "Tópico 1": 0.004888859429949629,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.08227768839676106,
+        "Tópico 4": 0.9128334519414562,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0
+      },
+      "Medico Legista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.5828647749241394,
+        "Tópico 4": 0.41619027764649247,
+        "Tópico 5": 0.0009449466858465381,
+        "Tópico 6": 0.0
+      },
+      "Pesquisador Datiloscopico (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.050696849587293695,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9493031502176026,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0
+      },
+      "Datiloscopista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.6676463184602821,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.04200823150503306,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.29034544955098485
+      },
+      "Radiotelegrafista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9896438143914399,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.010356185416450463
+      },
+      "Motorista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.999999999863668
+      },
+      "Guarda de Presídio (1967)": {
+        "Tópico 1": 0.009361819632669266,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.9906381800457322
+      },
+      "Fotógrafo (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.008567272151180918,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.9914327276981649
+      },
+      "Desenhista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.999999999798372,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0
+      },
+      "Auxiliar de Autópsia (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.08736561256720407,
+        "Tópico 4": 0.0008691005545168897,
+        "Tópico 5": 0.21343079801093948,
+        "Tópico 6": 0.698334488496129
+      }
+    },
+    "topic_words": {
+      "Tópico 1": {
+        "polícia": 0.2597082652485217,
+        "lei": 0.15965675569293594,
+        "atividade": 0.14557238551671672,
+        "nº": 0.14414893339947243,
+        "prever": 0.12668882166591056,
+        "policial": 0.11606597392062766,
+        "cargo": 0.10978701048038103,
+        "atuar": 0.10440201416210887,
+        "paulo": 0.10024626812858109,
+        "polícia judiciária": 0.0954451019915034,
+        "judiciária": 0.0954451019915034,
+        "arma fogo": 0.09454892989670366,
+        "fogo": 0.09454892989670366,
+        "ato": 0.09391638209840304,
+        "realizar": 0.0906717873654936
+      },
+      "Tópico 2": {
+        "impressão": 0.20275935886324836,
+        "edital": 0.1776973469891048,
+        "identificação": 0.1477931302535179,
+        "policial": 0.1419450352565385,
+        "lei": 0.12620173503273086,
+        "edital atribuição": 0.11775682067424292,
+        "impressão digital": 0.10726698814617557,
+        "papiloscopista": 0.10375426991210623,
+        "papiloscopista policial": 0.10375426991210623,
+        "novembro conforme": 0.10139958341588208,
+        "atividade inerente exercício": 0.10139958341588208,
+        "atividade inerente exercício cargo": 0.10139958341588208,
+        "anexo edital": 0.10139958341588208,
+        "30 novembro conforme": 0.10139958341588208,
+        "dgp 30 novembro conforme anexo": 0.10139958341588208
+      },
+      "Tópico 3": {
+        "ou": 0.11974540117307404,
+        "cadáver": 0.10552304870638884,
+        "manusear": 0.09696592337043758,
+        "exame": 0.09671090902686208,
+        "crime": 0.093017958695547,
+        "elemento": 0.08585142153321094,
+        "pericial": 0.0830211212400015,
+        "atender": 0.08014463540076426,
+        "criminal": 0.07933025578222856,
+        "material": 0.07732840523751829,
+        "fotografar": 0.07519600553191813,
+        "local crime": 0.07479504841808217,
+        "catástrofe": 0.07309138900281115,
+        "contato": 0.07004805201251343,
+        "perito criminal": 0.07004805201251343
+      },
+      "Tópico 4": {
+        "escritório": 0.20442321606752295,
+        "tarefa correlato escritório": 0.20433095587667097,
+        "correlato escritório": 0.20433095587667097,
+        "tarefa correlato": 0.19200371290717339,
+        "correlato": 0.18197933199111757,
+        "tarefa": 0.15254208257690494,
+        "recepção expedição": 0.08045427214052059,
+        "recepção expedição mensagem": 0.08045427214052059,
+        "reparação": 0.08045427214052059,
+        "radiotelegráfico": 0.08045427214052059,
+        "conservação reparação aparelho": 0.08045427214052059,
+        "conservação reparação aparelho tarefa": 0.08045427214052059,
+        "radiotelegráfico tarefa conservação": 0.08045427214052059,
+        "expedição mensagem radiotelegráfico tarefa": 0.08045427214052059,
+        "expedição mensagem radiotelegráfico": 0.08045427214052059
+      },
+      "Tópico 5": {
+        "cadáver": 0.1617875582769544,
+        "policial": 0.15941165536300447,
+        "autoridade": 0.1528737926009865,
+        "autoridade policial": 0.1528737926009865,
+        "eles": 0.13940851453731679,
+        "de eles": 0.13940851453731679,
+        "cadáver de eles": 0.13940851453731679,
+        "cadáver de": 0.13940851453731679,
+        "providência": 0.11571221753198817,
+        "conduzir": 0.10864348063159768,
+        "pessoa": 0.09312597897467273,
+        "adotar providência": 0.09293900969154453,
+        "adotar": 0.09293900969154453,
+        "necrotério": 0.09293900969154453,
+        "viatura": 0.08792712818066083
+      },
+      "Tópico 6": {
+        "veículo": 0.1825120911017363,
+        "execução pequeno": 0.1134856352650237,
+        "pequeno reparo": 0.1134856352650237,
+        "pequeno": 0.1134856352650237,
+        "execução pequeno reparo": 0.1134856352650237,
+        "reparo": 0.1134856352650237,
+        "transporte": 0.10330590466231238,
+        "conservação": 0.0969433848859948,
+        "fotografia": 0.09276827621471023,
+        "execução": 0.08827842952598057,
+        "revelação": 0.08533249289169746,
+        "verificação": 0.08253864063711545,
+        "conservação veículo proceder limpeza": 0.07073325763340593,
+        "abastecimento": 0.07073325763340593,
+        "abastecimento combustível": 0.07073325763340593
+      }
+    }
+  },
+  "7": {
+    "document_topics": {
+      "Atribuições Comuns (2012)": {
+        "Tópico 1": 0.011541704918546124,
+        "Tópico 2": 0.015734185357770478,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.972724109583128,
+        "Tópico 7": 0.0
+      },
+      "Delegado de Polícia (2023)": {
+        "Tópico 1": 0.8081690889769599,
+        "Tópico 2": 0.18842156455734135,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.003409346075476858,
+        "Tópico 7": 0.0
+      },
+      "Escrivão de Polícia (2023)": {
+        "Tópico 1": 0.9833892407577662,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.016610759045262338
+      },
+      "Investigador de Polícia (2023)": {
+        "Tópico 1": 0.9705896936888532,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.029410306115308118,
+        "Tópico 7": 0.0
+      },
+      "Perito Criminal (2023)": {
+        "Tópico 1": 0.14760393237619107,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.8107110890839693,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.034016802569338686,
+        "Tópico 6": 0.007668175811096166,
+        "Tópico 7": 0.0
+      },
+      "Médico Legista (2023)": {
+        "Tópico 1": 0.7677979415744297,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.21866344879217844,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.013538609426789106,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0
+      },
+      "Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.014244815222053018,
+        "Tópico 2": 0.04578037201118377,
+        "Tópico 3": 0.010585605748647661,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9257960976271903,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0035931092381157118
+      },
+      "Auxiliar de Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.7173413221379413,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.010956518490245922,
+        "Tópico 5": 0.27170215916507706,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0
+      },
+      "Agente de Telecomunicações Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9990838896809843,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.000916110087087515,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0
+      },
+      "Agente Policial (2017)": {
+        "Tópico 1": 0.0011394401833304613,
+        "Tópico 2": 0.8856505266304058,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.11321003298339037,
+        "Tópico 7": 0.0
+      },
+      "Carcereiro Policial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999992053044,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0
+      },
+      "Fotógrafo Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.989444776267218,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.01055522357310978
+      },
+      "Desenhista Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.9999999998505135,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0
+      },
+      "Auxiliar de Necropsia (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.1462993358040896,
+        "Tópico 3": 0.7933273918238589,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.010774972093353787,
+        "Tópico 7": 0.04959829999601461
+      },
+      "Atendente de Necrotério (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.005575646029047138,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.9944243538286571,
+        "Tópico 7": 0.0
+      },
+      "Assessoramento Papiloscopico (2023)": {
+        "Tópico 1": 0.0026446517289826542,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9973553481123288,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0
+      },
+      "Escrivão (1967)": {
+        "Tópico 1": 0.06571256490907787,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.06273022725697538,
+        "Tópico 4": 0.4892002438328937,
+        "Tópico 5": 0.0031555435659340186,
+        "Tópico 6": 0.31730931858472516,
+        "Tópico 7": 0.06189210150339337
+      },
+      "Investigador (1967)": {
+        "Tópico 1": 0.0018606016754917835,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.13667305145866004,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.24118241522040013,
+        "Tópico 6": 0.6095930290344819,
+        "Tópico 7": 0.010690902007708435
+      },
+      "Fiscal Diversões Públicas (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9274057304232962,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.07259426926471853
+      },
+      "Perito Criminal (1967)": {
+        "Tópico 1": 0.005010870364434329,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.08950033749913008,
+        "Tópico 4": 0.9054887919083734,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0
+      },
+      "Medico Legista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.5929687013053202,
+        "Tópico 4": 0.37484756897970894,
+        "Tópico 5": 0.02797908747240986,
+        "Tópico 6": 0.004204641537934136,
+        "Tópico 7": 0.0
+      },
+      "Pesquisador Datiloscopico (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.00011536909122814445,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.8539259387022748,
+        "Tópico 5": 0.14595869202175374,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0
+      },
+      "Datiloscopista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9999999998191405,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0
+      },
+      "Radiotelegrafista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.001271654438505408,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.988592517335156,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.010135828037371647
+      },
+      "Motorista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.9999999998627848
+      },
+      "Guarda de Presídio (1967)": {
+        "Tópico 1": 0.004665897365460822,
+        "Tópico 2": 0.010490281343499752,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.9848438209733089
+      },
+      "Fotógrafo (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.011784642999068009,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.9882153568497976
+      },
+      "Desenhista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9999999998007617,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0
+      },
+      "Auxiliar de Autópsia (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.03296020109812679,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.15729126589160353,
+        "Tópico 6": 0.33637375655066004,
+        "Tópico 7": 0.4733747761263789
+      }
+    },
+    "topic_words": {
+      "Tópico 1": {
+        "polícia": 0.26860534231361555,
+        "lei": 0.16536117938373246,
+        "nº": 0.1517751173327348,
+        "atividade": 0.14983238585833503,
+        "prever": 0.1326718935065551,
+        "policial": 0.1186974591692338,
+        "cargo": 0.11383870897779456,
+        "atuar": 0.10886938979612731,
+        "paulo": 0.1040026728417592,
+        "realizar": 0.09771420695176801,
+        "polícia judiciária": 0.09745893567180708,
+        "judiciária": 0.09745893567180708,
+        "fogo": 0.09679306890938083,
+        "arma fogo": 0.09679306890938083,
+        "ato": 0.09553220514204706
+      },
+      "Tópico 2": {
+        "edital": 0.24313484398039983,
+        "edital atribuição": 0.1828423786876018,
+        "policial": 0.17145914253032274,
+        "lei": 0.15739748743813417,
+        "determinar": 0.13957242747309934,
+        "policial prejuízo tarefa": 0.13114900010056052,
+        "policial prejuízo": 0.13114900010056052,
+        "policial prejuízo tarefa análogo poder": 0.13114900010056052,
+        "policial prejuízo tarefa análogo": 0.13114900010056052,
+        "atividade": 0.125568509648595,
+        "dgp 30 novembro conforme": 0.12146991708354708,
+        "conforme anexo": 0.12146991708354708,
+        "conforme anexo edital": 0.12146991708354708,
+        "conforme": 0.12146991708354708,
+        "30 novembro conforme anexo edital": 0.12146991708354708
+      },
+      "Tópico 3": {
+        "ou": 0.10900609639590315,
+        "cadáver": 0.09381859144637868,
+        "manusear": 0.08908032779037167,
+        "exame": 0.08707312915335305,
+        "crime": 0.08461193787517102,
+        "elemento": 0.07794575033433779,
+        "pericial": 0.07576227488548559,
+        "atender": 0.07306400203457045,
+        "criminal": 0.0723901847084848,
+        "material": 0.07114044257930704,
+        "fotografar": 0.06958481444456348,
+        "local crime": 0.06783371417004906,
+        "catástrofe": 0.0673264081960057,
+        "contato": 0.06433376374164669,
+        "perito": 0.06433376374164669
+      },
+      "Tópico 4": {
+        "escritório": 0.20477581355625815,
+        "tarefa correlato escritório": 0.20463275985524695,
+        "correlato escritório": 0.20463275985524695,
+        "tarefa correlato": 0.1922676045732317,
+        "correlato": 0.1814035465795608,
+        "tarefa": 0.1543266481763527,
+        "expedição mensagem radiotelegráfico tarefa conservação": 0.08211927106278491,
+        "conservação reparação aparelho tarefa correlato": 0.08211927106278491,
+        "expedição mensagem radiotelegráfico tarefa": 0.08211927106278491,
+        "expedição mensagem radiotelegráfico": 0.08211927106278491,
+        "conservação reparação": 0.08211927106278491,
+        "tarefa conservação reparação": 0.08211927106278491,
+        "expedição": 0.08211927106278491,
+        "reparação aparelho tarefa correlato escritório": 0.08211927106278491,
+        "expedição mensagem": 0.08211927106278491
+      },
+      "Tópico 5": {
+        "impressão": 0.20010436418287617,
+        "identificação": 0.1462085770966888,
+        "impressão digital": 0.14073222385352832,
+        "papiloscópico": 0.13996301681513967,
+        "digital": 0.12753877879873815,
+        "dado": 0.09688269797555675,
+        "pesquisa": 0.08925480028629329,
+        "papilar": 0.08748449059513927,
+        "tomar impressão digital": 0.07144943336653672,
+        "tomar": 0.07144943336653672,
+        "tomar impressão": 0.07144943336653672,
+        "técnico": 0.07137637249361174,
+        "impressão papilar": 0.06998759247611143,
+        "assessoramento": 0.06972242015404839,
+        "assessoramento técnico": 0.06972242015404839
+      },
+      "Tópico 6": {
+        "cadáver": 0.13179845427432463,
+        "policial": 0.1169892739366046,
+        "autoridade policial": 0.11348289845349427,
+        "autoridade": 0.11348289845349427,
+        "cadáver de eles": 0.11129885157694773,
+        "eles": 0.11129885157694773,
+        "de eles": 0.11129885157694773,
+        "cadáver de": 0.11129885157694773,
+        "providência": 0.09044943414752904,
+        "conduzir": 0.0836473966444732,
+        "adotar": 0.07419923438463183,
+        "necrotério": 0.07419923438463183,
+        "adotar providência": 0.07419923438463183,
+        "pessoa": 0.07021058420751897,
+        "viatura": 0.06719530604534385
+      },
+      "Tópico 7": {
+        "veículo": 0.18658321914831166,
+        "reparo": 0.115934090926643,
+        "execução pequeno reparo": 0.115934090926643,
+        "pequeno reparo": 0.115934090926643,
+        "execução pequeno": 0.115934090926643,
+        "pequeno": 0.115934090926643,
+        "transporte": 0.1017761346817923,
+        "conservação": 0.09862275158342489,
+        "fotografia": 0.09506225391588506,
+        "execução": 0.08718600684396823,
+        "revelação": 0.08701141494087072,
+        "verificação": 0.08483725339839335,
+        "lavagem librificação": 0.07225852171761732,
+        "lavagem librificação verificação": 0.07225852171761732,
+        "óleo execução": 0.07225852171761732
+      }
+    }
+  },
+  "8": {
+    "document_topics": {
+      "Atribuições Comuns (2012)": {
+        "Tópico 1": 0.008938227406430037,
+        "Tópico 2": 0.012253667087127745,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0025205642545021033,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.9762875411278843,
+        "Tópico 8": 0.0
+      },
+      "Delegado de Polícia (2023)": {
+        "Tópico 1": 0.8042485959134845,
+        "Tópico 2": 0.18985371274447033,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.00589769095420274,
+        "Tópico 8": 0.0
+      },
+      "Escrivão de Polícia (2023)": {
+        "Tópico 1": 0.9848158377044376,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.015184162097429277,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Investigador de Polícia (2023)": {
+        "Tópico 1": 0.9659784482960879,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0340215515083042,
+        "Tópico 8": 0.0
+      },
+      "Perito Criminal (2023)": {
+        "Tópico 1": 0.10037008351523216,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.8665758242288181,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.023627060779439827,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.009427031317005076,
+        "Tópico 8": 0.0
+      },
+      "Médico Legista (2023)": {
+        "Tópico 1": 0.7114198368744056,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.2625792298452898,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.011248060487916645,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.014752872591581643
+      },
+      "Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.013115834192717588,
+        "Tópico 2": 0.04927511078524311,
+        "Tópico 3": 0.019594970175005135,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9052855293913179,
+        "Tópico 6": 0.010839428744561869,
+        "Tópico 7": 0.0018891265545328828,
+        "Tópico 8": 0.0
+      },
+      "Auxiliar de Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.7323763335085637,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.011363042057792962,
+        "Tópico 5": 0.2562606242289691,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Agente de Telecomunicações Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9989961320269277,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0010038677480198766,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Agente Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.8691238060469416,
+        "Tópico 3": 0.008265413471459579,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 2.615723354964748e-05,
+        "Tópico 7": 0.12258462305451727,
+        "Tópico 8": 0.0
+      },
+      "Carcereiro Policial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999992264057,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Fotógrafo Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0026980597978443475,
+        "Tópico 3": 0.9686890610001395,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.01794172475584322,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.010671154274690708
+      },
+      "Desenhista Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.00551885635118542,
+        "Tópico 3": 0.9944811434913888,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Auxiliar de Necropsia (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.028631900944698523,
+        "Tópico 3": 0.05051267864742824,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.9208554202727883
+      },
+      "Atendente de Necrotério (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0024860026033343744,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.9661336699069903,
+        "Tópico 8": 0.031380327362573554
+      },
+      "Assessoramento Papiloscopico (2023)": {
+        "Tópico 1": 0.003282658564340939,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9967173412714285,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Escrivão (1967)": {
+        "Tópico 1": 0.05748503048729082,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.05026711463611218,
+        "Tópico 4": 0.43500851388804623,
+        "Tópico 5": 0.0036946029556683565,
+        "Tópico 6": 0.11940307054703649,
+        "Tópico 7": 0.3268674926419779,
+        "Tópico 8": 0.007274174527813704
+      },
+      "Investigador (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.08377098755629973,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.18592639560169824,
+        "Tópico 6": 0.1327150952129317,
+        "Tópico 7": 0.5975875211345534,
+        "Tópico 8": 0.0
+      },
+      "Fiscal Diversões Públicas (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9270033674722907,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.045346766226554217,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.027649865993409496
+      },
+      "Perito Criminal (1967)": {
+        "Tópico 1": 0.0030316569192694897,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.09413010564025417,
+        "Tópico 4": 0.9028382372144674,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Medico Legista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.5620906946944979,
+        "Tópico 4": 0.36859639521181947,
+        "Tópico 5": 0.05607678501677031,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.006351045883100056,
+        "Tópico 8": 0.006885078468238499
+      },
+      "Pesquisador Datiloscopico (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.00027116063084712465,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.8616624763339396,
+        "Tópico 5": 0.13806636285143337,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Datiloscopista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.975691355711091,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.024308644104538535
+      },
+      "Radiotelegrafista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.001242095797990322,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9905477788876967,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.00821012512739677,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Motorista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.9974428860006089,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.002557113852412637
+      },
+      "Guarda de Presídio (1967)": {
+        "Tópico 1": 0.00362242103772763,
+        "Tópico 2": 0.014941757053920042,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.9814358215796282,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Fotógrafo (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.01608356841314594,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.9839164314248523,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Desenhista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9999999998033304,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0
+      },
+      "Auxiliar de Autópsia (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.001417742566788105,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.9985822573115769
+      }
+    },
+    "topic_words": {
+      "Tópico 1": {
+        "polícia": 0.2741264572125864,
+        "lei": 0.16800482161480534,
+        "nº": 0.153686523005886,
+        "atividade": 0.15277979411565426,
+        "prever": 0.13390026050768852,
+        "policial": 0.12033573658036642,
+        "cargo": 0.11398819753722894,
+        "atuar": 0.11117681553170723,
+        "paulo": 0.10507183088886131,
+        "polícia judiciária": 0.09934059067779726,
+        "judiciária": 0.09934059067779726,
+        "arma fogo": 0.09881004284404583,
+        "fogo": 0.09881004284404583,
+        "ato": 0.09839341145774701,
+        "complementar nº": 0.09217703730771593
+      },
+      "Tópico 2": {
+        "edital": 0.23686411330858775,
+        "edital atribuição": 0.17787373858754996,
+        "policial": 0.16739681256133537,
+        "lei": 0.153608033894846,
+        "determinar": 0.13392007238442596,
+        "policial prejuízo tarefa análogo poder": 0.1279221893109629,
+        "policial prejuízo": 0.1279221893109629,
+        "policial prejuízo tarefa": 0.1279221893109629,
+        "policial prejuízo tarefa análogo": 0.1279221893109629,
+        "atividade": 0.1224608243768783,
+        "dgp 30 novembro conforme anexo": 0.11852113078331182,
+        "anexo edital": 0.11852113078331182,
+        "dgp 30 novembro conforme": 0.11852113078331182,
+        "conforme anexo edital": 0.11852113078331182,
+        "conforme anexo": 0.11852113078331182
+      },
+      "Tópico 3": {
+        "ou": 0.12796229854293809,
+        "manusear": 0.09806400186583518,
+        "exame": 0.09647468689132968,
+        "crime": 0.09524021997590883,
+        "elemento": 0.08941300217330705,
+        "pericial": 0.08733328984928344,
+        "criminal": 0.08442655137727274,
+        "realizar": 0.07888787973392837,
+        "material": 0.07794188429726737,
+        "local crime": 0.07771739591629413,
+        "atender": 0.07429012845429563,
+        "catástrofe": 0.07334552887954826,
+        "agente": 0.07321858783480209,
+        "realizar exame": 0.07282158123241513,
+        "fotografar": 0.07253760411997176
+      },
+      "Tópico 4": {
+        "correlato escritório": 0.20254092809492827,
+        "tarefa correlato escritório": 0.20254092809492827,
+        "escritório": 0.20222683346994108,
+        "tarefa correlato": 0.1903090783337997,
+        "correlato": 0.17955647886509876,
+        "tarefa": 0.15283957502007275,
+        "aparelho tarefa correlato escritório": 0.08132250608052852,
+        "aparelho tarefa correlato": 0.08132250608052852,
+        "aparelho tarefa": 0.08132250608052852,
+        "recepção expedição": 0.08132250608052852,
+        "recepção expedição mensagem": 0.08132250608052852,
+        "conservação reparação aparelho tarefa correlato": 0.08132250608052852,
+        "conservação reparação aparelho tarefa": 0.08132250608052852,
+        "conservação reparação aparelho": 0.08132250608052852,
+        "recepção expedição mensagem radiotelegráfico": 0.08132250608052852
+      },
+      "Tópico 5": {
+        "impressão": 0.20868137835454173,
+        "identificação": 0.15251968631392765,
+        "impressão digital": 0.14701924301891464,
+        "papiloscópico": 0.14647744541726515,
+        "digital": 0.13329205520449727,
+        "dado": 0.10101096626265853,
+        "pesquisa": 0.09286944661387073,
+        "papilar": 0.09093598725349969,
+        "técnico": 0.07490966124456234,
+        "tomar impressão": 0.0745050842033555,
+        "tomar": 0.0745050842033555,
+        "tomar impressão digital": 0.0745050842033555,
+        "iirgd": 0.07335986730920493,
+        "assessoramento técnico": 0.07335986730920493,
+        "assessoramento": 0.07335986730920493
+      },
+      "Tópico 6": {
+        "veículo": 0.20399826779030836,
+        "reparo": 0.12599157136857353,
+        "execução pequeno": 0.12599157136857353,
+        "execução pequeno reparo": 0.12599157136857353,
+        "pequeno reparo": 0.12599157136857353,
+        "pequeno": 0.12599157136857353,
+        "conservação": 0.10823381187078376,
+        "fotografia": 0.10313998367300889,
+        "transporte": 0.0992501309529038,
+        "execução": 0.09677151616990366,
+        "revelação": 0.09478589281099621,
+        "verificação": 0.0928287519809238,
+        "abastecimento combustível água óleo execução": 0.07861446710686358,
+        "abastecimento combustível água óleo": 0.07861446710686358,
+        "direção veículo automotor transporte": 0.07861446710686358
+      },
+      "Tópico 7": {
+        "cadáver": 0.10889618967779176,
+        "policial": 0.10830441847214195,
+        "autoridade": 0.10526834889919878,
+        "autoridade policial": 0.10526834889919878,
+        "eles": 0.0986002048878747,
+        "de eles": 0.0986002048878747,
+        "cadáver de eles": 0.0986002048878747,
+        "cadáver de": 0.0986002048878747,
+        "providência": 0.08138844724004192,
+        "conduzir": 0.07639402341998194,
+        "necrotério": 0.0657334699252498,
+        "adotar": 0.0657334699252498,
+        "adotar providência": 0.0657334699252498,
+        "pessoa": 0.06556852934651312,
+        "viatura": 0.060608075284290554
+      },
+      "Tópico 8": {
+        "cadáver": 0.13517657998237995,
+        "limpeza": 0.10747192937472883,
+        "instrumento": 0.10131265802838504,
+        "laboratório": 0.08665382738973311,
+        "limpeza desfecção local instrumento": 0.08628653419594282,
+        "recomposição suturo transporte": 0.08628653419594282,
+        "pesagem cadáver": 0.08628653419594282,
+        "recomposição suturo": 0.08628653419594282,
+        "suturo transporte pesagem": 0.08628653419594282,
+        "suturo transporte": 0.08628653419594282,
+        "limpeza desfecção": 0.08628653419594282,
+        "trabalho tarefa simples": 0.08628653419594282,
+        "pesagem cadáver humano": 0.08628653419594282,
+        "pesagem cadáver humano limpeza": 0.08628653419594282,
+        "tarefa simples": 0.08628653419594282
+      }
+    }
+  },
+  "9": {
+    "document_topics": {
+      "Atribuições Comuns (2012)": {
+        "Tópico 1": 0.010866051658059688,
+        "Tópico 2": 0.014489811369182001,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0034126964353439846,
+        "Tópico 6": 0.9712314403785821,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Delegado de Polícia (2023)": {
+        "Tópico 1": 0.8078471442046294,
+        "Tópico 2": 0.18738888104568285,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.004763974338884678,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Escrivão de Polícia (2023)": {
+        "Tópico 1": 0.9848985287584471,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.015101471032927707,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Investigador de Polícia (2023)": {
+        "Tópico 1": 0.9720381749928019,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.027961824799937966,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Perito Criminal (2023)": {
+        "Tópico 1": 0.10591059706044971,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.8433982792883883,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.028498434079476165,
+        "Tópico 6": 0.008593073448177228,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.013599615957015672
+      },
+      "Médico Legista (2023)": {
+        "Tópico 1": 0.6830553131227898,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.2326251201956582,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.011652109332839037,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.01525539277101124,
+        "Tópico 9": 0.05741206437632701
+      },
+      "Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.012265541424019585,
+        "Tópico 2": 0.04453721172335328,
+        "Tópico 3": 0.017067618313565035,
+        "Tópico 4": 0.001833997180679995,
+        "Tópico 5": 0.9127419975050206,
+        "Tópico 6": 0.0014153822540623527,
+        "Tópico 7": 0.010138251448099725,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Auxiliar de Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.7070964779874767,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.016108325624438383,
+        "Tópico 5": 0.27679519617513776,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Agente de Telecomunicações Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9989324623471151,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0010675374100133463,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Agente Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.8862737961257651,
+        "Tópico 3": 0.00868786550454381,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.10500151441114482,
+        "Tópico 7": 3.682374552549218e-05,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Carcereiro Policial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999991649924,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Fotógrafo Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.002126370864258422,
+        "Tópico 3": 0.9694583414379169,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.01846434628242756,
+        "Tópico 8": 0.009950941235226766,
+        "Tópico 9": 0.0
+      },
+      "Desenhista Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.004806928375062366,
+        "Tópico 3": 0.9951930714596077,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Auxiliar de Necropsia (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.026801878201574165,
+        "Tópico 3": 0.04824676344509626,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.9140398125617527,
+        "Tópico 9": 0.010911545659908964
+      },
+      "Atendente de Necrotério (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.002250455048462082,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.9459871154038548,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.039041032833612696,
+        "Tópico 9": 0.012721396553925167
+      },
+      "Assessoramento Papiloscopico (2023)": {
+        "Tópico 1": 0.0027969067023535486,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9911036069741056,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0060994861678601185
+      },
+      "Escrivão (1967)": {
+        "Tópico 1": 0.06059929009318338,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.038856378433302446,
+        "Tópico 4": 0.4921324024730947,
+        "Tópico 5": 0.003049801415095816,
+        "Tópico 6": 0.23236068619048186,
+        "Tópico 7": 0.13349901777978945,
+        "Tópico 8": 0.039502423293281345,
+        "Tópico 9": 0.0
+      },
+      "Investigador (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0977428714907645,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.2305594424800216,
+        "Tópico 6": 0.525389165298414,
+        "Tópico 7": 0.14630852015977733,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Fiscal Diversões Públicas (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0009398338799711468,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.037294085420062975,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.9617660805818388
+      },
+      "Perito Criminal (1967)": {
+        "Tópico 1": 0.0017778671454079323,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.09782605457373299,
+        "Tópico 4": 0.8839416051377395,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.01645447292730545
+      },
+      "Medico Legista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0007956908720457379,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0009256252894580808,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.9982786837250464
+      },
+      "Pesquisador Datiloscopico (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0004265709125523839,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.8781383798785405,
+        "Tópico 5": 0.12143504903597827,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Datiloscopista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9760551913818867,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.02394480844219112,
+        "Tópico 9": 0.0
+      },
+      "Radiotelegrafista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 7.137398882240324e-05,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9876320058412126,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.012022627511907205,
+        "Tópico 8": 0.0002739924841761555,
+        "Tópico 9": 0.0
+      },
+      "Motorista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.9977490907165025,
+        "Tópico 8": 0.0022509091307211307,
+        "Tópico 9": 0.0
+      },
+      "Guarda de Presídio (1967)": {
+        "Tópico 1": 0.002498207353920708,
+        "Tópico 2": 0.013906367286129376,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.8628930634867281,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.12070236155679553
+      },
+      "Fotógrafo (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.015055442943036547,
+        "Tópico 4": 0.0006489305250727506,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.9842956263643159,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Desenhista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9999999998169344,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0
+      },
+      "Auxiliar de Autópsia (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0009011835872466674,
+        "Tópico 8": 0.9990988162962606,
+        "Tópico 9": 0.0
+      }
+    },
+    "topic_words": {
+      "Tópico 1": {
+        "polícia": 0.2878500892681228,
+        "lei": 0.17658669110986358,
+        "nº": 0.1616344736825212,
+        "atividade": 0.16044426078139407,
+        "prever": 0.14086775476887298,
+        "policial": 0.12645914096406594,
+        "cargo": 0.12004041361624798,
+        "atuar": 0.11674485315332433,
+        "paulo": 0.11049107975614243,
+        "polícia judiciária": 0.10425746610465335,
+        "judiciária": 0.10425746610465335,
+        "arma fogo": 0.10375926496230442,
+        "fogo": 0.10375926496230442,
+        "ato": 0.10312871352833479,
+        "humano": 0.09720633697979394
+      },
+      "Tópico 2": {
+        "edital": 0.25548063660916304,
+        "edital atribuição": 0.19180286053829826,
+        "policial": 0.18057851467900296,
+        "lei": 0.16573620646697,
+        "determinar": 0.144476292988007,
+        "policial prejuízo tarefa análogo poder": 0.1379969615898721,
+        "policial prejuízo": 0.1379969615898721,
+        "policial prejuízo tarefa": 0.1379969615898721,
+        "policial prejuízo tarefa análogo": 0.1379969615898721,
+        "atividade": 0.1321195087751253,
+        "dgp 30 novembro conforme anexo": 0.12788029282863675,
+        "anexo edital": 0.12788029282863675,
+        "dgp 30 novembro conforme": 0.12788029282863675,
+        "conforme anexo edital": 0.12788029282863675,
+        "conforme anexo": 0.12788029282863675
+      },
+      "Tópico 3": {
+        "ou": 0.13474805114268565,
+        "manusear": 0.10427376701876617,
+        "crime": 0.10115371691315296,
+        "elemento": 0.09474456495775471,
+        "pericial": 0.09243895037823323,
+        "exame": 0.09189402263628396,
+        "criminal": 0.08903699508753056,
+        "material": 0.08277467796920807,
+        "local crime": 0.08229179876785929,
+        "realizar": 0.08191553246620088,
+        "atender": 0.07853972293633098,
+        "catástrofe": 0.07825813705819033,
+        "fotografar": 0.07763883275214689,
+        "agente": 0.07723881702492007,
+        "perito": 0.075618841401991
+      },
+      "Tópico 4": {
+        "escritório": 0.19620067543580585,
+        "correlato escritório": 0.19524910575172086,
+        "tarefa correlato escritório": 0.19524910575172086,
+        "tarefa correlato": 0.18345628218765933,
+        "correlato": 0.1731216780034764,
+        "tarefa": 0.1500553858648741,
+        "mensagem radiotelegráfico": 0.08390323637241148,
+        "aparelho tarefa": 0.08390323637241148,
+        "aparelho tarefa correlato": 0.08390323637241148,
+        "aparelho tarefa correlato escritório": 0.08390323637241148,
+        "recepção expedição mensagem radiotelegráfico tarefa": 0.08390323637241148,
+        "recepção expedição mensagem radiotelegráfico": 0.08390323637241148,
+        "recepção expedição mensagem": 0.08390323637241148,
+        "recepção expedição": 0.08390323637241148,
+        "mensagem": 0.08390323637241148
+      },
+      "Tópico 5": {
+        "impressão": 0.19934192827230712,
+        "identificação": 0.14485692747037077,
+        "impressão digital": 0.1406097697015703,
+        "papiloscópico": 0.14001493185037248,
+        "digital": 0.12744522118526183,
+        "dado": 0.09649045976800875,
+        "pesquisa": 0.08762896702434736,
+        "papilar": 0.08671233848703772,
+        "técnico": 0.0716547076615525,
+        "tomar": 0.07131768987150858,
+        "tomar impressão": 0.07131768987150858,
+        "tomar impressão digital": 0.07131768987150858,
+        "iirgd": 0.07025871253335789,
+        "assessoramento": 0.07025871253335789,
+        "assessoramento técnico": 0.07025871253335789
+      },
+      "Tópico 6": {
+        "cadáver": 0.1405180213156252,
+        "policial": 0.1393705439575225,
+        "autoridade": 0.13575731121964912,
+        "autoridade policial": 0.13575731121964912,
+        "cadáver de eles": 0.1271705977608506,
+        "cadáver de": 0.1271705977608506,
+        "eles": 0.1271705977608506,
+        "de eles": 0.1271705977608506,
+        "providência": 0.10496645002000757,
+        "conduzir": 0.09852213061805522,
+        "necrotério": 0.08478039850723372,
+        "adotar": 0.08478039850723372,
+        "adotar providência": 0.08478039850723372,
+        "pessoa": 0.0844222921430297,
+        "viatura": 0.07819615973761088
+      },
+      "Tópico 7": {
+        "veículo": 0.21172321660318988,
+        "execução pequeno": 0.13191660974704936,
+        "pequeno": 0.13191660974704936,
+        "execução pequeno reparo": 0.13191660974704936,
+        "reparo": 0.13191660974704936,
+        "pequeno reparo": 0.13191660974704936,
+        "conservação": 0.11404914791951148,
+        "fotografia": 0.10722840760629256,
+        "transporte": 0.10389734515764408,
+        "execução": 0.10157336072560519,
+        "revelação": 0.09952281914125226,
+        "verificação": 0.09439356563947816,
+        "combustível água óleo execução pequeno": 0.0821306150669894,
+        "combustível água óleo execução": 0.0821306150669894,
+        "lavagem librificação verificação abastecimento": 0.0821306150669894
+      },
+      "Tópico 8": {
+        "cadáver": 0.12971773851415414,
+        "limpeza": 0.10372049300819962,
+        "instrumento": 0.09822922994206479,
+        "desfecção local instrumento trabalho": 0.08430890620141361,
+        "desfecção local instrumento trabalho tarefa": 0.08430890620141361,
+        "recomposição suturo transporte pesagem": 0.08430890620141361,
+        "recomposição suturo": 0.08430890620141361,
+        "recomposição suturo transporte pesagem cadáver": 0.08430890620141361,
+        "transporte pesagem cadáver humano limpeza": 0.08430890620141361,
+        "recomposição suturo transporte": 0.08430890620141361,
+        "desfecção": 0.08430890620141361,
+        "humano limpeza": 0.08430890620141361,
+        "humano limpeza desfecção": 0.08430890620141361,
+        "humano limpeza desfecção local": 0.08430890620141361,
+        "operação dissecação": 0.08430890620141361
+      },
+      "Tópico 9": {
+        "legal": 0.14077897291225766,
+        "médico legal": 0.11237707047602995,
+        "médico": 0.09181156619693445,
+        "lavratura": 0.08315543228606646,
+        "lavratura auto": 0.08315543228606646,
+        "auto": 0.0756966693362649,
+        "programa": 0.07431453369548187,
+        "observância": 0.07431453369548187,
+        "exame": 0.0689414270321267,
+        "fiscalização": 0.06233713396516206,
+        "médico legal lavratura auto": 0.056188535238014974,
+        "determinaçãode": 0.056188535238014974,
+        "realização exame médico legal": 0.056188535238014974,
+        "delito caso violência acidente": 0.056188535238014974,
+        "delito caso violência acidente tentativa": 0.056188535238014974
+      }
+    }
+  },
+  "10": {
+    "document_topics": {
+      "Atribuições Comuns (2012)": {
+        "Tópico 1": 0.008448108422364962,
+        "Tópico 2": 0.011454473603638262,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.002708911354910205,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.9773885064956072,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Delegado de Polícia (2023)": {
+        "Tópico 1": 0.7156704809629293,
+        "Tópico 2": 0.1733566113881278,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0041524157487941365,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.1068204915271951,
+        "Tópico 10": 0.0
+      },
+      "Escrivão de Polícia (2023)": {
+        "Tópico 1": 0.9834449369753004,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.016555062812336218,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Investigador de Polícia (2023)": {
+        "Tópico 1": 0.9634484827889598,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.03655151700161426,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Perito Criminal (2023)": {
+        "Tópico 1": 0.10567709064924206,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.8404792505002527,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.028018209975232435,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.01183147587447788,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0018201651744722618,
+        "Tópico 10": 0.012173807656315335
+      },
+      "Médico Legista (2023)": {
+        "Tópico 1": 0.6888288442552677,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.2337170795003322,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.011451902530878624,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.013076596909786808,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.05292557659666113
+      },
+      "Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.012454182613295511,
+        "Tópico 2": 0.046733508645771686,
+        "Tópico 3": 0.016660564124374815,
+        "Tópico 4": 0.0016553970557198225,
+        "Tópico 5": 0.9098321472258569,
+        "Tópico 6": 0.010083684629616445,
+        "Tópico 7": 0.001805851298139338,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0007746642510037308,
+        "Tópico 10": 0.0
+      },
+      "Auxiliar de Papiloscopista Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.7185915241168472,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.01471653039680404,
+        "Tópico 5": 0.2666919452736936,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Agente de Telecomunicações Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9990985067818766,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0009014929795424572,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Agente Policial (2017)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.8593328207462705,
+        "Tópico 3": 0.00805189363630492,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0031169141810489572,
+        "Tópico 7": 0.12949837123351887,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Carcereiro Policial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.9999999991800567,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Fotógrafo Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.002324104171842619,
+        "Tópico 3": 0.9624641493125307,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.02611044084038103,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.009101305491502612,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Desenhista Técnico Pericial (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.005077459636504528,
+        "Tópico 3": 0.994922540193977,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Auxiliar de Necropsia (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.03062115636475143,
+        "Tópico 3": 0.052526107877322176,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.9059549455885665,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.010897790019740831
+      },
+      "Atendente de Necrotério (2013)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0018647756882892949,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.9642853361784284,
+        "Tópico 8": 0.024819401896560494,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.009030486111102933
+      },
+      "Assessoramento Papiloscopico (2023)": {
+        "Tópico 1": 0.0028038971014177974,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.9913689662546624,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.005827136482230372
+      },
+      "Escrivão (1967)": {
+        "Tópico 1": 0.05877464551613312,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.027021524393262733,
+        "Tópico 4": 0.4282263914755535,
+        "Tópico 5": 0.0030951244800102038,
+        "Tópico 6": 0.045802305140217346,
+        "Tópico 7": 0.25218132551806877,
+        "Tópico 8": 0.0718714658115389,
+        "Tópico 9": 0.11302721736605145,
+        "Tópico 10": 0.0
+      },
+      "Investigador (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0883816680413374,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.20366465013161072,
+        "Tópico 6": 0.05644363953971195,
+        "Tópico 7": 0.48100697639128365,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.17050306543935423,
+        "Tópico 10": 0.0
+      },
+      "Fiscal Diversões Públicas (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0012019116809914132,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.03830755318340135,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0035176207641945873,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.012723565073721622,
+        "Tópico 10": 0.9442493491662912
+      },
+      "Perito Criminal (1967)": {
+        "Tópico 1": 0.0014671527254143662,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.1039362020549708,
+        "Tópico 4": 0.8694497160939048,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.010261412437733038,
+        "Tópico 10": 0.014885516455507033
+      },
+      "Medico Legista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0007082302506409714,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0009178139816981125,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.9983739556406062
+      },
+      "Pesquisador Datiloscopico (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0004314084350889324,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.872139142565427,
+        "Tópico 5": 0.12742944881133098,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Datiloscopista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.978124469911641,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.021875529905194056,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Radiotelegrafista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 6.873902098764e-05,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9729917151256738,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.026939545665363728,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Motorista (1967)": {
+        "Tópico 1": 0.00016142361301030552,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.9743177479564489,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0015075394591538393,
+        "Tópico 9": 0.024013288817570973,
+        "Tópico 10": 0.0
+      },
+      "Guarda de Presídio (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.9999999998942138,
+        "Tópico 10": 0.0
+      },
+      "Fotógrafo (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0010130449286226083,
+        "Tópico 3": 0.009161878905837495,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.986483487541369,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.003341588469835643
+      },
+      "Desenhista (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.9999999997995744,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.0,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      },
+      "Auxiliar de Autópsia (1967)": {
+        "Tópico 1": 0.0,
+        "Tópico 2": 0.0,
+        "Tópico 3": 0.0,
+        "Tópico 4": 0.0,
+        "Tópico 5": 0.0,
+        "Tópico 6": 0.0012819421241530538,
+        "Tópico 7": 0.0,
+        "Tópico 8": 0.9987180577411922,
+        "Tópico 9": 0.0,
+        "Tópico 10": 0.0
+      }
+    },
+    "topic_words": {
+      "Tópico 1": {
+        "polícia": 0.29350959294963574,
+        "lei": 0.18015241369957538,
+        "nº": 0.16488406585822743,
+        "atividade": 0.1636189558420656,
+        "prever": 0.1436172757579484,
+        "policial": 0.12914271203655106,
+        "cargo": 0.12238429686711079,
+        "atuar": 0.11900545078187795,
+        "paulo": 0.112712873289837,
+        "polícia judiciária": 0.10621631781702195,
+        "judiciária": 0.10621631781702195,
+        "arma fogo": 0.1057674049280113,
+        "fogo": 0.1057674049280113,
+        "ato": 0.10490676208687749,
+        "humano": 0.09911224776163
+      },
+      "Tópico 2": {
+        "edital": 0.251001868083289,
+        "edital atribuição": 0.18847235563464748,
+        "policial": 0.1774490571363541,
+        "lei": 0.1628097914629663,
+        "determinar": 0.14191094171231614,
+        "policial prejuízo tarefa análogo poder": 0.1355581495260534,
+        "policial prejuízo": 0.1355581495260534,
+        "policial prejuízo tarefa": 0.1355581495260534,
+        "policial prejuízo tarefa análogo": 0.1355581495260534,
+        "atividade": 0.12980058576563888,
+        "dgp 30 novembro conforme anexo": 0.12561380671198813,
+        "anexo edital": 0.12561380671198813,
+        "dgp 30 novembro conforme": 0.12561380671198813,
+        "conforme anexo edital": 0.12561380671198813,
+        "conforme anexo": 0.12561380671198813
+      },
+      "Tópico 3": {
+        "ou": 0.13828127356194225,
+        "manusear": 0.10693764140397913,
+        "crime": 0.10376125980550123,
+        "elemento": 0.0974710161506466,
+        "pericial": 0.09487377834738417,
+        "exame": 0.09425592230657968,
+        "criminal": 0.09138784234422571,
+        "material": 0.08474473072448734,
+        "local crime": 0.08445889621098805,
+        "realizar": 0.08412154054024867,
+        "atender": 0.08058291055929337,
+        "catástrofe": 0.08027379734870863,
+        "fotografar": 0.0795258082285712,
+        "agente": 0.07926773404552558,
+        "contato": 0.07757668247495568
+      },
+      "Tópico 4": {
+        "escritório": 0.21512727021397518,
+        "correlato escritório": 0.21373315062144765,
+        "tarefa correlato escritório": 0.21373315062144765,
+        "tarefa correlato": 0.2008421191951901,
+        "correlato": 0.18952628621022843,
+        "tarefa": 0.16420192907011755,
+        "mensagem radiotelegráfico": 0.09169484355072505,
+        "aparelho tarefa": 0.09169484355072505,
+        "aparelho tarefa correlato": 0.09169484355072505,
+        "aparelho tarefa correlato escritório": 0.09169484355072505,
+        "recepção expedição mensagem radiotelegráfico tarefa": 0.09169484355072505,
+        "recepção expedição mensagem radiotelegráfico": 0.09169484355072505,
+        "recepção expedição mensagem": 0.09169484355072505,
+        "recepção expedição": 0.09169484355072505,
+        "mensagem": 0.09169484355072505
+      },
+      "Tópico 5": {
+        "impressão": 0.2068045085972047,
+        "identificação": 0.1503419234937874,
+        "impressão digital": 0.14579109966782336,
+        "papiloscópico": 0.14529725795823817,
+        "digital": 0.13216383223085693,
+        "dado": 0.10010085960918749,
+        "pesquisa": 0.09100339483282034,
+        "papilar": 0.09007223570335725,
+        "técnico": 0.07431987026494773,
+        "tomar": 0.07390548277508444,
+        "tomar impressão": 0.07390548277508444,
+        "tomar impressão digital": 0.07390548277508444,
+        "iirgd": 0.07285368631035988,
+        "assessoramento": 0.07285368631035988,
+        "assessoramento técnico": 0.07285368631035988
+      },
+      "Tópico 6": {
+        "veículo": 0.18749137515632586,
+        "pequeno": 0.14119236092496254,
+        "execução pequeno": 0.14119236092496254,
+        "execução pequeno reparo": 0.14119236092496254,
+        "reparo": 0.14119236092496254,
+        "pequeno reparo": 0.14119236092496254,
+        "fotografia": 0.12290566317791274,
+        "conservação": 0.12146788164729838,
+        "revelação": 0.11351946240119515,
+        "transporte": 0.1114746844475018,
+        "execução": 0.10630799186124937,
+        "abastecimento combustível água óleo": 0.08336471585621046,
+        "conservação veículo": 0.08336471585621046,
+        "óleo": 0.08336471585621046,
+        "óleo execução": 0.08336471585621046
+      },
+      "Tópico 7": {
+        "cadáver": 0.10900545418744137,
+        "policial": 0.10761304149502457,
+        "autoridade": 0.10488601619217695,
+        "autoridade policial": 0.10488601619217695,
+        "cadáver de": 0.09864077599908909,
+        "eles": 0.09864077599908909,
+        "de eles": 0.09864077599908909,
+        "cadáver de eles": 0.09864077599908909,
+        "providência": 0.0813069353022166,
+        "conduzir": 0.07621629154696907,
+        "necrotério": 0.06576051733272606,
+        "adotar": 0.06576051733272606,
+        "adotar providência": 0.06576051733272606,
+        "pessoa": 0.0644150655329915,
+        "viatura": 0.060574499907760856
+      },
+      "Tópico 8": {
+        "cadáver": 0.1494525482408626,
+        "limpeza": 0.11947322072359355,
+        "instrumento": 0.1130616577772915,
+        "instrumento trabalho tarefa simples laboratório": 0.09678465902141248,
+        "limpeza desfecção local": 0.09678465902141248,
+        "limpeza desfecção": 0.09678465902141248,
+        "local instrumento trabalho tarefa simples": 0.09678465902141248,
+        "suturo transporte pesagem cadáver humano": 0.09678465902141248,
+        "tarefa simples": 0.09678465902141248,
+        "tarefa simples laboratório": 0.09678465902141248,
+        "local instrumento trabalho tarefa": 0.09678465902141248,
+        "humano limpeza": 0.09678465902141248,
+        "humano limpeza desfecção": 0.09678465902141248,
+        "operação dissecação": 0.09678465902141248,
+        "humano limpeza desfecção local": 0.09678465902141248
+      },
+      "Tópico 9": {
+        "portaria entrada saida": 0.11287688407859928,
+        "detento assegurar": 0.11287688407859928,
+        "contrôle verificação fiscalização portaria entrada": 0.11287688407859928,
+        "disciplina": 0.11287688407859928,
+        "disciplina ordem": 0.11287688407859928,
+        "detento assegurar disciplina": 0.11287688407859928,
+        "detento assegurar disciplina ordem": 0.11287688407859928,
+        "contrôle verificação fiscalização portaria": 0.11287688407859928,
+        "movimentação presidiário detento": 0.11287688407859928,
+        "detento assegurar disciplina ordem dependência": 0.11287688407859928,
+        "disciplina ordem dependência instituição": 0.11287688407859928,
+        "dependência": 0.11287688407859928,
+        "portaria entrada": 0.11287688407859928,
+        "penal contrôle verificação fiscalização portaria": 0.11287688407859928,
+        "movimentação presidiário detento assegurar disciplina": 0.11287688407859928
+      },
+      "Tópico 10": {
+        "legal": 0.15876625794035665,
+        "médico legal": 0.12732591664065146,
+        "médico": 0.10403134314964295,
+        "lavratura auto": 0.09378064282340079,
+        "lavratura": 0.09378064282340079,
+        "auto": 0.08536759699304332,
+        "programa": 0.0832143815784224,
+        "observância": 0.0832143815784224,
+        "exame": 0.0780976083659,
+        "fiscalização": 0.06684758129159972,
+        "realização exame médico legal lavratura": 0.06366295832032573,
+        "acidente tentativa": 0.06366295832032573,
+        "médico legal determinaçãode": 0.06366295832032573,
+        "delito caso violência": 0.06366295832032573,
+        "delito caso violência acidente": 0.06366295832032573
+      }
+    }
+  }
+}
